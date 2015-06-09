@@ -1,0 +1,63 @@
+==========[COMMUN]=================
+
+
+==========[STALKER2106]=============
+
+
+==========[BAXLAN]==================
+
+-(refaire le sha)
+
+-Revoir les algorithmes de calcul:
+			- des proba d'accident//
+			- des scores//
+			- de la difficulté
+			- de l'usure des pneus
+			- de consommation de nitro
+		Et de calcul du prix:
+			- des voitures
+			- des moteurs
+			- des spoilers
+			- des pneus
+			- des prises d'air
+			- de l'essence
+			- de la nitro 
+			
+====================================
+==========[PLUS TARD]===============
+
+BUG dans les championnats !
+
+championnat = plusieurs courses (coupes ?)
+
+faire varier les gains en fonction de la difficulté
+
+les choix dans les menus doivent être des int et non des char
+
+parchoque: réduit les dégats d'accident
+
+ajouter des compteurs particuliers pour chaque type de courses (garder l'actuel = total) pour les stats
+
+option: raccourci dans les menus ou pas
+
+des arguments cheats
+	-nogui :pas de fenetre de jeu
+	-notime :supprime les temps d'attente
+	-100000cRD :accorde 100.000 crédits
+	-godshopRD :tout est gratuit
+	-godtrackRD :on arrive premier a toutes les courses
+	-bestcarRD :on a la voiture la plus chère upgradé au max
+	-gettracksRD :débloque toutes les map
+	-getachievementRD :débloque tout les achievements
+	-getcupRD :débloque toutes les coupes
+
+ajouter des priorités aux messages d'accidents, dans le txt
+	0 :afficher en premier
+	1 :afficher apres les premiers
+	2 :pas de priorité
+	
+régulierement revoir operator != du profil
+//exemple, actuellement on ne compare pas les stat course libre
+
+
+

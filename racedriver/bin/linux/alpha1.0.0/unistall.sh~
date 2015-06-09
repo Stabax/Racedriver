@@ -1,0 +1,4 @@
+echo -n "Vous êtes sur le point de desinstaller les librairies et dépendances de Racedriver."
+sudo rm -f lib/libsfml-system.so.1.6 /usr/lib/libsfml-system.so.1.6
+echo "Suppression effectuée avec succès !"
+read -p "Appuyez sur [Entree] pour quitter." nothing

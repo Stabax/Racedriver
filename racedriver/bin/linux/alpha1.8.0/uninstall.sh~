@@ -1,0 +1,8 @@
+echo -n "Les librairies et dépendances de Racedriver vont être desinstallées"
+echo ""
+sudo rm /usr/lib/libsfml-system.so.1.6
+sudo rm /usr/lib/libboost_system.so.1.48.0
+sudo rm /usr/lib/libcurl.so.4.2.0
+sudo rm -r ../racedriver
+echo "Suppression effectuée avec succès !"
+read -p "Appuyez sur [Entree] pour quitter." nothing

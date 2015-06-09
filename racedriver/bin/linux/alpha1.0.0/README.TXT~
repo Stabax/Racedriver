@@ -1,0 +1,27 @@
+::::::::::::::::::::::::::
+::   RACEDRIVER ALPHA 	::
+::======================::
+::	    1.0.0		::
+::======================::
+::	AVANT PROPOS	::
+::======================::::::::::::::::::::::::::::::::
+::Avant d'être en mesure d'exectuer le programme, 	::
+::vous devez installer les dépendances du jeu via	::
+::le script "install.sh". 					::
+::====================================================::
+::	NOTES IMPORTANTES						::
+::====================================================::
+::	::Il est probable que votre ordinateur ne		::
+::	::réagisse pas lorseque vous double cliquez sur ::
+::	::le script, dans ce cas, cliquez-droit sur le s::
+::	::cript, éditez ses propriétés, rendez-vous dans::
+::	::l'onglet "permissions" et cochez la ligne "Au-::
+::	::toriser l'execution de ce fichier comme un pr-::
+::	::ogramme")							::
+::====================================================:::::::::::::::::::::::::::::::::::::::::::::::
+::	INSTRUCTIONS D'INSTALLATION											   ::
+::=================================================================================================::
+::Pour se faire, double cliquez sur le fichier "install.sh", et choissisez executer via le terminal::
+::=========::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+::BON JEU !::
+:::::::::::::

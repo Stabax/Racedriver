@@ -1,0 +1,22 @@
+ 
+ 
+ 
+  BUG 5 - dans statistiques, ratio = 0
+  
+ =======================================================================================
+ 
+  BUG 1 - [RESOLU] - boucle infinie quand on entre une lettre dans le menu course libre
+
+  BUG 2 - [RESOLU] - quand on quitte et qu'on selectionne "n", on ne plus quitter par la suite
+  
+  BUG 3 - [RESOLU] - boucle infinie quand on entre n'importe quoi dans le menu charger
+  
+  BUG 4 - [RESOLU] - affichage anarchique du classement en course libre
+
+  BUG 6 - [RESOLU] - si on a 3 profils et qu'on supprime le 2, le 3 n'est plus pris en compte
+  
+  BUG 7 - [RESOLU] - le joueur 1 n'est pas toujours affiché quand il a un accident
+  
+  BUG 8 - [RESOLU] - les joueurs ayant le même score ont le même classement
+  
+  BUG 9 - [RESOLU] - mauvaise lecture des fichiers data

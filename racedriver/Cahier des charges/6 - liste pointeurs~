@@ -1,0 +1,30 @@
+
+new Circuit (Circuit.cpp 125)V
+
+new Moteur (Moteur.cpp 102)V
+
+new Profil (Profile.cpp 195)V
+
+new Profil (Profile.cpp 348)V
+
+new Voiture (Profile.cpp 497)V
+
+new Spoiler (Voiture.cpp 11)V
+
+new PriseAir (Voiture.cpp 12)V
+
+new Voiture (Voiture.cpp 157)
+
+
+
+delete Profil (main.cpp 68)V
+
+delete Circuit (menus.cpp 479)V
+
+delete Voiture (Profil.cpp 32-36)V
+
+delete Moteur (Voiture.cpp 32)V
+
+delete Spoiler (Voiture.cpp 33)V
+
+delete PriseAir (Voiture.cpp 34)V

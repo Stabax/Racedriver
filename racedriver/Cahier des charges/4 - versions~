@@ -1,0 +1,68 @@
+
+--- Alpha 0.0.1 ---
+	 début du projet = wip
+	 
+--- Alpha 0.0.2 ---
+	affichage des menus de base
+	listage des circuits
+	création de la voiture par défaut (renault 4L)	
+	
+--- Alpha 0.0.3 ---
+	sauvegarde/chargement des profils
+	chargement des circuits (invisible à l'utilisateur actuellement)
+	
+--- Alpha 0.1.1 ---
+	course libre avec gestion de la météo
+	
+--- Alpha 0.1.2 ---
+	listage des moteurs
+	la voiture est liée au profil
+	visualisation de la voiture et du moteur possedés
+	menus revisités
+	supprimer les profils
+	
+--- Alpha 0.2.1 ---
+	achat de moteurs
+	gestion de l'argent
+	
+--- Alpha 0.2.2 ---
+	listage des voitures
+	achat de box
+	courses libres entierement fonctionnelles
+	renommer les profils
+	
+--- Alpha 0.3.1 ---
+	achat de voiture
+	choix des voitures en lançant une course
+	
+--- Alpha 1.0.0 ---
+	débugage globale
+	calcul du prix des voitures
+	
+--- Alpha 1.1.0 ---
+	ajout de l'argent, des voitures et du uuid dans les stats
+	raccourcis dans les menus
+	la demande de sauvegarde n'est plus systematique
+	securisation des sauvegardes (SHA256)
+	protection des identifiants (identifiants uniques)
+	ajout d'un launcher avec mise à jour automatique
+	
+--- Alpha 1.2.0 ---
+	launcher fonctionnel
+	spoilers fonctionnels
+	prises d'air fonctionnels
+	ajout des pneus en objet
+	remplacement pneus
+	plein nitro
+	réparation de la voiture
+	ajout de l'IA
+	
+--- Alpha 1.8.0 ---
+	fusion du jeu et du lanceur
+	le nom des adversaire est affiché et chargé depuis pilotes.txt
+	ajout de la difficulté
+	les courses sont commentées
+	les vehicules se déteriorent avec les accidents
+	les messages d'accident sont chargés dans accidents.txt
+	sauvegarde automatique
+	commentaire meteo chargé depuis meteo.txt

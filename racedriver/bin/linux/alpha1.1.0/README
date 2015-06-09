@@ -1,0 +1,31 @@
+::::::::::::::::::::::::::
+::   RACEDRIVER ALPHA 	::
+::======================::
+::	    1.1.0		::
+::======================::::::::::::::::::::::::::::::::
+::			NOTES IMPORTANTES				::
+::====================================================::
+::Il est probable que votre ordinateur ne réagisse pas::
+::lorsque vous double cliquez sur un script (.sh),dans::
+::ce cas, cliquez-droit sur le script, éditez ses     ::
+::propriétés, rendez-vous dans l'onglet "permissions" ::
+::et cochez la ligne "Autoriser l'execution de ce     ::
+::fichier comme un programme".				::
+::Faire de même avec Data/racedriver_a1.1.0	      ::
+::====================================================:::::::::::::::::::::::::::::::::::::::::::::::
+::	INSTRUCTIONS D'INSTALLATION ET DE LANCEMENT								   ::
+::=================================================================================================::
+::Pour installer racedriver, double-cliquez sur le fichier "install.sh", et choissisez executer via::
+::le terminal, suivez les instructions du programme et une fois l'installation terminée, vous avez ::
+::la possibilité de lancer le jeu via le script "racedriver.sh".						   ::
+::double cliquez dessus et faites "lancer dans un terminal"				 			   ::
+::vous pouvez aussi lancer launcher.sh pour verifier si une mise à jour est disponible.		   ::
+::=================================================================================================::
+::	INSTRUCTIONS DE DESINSTALLATION										   ::
+::=================================================================================================::
+::Pour désinstaller racedriver, double-cliquez sur le fichier "uninstall.sh", et choissisez	   ::
+::executer via le terminal, suivez les instructions du programme et une fois la désinstallation    ::
+::terminée, vous pouvez supprimer le dossier du jeu.							         ::
+::=========::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+::BON JEU !::
+:::::::::::::

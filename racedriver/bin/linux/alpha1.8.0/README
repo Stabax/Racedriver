@@ -1,0 +1,37 @@
+::::::::::::::::::::::::::
+::   RACEDRIVER ALPHA 	::
+::======================::
+::	    1.8.0		::
+::======================:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+::	INSTRUCTIONS D'INSTALLATION ET DE LANCEMENT								   ::
+::=================================================================================================::
+::Pour installer racedriver, cliquez-droit sur le script, éditez ses propriétés, rendez-vous dans  ::
+::l'onglet "permissions" et cochez la ligne "Autoriser l'execution de ce fichier comme un          ::
+::programme"double-cliquez sur le fichier "install.sh", et choissisez executer via le terminal,    ::
+::suivez les instructions du programme et une fois l'installation terminée, vous avez la 		   ::
+::possibilité de lancer le jeu via le script "racedriver.sh".						   ::
+::double cliquez dessus et faites "lancer dans un terminal".				 		   ::
+::=================================================================================================::
+::	INSTRUCTIONS DE DESINSTALLATION										   ::
+::=================================================================================================::
+::Pour désinstaller racedriver, double-cliquez sur le fichier "uninstall.sh", et choissisez	   ::
+::executer via le terminal, suivez les instructions du programme.						   ::
+::=========::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+::BON JEU !::
+:::::::::::::
+
+
+
+
+
+MODDEZ RACEDRIVER !
+==========
+vous avez la possibilité de modifier racedriver !
+
+dans Data/console:
+
+	accident.txt = Ces commentaires sont affichés lors des accidents des joueurs en course. Il peut y avoir autant de commentaires que vous voulez. (8 minimum)
+	
+	meteo.txt = Ces commentaires sont affichés lors de la présentation de la course, plus particulierement losque la météo est présentée. Il peut y avoir autant de commentaires que vous voulez. Un commentaire commence par un chiffre suivi d'un point-virgule (;). 1 pour ensoleillé, 2 pour pluvieux, 3 pour neigeux et 4 pour glacé. Les commentaires doivent être dans l'ordre croissant. Il peut y avoir autant de commentaires que vous voulez. (1 minimum pour chaque météo)
+	
+	pilotes.txt = Contient les noms de tout les adversaires. Il peut y avoir autant de noms que vous voulez. (7 minimum)

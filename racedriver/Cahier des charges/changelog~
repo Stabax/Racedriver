@@ -1,0 +1,67 @@
+
+	définition = mise au point sur papier avec concentement de l'équipe
+	ajout = création/implémentation d'une entité dans le code
+	amélioration = implémentation/changement d'une entité déjà présente dans le code
+	débugage = correction de bug d'une entité du code
+	linkage = mise en commun de plusieurs fichiers sources/de plusieurs entités
+===
+
+05/10/13 - Alpha 0.0.1 - création du projet
+
+	-définition des grands principes du jeu
+	
+	-ajout des menus
+	-ajout de "à propos"
+	-ajout des voitures
+	-ajout des fonctions de gestion
+	
+	-linkage du main, des menus et des fonctions de gestion
+=====	
+	
+06/10/13
+	-définition du mode de chargement des circuits
+	-définition des calculs et des conditions de victoires
+	
+	-amélioration de la voiture
+	
+	-ajout des composantes de la voiture:
+		-les moteurs
+		-les spoilers
+		-les prises d'air
+	-ajout des circuits
+	-ajout du systeme de chargement des circuits
+	
+	-linkage de la voiture et des Moteurs, Spoilers et prises d'air
+=====	
+	
+07/10/13 - Alpha 0.0.2
+	-définition du menu de présentation des circuits
+	
+	-amélioration des fonctions de gestion
+	
+	-ajout des courses
+	-ajout des algoritmes calculant la victoire
+	
+	-débugage du systeme de chargement des circuits
+	
+	-linkage du main et du systeme de chargement des circuits
+=====
+
+08/10/13
+	-définition des sauvegardes
+	
+	-amélioration des menus
+	-amélioration du systeme de chargement des circuits
+=====
+	
+09/10/13 - Alpha 0.0.3
+	-amélioration des menus
+	
+	-ajout du systeme de sauvegardes
+=====
+
+10/10/13
+	-amélioration des courses
+	
+	-linkage des courses et des circuits et des voitures et du main
+	

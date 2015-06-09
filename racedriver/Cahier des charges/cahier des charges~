@@ -1,0 +1,39 @@
+
+--- Debut ---
+
+	-créer les menus ---> tout menus prévus doivent être affichables, parenthèses si non implémentées
+	-Lancer des courses libres commentées
+	-sauvegarder/charger un profil ---> argent, 3 voitures, pièces en possession, pseudo, victoires, score ...
+	-pouvoir utiliser 4 moteurs différents de rang D
+
+
+--- Alpha 1.0 ---
+
+	-pouvoir utiliser tout les spoiler et toutes les prises d'air
+	-gestion de l'IA (ne pas toujours mettre les concurrents en 4L)
+	-pouvoir acquérir des voitures de diverses marques
+	-pouvoir utiliser des moteurs pour chaques marques
+	-proposer au moins 6 circuits
+	
+--- Alpha 2.0 ---
+
+	-crypter les fichiers de sauvegarde
+	-crypter les listes de moteurs, de spoiler et de prise d'air, les nommer avec des noms de code (si existants)
+	-pouvoir lancer dess championnats/carrières
+	-pouvoir utiliser tout les moteurs de chaque marque
+	-proposer un guide complet des fonctions du jeu
+	
+--- Beta 1.0 ---
+
+	-gérer le temps durant les courses pour plus de réalité
+	-créer UN fichier "mods" pour créer ses propres moteurs, spoilers, voitures et prise d'air
+	-ajouter des attributs aux circuits (comme la dénivelée, le type de sol) et les prendre en compte pour la victoire
+	
+--- Beta 2.0 ---
+
+	-ajouter un mode multijoueur avec classement
+	-ajouter un éditeur de circuit
+
+--- Final ---
+
+	autres mises à jour ulterieures

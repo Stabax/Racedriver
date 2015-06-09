@@ -1,0 +1,96 @@
+Le résultat d'une course dépend de :
+
+des 3 attributs d'une voiture :
+	-Moteur(Vitesse)
+	-Carburant(Aucun attribut)
+	-Nitro(Acceleration)
+	-Pneus(Maniabilité)
+	-Spoiler(Maniabilité)
+	-Prises d'air(Aerodynamique)
+
+
+Soit Vitesse, Acceleration, Aerodynamique & Maniabilité
+
+ainsi que des 3 attibuts d'un circuit:
+	-Taille (la vitesse influe dessus)
+	-Virages (la maniabilité et l'accélération jouent dessus)
+	-Obstacles ( la maniabilité seule influe la dessus )
+
+========================
+Ainsi par exemple, une course comme celle ci
+
+Circuit EvryAutomobile
+-Taille: 11 (km)
+-Virages: 4
+-Obstacles: 6
+
+nécéssitera:
+
+vitesse >= (Taille x 10)				<=>		Vitesse >= 110
+Obstacles =< (Maniabilité x 2) 			<=>		(Maniabilité x 2) >= 6
+Virages =< (Acceleration + Maniabilité)		<=>		Accel + Mania >= 4
+
+Ceci est pour une victoire assurée ! Si toutes ces conditions sont vraies, on ne fait pas de rand(); la victoire est instantanée !
+
+Voici la table de conversion Taille/Vitesse:
+
+	(Vitesse >= (Taille x 10)) 						=	0 Randomisations
+	((Taille/2) =< Vitesse < Taille) 					=	1 Randomisation
+	(0 < Vitesse < (Taille/2)) 						=	2 Randomisations
+
+Voici la table de conversion Virages/Acceleration+Maniabilité:
+
+	((Acceleration + Maniabilité) >= Virages) 			=	0 Randomisations
+	((Virages/2) =< (Acceleration + Maniabilité) < Virages) 	=	1 Randomisation
+	(0 < (Acceleration + Maniabilité)< (Virages/2))			=	2 Randomisations
+
+Voici la table de conversion Obstacles/Maniabilité:
+
+	(Maniabilité >= Obstacles) 						=	0 Randomisations
+	((Obstacles/2) =< Maniabilité < Obstacles) 			=	1 Randomisation
+	(0 < Maniabilité < (Obstacles/2)) 					=	2 Randomisations
+
+////////////////////////////////////////////////////////////////
+//Vous l'aurez compris, ces tables sont sensiblement identiques, voyons dans un exemple comment ça marche.
+////////////////////////////////////////////////////////////////
+Admettons la même course, et ce véhicule par exemple:
+
+	Toyota Corolla Verso
+	-Vitesse 90
+	-Maniabilité 3
+	-Acceleration 2
+
+Se présente à la course. Voici ce qui va se passer :
+
+
+Vitesse/Taille :				90 >= (11x10)	 	<=>	90 >= 110   	|FAUX
+						(110/2) =< 90 < 110	<=>	55 =< 90 < 110	|VRAI <- Donc il y aura 1 Randomisation de vitesse
+
+Acceleration+Maniabilité/Virages :	(2+3) >= 4	 		<=>	5 >= 4   		|VRAI <- Aucune randomisation ici, la voiture est au niveau.
+
+Maniabilité/Obstacles :			(3x2) >= 6	 		<=>	6 >= 6   		|VRAI <- AUcune randomisation ici, la voiture est de peu au niveau.
+
+On va donc randomiser la victoire ou la défaite selon si:
+
+Aux tests vus plus haut
+
+2Victoires + 1 Defaite 	-> On Rand(2), si 0 Alors perdu, si 1 Alors Gagné !
+1Victoire + 2 Défaites 	-> La course est perdue... dommage !
+3Victoires			-> On ne randomise pas, la course est une réussite !
+
+Voici les règles de RaceDriver... Bon jeu !
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

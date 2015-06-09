@@ -33,7 +33,7 @@ public:
     //autre erreur, la reqête n'a pas aboutie
     fail,
   };
-  
+
   //constructeurs
   Basic_File(std::string const &filePath = "");
   Basic_File(Basic_File const &OtherFile) = delete;
@@ -71,7 +71,7 @@ public:
   void remove();
 
   //opérateurs méthodes ( =, (), [], -> )
-  Basic_File& operator=(const Basic_File &) = delete; 
+  Basic_File& operator=(const Basic_File &) = delete;
 
 protected:
   //attributs

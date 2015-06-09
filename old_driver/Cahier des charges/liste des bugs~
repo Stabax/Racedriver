@@ -1,6 +1,0 @@
-
- BUG 1 - boucle infinie quand on entre n'importe quoi dans le menu course libre
- 
- BUG 2 - quand on quitte et qu'on dis "non", on ne peut pas re-quitter
- 
- BUG 3 - boucle infinie quand on entre n'importe quoi dans le menu charger

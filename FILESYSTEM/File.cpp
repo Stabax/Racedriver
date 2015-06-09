@@ -206,12 +206,12 @@ bool File::isSameContent(File &a)
   if(aContent.size() != thisContent.size())
     return (false);
   else
-  {
-    size_t aContentSize = aContent.size();
-    for(unsigned counter = 0; counter < aContentSize; counter++)
-      if(aContent[counter] != thisContent[counter])
-        return (false);
-  }
+    {
+      size_t aContentSize = aContent.size();
+      for(unsigned counter = 0; counter < aContentSize; counter++)
+	if(aContent[counter] != thisContent[counter])
+	  return (false);
+    }
   return (true);
 }
 

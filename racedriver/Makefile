@@ -2,19 +2,24 @@ CC = g++
 
 RM = rm -f
 
-CXXFLAGS = -Werror -Wall -Wextra -pedantic -Wshadow -Woverloaded-virtual -std=c++0x -Wconversion -Os -s -O2
-
-LDFLAGS = -lsfml-system -lsfml-window -lsfml-graphics
-
-NAME = racedriver
+INCDIR = include
 
 SRCDIR = src
 
 BINDIR = bin
 
-SRCS =	main.cpp
+CXXFLAGS = -Werror -Wall -Wextra -pedantic -Wshadow -Woverloaded-virtual -std=c++0x -Wconversion -Os -s -O2 -I$(INCDIR)
 
-OBJS = $(SRCDIR)/$(SRCS:.cpp=.o)
+LDFLAGS = -lsfml-system -lsfml-window -lsfml-graphics
+
+NAME = racedriver
+
+SRCS =	$(SRCDIR)/main.cpp		\
+	$(SRCDIR)/GameEngine.cpp	\
+	$(SRCDIR)/Menu.cpp		\
+	$(SRCDIR)/Part.cpp
+
+OBJS = $(SRCS:.cpp=.o)
 
 
 all: $(NAME)

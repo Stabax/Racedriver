@@ -10,7 +10,7 @@ BINDIR = bin
 
 CXXFLAGS = -Werror -Wall -Wextra -pedantic -Wshadow -Woverloaded-virtual -std=c++0x -Wconversion -Os -s -O2 -I$(INCDIR)
 
-LDFLAGS = -lsfml-system -lsfml-window -lsfml-graphics
+LDFLAGS = -lsfml-audio -lsfml-system -lsfml-window -lsfml-graphics
 
 NAME = racedriver
 

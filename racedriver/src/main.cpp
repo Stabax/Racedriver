@@ -1,4 +1,7 @@
+#include <SFML/System.hpp>
 #include <GameEngine.hpp>
+
+sf::Vector2i	g_winsize;
 
 int		main(int argc, char **argv)
 {
@@ -6,7 +9,7 @@ int		main(int argc, char **argv)
 
   static_cast<void> (argc);
   static_cast<void> (argv);
-  while (Game.update())
+  while (Game.update() == true)
     {
       Game.draw();
     }

@@ -16,6 +16,8 @@ NAME = racedriver
 
 SRCS =	$(SRCDIR)/main.cpp		\
 	$(SRCDIR)/GameEngine.cpp	\
+	$(SRCDIR)/HUD.cpp		\
+	$(SRCDIR)/Player.cpp		\
 	$(SRCDIR)/Menu.cpp		\
 	$(SRCDIR)/Part.cpp
 

@@ -26,7 +26,7 @@ bool GameEngine::initialize()
     return (false);
   _menuIndex = 0;
   std::vector<std::string> items = {"Play", "Options", "Quit"};
-  _menus.push_back(new Menu("Main Menu", items, "font"));
+  _menus.push_back(new Menu("Main Menu", items, "font", "bg"));
   _ambiant.play();
   return (true);
 }

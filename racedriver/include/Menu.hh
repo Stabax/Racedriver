@@ -10,13 +10,15 @@
 class Menu
 {
 public:
-  Menu(std::string title, std::vector<std::string> items, std::string font);
+  Menu(std::string title, std::vector<std::string> items, std::string font, std::string bg);
   ~Menu();
 
   bool update(sf::Event);
   void draw(sf::RenderWindow &);
 
 private:
+  sf::Texture			_texture;
+  sf::Sprite			_background;
   sf::Font			_font;
   int				_cursor;
   sf::Text			_title;

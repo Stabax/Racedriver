@@ -1,15 +1,17 @@
 #include <Menu.hh>
 
-Menu::Menu(std::string title, std::vector<std::string> items, std::string font)
+Menu::Menu(std::string title, std::vector<std::string> items, std::string font, std::string bg)
 {
   extern sf::Vector2i	g_winsize;
   sf::Vector2f		pos;
 
   _cursor = 0;
-  if (!_font.loadFromFile(font+".ttf"))
+  if (!_font.loadFromFile(font+".ttf")
+      || !_texture.loadFromFile(bg+".png"))
     {
-      std::cerr << "Unable to load font file";
+      std::cerr << "Unable to load some files";
     }
+  _background.setTexture(_texture);
   _title.setFont(_font);
   _title.setString(title);
   _title.setCharacterSize(100);
@@ -53,6 +55,7 @@ bool Menu::update(sf::Event event)
 
 void Menu::draw(sf::RenderWindow &win)
 {
+  win.draw(_background);
   win.draw(_title);
   for (size_t i = 0; i < _items.size(); i++)
     {

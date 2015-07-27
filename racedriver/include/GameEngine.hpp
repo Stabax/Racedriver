@@ -31,8 +31,9 @@ class GameEngine
  private:
   sf::RenderWindow	_win;
   sf::Music		_ambiant;
-  short int		_menuIndex;
+  short int		_menuIndex, _prevIndex;
   std::vector<Menu *>	_menus;
+  MenuHandle		_handle;
   GameState		_gameState;
 
 };

@@ -8,17 +8,19 @@ SRCDIR = src
 
 BINDIR = bin
 
-CXXFLAGS = -Werror -Wall -Wextra -pedantic -Wshadow -Woverloaded-virtual -std=c++0x -Wconversion -Os -s -O2 -I$(INCDIR)
+CXXFLAGS = -Werror -Wall -Wextra -pedantic -Wshadow -Woverloaded-virtual -std=c++0x -Wconversion -Os -s -O2 -g3 -I$(INCDIR)
 
 LDFLAGS = -lsfml-audio -lsfml-system -lsfml-window -lsfml-graphics
 
 NAME = racedriver
 
 SRCS =	$(SRCDIR)/main.cpp		\
+	$(SRCDIR)/Pipeline.cpp		\
 	$(SRCDIR)/GameEngine.cpp	\
 	$(SRCDIR)/HUD.cpp		\
 	$(SRCDIR)/Player.cpp		\
 	$(SRCDIR)/Menu.cpp		\
+	$(SRCDIR)/MenuHandle.cpp	\
 	$(SRCDIR)/Part.cpp
 
 OBJS = $(SRCS:.cpp=.o)

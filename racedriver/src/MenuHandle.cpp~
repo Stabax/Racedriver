@@ -1,0 +1,16 @@
+#include <MenuHandle.hh>
+
+int MenuHandle::mgoto()
+{
+  return (100 + 1);
+}
+
+int MenuHandle::back()
+{
+  return (-1);
+}
+
+int MenuHandle::quit()
+{
+  return (-2);
+}

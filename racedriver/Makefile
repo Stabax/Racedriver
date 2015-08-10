@@ -12,17 +12,17 @@ LDFLAGS = -lsfml-audio -lsfml-system -lsfml-window -lsfml-graphics
 
 ifeq ($(OS),Windows_NT)
 	CXXFLAGS = -Werror -Wall -Wextra -pedantic -Wshadow -Woverloaded-virtual -std=c++0x -Os -O2 -g3 -I$(INCDIR)
-	NAME = racedriver-win32
+	NAME = $(BINDIR)/racedriver-win32
 else
 	UNAME_S := $(shell uname -s)
   ifeq ($(UNAME_S),Linux)
 	CXXFLAGS = -Werror -Wall -Wextra -pedantic -Wshadow -Woverloaded-virtual -std=c++0x -Os -O2 -g3 -I$(INCDIR) -I/usr/include
-	NAME = racedriver-linux
+	NAME = $(BINDIR)/racedriver-linux
   endif
   ifeq ($(UNAME_S),Darwin)
 	CXXFLAGS = -Wall -Wextra -pedantic -Wshadow -Woverloaded-virtual -std=c++0x -Os -O2 -g3 -I$(INCDIR) -I/usr/local/include
 	LDFLAGS += -L/usr/local/lib
-	NAME = racedriver-macos
+	NAME = $(BINDIR)/racedriver-macos
   endif
 endif
 
@@ -41,13 +41,13 @@ OBJS = $(SRCS:.cpp=.o)
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(OBJS) -o $(BINDIR)/$(NAME) $(CXXFLAGS) $(LDFLAGS)
+	$(CC) $(OBJS) -o $(NAME) $(CXXFLAGS) $(LDFLAGS)
 
 clean:
 	$(RM) $(OBJS)
 
 fclean: clean
-	$(RM) $(BINDIR)/$(NAME)
+	$(RM) $(NAME)
 
 re: fclean all
 

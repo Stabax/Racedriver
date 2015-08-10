@@ -26,6 +26,7 @@ bool GameEngine::initialize()
   _prevIndex = 0;
   _menuIndex = 0;
   _menus.push_back(new MainMenu());
+  _menus.push_back(new SettingsMenu());
   _ambiant.play();
   return (true);
 }
@@ -37,8 +38,11 @@ bool GameEngine::updateGame()
 
 bool GameEngine::updateMenu(sf::Event event)
 {
-  _menuIndex = _menus[_menuIndex]->update(event);
-  if (_menuIndex == -2)
+  int status;
+
+  if ((status = _menus[_menuIndex]->update(event)) >= 0)
+    _menuIndex = status;
+  if (status == -2)
     return (false);
   return (true);
 }

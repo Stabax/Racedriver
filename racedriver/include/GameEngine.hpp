@@ -6,8 +6,8 @@
 #include <iostream>
 #include <vector>
 #include <string>
-#include <Menus/Menu.hh>
 #include <Menus/MainMenu.hh>
+#include <Menus/SettingsMenu.hh>
 
 enum GameState {
   SMenu,

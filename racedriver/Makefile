@@ -33,6 +33,8 @@ SRCS =	$(SRCDIR)/main.cpp							\
 				$(SRCDIR)/Player.cpp				\
 				$(SRCDIR)/Menus/Menu.cpp			\
 				$(SRCDIR)/Menus/MainMenu.cpp			\
+				$(SRCDIR)/Menus/OptionsMenu.cpp			\
+				$(SRCDIR)/Menus/SettingsMenu.cpp		\
 				$(SRCDIR)/Part.cpp
 
 OBJS = $(SRCS:.cpp=.o)

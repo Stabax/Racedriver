@@ -7,7 +7,7 @@ MainMenu::MainMenu() : Menu("truckdriver", 50, "carbon")
   sf::Rect<int> pos = {0, 150, g_winsize.x, g_winsize.y - 400};
 
   initLabel("Main Menu", items);
-  setPosition(pos);
+  setPosition(pos, true);
 }
 
 MainMenu::~MainMenu()
@@ -24,17 +24,17 @@ int MainMenu::update(sf::Event event)
       switch (_cursor)
       {
         case 0:
-          return (1);
+          return (0);
           break;
         case 1:
-          return (0);
+          return (1);
           break;
         case 2:
           return (-2);
           break;
       }
     }
-	return (0);
+	return (-1);
 }
 
 void MainMenu::draw(sf::RenderWindow &win)

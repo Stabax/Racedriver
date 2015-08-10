@@ -30,7 +30,7 @@ public:
   ~Menu();
 
   void initLabel(std::string title, std::vector<std::string> items);
-  void setPosition(sf::Rect<int> pos);
+  void setPosition(sf::Rect<int> pos, bool center = true);
 
   void updateNav(sf::Event event);
   void drawNav(sf::RenderWindow &win);

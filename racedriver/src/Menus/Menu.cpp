@@ -27,7 +27,7 @@ void Menu::initLabel(std::string title, std::vector<std::string> items)
   }
 }
 
-void Menu::setPosition(sf::Rect<int> pos)
+void Menu::setPosition(sf::Rect<int> pos, bool center)
 {
   extern sf::Vector2i	g_winsize;
   float spacing = (pos.height - (_items.size() * _items[0].getLocalBounds().height)) / _items.size();
@@ -36,8 +36,12 @@ void Menu::setPosition(sf::Rect<int> pos)
   _title.setPosition(centerText(_title, 'X'), TITLE_Y);
   for (size_t i = 0; i < _items.size(); i++)
   {
-    _items[i].setPosition(pos.left + ((pos.width / 2) - (_items[i].getLocalBounds().width / 2)),
-      pos.top + (i * spacing));
+    if (center == true)
+      _items[i].setPosition(pos.left + ((pos.width / 2) - (_items[i].getLocalBounds().width / 2)),
+        pos.top + (i * spacing));
+    else
+      _items[i].setPosition(pos.left + (pos.width / 2.5),
+        pos.top + (i * spacing));
   }
 }
 
@@ -50,11 +54,12 @@ void Menu::updateNav(sf::Event event)
       _cursor += 1;
     else if (event.key.code == sf::Keyboard::Up)
       _cursor -= 1;
-  }
-  if (_cursor < 0)
-    _cursor = static_cast<unsigned int>(_items.size() - 1);
-  else if (static_cast<unsigned int>(_cursor) >= _items.size())
-    _cursor = 0;
+    if (_cursor < 0)
+      _cursor = static_cast<unsigned int>(_items.size() - 1);
+    else if (static_cast<unsigned int>(_cursor) >= _items.size())
+      _cursor = 0;
+}
+
   _items[_cursor].setStyle(sf::Text::Bold);
 }
 

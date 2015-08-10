@@ -6,7 +6,8 @@
 #include <iostream>
 #include <vector>
 #include <string>
-#include <Menu.hh>
+#include <Menus/Menu.hh>
+#include <Menus/MainMenu.hh>
 
 enum GameState {
   SMenu,
@@ -33,7 +34,6 @@ class GameEngine
   sf::Music		_ambiant;
   short int		_menuIndex, _prevIndex;
   std::vector<Menu *>	_menus;
-  MenuHandle		_handle;
   GameState		_gameState;
 
 };

@@ -25,10 +25,7 @@ bool GameEngine::initialize()
     return (false);
   _prevIndex = 0;
   _menuIndex = 0;
-  std::vector<std::pair<std::string, int (MenuHandle::*)()>> items = {std::make_pair("Play", &MenuHandle::back),
-								      std::make_pair("Options", &MenuHandle::back),
-								      std::make_pair("Quit", &MenuHandle::quit)};
-  _menus.push_back(new Menu("Main Menu", items, "truckdriver", "carbon"));
+  _menus.push_back(new MainMenu());
   _ambiant.play();
   return (true);
 }
@@ -40,18 +37,9 @@ bool GameEngine::updateGame()
 
 bool GameEngine::updateMenu(sf::Event event)
 {
-  int	status;
-
-  status = _menus[_menuIndex]->update(event, &_handle);
-  if (status == -2)
+  _menuIndex = _menus[_menuIndex]->update(event);
+  if (_menuIndex == -2)
     return (false);
-  else if (status == -1)
-    _menuIndex = _prevIndex;
-  else if (status > 100)
-    {
-      _prevIndex = _menuIndex;
-      _menuIndex = static_cast<short int>(status % 100);
-    }
   return (true);
 }
 
@@ -60,24 +48,24 @@ bool GameEngine::update()
   sf::Event	event;
 
   while (_win.pollEvent(event))
+  {
+    if (event.type == sf::Event::Closed)
     {
-      if (event.type == sf::Event::Closed)
-	{
-	  _win.close();
-	  return (false);
-	}
-      switch (_gameState)
-	{
-	case SMenu:
-	  if (updateMenu(event) == false)
-	    return (false);
-	  break;
-	case SGame:
-	  if (updateGame() == false)
-	    return (false);
-	  break;
-	}
+      _win.close();
+      return (false);
     }
+    switch (_gameState)
+    {
+      case SMenu:
+        if (updateMenu(event) == false)
+          return (false);
+        break;
+      case SGame:
+        if (updateGame() == false)
+          return (false);
+        break;
+    }
+  }
   return (true);
 }
 
@@ -86,18 +74,13 @@ void GameEngine::drawGame()
 
 }
 
-void GameEngine::drawMenu()
-{
-  _menus[_menuIndex]->draw(_win);
-}
-
 void GameEngine::draw()
 {
   _win.clear();
   switch (_gameState)
     {
     case SMenu:
-      drawMenu();
+      _menus[_menuIndex]->draw(_win);
       break;
     case SGame:
       drawGame();
@@ -105,4 +88,3 @@ void GameEngine::draw()
     }
   _win.display();
 }
-

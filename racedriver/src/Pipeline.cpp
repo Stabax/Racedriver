@@ -4,6 +4,7 @@
 Pipeline::Pipeline()
 {
   _paths.insert(std::make_pair("data", "Data/"));
+  _paths.insert(std::make_pair("music", "music/"));
   _paths.insert(std::make_pair("textures", "texture/"));
   _paths.insert(std::make_pair("fonts", "font/"));
 }

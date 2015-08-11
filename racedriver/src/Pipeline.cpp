@@ -4,6 +4,7 @@
 Pipeline::Pipeline()
 {
   _paths.insert(std::make_pair("data", "Data/"));
+  _paths.insert(std::make_pair("saves", "Saves/"));
   _paths.insert(std::make_pair("music", "music/"));
   _paths.insert(std::make_pair("nav", "navigation/"));
   _paths.insert(std::make_pair("bg", "backgrounds/"));
@@ -59,6 +60,11 @@ bool Pipeline::load()
       || loadFonts(fonts) > 0)
     return (false);
   return (true);
+}
+
+std::string &Pipeline::getPath(std::string keyword)
+{
+  return (_paths[keyword]);
 }
 
 sf::Texture &Pipeline::getTexture(std::string name)

@@ -21,6 +21,7 @@ public:
   int loadFonts(std::vector<std::string> toload);
   bool load();
 
+  std::string &getPath(std::string keyword);
   sf::Texture	&getTexture(std::string name);
   sf::Font	&getFont(std::string name);
 

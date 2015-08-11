@@ -7,6 +7,7 @@
 #include <vector>
 #include <string>
 #include <Menus/MainMenu.hh>
+#include <Menus/ProfileMenu.hh>
 #include <Menus/SettingsMenu.hh>
 
 enum GameState {

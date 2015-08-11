@@ -26,6 +26,7 @@ bool GameEngine::initialize()
   _prevIndex = 0;
   _menuIndex = 0;
   _menus.push_back(new MainMenu());
+  _menus.push_back(new ProfileMenu());
   _menus.push_back(new SettingsMenu());
   _ambiant.play();
   return (true);

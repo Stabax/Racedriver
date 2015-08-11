@@ -1,10 +1,10 @@
 #include <Menus/MainMenu.hh>
 
-MainMenu::MainMenu() : Menu("truckdriver", 50, "carbon")
+MainMenu::MainMenu() : Menu("truckdriver", 50, "carbon", "graphite")
 {
   extern sf::Vector2i g_winsize;
   std::vector<std::string> items = {"Play", "Options", "Quit"};
-  sf::Rect<int> pos = {0, 150, g_winsize.x, g_winsize.y - 400};
+  sf::Rect<int> pos = {(g_winsize.x / 2) - 150, 200, 300, 400};
 
   initLabel("Main Menu", items);
   setPosition(pos, true);

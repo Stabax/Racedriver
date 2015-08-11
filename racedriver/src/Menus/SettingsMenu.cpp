@@ -1,13 +1,13 @@
 #include <Menus/SettingsMenu.hh>
 
-SettingsMenu::SettingsMenu() : OptionsMenu("truckdriver", 50, "carbon")
+SettingsMenu::SettingsMenu() : OptionsMenu("truckdriver", 50, "carbon", "graphite")
 {
   extern sf::Vector2i g_winsize;
   std::vector<std::string> items = {"Resolution", "Fullscreen", "Back"};
   std::vector<std::pair<std::vector<std::string>, int>> values;
   std::vector<std::string> iovalue = {"On", "Off"};
   std::vector<std::string> empty = {""};
-  sf::Rect<int> pos = {0, 100, g_winsize.x, g_winsize.y - 400};
+  sf::Rect<int> pos = {(g_winsize.x / 2) - 225, 150, 450, 500};
 
   std::vector<std::string> resolution = {"1024x768", "1336x768", "1600x900", "1920x1080"};
   values.push_back(std::make_pair(resolution, 0));

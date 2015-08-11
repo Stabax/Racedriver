@@ -26,7 +26,7 @@ inline float centerText(sf::Text &obj, char direction)
 class Menu
 {
 public:
-  Menu(std::string font, int csize, std::string bg);
+  Menu(std::string font, int csize, std::string bg, std::string nav);
   ~Menu();
 
   void initLabel(std::string title, std::vector<std::string> items);
@@ -40,6 +40,7 @@ public:
 
 protected:
   sf::Sprite                _background;
+  sf::Sprite                _navbg;
   std::vector<sf::Text>			_items;
   sf::Text				          _title;
   sf::Rect<int>             _position;

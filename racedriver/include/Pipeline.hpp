@@ -5,15 +5,21 @@
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
 
+enum TType {
+  Tany,
+  Tnav,
+  Tbg
+};
+
 class Pipeline
 {
 public:
   Pipeline();
   ~Pipeline();
 
-  int		loadTextures(std::vector<std::string> toload);
-  int		loadFonts(std::vector<std::string> toload);
-  bool		load();
+  int loadTextures(std::vector<std::pair<std::string, TType>> toload);
+  int loadFonts(std::vector<std::string> toload);
+  bool load();
 
   sf::Texture	&getTexture(std::string name);
   sf::Font	&getFont(std::string name);

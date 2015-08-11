@@ -5,6 +5,8 @@ Pipeline::Pipeline()
 {
   _paths.insert(std::make_pair("data", "Data/"));
   _paths.insert(std::make_pair("music", "music/"));
+  _paths.insert(std::make_pair("nav", "navigation/"));
+  _paths.insert(std::make_pair("bg", "backgrounds/"));
   _paths.insert(std::make_pair("textures", "texture/"));
   _paths.insert(std::make_pair("fonts", "font/"));
 }
@@ -14,15 +16,22 @@ Pipeline::~Pipeline()
 
 }
 
-int Pipeline::loadTextures(std::vector<std::string> toload)
+int Pipeline::loadTextures(std::vector<std::pair<std::string, TType>> toload)
 {
   sf::Texture	loaded;
+  std::string path;
 
   for (size_t i = 0; i < toload.size(); i++)
     {
-      if (!loaded.loadFromFile("./"+_paths["data"]+_paths["textures"]+toload[i]+".png"))
-	return (1);
-      _textures.insert(std::make_pair(toload[i], sf::Texture(loaded)));
+      if (toload[i].second == Tany)
+        path = "./"+_paths["data"]+_paths["textures"]+toload[i].first+".png";
+      else if (toload[i].second == Tnav)
+        path = "./"+_paths["data"]+_paths["textures"]+_paths["nav"]+toload[i].first+".png";
+      else if (toload[i].second == Tbg)
+        path = "./"+_paths["data"]+_paths["textures"]+_paths["bg"]+toload[i].first+".png";
+      if (!loaded.loadFromFile(path))
+	     return (1);
+      _textures.insert(std::make_pair(toload[i].first, sf::Texture(loaded)));
     }
   return (0);
 }
@@ -42,9 +51,9 @@ int Pipeline::loadFonts(std::vector<std::string> toload)
 
 bool Pipeline::load()
 {
-  std::vector<std::string>	textures = {"carbon"};
+  std::vector<std::pair<std::string, TType>>	textures = {std::make_pair("carbon", Tbg),
+    std::make_pair("graphite", Tnav)};
   std::vector<std::string>	fonts = {"truckdriver"};
-
 
   if (loadTextures(textures) > 0
       || loadFonts(fonts) > 0)

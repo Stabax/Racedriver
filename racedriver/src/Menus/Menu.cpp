@@ -1,11 +1,12 @@
 #include <Menus/Menu.hh>
 
-Menu::Menu(std::string font, int csize, std::string bg)
+Menu::Menu(std::string font, int csize, std::string bg, std::string nav)
 {
   extern Pipeline	g_pipeline;
 
   _cursor = 0;
   _background.setTexture(g_pipeline.getTexture(bg));
+  _navbg.setTexture(g_pipeline.getTexture(nav));
   _title.setFont(g_pipeline.getFont(font));
   _title.setCharacterSize(csize * TITLE_FACTOR);
 }
@@ -30,18 +31,20 @@ void Menu::initLabel(std::string title, std::vector<std::string> items)
 void Menu::setPosition(sf::Rect<int> pos, bool center)
 {
   extern sf::Vector2i	g_winsize;
-  float spacing = (pos.height - (_items.size() * _items[0].getLocalBounds().height)) / _items.size();
+  float spacing = (pos.height - ((_items.size() - 1) * _items[0].getLocalBounds().height) - 30) / (_items.size() - 1);
 
   _position = pos;
   _title.setPosition(centerText(_title, 'X'), TITLE_Y);
+  _navbg.setScale(sf::Vector2f(pos.width / _navbg.getLocalBounds().width, pos.height / _navbg.getLocalBounds().height));
+  _navbg.setPosition(pos.left, pos.top);
   for (size_t i = 0; i < _items.size(); i++)
   {
     if (center == true)
       _items[i].setPosition(pos.left + ((pos.width / 2) - (_items[i].getLocalBounds().width / 2)),
-        pos.top + (i * spacing));
+        10 + pos.top + (i * spacing));
     else
       _items[i].setPosition(pos.left + (pos.width / 2.5),
-        pos.top + (i * spacing));
+        10 + pos.top + (i * spacing));
   }
 }
 
@@ -66,6 +69,7 @@ void Menu::updateNav(sf::Event event)
 void Menu::drawNav(sf::RenderWindow &win)
 {
   win.draw(_background);
+  win.draw(_navbg);
   win.draw(_title);
   for (size_t i = 0; i < _items.size(); i++)
     {

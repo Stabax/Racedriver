@@ -6,8 +6,11 @@
 class OptionsMenu : public Menu
 {
 public:
-  OptionsMenu(std::string font, int csize, std::string bg);
+  OptionsMenu(std::string font, int csize, std::string bg, std::string nav);
   ~OptionsMenu();
+
+  float getBiggestWidth() const;
+  void setPosition(sf::Rect<int> pos, bool center);
 
   void initLabel(std::string title, std::vector<std::string> items, std::vector<std::pair<std::vector<std::string>, int>> values);
 

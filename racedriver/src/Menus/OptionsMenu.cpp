@@ -10,23 +10,6 @@ OptionsMenu::~OptionsMenu()
 
 }
 
-float OptionsMenu::getBiggestWidth() const
-{
-  int best = 0;
-  int count;
-
-  for (size_t i = 0; i < _stritems.size(); i++)
-  {
-    for (size_t j = 0; j < _values[i].first.size(); j++)
-    {
-      count = (_stritems[i].length() + _values[i].first[j].length());
-      if (best < count)
-        best = count;
-    }
-  }
-  return ((_title.getCharacterSize() / TITLE_FACTOR) * best);
-}
-
 void OptionsMenu::setPosition(sf::Rect<int> pos, bool center)
 {
   extern sf::Vector2i	g_winsize;
@@ -40,10 +23,10 @@ void OptionsMenu::setPosition(sf::Rect<int> pos, bool center)
   {
     if (center == true || i == _items.size() - 1)
       _items[i].setPosition(pos.left + ((pos.width / 2) - (_items[i].getLocalBounds().width / 2)),
-        pos.top + 10 + (i * spacing));
+        pos.top + 5 + (i * spacing));
     else
-      _items[i].setPosition(pos.left + 10,
-        pos.top + 10 + (i * spacing));
+      _items[i].setPosition(pos.left + 20,
+        pos.top + 5 + (i * spacing));
   }
 }
 
@@ -58,7 +41,7 @@ void OptionsMenu::initLabel(std::string title, std::vector<std::string> items, s
     if (i == items.size() - 1)
       _items[i].setString(items[i]);
     else
-      _items[i].setString(items[i]+"\t\t"+values[i].first[0]);
+      _items[i].setString(items[i]+"\t"+values[i].first[0]);
     _items[i].setFont(*_title.getFont());
     _items[i].setCharacterSize(_title.getCharacterSize() / TITLE_FACTOR);
   }
@@ -71,11 +54,13 @@ void OptionsMenu::updateNav(sf::Event event)
   {
     if (event.key.code == sf::Keyboard::Down)
     {
+      _items[_cursor].setString(_stritems[_cursor]+"\t"+_values[_cursor].first[_values[_cursor].second]);
       _cursor += 1;
       _hcursor = _values[_cursor].second;
     }
     else if (event.key.code == sf::Keyboard::Up)
     {
+      _items[_cursor].setString(_stritems[_cursor]+"\t"+_values[_cursor].first[_values[_cursor].second]);
       _cursor -= 1;
       _hcursor = _values[_cursor].second;
     }
@@ -91,6 +76,8 @@ void OptionsMenu::updateNav(sf::Event event)
       _hcursor = static_cast<unsigned int>(_values[_cursor].first.size() - 1);
     else if (static_cast<unsigned int>(_hcursor) >= _values[_cursor].first.size())
       _hcursor = 0;
+    if (event.key.code == sf::Keyboard::Return)
+      _values[_cursor].second = _hcursor;
     _items[_cursor].setString(_stritems[_cursor]+"\t"+_values[_cursor].first[_hcursor]);
   }
   _items[_cursor].setStyle(sf::Text::Bold);

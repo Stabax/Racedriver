@@ -29,14 +29,21 @@ endif
 SRCS =	$(SRCDIR)/main.cpp							\
 				$(SRCDIR)/Pipeline.cpp				\
 				$(SRCDIR)/GameEngine.cpp			\
+				$(SRCDIR)/MusicBox.cpp				\
 				$(SRCDIR)/HUD.cpp				\
+				$(SRCDIR)/Part.cpp				\
 				$(SRCDIR)/Player.cpp				\
 				$(SRCDIR)/Menus/Menu.cpp			\
 				$(SRCDIR)/Menus/MainMenu.cpp			\
 				$(SRCDIR)/Menus/ProfileMenu.cpp			\
 				$(SRCDIR)/Menus/OptionsMenu.cpp			\
-				$(SRCDIR)/Menus/SettingsMenu.cpp		\
-				$(SRCDIR)/Part.cpp
+				$(SRCDIR)/Menus/SettingsMenu.cpp	#	\
+				$(SRCDIR)/Filesystem/Basic_File.cpp		\
+				$(SRCDIR)/Filesystem/File.cpp		\
+				$(SRCDIR)/Filesystem/general_exceptions.cpp		\
+				$(SRCDIR)/Filesystem/GroupedKeyWordFile.cpp		\
+				$(SRCDIR)/Filesystem/KeyWordFile.cpp		\
+				$(SRCDIR)/Filesystem/system_exceptions.cpp		\
 
 OBJS = $(SRCS:.cpp=.o)
 

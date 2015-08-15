@@ -41,10 +41,10 @@ void Menu::setPosition(sf::Rect<int> pos, bool center)
   {
     if (center == true)
       _items[i].setPosition(pos.left + ((pos.width / 2) - (_items[i].getLocalBounds().width / 2)),
-        10 + pos.top + (i * spacing));
+        5 + pos.top + (i * spacing));
     else
-      _items[i].setPosition(pos.left + (pos.width / 2.5),
-        10 + pos.top + (i * spacing));
+      _items[i].setPosition(pos.left + 20,
+        5 + pos.top + (i * spacing));
   }
 }
 

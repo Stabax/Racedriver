@@ -9,6 +9,8 @@ public:
   SettingsMenu();
   ~SettingsMenu();
 
+  void musicToggle();
+
   int update(sf::Event event);
   void draw(sf::RenderWindow &win);
 

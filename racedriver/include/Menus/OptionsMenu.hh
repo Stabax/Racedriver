@@ -19,7 +19,7 @@ public:
   virtual int update(sf::Event event) = 0;
   virtual void draw(sf::RenderWindow &win) = 0;
 
-private:
+protected:
   std::vector<std::pair<std::vector<std::string>, int>> _values;
   std::vector<std::string>                              _stritems;
   int                                                   _hcursor;

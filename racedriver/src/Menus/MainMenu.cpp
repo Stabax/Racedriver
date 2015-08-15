@@ -24,10 +24,10 @@ int MainMenu::update(sf::Event event)
       switch (_cursor)
       {
         case 0:
-          return (1);
+          return (Profile);
           break;
         case 1:
-          return (2);
+          return (Settings);
           break;
         case 2:
           return (-2);

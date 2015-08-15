@@ -13,7 +13,11 @@ ProfileMenu::ProfileMenu() : Menu("truckdriver", 50, "carbon", "graphite")
   if ((dir = opendir(path.c_str())) != NULL)
   {
     while ((ent = readdir(dir)) != NULL)
-      items.push_back(std::string(ent->d_name));
+      if (strcmp(ent->d_name, ".") != 0 && strcmp(ent->d_name, "..") != 0)
+      {
+        std::string entry = ent->d_name;
+        items.push_back(entry.substr(0, entry.find(".")));
+      }
   }
   std::rotate(items.begin(), items.begin() + 2, items.end());
   closedir (dir);
@@ -32,18 +36,14 @@ int ProfileMenu::update(sf::Event event)
   if (event.type == sf::Event::KeyPressed
       && event.key.code == sf::Keyboard::Return)
     {
-      switch (_cursor)
-      {
-        case 0:
-          return (0);
-          break;
-        case 1:
-          return (1);
-          break;
-        case 2:
-          return (-2);
-          break;
-      }
+      if (static_cast<unsigned int>(_cursor) == _items.size() - 1)
+        return (Main);
+      else if (static_cast<unsigned int>(_cursor) == _items.size() - 2)
+        return (NewProfile);
+      else
+        {
+          /*load profile*/
+        }
     }
 	return (-1);
 }

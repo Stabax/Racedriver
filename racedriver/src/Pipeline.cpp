@@ -24,12 +24,12 @@ int Pipeline::loadTextures(std::vector<std::pair<std::string, TType>> toload)
 
   for (size_t i = 0; i < toload.size(); i++)
     {
-      if (toload[i].second == Tany)
-        path = "./"+_paths["data"]+_paths["textures"]+toload[i].first+".png";
-      else if (toload[i].second == Tnav)
-        path = "./"+_paths["data"]+_paths["textures"]+_paths["nav"]+toload[i].first+".png";
+      path = "./"+_paths["data"]+_paths["textures"];
+      if (toload[i].second == Tnav)
+        path += _paths["nav"];
       else if (toload[i].second == Tbg)
-        path = "./"+_paths["data"]+_paths["textures"]+_paths["bg"]+toload[i].first+".png";
+        path += _paths["bg"];
+      path += toload[i].first+".png";
       if (!loaded.loadFromFile(path))
 	     return (1);
       _textures.insert(std::make_pair(toload[i].first, sf::Texture(loaded)));

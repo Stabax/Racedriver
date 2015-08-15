@@ -6,6 +6,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <MusicBox.hh>
 #include <Menus/MainMenu.hh>
 #include <Menus/ProfileMenu.hh>
 #include <Menus/SettingsMenu.hh>
@@ -32,7 +33,7 @@ class GameEngine
 
  private:
   sf::RenderWindow	_win;
-  sf::Music		_ambiant;
+  MusicBox		_ambiant;
   short int		_menuIndex, _prevIndex;
   std::vector<Menu *>	_menus;
   GameState		_gameState;

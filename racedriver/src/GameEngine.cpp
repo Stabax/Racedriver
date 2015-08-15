@@ -21,14 +21,11 @@ GameEngine::~GameEngine()
 bool GameEngine::initialize()
 {
   std::cout << "Initializing Game, please wait...\n";
-  if (!_ambiant.openFromFile("Data/music/daisuke.ogg"))
-    return (false);
   _prevIndex = 0;
   _menuIndex = 0;
   _menus.push_back(new MainMenu());
   _menus.push_back(new ProfileMenu());
   _menus.push_back(new SettingsMenu());
-  _ambiant.play();
   return (true);
 }
 
@@ -52,6 +49,7 @@ bool GameEngine::update()
 {
   sf::Event	event;
 
+  _ambiant.update();
   while (_win.pollEvent(event))
   {
     if (event.type == sf::Event::Closed)

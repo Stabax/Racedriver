@@ -11,6 +11,13 @@
 #define TITLE_FACTOR  1.75
 #define TITLE_Y       10
 
+enum MenuIndex {
+  Main,
+  Profile,
+  Settings,
+  NewProfile
+};
+
 /* function used to center drawables texts on screen */
 inline float centerText(sf::Text &obj, char direction)
 {

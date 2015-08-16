@@ -2,6 +2,7 @@
 #define PROFILEMENU_HH_
 
 #include <dirent.h>
+#include <cstring>
 #include <Menus/Menu.hh>
 #ifndef WIN32
     #include <sys/types.h>

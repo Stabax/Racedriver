@@ -4,11 +4,14 @@
 #ifndef WIN32
     #include <sys/types.h>
 #endif
+#include <cstring>
 #include <dirent.h>
 #include <Pipeline.hpp>
 #include <Menus/Menu.hh>
 #include <SFML/Audio.hpp>
 #include <vector>
+#include <cstdlib>
+#include <time.h>
 
 class MusicBox
 {

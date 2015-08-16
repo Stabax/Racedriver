@@ -1,4 +1,4 @@
-#include "GameEngine.hpp"
+#include <GameEngine.hpp>
 
 GameEngine::GameEngine()
 {
@@ -37,8 +37,10 @@ void GameEngine::createWindow(bool fullscreen)
 
   if (_win.isOpen() == true)
     _win.close();
-  _win.create(sf::VideoMode(g_winsize.x, g_winsize.y), "RaceDriver",
-    (fullscreen ? sf::Style::Fullscreen : sf::Style::Resize | sf::Style::Close));
+  if (fullscreen == true)
+    _win.create(sf::VideoMode(g_winsize.x, g_winsize.y, 32), "RaceDriver", sf::Style::Fullscreen);
+  else
+    _win.create(sf::VideoMode(g_winsize.x, g_winsize.y, 32), "RaceDriver", sf::Style::Titlebar);
 }
 
 MusicBox &GameEngine::getMusicBox()

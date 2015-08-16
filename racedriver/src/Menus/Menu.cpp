@@ -35,6 +35,7 @@ void Menu::setPosition(sf::Rect<int> pos, bool center)
 
   _position = pos;
   _title.setPosition(centerText(_title, 'X'), TITLE_Y);
+  _background.setScale(sf::Vector2f(g_winsize.x / _background.getLocalBounds().width, g_winsize.y / _background.getLocalBounds().height));
   _navbg.setScale(sf::Vector2f(pos.width / _navbg.getLocalBounds().width, pos.height / _navbg.getLocalBounds().height));
   _navbg.setPosition(pos.left, pos.top);
   for (size_t i = 0; i < _items.size(); i++)

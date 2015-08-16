@@ -3,14 +3,22 @@
 SettingsMenu::SettingsMenu() : OptionsMenu("truckdriver", 50, "carbon", "graphite")
 {
   extern sf::Vector2i g_winsize;
+
   std::vector<std::string> items = {"Resolution", "Fullscreen", "Music", "Back"};
   std::vector<std::pair<std::vector<std::string>, int>> values;
   std::vector<std::string> iovalue = {"On", "Off"};
   std::vector<std::string> empty = {""};
   sf::Rect<int> pos = {(g_winsize.x / 2) - 225, 150, 450, 500};
+  std::vector<sf::VideoMode> vmodes = sf::VideoMode::getFullscreenModes();
+  float scratio = sf::VideoMode::getDesktopMode().width / sf::VideoMode::getDesktopMode().height;
+  std::vector<std::string> resolutions;
 
-  std::vector<std::string> resolution = {"1024x768", "1336x768", "1600x900", "1920x1080"};
-  values.push_back(std::make_pair(resolution, 0));
+  for (size_t i = 0; i < vmodes.size(); i++)
+  {
+    if (vmodes[i].isValid() && vmodes[i].height > 600 && scratio == (vmodes[i].width / vmodes[i].height))
+       resolutions.push_back(std::to_string(vmodes[i].width)+"x"+std::to_string(vmodes[i].height));
+  }
+  values.push_back(std::make_pair(resolutions, 0));
   values.push_back(std::make_pair(iovalue, 0));
   values.push_back(std::make_pair(iovalue, 0));
   values.push_back(std::make_pair(empty, 0));

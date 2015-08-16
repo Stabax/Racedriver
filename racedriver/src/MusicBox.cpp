@@ -54,6 +54,7 @@ std::vector<std::string> MusicBox::generate()
   std::string path = "./"+g_pipeline.getPath("data")+g_pipeline.getPath("music");
   DIR *dir;
 
+  srand(time(NULL));
   if ((dir = opendir(path.c_str())) != NULL)
   {
     while ((ent = readdir(dir)) != NULL)
@@ -63,6 +64,7 @@ std::vector<std::string> MusicBox::generate()
         pl.push_back(entry.substr(0, entry.find(".")));
       }
   }
+  std::rotate(pl.begin(), pl.begin() + (rand() % pl.size()), pl.end());
   closedir(dir);
   return (pl);
 }

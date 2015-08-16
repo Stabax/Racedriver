@@ -2,6 +2,7 @@
 #define SETTINGSMENU_HH_
 
 #include <Menus/OptionsMenu.hh>
+#include <string>
 #include <GameEngine.hpp>
 
 class GameEngine; //Forward declaration cross-includes

@@ -17,7 +17,7 @@ public:
   Pipeline();
   ~Pipeline();
 
-  int loadTextures(std::vector<std::pair<std::string, TType>> toload);
+  int loadTextures(std::vector<std::pair<std::string, TType> > toload);
   int loadFonts(std::vector<std::string> toload);
   bool load();
 

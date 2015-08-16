@@ -4,13 +4,17 @@ GameEngine::GameEngine()
 {
   extern sf::Vector2i	g_winsize;
 
+  std::cout << "Initializing Game, please wait...\n";
   g_winsize.x = 1024;
   g_winsize.y = 768;
   _win.setPosition(sf::Vector2i(10, 10));
-  _win.create(sf::VideoMode(g_winsize.x, g_winsize.y), "RaceDriver");
+  createWindow(false);
   _win.setKeyRepeatEnabled(false);
   _win.setFramerateLimit(90);
   _gameState = SMenu;
+  _prevIndex = 0;
+  _menuIndex = 0;
+  _ambiant.init(true);
 }
 
 GameEngine::~GameEngine()
@@ -20,13 +24,26 @@ GameEngine::~GameEngine()
 
 bool GameEngine::initialize()
 {
-  std::cout << "Initializing Game, please wait...\n";
-  _prevIndex = 0;
-  _menuIndex = 0;
+  _menus = std::vector<Menu *>();
   _menus.push_back(new MainMenu());
   _menus.push_back(new ProfileMenu());
   _menus.push_back(new SettingsMenu());
   return (true);
+}
+
+void GameEngine::createWindow(bool fullscreen)
+{
+  extern sf::Vector2i g_winsize;
+
+  if (_win.isOpen() == true)
+    _win.close();
+  _win.create(sf::VideoMode(g_winsize.x, g_winsize.y), "RaceDriver",
+    (fullscreen ? sf::Style::Fullscreen : sf::Style::Resize | sf::Style::Close));
+}
+
+MusicBox &GameEngine::getMusicBox()
+{
+  return (_ambiant);
 }
 
 bool GameEngine::updateGame()
@@ -38,8 +55,16 @@ bool GameEngine::updateMenu(sf::Event event)
 {
   int status;
 
-  if ((status = _menus[_menuIndex]->update(event)) >= 0)
-    _menuIndex = status;
+  if (_menuIndex != Settings)
+  {
+    if ((status = _menus[_menuIndex]->update(event)) >= 0)
+      _menuIndex = status;
+  }
+  else
+  {
+    if ((status = reinterpret_cast<SettingsMenu *>(_menus[_menuIndex])->update(event, *this)) >= 0)
+      _menuIndex = status;
+  }
   if (status == -2)
     return (false);
   return (true);

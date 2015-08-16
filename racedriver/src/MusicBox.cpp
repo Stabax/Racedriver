@@ -3,15 +3,19 @@
 MusicBox::MusicBox()
 {
   _current = 0;
-  _active = false;
-  _playlist = generate();
-  LPlay();
-  _music.stop();
 }
 
 MusicBox::~MusicBox()
 {
 
+}
+
+void MusicBox::init(bool state)
+{
+  _active = state;
+  _playlist = generate();
+  if (state == true)
+    LPlay();
 }
 
 int MusicBox::LPlay()
@@ -28,7 +32,7 @@ void MusicBox::toggle(bool state)
 {
   if (state == _active)
     return;
-  if (state == true)
+  if (state == false)
   {
     _active = false;
     _music.stop();

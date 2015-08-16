@@ -23,15 +23,40 @@ SettingsMenu::~SettingsMenu()
 
 }
 
-void SettingsMenu::musicToggle()
+void SettingsMenu::setResolution(GameEngine &game)
+{
+  extern sf::Vector2i g_winsize;
+  std::string res = _values[_cursor].first[_hcursor];
+
+  g_winsize.x = atoi((res.substr(0, res.find("x"))).c_str());
+  g_winsize.y = atoi((res.substr(res.find("x") + 1, res.length())).c_str());
+  game.createWindow(false);
+  game.initialize();
+}
+
+void SettingsMenu::fullscreenToggle(GameEngine &game)
 {
   if (_hcursor == 1)
-    std::cout << "off\n";
+    game.createWindow(false);
   else
-    std::cout << "on\n";
+    game.createWindow(true);
+}
+
+void SettingsMenu::musicToggle(GameEngine &game)
+{
+  if (_hcursor == 1)
+    game.getMusicBox().toggle(false);
+  else
+    game.getMusicBox().toggle(true);
 }
 
 int SettingsMenu::update(sf::Event event)
+{
+  static_cast<void>(event);
+  return (0);
+}
+
+int SettingsMenu::update(sf::Event event, GameEngine &game)
 {
   updateNav(event);
   if (event.type == sf::Event::KeyPressed
@@ -40,11 +65,13 @@ int SettingsMenu::update(sf::Event event)
       switch (_cursor)
       {
         case 0:
+          setResolution(game);
           break;
         case 1:
+          fullscreenToggle(game);
           break;
         case 2:
-          musicToggle();
+          musicToggle(game);
           break;
         case 3:
           return (Main);

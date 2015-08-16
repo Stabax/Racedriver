@@ -16,6 +16,7 @@ public:
   MusicBox();
   ~MusicBox();
 
+  void init(bool state);
   int LPlay();
   void toggle(bool state);
   std::vector<std::string> generate();

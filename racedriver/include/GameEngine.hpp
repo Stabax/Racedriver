@@ -23,6 +23,8 @@ class GameEngine
   ~GameEngine();
 
   bool initialize();
+  void createWindow(bool fullscreen);
+  MusicBox &getMusicBox();
 
   bool updateGame();
   bool updateMenu(sf::Event event);

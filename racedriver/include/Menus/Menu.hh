@@ -11,6 +11,8 @@
 #define TITLE_FACTOR  1.75
 #define TITLE_Y       10
 
+class GameEngine;
+
 enum MenuIndex {
   Main,
   Profile,

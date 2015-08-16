@@ -10,12 +10,12 @@ SettingsMenu::SettingsMenu() : OptionsMenu("truckdriver", 50, "carbon", "graphit
   std::vector<std::string> empty = {""};
   sf::Rect<int> pos = {(g_winsize.x / 2) - 225, 150, 450, 500};
   std::vector<sf::VideoMode> vmodes = sf::VideoMode::getFullscreenModes();
-  float scratio = sf::VideoMode::getDesktopMode().width / sf::VideoMode::getDesktopMode().height;
+  float scratio = static_cast<float>(sf::VideoMode::getDesktopMode().width / sf::VideoMode::getDesktopMode().height);
   std::vector<std::string> resolutions;
 
   for (size_t i = 0; i < vmodes.size(); i++)
   {
-    if (vmodes[i].isValid() && vmodes[i].height > 600 && scratio == (vmodes[i].width / vmodes[i].height))
+    if (vmodes[i].isValid() && vmodes[i].height >= 600 && scratio == static_cast<float>(vmodes[i].width / vmodes[i].height))
        resolutions.push_back(std::to_string(vmodes[i].width)+"x"+std::to_string(vmodes[i].height));
   }
   values.push_back(std::make_pair(resolutions, 0));

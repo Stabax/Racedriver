@@ -1,8 +1,10 @@
 #include "Game.hh"
 
-void setLaunchOptions(int argc, char **argv)
+void setLaunchOptions(t_engine &engine, int argc, char **argv)
 {
-
+  for (short i = 0; i < argc; i++)
+    if (strcmp(argv[i], "-console") == 0)
+      engine.con.show();
 }
 
 bool init(t_engine &engine)
@@ -37,9 +39,10 @@ void draw(t_engine &engine)
 int main(int argc, char **argv)
 {
   t_engine engine;
-  
+
   if (!init(engine))
     return (1);
+  setLaunchOptions(engine, argc, argv);
   while (update(engine))
     draw(engine);
   engine.win.close();

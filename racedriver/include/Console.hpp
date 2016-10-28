@@ -1,3 +1,8 @@
+#ifndef CONSOLE_HPP_
+#define CONSOLE_HPP_
+
+#include <string>
+#include <vector>
 
 class Console
 {
@@ -23,4 +28,7 @@ public:
 private:
   bool _open;
   std::vector<std::string> _history;
+  
 };
+
+#endif /* !CONSOLE_HPP_ */

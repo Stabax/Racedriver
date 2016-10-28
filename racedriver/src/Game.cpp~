@@ -1,0 +1,29 @@
+
+void setLaunchOptions(int argc, char **argv)
+{
+
+}
+
+bool init()
+{
+
+}
+
+bool update()
+{
+
+}
+
+void draw()
+{
+
+}
+
+int main(int argc, char **argv)
+{
+  if (!init())
+    return (1);
+  while (update())
+    draw();
+  return (0);
+}

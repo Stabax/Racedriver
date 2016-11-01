@@ -1,7 +1,7 @@
 #ifndef GAMEMENU_HPP_
 #define GAMEMENU_HPP_
 
-#include "engine/Menu.hpp"
+#include "Menu.hpp"
 
 class GameMenu : public Menu
 {

@@ -12,7 +12,7 @@ LDFLAGS = -lsfml-audio -lsfml-system -lsfml-window -lsfml-graphics
 
 ifeq ($(OS),Windows_NT)
 	CXXFLAGS = -W -Wall -Wextra -pedantic -Wshadow -Woverloaded-virtual -std=c++0x -Os -O2 -g3 -I$(INCDIR)
-	NAME = $(BINDIR)/racedriver-win32
+	NAME = $(BINDIR)/racedriver-win32.exe
 else
 	UNAME_S := $(shell uname -s)
   ifeq ($(UNAME_S),Linux)
@@ -31,7 +31,7 @@ SRCS =				$(SRCDIR)/Game.cpp		\
 				$(SRCDIR)/Render.cpp		\
 				$(SRCDIR)/HUD.cpp		\
 				$(SRCDIR)/Console.cpp		\
-				$(SRCDIR)/engine/Menu.cpp
+				$(SRCDIR)/Menu.cpp
 
 OBJS = $(SRCS:.cpp=.o)
 

@@ -7,14 +7,14 @@
 
 typedef enum e_gamestate {
   Menu,
-  Play,
-  
+  Play,  
 } gamestate;
 
 typedef struct s_engine
 {
   sf::RenderWindow win;
-  Console con;
+  Console *con;
+  gamestate gs;
 } t_engine;
 
 #endif /* !GAME_HH_ */

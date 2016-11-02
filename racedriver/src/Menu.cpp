@@ -15,6 +15,21 @@ bool Menu::loadFromFile()
   return (false);
 }
 
+void connectSlots(/* VARARGS*/)
+{
+
+}
+
+bool Menu::buildTitle()
+{
+  return (false);
+}
+
+bool Menu::buildItems()
+{
+  return (false);
+}
+
 void Menu::checkOverflow()
 {
   if (_cursor < 0)

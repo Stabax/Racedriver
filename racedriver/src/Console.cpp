@@ -1,12 +1,13 @@
-#include "Console.hpp"
 #include "Game.hh"
 
 Console::Console(sf::RenderWindow &win)
 {
   int width = win.getSize().x;
   int height = win.getSize().y / 3;
-
+  _margin = 7;
+  
   _open = false;
+  _font.loadFromFile(FONTFILE);
   _geometry.push_back(sf::RectangleShape(sf::Vector2f(width, height))); //Frame
   _geometry[0].setPosition(0, 0);
   _geometry[0].setFillColor(sf::Color(0, 51, 51, 200));
@@ -23,16 +24,6 @@ Console::~Console()
 
 }
 
-void Console::show()
-{
-  _open = true;
-}
-
-void Console::hide()
-{
-  _open = false;
-}
-
 void Console::toggle()
 {
   _open = !_open;
@@ -45,11 +36,27 @@ bool Console::isOpen()
 
 void Console::clear()
 {
-
+  _output.clear();
 }
 
-bool Console::update()
+void Console::writeLine(std::string str)
 {
+  _output.push_back(sf::Text(str, _font, FONTSIZE));
+  positionOutput();
+}
+
+void Console::positionOutput()
+{
+  _output.back().setPosition(sf::Vector2f(_margin, _margin + (FONTSIZE * _output.size())));
+}
+
+void Console::grabInput(sf::Event &event)
+{
+}
+
+bool Console::update(sf::Event &event)
+{
+  grabInput(event);
   return (true);
 }
 
@@ -59,4 +66,6 @@ void Console::draw(t_engine &engine)
     return;
   for (size_t i = 0; i < _geometry.size(); i++)
     engine.win.draw(_geometry[i]);
+  for (size_t i = 0; i < _output.size(); i++)
+    engine.win.draw(_output[i]);
 }

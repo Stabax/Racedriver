@@ -27,10 +27,9 @@ else
 endif
 
 SRCS =				$(SRCDIR)/Game.cpp		\
-				$(SRCDIR)/GameMenu.cpp		\
+				$(SRCDIR)/Console.cpp		\
 				$(SRCDIR)/Render.cpp		\
 				$(SRCDIR)/HUD.cpp		\
-				$(SRCDIR)/Console.cpp		\
 				$(SRCDIR)/Menu.cpp
 
 OBJS = $(SRCS:.cpp=.o)

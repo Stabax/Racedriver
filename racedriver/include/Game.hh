@@ -2,19 +2,19 @@
 #define GAME_HH_
 
 #include <SFML/Graphics.hpp>
-#include "string.h"
 #include "Console.hpp"
+#include "string.h"
 
 typedef enum e_gamestate {
   Menu,
-  Play,  
+  Play
 } gamestate;
 
 typedef struct s_engine
 {
   sf::RenderWindow win;
-  Console *con;
   gamestate gs;
+  Console *con;
 } t_engine;
 
 #endif /* !GAME_HH_ */

@@ -12,6 +12,10 @@ public:
 
   bool loadFromFile();
 
+  void connectSlots(/* VARARGS*/);
+
+  bool buildTitle();
+  bool buildItems();
   void checkOverflow();
   
   bool update();

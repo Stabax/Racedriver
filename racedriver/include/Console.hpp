@@ -5,8 +5,8 @@
 #include <string>
 #include <vector>
 
-#define FONTSIZE	14
-#define FONTFILE	"./data/font/console.ttf"
+#define FONTSIZE	10
+#define FONTFILE	"./Data/font/console.ttf"
 
 typedef struct s_engine t_engine;
 
@@ -26,6 +26,9 @@ public:
   void clear();
   void writeLine(std::string str);
   void positionOutput();
+
+  //Input
+  void exec(std::string cmd);
   void grabInput(sf::Event &event);
 
   //Logic
@@ -35,10 +38,12 @@ public:
 private:
   bool _open;
   int _margin;
+  unsigned int _height;
   sf::Font _font;
   std::vector<sf::RectangleShape> _geometry;
   std::vector<std::string> _history;
   std::vector<sf::Text> _output;
+  sf::Text _inputText;
   std::string _input;
 };
 

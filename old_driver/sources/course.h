@@ -4,9 +4,9 @@
 #ifndef course
 #define course
 
+#include <unistd.h>
 #include <cmath>
 #include <fstream>
-#include"SFML/System.hpp"
 
 #include "Circuit.h"
 #include "fonctions.h"

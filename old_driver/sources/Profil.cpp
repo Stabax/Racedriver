@@ -7,13 +7,13 @@
 //Constructeurs
 Profil::Profil(const std::string& uuid, const unsigned short int& numero, const std::string& nom) : m_uuid(uuid), m_numero(numero), m_nom(nom), m_credits(2000), m_difficulte(3), m_nbBox(1), m_box({0}), m_nbCourses(0), m_victoires(0), m_defaites(0), m_accidents(0), m_creditsGagnes(0), m_voituresAchetees(0), m_nbCoursesCL(0), m_victoiresCL(0), m_defaitesCL(0), m_accidentsCL(0), m_creditsGagnesCL(0), m_sauvegardeAuto(false)
 {
-	
+
 }
 
 
 Profil::Profil(const std::string& uuid, const unsigned short int& numero, const std::string& nom, const unsigned int& credits, const bool& sauvegardeAuto, const unsigned short int& difficulte, const unsigned short int& nbBox, const unsigned short int& nbCourses, const unsigned short int& victoires, const unsigned short int& defaites, const unsigned short int& accidents, const unsigned short int& creditsGagnes, const unsigned short int& nbCoursesCL, const unsigned short int& victoiresCL, const unsigned short int& defaitesCL, const unsigned short int& accidentsCL, const unsigned short int& creditsGagnesCL, const unsigned short int& voituresAchetees) : m_uuid(uuid), m_numero(numero), m_nom(nom), m_credits(credits), m_difficulte(difficulte), m_nbBox(nbBox), m_box({0}), m_nbCourses(nbCourses), m_victoires(victoires), m_defaites(defaites), m_accidents(accidents), m_creditsGagnes(creditsGagnes), m_voituresAchetees(voituresAchetees), m_nbCoursesCL(nbCoursesCL), m_victoiresCL(victoiresCL), m_defaitesCL(defaitesCL), m_accidentsCL(accidentsCL), m_creditsGagnesCL(creditsGagnesCL), m_sauvegardeAuto(sauvegardeAuto)
 {
-	
+
 }
 
 
@@ -39,13 +39,13 @@ bool Profil::compatible(Profil& Player, const unsigned short int& numeroBox, con
 	unsigned short int rangPiece = 0;
 	unsigned short int rangVoitureBox = 0;
 	Voiture *VoitureBox = Player.getBox(numeroBox);
-	
+
 	rangVoitureBox = vRang(VoitureBox->getRang());
 	rangPiece = vRang(rangNewPiece);
 
 	if(rangVoitureBox >= rangPiece)
 	{
-		compatible = true;	
+		compatible = true;
 	}
 	else
 	{
@@ -63,19 +63,19 @@ void Profil::listerSauvegardes()
 	std::ostringstream oss;   // stream utilise pour la conversion
 	bool ouvert = true;
 
-	
+
 	do
 	{
 		oss.str(""); //On vide le contenu de oss
 		oss << i;      // on insere le int dans le stream oss
 		numeroSave = oss.str(); // range le int dans la variable numeroSave
-		std::ifstream fichier( "Saves/Profil" + numeroSave + ".save" ); 
+		std::ifstream fichier( "Saves/Profil" + numeroSave + ".save" );
 
 		if(fichier)
 		{
 			for(unsigned short int ligne = 1; ligne <= 2; ligne++) //le nom est stocké sur la deuxieme ligne
 			{
-				getline(fichier, nomProfil); 
+				getline(fichier, nomProfil);
 			}
 			std::cout << i << ". Profil " << i << ": " << nomProfil << "\n";
 			i++; // on incremente
@@ -133,20 +133,20 @@ bool Profil::chargerProfil(const unsigned short int& numeroSave, Profil*& Profil
 
 	oss << numeroSave;      // on insere le int dans le stream oss
 	numeroProfil = oss.str(); // range le int dans la variable numeroSave
-	
+
 	std::string cheminFichier = "Saves/Profil" + numeroProfil + ".save";
 	std::string cheminLock = "Saves/Profil" + numeroProfil + ".lock";
 
 	std::ifstream save(cheminFichier.c_str());
-	
+
 	std::ifstream lockFichier(cheminLock.c_str());
 
-	if(save == 0) //Si la lecture echoue
+	if(!save) //Si la lecture echoue
 	{
 		error("Echec de lecture du fichier de sauvegarde");
 		statut = false; //Le fichier ne peut être charge, donc la fonction renvoie un echec
 	}
-	else if(lockFichier == 0)
+	else if(!lockFichier)
 	{
 		error("Echec de lecture du fichier de verouillage de la sauvegarde");
 		statut = false; //Le fichier ne peut être charge, donc la fonction renvoie un echec
@@ -230,22 +230,22 @@ bool Profil::chargerProfil(const unsigned short int& numeroSave, Profil*& Profil
 				else if(ligne == 4)
 				{
 					//ligne 4 - sauvegarde auto, Difficulte;nombre de box possedes
-					tailleString = ligneChargee.find_first_of(";"); 
+					tailleString = ligneChargee.find_first_of(";");
 					iss.str(ligneChargee);
-					iss >> sauvegardeAuto; 
-					iss.clear(); 
-					ligneChargee.erase(0, tailleString + 1);
-					
-					tailleString = ligneChargee.find_first_of(";"); 
-					iss.str(ligneChargee);
-					iss >> difficulteChargee; 
-					iss.clear(); 
+					iss >> sauvegardeAuto;
+					iss.clear();
 					ligneChargee.erase(0, tailleString + 1);
 
-					tailleString = ligneChargee.find_first_of(";"); 
+					tailleString = ligneChargee.find_first_of(";");
 					iss.str(ligneChargee);
-					iss >> nbBoxCharges; 
-					iss.clear(); 
+					iss >> difficulteChargee;
+					iss.clear();
+					ligneChargee.erase(0, tailleString + 1);
+
+					tailleString = ligneChargee.find_first_of(";");
+					iss.str(ligneChargee);
+					iss >> nbBoxCharges;
+					iss.clear();
 					ligneChargee.erase(0, tailleString + 1);
 
 					ligne++;
@@ -253,37 +253,37 @@ bool Profil::chargerProfil(const unsigned short int& numeroSave, Profil*& Profil
 				else if(ligne == 5)
 				{
 					 //ligne 5 - victoires;defaites;accidents
-					tailleString = ligneChargee.find_first_of(";"); 
+					tailleString = ligneChargee.find_first_of(";");
 					iss.str(ligneChargee.substr(0, tailleString));
 					iss >> coursesChargees;
 					iss.clear();
 					ligneChargee.erase(0, tailleString + 1);
-				
-					tailleString = ligneChargee.find_first_of(";"); 
+
+					tailleString = ligneChargee.find_first_of(";");
 					iss.str(ligneChargee.substr(0, tailleString));
 					iss >> victoiresChargees;
 					iss.clear();
 					ligneChargee.erase(0, tailleString + 1);
-				
-					tailleString = ligneChargee.find_first_of(";"); 
+
+					tailleString = ligneChargee.find_first_of(";");
 					iss.str(ligneChargee.substr(0, tailleString));
 					iss >> defaitesChargees;
 					iss.clear();
 					ligneChargee.erase(0, tailleString + 1);
-				
-					tailleString = ligneChargee.find_first_of(";"); 
+
+					tailleString = ligneChargee.find_first_of(";");
 					iss.str(ligneChargee.substr(0, tailleString));
 					iss >> accidentsCharges;
 					iss.clear();
 					ligneChargee.erase(0, tailleString + 1);
 
-					tailleString = ligneChargee.find_first_of(";"); 
+					tailleString = ligneChargee.find_first_of(";");
 					iss.str(ligneChargee.substr(0, tailleString));
 					iss >> creditsGagnesCharges;
 					iss.clear();
 					ligneChargee.erase(0, tailleString + 1);
 
-					tailleString = ligneChargee.find_first_of(";"); 
+					tailleString = ligneChargee.find_first_of(";");
 					iss.str(ligneChargee.substr(0, tailleString));
 					iss >> voituresAcheteesChargees;
 					iss.clear();
@@ -294,37 +294,37 @@ bool Profil::chargerProfil(const unsigned short int& numeroSave, Profil*& Profil
 				else if(ligne == 6)
 				{
 					 //ligne 5 - victoires;defaites;accidents
-					tailleString = ligneChargee.find_first_of(";"); 
+					tailleString = ligneChargee.find_first_of(";");
 					iss.str(ligneChargee.substr(0, tailleString));
 					iss >> coursesChargeesCL;
 					iss.clear();
 					ligneChargee.erase(0, tailleString + 1);
-				
-					tailleString = ligneChargee.find_first_of(";"); 
+
+					tailleString = ligneChargee.find_first_of(";");
 					iss.str(ligneChargee.substr(0, tailleString));
 					iss >> victoiresChargeesCL;
 					iss.clear();
 					ligneChargee.erase(0, tailleString + 1);
-				
-					tailleString = ligneChargee.find_first_of(";"); 
+
+					tailleString = ligneChargee.find_first_of(";");
 					iss.str(ligneChargee.substr(0, tailleString));
 					iss >> defaitesChargeesCL;
 					iss.clear();
 					ligneChargee.erase(0, tailleString + 1);
-				
-					tailleString = ligneChargee.find_first_of(";"); 
+
+					tailleString = ligneChargee.find_first_of(";");
 					iss.str(ligneChargee.substr(0, tailleString));
 					iss >> accidentsChargesCL;
 					iss.clear();
 					ligneChargee.erase(0, tailleString + 1);
 
-					tailleString = ligneChargee.find_first_of(";"); 
+					tailleString = ligneChargee.find_first_of(";");
 					iss.str(ligneChargee.substr(0, tailleString));
 					iss >> creditsGagnesChargesCL;
 					iss.clear();
 					ligneChargee.erase(0, tailleString + 1);
 
-					tailleString = ligneChargee.find_first_of(";"); 
+					tailleString = ligneChargee.find_first_of(";");
 					iss.str(ligneChargee.substr(0, tailleString));
 					iss >> voituresAcheteesChargees;
 					iss.clear();
@@ -337,28 +337,28 @@ bool Profil::chargerProfil(const unsigned short int& numeroSave, Profil*& Profil
 				{
 					 //ligne 6 a 10 - Voiture Box 0 a 4
 					if(ligneChargee[0] != '0')
-					{	
+					{
 						tailleString = ligneChargee.find_first_of(";"); //find first of recherche la position du premier point virgule
 						marqueChargee = ligneChargee.substr(0, tailleString);
 						ligneChargee.erase(0, tailleString + 1); // On retire la marque charge
 
-						tailleString = ligneChargee.find_first_of(";"); 
+						tailleString = ligneChargee.find_first_of(";");
 						modeleCharge = ligneChargee.substr(0, tailleString);
 						ligneChargee.erase(0, tailleString + 1); // On retire le modele charge
 
-						tailleString = ligneChargee.find_first_of(";"); 
+						tailleString = ligneChargee.find_first_of(";");
 						iss.str(ligneChargee.substr(0, tailleString));
 						iss >> idMoteurCharge; // on convertit la string recuperee plus haut en entier
 						ligneChargee.erase(0, tailleString + 1); // On retire les pneus charges
 						iss.clear(); //on flushe l'objet
 
-						tailleString = ligneChargee.find_first_of(";"); 
+						tailleString = ligneChargee.find_first_of(";");
 						iss.str(ligneChargee.substr(0, tailleString));
 						iss >> idSpoilerCharge; // on convertit la string recuperee plus haut en entier
 						ligneChargee.erase(0, tailleString + 1); // On retire les pneus charges
 						iss.clear(); //on flushe l'objet
 
-						tailleString = ligneChargee.find_first_of(";"); 
+						tailleString = ligneChargee.find_first_of(";");
 						iss.str(ligneChargee.substr(0, tailleString));
 						iss >> idPriseAirChargee; // on convertit la string recuperee plus haut en entier
 						ligneChargee.erase(0, tailleString + 1); // On retire les pneus charges
@@ -367,31 +367,31 @@ bool Profil::chargerProfil(const unsigned short int& numeroSave, Profil*& Profil
 						rangCharge = ligneChargee[0];
 						ligneChargee.erase(0, 2); // On retire le rang charge
 
-						tailleString = ligneChargee.find_first_of(";"); 
+						tailleString = ligneChargee.find_first_of(";");
 						iss.str(ligneChargee.substr(0, tailleString));
 						iss >> nitroMaxChargee; // on convertit la string recuperee plus haut en entier
 						ligneChargee.erase(0, tailleString + 1); // On retire les pneus charges
 						iss.clear(); //on flushe l'objet
 
-						tailleString = ligneChargee.find_first_of(";"); 
+						tailleString = ligneChargee.find_first_of(";");
 						iss.str(ligneChargee.substr(0, tailleString));
 						iss >> aerodynamismeVoitureCharge; // on convertit la string recuperee plus haut en entier
 						ligneChargee.erase(0, tailleString + 1); // On retire les pneus charges
 						iss.clear(); //on flushe l'objet
 
-						tailleString = ligneChargee.find_first_of(";"); 
+						tailleString = ligneChargee.find_first_of(";");
 						iss.str(ligneChargee.substr(0, tailleString));
 						iss >> idPneusCharges; // on convertit la string recuperee plus haut en entier
 						ligneChargee.erase(0, tailleString + 1); // On retire la durabilité des pneus charges
 						iss.clear(); //on flushe l'objet
 
-						tailleString = ligneChargee.find_first_of(";"); 
+						tailleString = ligneChargee.find_first_of(";");
 						iss.str(ligneChargee.substr(0, tailleString));
 						iss >> pneusCharges; // on convertit la string recuperee plus haut en entier
 						ligneChargee.erase(0, tailleString + 1); // On retire les pneus charges
 						iss.clear(); //on flushe l'objet
-						
-						tailleString = ligneChargee.find_first_of(";"); 
+
+						tailleString = ligneChargee.find_first_of(";");
 						iss.str(ligneChargee.substr(0, tailleString));
 						iss >> etat; // on convertit la string recuperee plus haut en entier
 						ligneChargee.erase(0, tailleString + 1); // On retire les pneus charges
@@ -449,7 +449,7 @@ void Profil::supprimerProfil(const unsigned short int& numeroSave)
 		error("Impossible de supprimer le profil");
 		fail = true;
 	}
-	
+
 	if(remove(cheminLock.c_str()))
 	{
 		clrscreen();
@@ -529,7 +529,7 @@ void Profil::sauvegarderProfil()
 					save << "0" << "\n";
 				}
 				else
-				{		
+				{
 			save << m_box[i]->getMarque() << ";" << m_box[i]->getModele() << ";" << m_box[i]->getIdMoteur() << ";" << m_box[i]->getIdSpoiler() << ";" << m_box[i]->getIdPriseAir() << ";" << m_box[i]->getRang() << ";" << m_box[i]->getNitroMax() << ";" << m_box[i]->getAerodynamismeVoiture() << ";" << m_box[i]->getIdPneus() <<";"<< m_box[i]->getDurabilitePneus() <<";"<< m_box[i]->getEtat() << "\n";
 				}
 			}
@@ -539,15 +539,15 @@ void Profil::sauvegarderProfil()
 			error("Impossible d'ecraser le fichier de profil");
 		}
 	}
-	
-	//Une fois la sauvegarde faite on crée le Lock	
+
+	//Une fois la sauvegarde faite on crée le Lock
 	nomLock = "Saves/Profil" + sNumeroSave + ".lock";
 	std::ofstream lock(nomLock.c_str()); //flux d'écriture dans le lock
 
 	std::string ligneChargee;
 	std::string saveContent;
-	
-	if(lock == 0)
+
+	if(!lock)
 	{
 		error("Impossible de lire le lock en ecriture.");
 	}
@@ -569,7 +569,7 @@ void Profil::creerProfil(std::string& nom, Profil*& ProfilCree)
 	sNumeroSave = oss.str(); // range le int dans la variable numeroSave
 
 	nomFichier = "Saves/Profil" + sNumeroSave + ".save";
-	
+
 	boost::uuids::uuid uuid = boost::uuids::random_generator()(); //On génére un identifiant unique au profil.
 	ProfilCree = new Profil(boost::uuids::to_string(uuid), numeroSave, nom); //On construit le profil cree (la partie boost est la conversion en string de l'uuid)
 	std::cout << "Creation de votre Profil\n";
@@ -577,7 +577,7 @@ void Profil::creerProfil(std::string& nom, Profil*& ProfilCree)
 	std::cout << "Profil" << numeroSave << " cree avec succes !\n";
 	std::cout << "===============\n";
 	std::cout << "Appuyez sur Entree pour continuer...\n";
-	videKBuffer();	
+	videKBuffer();
 }
 
 
@@ -679,7 +679,7 @@ bool Profil::getSauvegardeAuto() const
 std::string Profil::getDifficulteString() const
 {
 	std::string difficulte;
-	
+
 	if(m_difficulte==1)
 	{
 		difficulte = "DEBUTANT";
@@ -700,7 +700,7 @@ std::string Profil::getDifficulteString() const
 	{
 		difficulte = "EXPERT";
 	}
-	
+
 	return difficulte;
 }
 
@@ -779,7 +779,7 @@ void Profil::ajouterAccident()
 
 
 bool Profil::boxVide(unsigned short int numeroBox)
-{	
+{
 	bool vide;
 	if(m_box[numeroBox] == 0)
 	{
@@ -822,7 +822,7 @@ bool Profil::payer(const unsigned short int& prix)
 	{
 		error("Vous ne disposez pas d'assez de Credits !");
 		paye = false;
-	}	
+	}
 	else
 	{
 		m_credits -= prix;
@@ -839,7 +839,7 @@ bool operator!=(Profil& Player, Profil& Player2)
 	Voiture* Voiture2 = 0;
 
 	if(Player.getUuid() == Player2.getUuid() && Player.getNumero() == Player2.getNumero() && Player.getNom() == Player2.getNom() && Player.getCredits() == Player2.getCredits() && Player.getNbBox() == Player2.getNbBox() && Player.getNbCourses() == Player2.getNbCourses() && Player.getVictoires() == Player2.getVictoires() && Player.getDefaites() == Player2.getDefaites() && Player.getAccidents() == Player2.getAccidents() && Player.getCreditsGagnes() == Player2.getCreditsGagnes() && Player.getVoituresAchetees() == Player2.getVoituresAchetees() && Player.getDifficulte() == Player2.getDifficulte() && Player.getSauvegardeAuto() == Player2.getSauvegardeAuto()) //On utilise les accesseurs pour comparer
-	{	
+	{
 		for(unsigned short int numeroBox = 0; numeroBox < Player.getNbBox(); numeroBox++)
 		{
 			Voiture1 = Player.getBox(numeroBox);
@@ -882,9 +882,3 @@ bool operator!=(Profil& Player, Profil& Player2)
 	}
 	return modifie;
 }
-	
-	
-
-
-
-

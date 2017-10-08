@@ -7,10 +7,8 @@
 #include <iostream>
 #include <string>
 #include <limits>
-#include<fstream>
+#include <fstream>
 
-
-#include "SFML/System.hpp"
 #include "sha.h"
 
 

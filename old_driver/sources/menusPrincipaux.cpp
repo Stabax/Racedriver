@@ -6,7 +6,7 @@
 void menuRacedriver()
 {
 	bool quit = false;
-	char menu = '0';				
+	char menu = '0';
 	Profil* Player = 0;	//On instancie un joueur non charge
 
 	while(quit != true)
@@ -72,10 +72,10 @@ void menuJeu(Profil& Player, bool& quitGame)
 	Profil* PlayerSaved = 0; //On cree un profil temporaire
 	std::ostringstream oss;
 	std::string numeroProfil;
-	
+
 	clrscreen();
 	while(quit != true)
-	{ 
+	{
 		if(!Player.getSauvegardeAuto())
 		{
 			std::cout << "Menu Jeu\n";
@@ -148,10 +148,10 @@ void menuJeu(Profil& Player, bool& quitGame)
 							}
 						}
 					}
-				}								
+				}
 				quit = true;
 				quitGame = true;
-			}				
+			}
 			break;
 			case '1':
 				clrscreen(); //On flushe l'ancien ecran
@@ -222,13 +222,13 @@ void menuJeu(Profil& Player, bool& quitGame)
 								}
 							}
 						}
-					}								
-					quit = true;				
+					}
+					quit = true;
 				}
 				else
 				{
 					menuOptions(Player);
-				}				
+				}
 				clrscreen();
 				break;
 			}
@@ -276,12 +276,12 @@ void menuJeu(Profil& Player, bool& quitGame)
 								}
 							}
 						}
-					}								
+					}
 					quit = true;
 				}
 				clrscreen();
-			}			
-			break;		
+			}
+			break;
 			default:
 				clrscreen(); //On flushe l'ancien ecran
 				saisieInvalide();
@@ -298,7 +298,7 @@ void menuChargementPartie(Profil*& Player, bool& quit)
 	unsigned short int menu;
 	bool etat; //stocke le resultat du chargement
 	std::string nom;
-		
+
 	//Debut
 	//Menu Chargement profil
 	std::cout << "Charger un Profil: \n";
@@ -326,7 +326,7 @@ void menuChargementPartie(Profil*& Player, bool& quit)
 	{
 				etat = Profil::chargerProfil(menu, Player);
 				if(etat == true)
-				{				
+				{
 					menuJeu(*Player, quit);//Redirection de l'utilisateur dans le menu de jeu
 				}
 
@@ -343,7 +343,7 @@ void menuCreationPartie(Profil*& Player, bool& quit)
 {
 	//Var
 	std::string nom;
-	
+
 	//Menu Creation de profil
 	std::cout << "Creation de votre Profil\n";
 	std::cout << "===============\n\n";
@@ -370,7 +370,7 @@ void menuSuppressionPartie()
 	char quitVerify = 'x';
 	unsigned short int menu;
 	std::string nom;
-		
+
 	//Debut
 	//Menu Chargement profil
 	std::cout << "Supprimer un Profil: \n";
@@ -400,7 +400,7 @@ void menuSuppressionPartie()
 		{
 			if(menu == i)
 			{
-				clrscreen(); //On flushe l'ancien ecran	
+				clrscreen(); //On flushe l'ancien ecran
 				while(quitVerify != 'n') // Boucle de confirmation
 				{
 					std::cout << "/!\\ Attention ! /!\\\n";
@@ -454,15 +454,15 @@ void menuApropos()
 	std::cout << "A Propos de\n";
 	std::cout << "===============\n\n";
 	std::cout << " ________                  ________       _____                    \n";		// Dessin de Credits
-	sf::Sleep(0.2f);
+	sleep(0.2f);
 	std::cout << " ___  __ \\_____ ______________  __ \\_________(_)__   ______________\n";		// En ASCII-ART
-	sf::Sleep(0.2f);
+	sleep(0.2f);
 	std::cout << " __  /_/ /  __ `/  ___/  _ \\_  / / /_  ___/_  /__ | / /  _ \\_  ___/\n";		// Caractere \ et " doublement echappes
-	sf::Sleep(0.2f);
+	sleep(0.2f);
 	std::cout << " _  _, _// /_/ // /__ /  __/  /_/ /_  /   _  / __ |/ //  __/  /    \n";		// Pour palier aux warnings de compilo
-	sf::Sleep(0.2f);
+	sleep(0.2f);
 	std::cout << " /_/ |_| \\__,_/ \\___/ \\___//_____/ /_/    /_/  _____/ \\___//_/     \n\n";	// RACEDRIVER Police Speed from patorjk.com
-	sf::Sleep(0.5f);
+	sleep(0.5f);
 	std::cout << "Racedriver est un jeu de course de voitures en console. \n";
 	std::cout << "Ce jeu est developpe en C++ par:\n";
 	std::cout << "~Baxlan(contact: Cavalioz@Hotmail.fr)\n";
@@ -473,5 +473,3 @@ void menuApropos()
 	videKBuffer(); //On appelle le videur de buffer qui va demander la pression d'entree, vu que le buffer est vide. (=pause, en version portable)
 	clrscreen();
 }
-
-

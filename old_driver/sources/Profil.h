@@ -6,10 +6,10 @@
 
 #include <iostream>
 #include <string>
-#include<cfloat>
-#include <boost/uuid/uuid.hpp>            // librairie de classe
-#include <boost/uuid/uuid_generators.hpp> // generateur d'id unique
-#include <boost/uuid/uuid_io.hpp> 
+#include <cfloat>
+#include <uuid/uuid.hpp>            // librairie de classe
+#include <uuid/uuid_generators.hpp> // generateur d'id unique
+#include <uuid/uuid_io.hpp>
 
 #include "sha.h"
 #include "fonctions.h"
@@ -20,12 +20,12 @@ class Profil
 {
 	//Fonctions amies
 		//Aucune
-		
+
 	public:
 	//constructeurs
 	Profil(const std::string& uuid, const unsigned short int& numero, const std::string& nom); //Nouveau Profil
 	Profil(const std::string& uuid, const unsigned short int& numero, const std::string& nom, const unsigned int& credits, const bool& sauvegardeAuto, const unsigned short int& difficulte, const unsigned short int& nbBox, const unsigned short int& nbCourses, const unsigned short int& victoires, const unsigned short int& defaites, const unsigned short int& accidents, const unsigned short int& creditsGagnes, const unsigned short int& nbCoursesCL, const unsigned short int& victoiresCL, const unsigned short int& defaitesCL, const unsigned short int& accidentsCL, const unsigned short int& creditsGagnesCL, const unsigned short int& voituresAchetees); //Profil Chargé
-	
+
 	//Destructeur
 	~Profil();
 
@@ -36,7 +36,7 @@ class Profil
 	static bool chargerProfil(const unsigned short int& numeroSave, Profil*& ProfilCharge);
 	static void creerProfil(std::string& nom, Profil*& ProfilCree);
 	static bool compatible(Profil& Player, const unsigned short int& numeroBox, const char& rangNewPiece);
-	
+
 	//Accesseurs et Mutateurs
 	std::string getUuid() const;	//profil
 	unsigned short int getNumero() const;
@@ -55,7 +55,7 @@ class Profil
 	float getVDRatio() const;
 	unsigned short int getCreditsGagnes() const;
 	unsigned short int getVoituresAchetees() const;
-	
+
 	void setMoteurVoiture(const unsigned short int& numeroBox, Moteur* newMoteur, const unsigned short int& idMoteur);
 	void setBox(const unsigned short int& numeroBox, const std::string& marque, const std::string& modele, const unsigned short int& idMoteur, const unsigned short int& idSpoiler, const unsigned short int& idPriseAir, const char& rang, const unsigned short int& nitroMax, const unsigned short int& aerodynamismeVoiture, const unsigned short int& idPneus, const unsigned short int& pneus, const unsigned short int& etat);
 	void setBox(const unsigned short int& numeroBox, Voiture* Voiture);
@@ -93,9 +93,9 @@ class Profil
 	unsigned short int m_difficulte;
 	unsigned short int m_nbBox;  //gestion vehicules
 	Voiture* m_box[5];
-	
+
 	//Stats
-	unsigned short int m_nbCourses;  
+	unsigned short int m_nbCourses;
 	unsigned short int m_victoires;
 	unsigned short int m_defaites;
 	unsigned short int m_accidents;
@@ -103,13 +103,13 @@ class Profil
 	unsigned short int m_voituresAchetees;
 
 	//Stats course libre
-	unsigned short int m_nbCoursesCL;  
+	unsigned short int m_nbCoursesCL;
 	unsigned short int m_victoiresCL;
 	unsigned short int m_defaitesCL;
 	unsigned short int m_accidentsCL;
 	unsigned short int m_creditsGagnesCL;
 
-	bool m_sauvegardeAuto;	
+	bool m_sauvegardeAuto;
 };
 
 bool operator!=(Profil& Player, Profil& PlayerSaved);

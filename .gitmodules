@@ -1,0 +1,3 @@
+[submodule "old_driver/curl"]
+	path = old_driver/curl
+	url = https://github.com/curl/curl.git

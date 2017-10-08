@@ -26,20 +26,20 @@ PriseAir* PriseAir::chargerPriseAir(const unsigned short int& id)
 	std::string var=""; //contient les lignes du fichier
 	std::string chemin = "Data/composants/priseair.cdx";
 	unsigned short int idActuel = id + 1; //indique l'id actuellement lu dans le fichier
-	
+
 	std::ifstream engine(chemin.c_str());
-	
-	if(engine==0)
+
+	if(!engine)
 	{
-		error("Echec de lecture du fichier priseair.cdx");	
+		error("Echec de lecture du fichier priseair.cdx");
 	}
 	else
-	{	
+	{
 		while(idActuel!=id && std::getline(engine, var))
 		{
 			std::istringstream iss(var.substr(0,var.find_first_of(";"))); //on transforme le premier char en int pour etre compare
 			if(iss>>idActuel)
-			{			
+			{
 			}
 			else
 			{
@@ -47,20 +47,20 @@ PriseAir* PriseAir::chargerPriseAir(const unsigned short int& id)
 			}
 			//on utilise while(std::getline(flux, string) pour "Tant qu'il y a une ligne a lire"
 		}
-		
-		if(idActuel==id)		
+
+		if(idActuel==id)
 		{
 			unsigned short int curseur;
 			var.erase(0,var.find_first_of(";")+1);
-			
+
 			curseur=var.find_first_of(";");
 			std::string modele=var.substr(0,curseur);
 			var.erase(0,curseur+1);
-			
+
 			curseur=var.find_first_of(";");
 			char rang=var[0];
 			var.erase(0,curseur+1);
-			
+
 			std::string sAerodynamisme=var;
 
 			unsigned short int aerodynamisme;
@@ -74,9 +74,9 @@ PriseAir* PriseAir::chargerPriseAir(const unsigned short int& id)
 			{
 				error("Fichier corompu14.");
 			}
-			
+
 			PriseAirCharge = new PriseAir(modele, rang, aerodynamisme);
-		}	
+		}
 		else
 		{
 			error("Fichier corompu15.");
@@ -89,24 +89,24 @@ PriseAir* PriseAir::chargerPriseAir(const unsigned short int& id)
 void PriseAir::infoPriseAir(const unsigned short int& id, unsigned int& prix)
 {
 	std::string var = ""; //contient les lignes du fichier
-	std::string chemin ="Data/composants/priseair.cdx";	
+	std::string chemin ="Data/composants/priseair.cdx";
 	std::ifstream engine(chemin.c_str());
 	std::istringstream iss;
 	unsigned short int idActuel = 0; //indique l'id actuellement lu dans le fichier
-	unsigned short int curseur;	
+	unsigned short int curseur;
 	char rang;
 
-	if(engine==0)
+	if(!engine)
 	{
-		error("Echec de lecture du fichier priseair.cdx");	
+		error("Echec de lecture du fichier priseair.cdx");
 	}
 	else
-	{	
+	{
 		while(idActuel!=id && std::getline(engine, var))
 		{
 			iss.str(var.substr(0,var.find_first_of(";"))); //on transforme le premier char en int pour etre compare
 			if(iss>>idActuel)
-			{			
+			{
 			}
 			else
 			{
@@ -114,17 +114,17 @@ void PriseAir::infoPriseAir(const unsigned short int& id, unsigned int& prix)
 			}
 			iss.clear();
 		}
-		curseur = var.find_first_of(";"); 
+		curseur = var.find_first_of(";");
 		var.erase(0, curseur + 1); // On retire l'id
-		if(idActuel==id)		
-		{			
-			curseur = var.find_first_of(";"); 
+		if(idActuel==id)
+		{
+			curseur = var.find_first_of(";");
 			var.erase(0, curseur + 1);
-			
+
 			rang = var[0];
-			
+
 			prix =  vRang(rang) * 300 + id * 100;
-		}	
+		}
 		else
 		{
 			error("Fichier corompu21b.");
@@ -136,23 +136,23 @@ void PriseAir::infoPriseAir(const unsigned short int& id, unsigned int& prix)
 void PriseAir::infoPriseAir(const unsigned short int& id, std::string& modele, char& rang, unsigned short int& aero, unsigned int& prix)
 {
 	std::string var = ""; //contient les lignes du fichier
-	std::string chemin ="Data/composants/priseair.cdx";	
+	std::string chemin ="Data/composants/priseair.cdx";
 	std::ifstream engine(chemin.c_str());
 	std::istringstream iss;
 	unsigned short int idActuel = 0; //indique l'id actuellement lu dans le fichier
-	unsigned short int curseur;	
+	unsigned short int curseur;
 
-	if(engine==0)
+	if(!engine)
 	{
-		error("Echec de lecture du fichier priseair.cdx");	
+		error("Echec de lecture du fichier priseair.cdx");
 	}
 	else
-	{	
+	{
 		while(idActuel!=id && std::getline(engine, var))
 		{
 			iss.str(var.substr(0,var.find_first_of(";"))); //on transforme le premier char en int pour etre compare
 			if(iss>>idActuel)
-			{			
+			{
 			}
 			else
 			{
@@ -160,20 +160,20 @@ void PriseAir::infoPriseAir(const unsigned short int& id, std::string& modele, c
 			}
 			iss.clear();
 		}
-		curseur = var.find_first_of(";"); 
+		curseur = var.find_first_of(";");
 		var.erase(0, curseur + 1); // On retire l'id
-		if(idActuel==id)		
-		{			
+		if(idActuel==id)
+		{
 			curseur = var.find_first_of(";");
-			modele=var.substr(0,curseur); 
+			modele=var.substr(0,curseur);
 			var.erase(0, curseur + 1);
-			
+
 			curseur = var.find_first_of(";");
-			rang=var[0]; 
+			rang=var[0];
 			var.erase(0, curseur + 1);
-			
+
 			std::string sAero=var.substr(0,curseur);
-			
+
 			iss.clear();
 			iss.str(sAero);
 			if(iss >> aero)
@@ -182,20 +182,20 @@ void PriseAir::infoPriseAir(const unsigned short int& id, std::string& modele, c
 			else
 			{
 				error("Fichier corrompu ta mere");
-			}  
-			
+			}
+
 			prix =  vRang(rang) * 300 + id * 100;
-			
-		}	
+
+		}
 		else
 		{
 			error("Fichier corompu21b.");
 		}
 	}
 }
-	
-	
-	
+
+
+
 //Accesseurs et Mutateurs
 std::string PriseAir::getNom() const
 {
@@ -218,15 +218,8 @@ unsigned short int PriseAir::getAerodynamisme() const
 
 //Methodes
 	//Aucune
-	
-	
-	
+
+
+
 //Operateurs methodes
 	//Aucun
-	
-	
-	
-	
-	
-	
-	

@@ -13,7 +13,7 @@ Les bibliothèques utilisées sont:
 	-Boost-asio: pour le multijoueur
 	-SFML: pour le graphique, le son et le temps
 	-curl: pour télécharger les mises à jour depuis un FTP
-	
+
 Toutes les classes sont instanciées depuis des fichiers .cdx et le fichier mods.txt
 Les différentes classes sont le coeur du jeu:
 	-Circuit
@@ -23,12 +23,12 @@ Les différentes classes sont le coeur du jeu:
 	-PriseAir
 	-Spoiler
 	-Pneus
-	
+
 Tout ce qui n'est pas objet ne sert qu'à faire:
 	-des verifications (sauvegarde...)
 	-des demandes (choix des menus...)
 	-des calculs (courses...)
-	
+
 Les conventions de ce programme sont:
 	-des majuscules au début des classes et des objets (pointeurs ou non)
 	-les attributs commencent par m_
@@ -54,9 +54,10 @@ namespace GLOBAL
 	bool vainqueur = false;
 	bool MeilleureVoiture = false;
 	bool debloqueMap = false;
-	bool debloqueAchievement = false;	
+	bool debloqueAchievement = false;
 }
 
+#include <unistd.h>
 
 #include "launcher.h"
 #include "menusPrincipaux.h"
@@ -64,15 +65,15 @@ namespace GLOBAL
 
 
 //argc = nombre d'arguments, argv = tableau de string contenant les arguments. argv[0] est toujours le nom de l'executable
-int main(/* int argc, char * argv[] */) 
+int main(/* int argc, char * argv[] */)
 {
 	try
-	{	
+	{
 		clrscreen();
 		std::srand(std::time(0)); //INITIALISATION DE L'ALEATOIRE
-		miseAJour();//on verifie et fait les mises à jour	
+		miseAJour();//on verifie et fait les mises à jour
 		std::cout << "Chargement en Cours...\n";
-		sf::Sleep(2.0f);
+		sleep(2.0f);
 		clrscreen();
 		std::cout << "Pour jouer dans les meilleures conditions,\nbasculez en plein ecran !\n\n";
 		menuRacedriver();//on lance le coeur du jeu
@@ -93,7 +94,6 @@ int main(/* int argc, char * argv[] */)
 	{
 		error("Le programme a rencontre un probleme non defini.");
 	}
-	
+
 	return 0;
 }
-

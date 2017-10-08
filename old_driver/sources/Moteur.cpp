@@ -26,20 +26,20 @@ Moteur* Moteur::chargerMoteur(const unsigned short int& id, const std::string& m
 	std::string var=""; //contient les lignes du fichier
 	std::string chemin = "Data/Moteurs/"+marqueChargee+".cdx";
 	unsigned short int idActuel = id + 1; //indique l'id actuellement lu dans le fichier
-	
+
 	std::ifstream engine(chemin.c_str());
-	
-	if(engine==0)
+
+	if(!engine)
 	{
-		error("Echec de lecture du fichier "+marqueChargee+".cdx");	
+		error("Echec de lecture du fichier "+marqueChargee+".cdx");
 	}
 	else
-	{	
+	{
 		while(idActuel!=id && std::getline(engine, var))
 		{
 			std::istringstream iss(var.substr(0,var.find_first_of(";"))); //on transforme le premier char en int pour etre compare
 			if(iss>>idActuel)
-			{			
+			{
 			}
 			else
 			{
@@ -47,30 +47,30 @@ Moteur* Moteur::chargerMoteur(const unsigned short int& id, const std::string& m
 			}
 			//on utilise while(std::getline(flux, string) pour "Tant qu'il y a une ligne a lire"
 		}
-		
-		if(idActuel==id)		
+
+		if(idActuel==id)
 		{
 			unsigned short int curseur;
 			var.erase(0,var.find_first_of(";")+1);
-			
+
 			curseur=var.find_first_of(";");
 			std::string modele=var.substr(0,curseur);
 			var.erase(0,curseur+1);
-			
+
 			curseur=var.find_first_of(";");
 			char rang=var[0];
 			var.erase(0,curseur+1);
-			
+
 			curseur=var.find_first_of(";");
 			std::string sVitesse=var.substr(0,curseur);
 			var.erase(0,curseur+1);
-			
+
 			curseur=var.find_first_of(";");
 			std::string sAcceleration=var.substr(0,curseur);
 			var.erase(0,curseur+1);
-			
+
 			std::string carburant=var;
-			
+
 			unsigned short int vitesse;
 			unsigned short int acceleration;
 			std::istringstream iss(sVitesse);
@@ -90,9 +90,9 @@ Moteur* Moteur::chargerMoteur(const unsigned short int& id, const std::string& m
 			{
 				error("Fichier corompu14.");
 			}
-			
+
 			MoteurCharge = new Moteur(marqueChargee, modele, rang, vitesse, acceleration, carburant);
-		}	
+		}
 		else
 		{
 			error("Fichier corompu15.");
@@ -105,9 +105,9 @@ Moteur* Moteur::chargerMoteur(const unsigned short int& id, const std::string& m
 void Moteur::listerMoteurs(const std::string& marque)
 {
 	std::cout<<"Liste des moteurs "<< marque <<" :\n\n";
-	
+
 	std::string chemin ="Data/Moteurs/"+marque+".cdx";
-	
+
 	std::string var;
 
 	std::ifstream flux(chemin.c_str());
@@ -116,38 +116,38 @@ void Moteur::listerMoteurs(const std::string& marque)
 		unsigned short int curseur;
 		std::cout<<"   |Modele     |Rang  |Vitesse  |Acceleration  |Carburant  |Prix |\n\n";
 		while(std::getline(flux, var))
-		{			
+		{
 				curseur=var.find_first_of(";");
 				std::string id=var.substr(0,curseur);
 				var.erase(0,curseur+1);
-			
+
 				curseur=var.find_first_of(";");
 				std::string modele=var.substr(0,curseur);
 				var.erase(0,curseur+1);
-			
+
 				curseur=var.find_first_of(";");
 				char rang=var[0];
 				var.erase(0,curseur+1);
-			
+
 				curseur=var.find_first_of(";");
 				std::string sVitesse=var.substr(0,curseur);
 				var.erase(0,curseur+1);
-			
+
 				curseur=var.find_first_of(";");
 				std::string sAcceleration=var.substr(0,curseur);
 				var.erase(0,curseur+1);
-			
+
 				std::string carburant=var;
-			
+
 				std::string espace1;
 				std::string espace2;
 				std::string espace3;
 				std::string espace4;
 				std::string espace5;
 				std::string espaceRang="      "; //6 espaces
-				
-				
-				
+
+
+
 				if(modele.size()<12)
 				{
 					for(unsigned short int i=0; i<12-modele.size(); i++)
@@ -163,7 +163,7 @@ void Moteur::listerMoteurs(const std::string& marque)
 						espace2+=" ";
 					}
 				}
-				
+
 				if(sAcceleration.size()<15)
 				{
 					for(unsigned short int i=0; i<15 - sAcceleration.size(); i++)
@@ -171,7 +171,7 @@ void Moteur::listerMoteurs(const std::string& marque)
 						espace3+=" ";
 					}
 				}
-				
+
 				if(carburant.size()<12)
 				{
 					for(unsigned short int i=0; i<12-carburant.size(); i++)
@@ -179,7 +179,7 @@ void Moteur::listerMoteurs(const std::string& marque)
 						espace4+=" ";
 					}
 				}
-				
+
 				if(id.size()<3)
 				{
 					for(unsigned short int i=0; i<3-id.size(); i++)
@@ -187,7 +187,7 @@ void Moteur::listerMoteurs(const std::string& marque)
 						espace5+=" ";
 					}
 				}
-			
+
 				unsigned short int vitesse;
 				unsigned short int acceleration;
 				std::istringstream iss(sVitesse);
@@ -198,7 +198,7 @@ void Moteur::listerMoteurs(const std::string& marque)
 				{
 					error("Fichier corompu16.");
 				}
-				iss.clear();					
+				iss.clear();
 				iss.str(sAcceleration);
 				if (iss>>acceleration)
 				{
@@ -207,13 +207,13 @@ void Moteur::listerMoteurs(const std::string& marque)
 				{
 					error("Fichier corompu17.");
 				}
-				
+
 				unsigned short int prix = ((vitesse + acceleration) * 25) + ( (vRang(rang)-1) * 500);
-				
-				
+
+
 				std::cout<<id<<"."<<espace5<<modele<< espace1 <<rang<< espaceRang <<vitesse<< espace2 <<acceleration<< espace3 <<carburant<< espace4 << prix <<"c\n";
-			
-		}	
+
+		}
 	}
 	else
 	{
@@ -225,38 +225,38 @@ void Moteur::listerMoteurs(const std::string& marque)
 void Moteur::infoMoteur(const unsigned short int& id, const std::string& marque, std::string& modele)
 {
 	std::string var; //contient les lignes du fichier
-	std::string chemin ="Data/Moteurs/"+marque+".cdx";	
+	std::string chemin ="Data/Moteurs/"+marque+".cdx";
 	std::ifstream engine(chemin.c_str());
-	
-	if(engine==0)
+
+	if(!engine)
 	{
-		error("Echec de lecture du fichier "+marque+".cdx");	
+		error("Echec de lecture du fichier "+marque+".cdx");
 	}
 	else
-	{	
+	{
 		unsigned short int idActuel; //indique l'id actuellement lu dans le fichier
-		
+
 		while(idActuel!=id && std::getline(engine, var))
 		{
 			std::istringstream iss(var.substr(0,var.find_first_of(";"))); //on transforme le premier char en int pour etre compare
 			if(iss>>idActuel)
-			{			
+			{
 			}
 			else
 			{
 				error("Fichier corrompu18");
 			}
 		}
-		
-		if(idActuel==id)		
+
+		if(idActuel==id)
 		{
 			unsigned short int curseur;
 			var.erase(0,var.find_first_of(";")+1);
-			
+
 			curseur=var.find_first_of(";");
 			modele=var.substr(0,curseur);
 			var.erase(0,curseur+1);
-		}	
+		}
 		else
 		{
 			error("Fichier corompu21.");
@@ -268,7 +268,7 @@ void Moteur::infoMoteur(const unsigned short int& id, const std::string& marque,
 void Moteur::infoMoteur(const unsigned short int& id, const std::string& marque, unsigned int& prix)
 {
 	std::string var = ""; //contient les lignes du fichier
-	std::string chemin ="Data/Moteurs/"+marque+".cdx";	
+	std::string chemin ="Data/Moteurs/"+marque+".cdx";
 	std::ifstream engine(chemin.c_str());
 	std::istringstream iss;
 	unsigned short int idActuel = 0; //indique l'id actuellement lu dans le fichier
@@ -278,20 +278,20 @@ void Moteur::infoMoteur(const unsigned short int& id, const std::string& marque,
 	unsigned short int acceleration;
 
 	std::string sVitesse;
-	std::string sAcceleration;	
+	std::string sAcceleration;
 	char rang;
 
-	if(engine==0)
+	if(!engine)
 	{
-		error("Echec de lecture du fichier "+marque+".cdx");	
+		error("Echec de lecture du fichier "+marque+".cdx");
 	}
 	else
-	{	
+	{
 		while(idActuel!=id && std::getline(engine, var))
 		{
 			iss.str(var.substr(0,var.find_first_of(";"))); //on transforme le premier char en int pour etre compare
 			if(iss>>idActuel)
-			{			
+			{
 			}
 			else
 			{
@@ -299,22 +299,22 @@ void Moteur::infoMoteur(const unsigned short int& id, const std::string& marque,
 			}
 			iss.clear();
 		}
-		curseur = var.find_first_of(";"); 
+		curseur = var.find_first_of(";");
 		var.erase(0, curseur + 1); // On retire l'id
-		if(idActuel==id)		
+		if(idActuel==id)
 		{
 
-			curseur = var.find_first_of(";"); 
+			curseur = var.find_first_of(";");
 			var.erase(0, curseur + 1); // On retire le modele
-			
+
 			rang = var[0];
 			var.erase(0, 2); // On retire le rang
 
-			curseur = var.find_first_of(";"); 
+			curseur = var.find_first_of(";");
 			sVitesse = var.substr(0, curseur);
 			var.erase(0, curseur + 1); // On retire la vitesse chargee
 
-			curseur = var.find_first_of(";"); 
+			curseur = var.find_first_of(";");
 			sAcceleration = var.substr(0, curseur);
 			var.erase(0, curseur + 1); // On retire l'accel chargee
 
@@ -335,9 +335,9 @@ void Moteur::infoMoteur(const unsigned short int& id, const std::string& marque,
 			{
 				error("Fichier corompu20b.");
 			}
-			
+
 			prix = (((vitesse + acceleration) * 25) + ( (vRang(rang)-1)) * 500);
-		}	
+		}
 		else
 		{
 			error("Fichier corompu21b.");
@@ -349,7 +349,7 @@ void Moteur::infoMoteur(const unsigned short int& id, const std::string& marque,
 void Moteur::infoMoteur(const unsigned short int& id, const std::string& marque, std::string& modele, unsigned short int& vitesse, unsigned short int& acceleration)
 {
 	std::string var; //contient les lignes du fichier
-	std::string chemin ="Data/Moteurs/"+marque+".cdx";	
+	std::string chemin ="Data/Moteurs/"+marque+".cdx";
 	std::ifstream engine(chemin.c_str());
 	unsigned short int idActuel = 0; //indique l'id actuellement lu dans le fichier
 	unsigned short int curseur = 0;
@@ -358,19 +358,19 @@ void Moteur::infoMoteur(const unsigned short int& id, const std::string& marque,
 	//Variables dont on va avoir besoin lors du chargement:
 	std::string sVitesse;
 	std::string sAcceleration;
-		
-	if(engine==0)
+
+	if(!engine)
 	{
-		error("Echec de lecture du fichier "+marque+".cdx");	
+		error("Echec de lecture du fichier "+marque+".cdx");
 	}
 	else
-	{	
+	{
 		while(idActuel!=id && std::getline(engine, var))
 		{
-			curseur = var.find_first_of(";"); 
+			curseur = var.find_first_of(";");
 			iss.str(var.substr(0, curseur));
 			if(iss >> idActuel)
-			{			
+			{
 			}
 			else
 			{
@@ -379,23 +379,23 @@ void Moteur::infoMoteur(const unsigned short int& id, const std::string& marque,
 			iss.clear();
 		}
 		var.erase(0, curseur + 1); //On supprime l'id de la ligne
-		if(idActuel==id)		
+		if(idActuel==id)
 		{
-			curseur = var.find_first_of(";"); 
+			curseur = var.find_first_of(";");
 			modele = var.substr(0, curseur);
 			var.erase(0, curseur + 1); // On retire le modele charge
-			
-			curseur = var.find_first_of(";"); 
+
+			curseur = var.find_first_of(";");
 			var.erase(0, curseur + 1); // On retire le rang
 
-			curseur = var.find_first_of(";"); 
+			curseur = var.find_first_of(";");
 			sVitesse = var.substr(0, curseur);
 			var.erase(0, curseur + 1); // On retire la vitesse chargee
 
-			curseur = var.find_first_of(";"); 
+			curseur = var.find_first_of(";");
 			sAcceleration = var.substr(0, curseur);
 			var.erase(0, curseur + 1); // On retire l'accel chargee
-			
+
 			iss.str(sVitesse);
 			if(iss>>vitesse)
 			{
@@ -413,7 +413,7 @@ void Moteur::infoMoteur(const unsigned short int& id, const std::string& marque,
 			{
 				error("Fichier corompu20.");
 			}
-		}	
+		}
 		else
 		{
 			error("Fichier corompu21.");
@@ -425,51 +425,51 @@ void Moteur::infoMoteur(const unsigned short int& id, const std::string& marque,
 void Moteur::infoMoteur(const unsigned short int& id, const std::string& marque, std::string& modele, unsigned short int& vitesse, unsigned short int& acceleration, char& rang, unsigned int& prix)
 {
 	std::string var; //contient les lignes du fichier
-	std::string chemin ="Data/Moteurs/"+marque+".cdx";	
+	std::string chemin ="Data/Moteurs/"+marque+".cdx";
 	std::ifstream engine(chemin.c_str());
 	unsigned short int curseur;
-	
-	if(engine==0)
+
+	if(!engine)
 	{
-		error("Echec de lecture du fichier "+marque+".cdx");	
+		error("Echec de lecture du fichier "+marque+".cdx");
 	}
 	else
-	{	
+	{
 		unsigned short int idActuel; //indique l'id actuellement lu dans le fichier
-		
+
 		while(idActuel!=id && std::getline(engine, var))
 		{
 			std::istringstream iss(var.substr(0,var.find_first_of(";"))); //on transforme le premier char en int pour etre compare
 			if(iss>>idActuel)
-			{			
+			{
 			}
 			else
 			{
 				error("Fichier corrompu18");
 			}
 		}
-		
-		if(idActuel==id)		
+
+		if(idActuel==id)
 		{
-			
+
 			var.erase(0,var.find_first_of(";")+1);
-			
+
 			curseur=var.find_first_of(";");
 			modele=var.substr(0,curseur);
 			var.erase(0,curseur+1);
-			
+
 			curseur=var.find_first_of(";");
 			rang=var[0];
 			var.erase(0,curseur+1);
-			
+
 			curseur=var.find_first_of(";");
 			std::string sVitesse=var.substr(0,curseur);
 			var.erase(0,curseur+1);
-			
+
 			curseur=var.find_first_of(";");
 			std::string sAcceleration=var.substr(0,curseur);
 			var.erase(0,curseur+1);
-			
+
 			std::istringstream iss(sVitesse);
 			if (iss>>vitesse)
 			{
@@ -487,9 +487,9 @@ void Moteur::infoMoteur(const unsigned short int& id, const std::string& marque,
 			{
 				error("Fichier corompu20.");
 			}
-			
+
 			prix = ((vitesse + acceleration) * 25) + ( (vRang(rang)-1) * 500);
-		}	
+		}
 		else
 		{
 			error("Fichier corompu21.");
@@ -506,7 +506,7 @@ unsigned short int Moteur::compterMoteurs(const std::string& marque)
 	unsigned short int id; //indique l'id actuellement lu dans le fichier
 	unsigned short int nbMoteur=0;
 	std::string var;
-	
+
 	if(engine)
 	{
 		while(std::getline(engine, var))
@@ -515,11 +515,11 @@ unsigned short int Moteur::compterMoteurs(const std::string& marque)
 			std::istringstream iss(var.substr(0,var.find_first_of(";"))); //on transforme le premier char en int pour etre compare
 			if(iss>>id)
 			{
-				nbMoteur++;			
+				nbMoteur++;
 			}
 			else
 			{
-				error("Fichier corrompu22");			
+				error("Fichier corrompu22");
 			}
 			//on utilise while(std::getline(flux, string) pour "Tant qu'il y a une ligne a lire"
 		}
@@ -548,13 +548,13 @@ float Moteur::returnPrixCarburant(const std::string& carburant)
 	}
 	else
 	{
-	 	throw std::string("Erreur, le carburant " + carburant + " n'existe pas !");	
+	 	throw std::string("Erreur, le carburant " + carburant + " n'existe pas !");
 	}
 }
 
 
 
-//Accesseurs et Mutateurs	
+//Accesseurs et Mutateurs
 std::string Moteur::getModele() const
 {
 	return m_modele;
@@ -617,7 +617,3 @@ float Moteur::getPrixCarburant() const
 
 //Operateurs methodes
 	//Aucun
-
-
-
-

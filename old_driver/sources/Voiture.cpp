@@ -32,21 +32,21 @@ Voiture* Voiture::chargerVoiture(const unsigned short int& id, const char& rangC
 	sRang = rangCharge;
 	std::string chemin = "Data/Voitures/"+sRang+".cdx";
 	std::ifstream engine(chemin.c_str());
-	std::istringstream iss;	
+	std::istringstream iss;
 
-	if(engine==0)
+	if(!engine)
 	{
-		error("Echec de lecture du fichier "+sRang+".cdx");	
+		error("Echec de lecture du fichier "+sRang+".cdx");
 	}
 	else
-	{	
+	{
 		unsigned short int idActuel = id + 1; //indique l'id actuellement lu dans le fichier
 		while(idActuel!=id && std::getline(engine, var)) //on lit dans le fichier
 		{
 			//on utilise while(std::getline(flux, string) pour "Tant qu'il y a une ligne a lire"
 			iss.str(var.substr(0,var.find_first_of(";"))); //on transforme le premier char en int pour etre compare
 			if(iss>>idActuel)
-			{			
+			{
 			}
 			else
 			{
@@ -54,44 +54,44 @@ Voiture* Voiture::chargerVoiture(const unsigned short int& id, const char& rangC
 			}
 			iss.clear();
 		}
-		if(idActuel==id)		
+		if(idActuel==id)
 		{
 			unsigned short int curseur;
 			curseur=var.find_first_of(";");
 			var.erase(0,curseur+1);
-				
+
 			curseur=var.find_first_of(";");
 			std::string marque=var.substr(0,curseur);
 			var.erase(0,curseur+1);
-		
+
 			curseur=var.find_first_of(";");
 			std::string modele=var.substr(0,curseur);
 			var.erase(0,curseur+1);
-		
+
 			curseur=var.find_first_of(";");
 			std::string sIdMoteur=var.substr(0,curseur);
 			var.erase(0,curseur+1);
-		
+
 			curseur=var.find_first_of(";");
 			std::string sIdSpoiler=var.substr(0,curseur);
 			var.erase(0,curseur+1);
-		
+
 			curseur=var.find_first_of(";");
 			std::string sIdPriseAir=var.substr(0,curseur);
 			var.erase(0,curseur+1);
-		
+
 			curseur=var.find_first_of(";");
 			std::string sNitroMax=var.substr(0,curseur);
 			var.erase(0,curseur+1);
-		
+
 			std::string sAerodynamisme=var;
-		
+
 			unsigned short int idMoteur;
 			unsigned short int idSpoiler;
 			unsigned short int nitroMax;
 			unsigned short int idPriseAir;
 			unsigned short int aerodynamisme;
-		
+
 			iss.str(sIdMoteur);
 			if (iss>>idMoteur)
 			{
@@ -99,8 +99,8 @@ Voiture* Voiture::chargerVoiture(const unsigned short int& id, const char& rangC
 			else
 			{
 				error("Fichier corrompu1b.");
-			}	
-			iss.clear();			
+			}
+			iss.clear();
 			iss.str(sIdSpoiler);
 			if (iss>>idSpoiler)
 			{
@@ -109,7 +109,7 @@ Voiture* Voiture::chargerVoiture(const unsigned short int& id, const char& rangC
 			{
 				error("Fichier corrompu2.");
 			}
-			iss.clear();					
+			iss.clear();
 			iss.str(sIdPriseAir);
 			if (iss>>idPriseAir)
 			{
@@ -118,7 +118,7 @@ Voiture* Voiture::chargerVoiture(const unsigned short int& id, const char& rangC
 			{
 				error("Fichier corrompu3.");
 			}
-			iss.clear();					
+			iss.clear();
 			iss.str(sNitroMax);
 			if (iss>>nitroMax)
 			{
@@ -138,7 +138,7 @@ Voiture* Voiture::chargerVoiture(const unsigned short int& id, const char& rangC
 			}
 			iss.clear();
 			VoitureCharge = new Voiture(marque, modele, idMoteur, idSpoiler, idPriseAir, rangCharge, nitroMax, aerodynamisme, 1);
-		}	
+		}
 		else
 		{
 			error("Fichier corrompu.");
@@ -149,11 +149,11 @@ Voiture* Voiture::chargerVoiture(const unsigned short int& id, const char& rangC
 
 
 void Voiture::listerVoitures(const char& rang)
-{	
+{
 	std::string sRang;
 	sRang = rang;
 	std::string chemin ="Data/Voitures/"+sRang+".cdx";
-	
+
 	std::string var;
 	unsigned int prixMoteur=0;
 
@@ -164,43 +164,43 @@ void Voiture::listerVoitures(const char& rang)
 		std::cout<<"   |Marque   |Modele     |Capacite nitro  |Aerodynamisme  |Prix  |\n\n";
 		while(std::getline(flux, var))
 		{
-			
+
 			curseur=var.find_first_of(";");
 			std::string id=var.substr(0,curseur);
 			var.erase(0,curseur+1);
-				
+
 			curseur=var.find_first_of(";");
 			std::string marque=var.substr(0,curseur);
 			var.erase(0,curseur+1);
-		
+
 			curseur=var.find_first_of(";");
 			std::string modele=var.substr(0,curseur);
 			var.erase(0,curseur+1);
-		
+
 			curseur=var.find_first_of(";");
 			std::string sIdMoteur=var.substr(0,curseur);
 			var.erase(0,curseur+1);
-			
+
 			curseur=var.find_first_of(";");
 			var.erase(0,curseur+1);
-						
+
 			curseur=var.find_first_of(";");
 			var.erase(0,curseur+1);
-		
+
 			curseur=var.find_first_of(";");
 			std::string sNitroMax=var.substr(0,curseur);
 			std::string ssNitroMax= sNitroMax + "L";
 			var.erase(0,curseur+1);
-		
+
 			std::string sAerodynamisme=var;
 			std::string ssAerodynamisme = sAerodynamisme + "%";
-			
+
 			std::string espace1;
 			std::string espace2;
 			std::string espace3;
 			std::string espace4;
-			std::string espace5;			
-			
+			std::string espace5;
+
 			if(marque.size()<10)
 			{
 				for(unsigned short int i=0; i<10-marque.size(); i++)
@@ -208,7 +208,7 @@ void Voiture::listerVoitures(const char& rang)
 					espace1+=" ";
 				}
 			}
-			
+
 			if(modele.size()<12)
 			{
 				for(unsigned short int i=0; i<12-modele.size(); i++)
@@ -224,7 +224,7 @@ void Voiture::listerVoitures(const char& rang)
 					espace3+=" ";
 				}
 			}
-			
+
 			if(ssAerodynamisme.size()<16)
 			{
 				for(unsigned short int i=0; i<16-ssAerodynamisme.size(); i++)
@@ -232,7 +232,7 @@ void Voiture::listerVoitures(const char& rang)
 					espace4+=" ";
 				}
 			}
-			
+
 			if(id.size()<3)
 			{
 				for(unsigned short int i=0; i<3-id.size(); i++)
@@ -240,9 +240,9 @@ void Voiture::listerVoitures(const char& rang)
 					espace5+=" ";
 				}
 			}
-			
-			
-			
+
+
+
 			unsigned short int nitroMax;
 			unsigned short int aerodynamisme;
 			unsigned short int idMoteur;
@@ -272,14 +272,14 @@ void Voiture::listerVoitures(const char& rang)
 			{
 				error("Fichier corrompu11.");
 			}
-			
-			
+
+
 			Moteur::infoMoteur(idMoteur, marque, prixMoteur);
-			
+
 			unsigned int prix=roundf( (prixMoteur + 0 + 0 + 0 )  *0.85+ (( aerodynamisme + nitroMax ) * 100)+ (( vRang(rang) - 1 ) * 20000));
-								
-			std::cout<< id << "." << espace5 << marque << espace1 << modele << espace2 << ssNitroMax << espace3 << ssAerodynamisme << espace4 << prix << "c\n";			
-		}	
+
+			std::cout<< id << "." << espace5 << marque << espace1 << modele << espace2 << ssNitroMax << espace3 << ssAerodynamisme << espace4 << prix << "c\n";
+		}
 	}
 }
 
@@ -293,7 +293,7 @@ unsigned short int Voiture::compterVoitures(const char& rang)
 	unsigned short int id; //indique l'id actuellement lu dans le fichier
 	unsigned short int nbVoiture=0;
 	std::string var;
-	
+
 	if(engine)
 	{
 		while(std::getline(engine, var))
@@ -302,11 +302,11 @@ unsigned short int Voiture::compterVoitures(const char& rang)
 			std::istringstream iss(var.substr(0,var.find_first_of(";"))); //on transforme le premier char en int pour etre compare
 			if(iss>>id)
 			{
-				nbVoiture++;			
+				nbVoiture++;
 			}
 			else
 			{
-				error("Fichier corrompu6");			
+				error("Fichier corrompu6");
 			}
 			//on utilise while(std::getline(flux, string) pour "Tant qu'il y a une ligne a lire"
 		}
@@ -328,58 +328,58 @@ void Voiture::infoVoiture(const unsigned short int& id, const char& rang, std::s
 
 	std::string chemin ="Data/Voitures/"+sRang+".cdx";
 	std::ifstream engine(chemin.c_str());
-	
-	if(engine==0)
+
+	if(!engine)
 	{
-		error("Echec de lecture du fichier "+sRang+".cdx");	
+		error("Echec de lecture du fichier "+sRang+".cdx");
 	}
 	else
-	{	
+	{
 		unsigned short int idActuel; //indique l'id actuellement lu dans le fichier
-		
+
 		while(idActuel!=id && std::getline(engine, var))
 		{
 			std::istringstream iss(var.substr(0,var.find_first_of(";"))); //on transforme le premier char en int pour etre compare
 			if(iss>>idActuel)
-			{			
+			{
 			}
 			else
 			{
 				error("Fichier corrompu8");
 			}
 		}
-		
-		if(idActuel==id)		
+
+		if(idActuel==id)
 		{
 			unsigned short int curseur;
 			var.erase(0,var.find_first_of(";")+1);
-					
+
 			curseur=var.find_first_of(";");
 			marque=var.substr(0,curseur);
 			var.erase(0,curseur+1);
-			
+
 			curseur=var.find_first_of(";");
 			modele=var.substr(0,curseur);
 			var.erase(0,curseur+1);
-			
+
 			curseur=var.find_first_of(";");
 			std::string sIdMoteur=var.substr(0,curseur);
 			var.erase(0,curseur+1);
-			
+
 			curseur=var.find_first_of(";");
 			std::string sIdSpoiler=var.substr(0,curseur);
 			var.erase(0,curseur+1);
-			
+
 			curseur=var.find_first_of(";");
 			std::string sIdPriseAir=var.substr(0,curseur);
 			var.erase(0,curseur+1);
-			
+
 			curseur=var.find_first_of(";");
 			std::string sNitro=var.substr(0,curseur);
 			var.erase(0,curseur+1);
-			
+
 			std::string sAerodynamisme=var;
-			
+
 			std::istringstream iss(sNitro);
 			if (iss>>nitroMax)
 			{
@@ -406,12 +406,12 @@ void Voiture::infoVoiture(const unsigned short int& id, const char& rang, std::s
 			{
 				error("Fichier corrompu11.");
 			}
-			
+
 			Moteur::infoMoteur(idMoteur, marque, nomMoteur);
 			unsigned int prixMoteur=0;
 			Moteur::infoMoteur(idMoteur, marque, prixMoteur);
 			prix=roundf( (prixMoteur + 0 + 0 + 0 )  *0.85+ (( aerodynamisme + nitroMax ) * 100)+ (( vRang(rang) - 1 ) * 20000));
-		}	
+		}
 		else
 		{
 			error("Fichier corrompu12.");
@@ -568,8 +568,8 @@ unsigned short int Voiture::getAerodynamismeSpoiler() const
 {
 	return m_spoiler->getAerodynamisme();
 }
-	
-	
+
+
 std::string Voiture::getNomPriseAir() const
 {
 	return m_priseAir->getNom();
@@ -604,7 +604,7 @@ std::string Voiture::getMarquePneus() const
 {
 	return m_pneus->getMarque();
 }
-	
+
 
 void Voiture::setMoteur(Moteur* newMoteur, const unsigned short int& idMoteur)
 {
@@ -680,7 +680,7 @@ void Voiture::reparer()
 void Voiture::updateAttributs()
 {
 	m_aerodynamisme = ( m_priseAir->getAerodynamisme() / 3 ) + ( m_spoiler->getAerodynamisme() /3 ) + (m_aerodynamismeVoiture /3);
-	
+
 	m_aerodynamisme+=1;
 
 	m_vitesse = m_moteur->getVitesse() + ( m_aerodynamisme / 3 );
@@ -694,7 +694,3 @@ void Voiture::updateAttributs()
 
 //Operateurs Methodes
 	//Aucun
-
-
-
-

@@ -30,22 +30,22 @@ void menuCourse(Profil& Player)
 				clrscreen(); //On flushe l'ancien ecran
 				quit = true; //INSTRUCTION DE SORTIE
 				break;
-				
+
 			case '1':
 				clrscreen(); //On flushe l'ancien ecran
 				error("Non implementee.");
 				break;
-				
+
 			case '2':
 				clrscreen(); //On flushe l'ancien ecran
 				menuCourseChampionnat(Player);
 				break;
-				
+
 			case '3':
 				clrscreen(); //On flushe l'ancien ecran
 				menuCourseLibre(Player);
 				break;
-				
+
 			default:
 				clrscreen(); //On flushe l'ancien ecran
 				saisieInvalide();
@@ -84,19 +84,19 @@ void menuGarage(Profil& Player)
 				break;
 			case '1':
 				clrscreen(); //On flushe l'ancien ecran
-				menuConsulterGarage(Player, 0);				
+				menuConsulterGarage(Player, 0);
 				break;
 			case '2':
 				clrscreen(); //On flushe l'ancien ecran
-				menuConsulterGarage(Player, 1);	
+				menuConsulterGarage(Player, 1);
 				break;
 			case '3':
 				clrscreen(); //On flushe l'ancien ecran
-				menuConsulterGarage(Player, 3);	
+				menuConsulterGarage(Player, 3);
 				break;
 			case '4':
 				clrscreen(); //On flushe l'ancien ecran
-				menuAcheterBox(Player);	
+				menuAcheterBox(Player);
 				break;
 			default:
 				clrscreen(); //On flushe l'ancien ecran
@@ -200,7 +200,7 @@ void menuSauvegarde(Profil& Player)
 		std::cout << "Sauvegarde en cours...\n";
 		std::cout << "===============\n";
 		std::cout << "Veuillez patienter";
-		sf::Sleep(0.4f);
+		sleep(0.4f);
 		Player.sauvegarderProfil();
 		clrscreen();
 		std::cout << "Sauvegarder votre Progression\n";
@@ -251,7 +251,7 @@ void menuOptions(Profil& Player)
 				clrscreen(); //On flushe l'ancien ecran
 				quit = true; //INSTRUCTION DE SORTIE
 				break;
-				
+
 			case '1':
 				clrscreen(); //On flushe l'ancien ecran
 				if(Player.getSauvegardeAuto())
@@ -262,7 +262,7 @@ void menuOptions(Profil& Player)
 				{
 					Player.setSauvegardeAuto(true);
 				}
-				break;				
+				break;
 			case '2':
 				clrscreen(); //On flushe l'ancien ecran
 				menuDifficulte(Player);
@@ -275,7 +275,7 @@ void menuOptions(Profil& Player)
 				clrscreen(); //On flushe l'ancien ecran
 				menuChangementNomProfil(Player);
 				break;
-				
+
 			default:
 				clrscreen(); //On flushe l'ancien ecran
 				saisieInvalide();
@@ -287,5 +287,3 @@ void menuOptions(Profil& Player)
 		Player.sauvegarderProfil();
 	}
 }
-
-

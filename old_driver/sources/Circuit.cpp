@@ -22,11 +22,11 @@ Circuit::~Circuit()
 void Circuit::chargerCircuit(const unsigned short int& id, Circuit*& CircuitCourant)
 {
 	bool trouve = false;
-	std::string circuitCharge; //Variable de lecture de ligne	
-	std::istringstream iss;	
+	std::string circuitCharge; //Variable de lecture de ligne
+	std::istringstream iss;
 	std::ifstream tracks("Data/Tracks.map");
 
-	if(tracks == 0) //Si la lecture echoue
+	if(!tracks.is_open()) //Si la lecture echoue
 	{
 		error("Echec de lecture du fichier tracks.map");
 	}
@@ -36,48 +36,48 @@ void Circuit::chargerCircuit(const unsigned short int& id, Circuit*& CircuitCour
 		{
 			std::getline(tracks, circuitCharge);
 		}
-		
-		iss.clear();			
+
+		iss.clear();
 		unsigned short int curseur;
 		curseur = circuitCharge.find_first_of(";"); //strpos() recherche la position du premier point virgule
 		std::string nomCharge;
 		nomCharge = circuitCharge.substr(0, curseur);
 		circuitCharge.erase(0, curseur + 1); // On retire le nom du circuit charge
-		
+
 		unsigned short int tailleChargee;
-		curseur = circuitCharge.find_first_of(";"); 
-		iss.str(circuitCharge.substr(0, curseur));		
+		curseur = circuitCharge.find_first_of(";");
+		iss.str(circuitCharge.substr(0, curseur));
 		iss >> tailleChargee;
 		circuitCharge.erase(0, curseur + 1);
 		iss.clear();
 
 		unsigned short int viragesCharges;
-		curseur = circuitCharge.find_first_of(";"); 
+		curseur = circuitCharge.find_first_of(";");
 		iss.str(circuitCharge.substr(0, curseur));
 		iss >> viragesCharges;
 		circuitCharge.erase(0, curseur + 1);
 		iss.clear();
 
 		unsigned short int meteoChargee;
-		curseur = circuitCharge.find_first_of(";"); 
+		curseur = circuitCharge.find_first_of(";");
 		iss.str(circuitCharge.substr(0, curseur));
 		iss >> meteoChargee;
 		circuitCharge.erase(0, curseur + 1);
 		iss.clear();
-		
+
 		unsigned short int difficulte;
-		curseur = circuitCharge.find_first_of(";"); 
+		curseur = circuitCharge.find_first_of(";");
 		iss.str(circuitCharge.substr(0, curseur));
 		iss >> difficulte;
 		circuitCharge.erase(0, curseur + 1);
 		iss.clear();
-		
+
 		unsigned short int denivele;
-		curseur = circuitCharge.find_first_of(";"); 
+		curseur = circuitCharge.find_first_of(";");
 		iss.str(circuitCharge.substr(0, curseur));
 		iss >> denivele;
 		circuitCharge.erase(0, curseur + 1);
-		iss.clear();		 
+		iss.clear();
 
 		trouve = true;
 		CircuitCourant = new Circuit(nomCharge, tailleChargee, viragesCharges, meteoChargee, difficulte, denivele); //On construit le circuit charge
@@ -95,14 +95,14 @@ unsigned short int Circuit::listerCircuits()
 	std::istringstream iss;
 	std::ifstream tracks("Data/Tracks.map");
 
-	if(tracks == 0) //Si la lecture echoue
+	if(!tracks.is_open()) //Si la lecture echoue
 	{
 		error("Echec de lecture du fichier tracks.map"); //Le fichier ne peut être charge, on affiche une erreur
 	}
 	else
 	{
 		std::string circuitCharge = ""; //ligne lue dans le fichier
-		
+
 		while(std::getline(tracks, circuitCharge))
 		{
 			unsigned short int curseur;
@@ -110,37 +110,37 @@ unsigned short int Circuit::listerCircuits()
 			std::string nomCharge;
 			nomCharge = circuitCharge.substr(0, curseur);
 			circuitCharge.erase(0, curseur + 1); // On retire le nom du circuit charge
-			
+
 			unsigned short int tailleChargee;
-			curseur = circuitCharge.find_first_of(";"); 
-			iss.str(circuitCharge.substr(0, curseur));		
+			curseur = circuitCharge.find_first_of(";");
+			iss.str(circuitCharge.substr(0, curseur));
 			iss >> tailleChargee;
 			circuitCharge.erase(0, curseur + 1);
 			iss.clear();
 
 			unsigned short int viragesCharges;
-			curseur = circuitCharge.find_first_of(";"); 
+			curseur = circuitCharge.find_first_of(";");
 			iss.str(circuitCharge.substr(0, curseur));
 			iss >> viragesCharges;
 			circuitCharge.erase(0, curseur + 1);
 			iss.clear();
 
 			unsigned short int climatCharge;
-			curseur = circuitCharge.find_first_of(";"); 
+			curseur = circuitCharge.find_first_of(";");
 			iss.str(circuitCharge.substr(0, curseur));
 			iss >> climatCharge;
 			circuitCharge.erase(0, curseur + 1);
 			iss.clear();
-			
+
 			unsigned short int difficulte;
-			curseur = circuitCharge.find_first_of(";"); 
+			curseur = circuitCharge.find_first_of(";");
 			iss.str(circuitCharge.substr(0, curseur));
 			iss >> difficulte;
 			circuitCharge.erase(0, curseur + 1);
 			iss.clear();
-			
+
 			unsigned short int denivele;
-			curseur = circuitCharge.find_first_of(";"); 
+			curseur = circuitCharge.find_first_of(";");
 			iss.str(circuitCharge.substr(0, curseur));
 			iss >> denivele;
 			circuitCharge.erase(0, curseur + 1);
@@ -164,7 +164,7 @@ unsigned short int Circuit::listerCircuits()
 				climatString = "Glacial";
 			}
 
-			nombreCircuits++;			
+			nombreCircuits++;
 			std::cout << "|-" << nombreCircuits << ". " << nomCharge << " [" << tailleChargee << " Km / " << viragesCharges << " Virages, Denivele: " << denivele <<"m] (" << climatString << "), {Difficulte: "<< difficulte <<"}\n";
 		}
 		std::cout << "\n"; //on separe le blocs de circuits de l'option retour
@@ -197,7 +197,7 @@ unsigned short int Circuit::construireMeteo(const unsigned short int& climat)
 		}
 	}
 	else if(climat == 2)
-	{		
+	{
 		if(meteo == 0 || meteo == 1 || meteo == 2 )
 		{
 			meteo = 1; //Ensoleille
@@ -216,7 +216,7 @@ unsigned short int Circuit::construireMeteo(const unsigned short int& climat)
 		}
 	}
 	else if(climat == 3)
-	{		
+	{
 		if(meteo == 0 || meteo == 1)
 		{
 			meteo = 1; //Ensoleille
@@ -235,7 +235,7 @@ unsigned short int Circuit::construireMeteo(const unsigned short int& climat)
 		}
 	}
 	else if(climat == 4)
-	{		
+	{
 		if(meteo == 0 || meteo == 1  )
 		{
 			meteo = 1; //Ensoleille
@@ -273,7 +273,7 @@ unsigned short int Circuit::construireVent()
 	{
 		vent = 5;
 	}
-	
+
 	return vent;
 }
 
@@ -355,12 +355,5 @@ unsigned short int Circuit::getDenivele() const
 //Methodes
 
 
-		
+
 //Operateurs methodes
-
-
-
-
-
-
-

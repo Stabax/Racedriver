@@ -80,7 +80,7 @@ std::string randNomAdversaire()
 	}
 	std::ifstream pilotestxt("Data/console/pilotes.txt");
 
-	if(pilotestxt)
+	if(!pilotestxt)
 	{
 		error("Echec de lecture du fichier pilotes.txt");
 	}

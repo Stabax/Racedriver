@@ -10,7 +10,7 @@ public:
 	~Engine();
 
 	virtual bool update(const sf::Event &e);
-	virtual void draw(sf::RenderWindow *win);
+	virtual void draw(sf::RenderWindow &win);
 };
 
 #endif /* !ENGINE_HH_ */

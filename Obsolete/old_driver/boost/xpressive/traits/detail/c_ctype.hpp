@@ -516,7 +516,7 @@ struct char_class_impl<char>
         #ifdef __isctype
         return 0 != __isctype(ch, mask);
         #else
-        return 0 != ((*__ctype_b_loc())[(int)(ch)] & (unsigned short int)mask);
+        return 0 != ((*__ctype_b_loc())[(int)(ch)] & (int)mask);
         #endif
     }
 };

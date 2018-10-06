@@ -5,7 +5,7 @@
 
 
 //Constructeurs
-Pneus::Pneus(const std::string& marque, const char& rang, const unsigned short int& usure): m_marque(marque), m_rang(rang), m_durabilite(usure), m_prix(vRang(m_rang)*1500)
+Pneus::Pneus(const std::string& marque, const char& rang, const int& usure): m_marque(marque), m_rang(rang), m_durabilite(usure), m_prix(vRang(m_rang)*1500)
 {
 
 }
@@ -21,12 +21,12 @@ Pneus::~Pneus()
 
 
 //Methodes statiques
-Pneus* Pneus::chargerPneus(const unsigned short int& id, const unsigned short int& usure)
+Pneus* Pneus::chargerPneus(const int& id, const int& usure)
 {
 	Pneus* PneusCharge = 0; //Pneus a creer
 	std::string var=""; //contient les lignes du fichier
 	std::string chemin = "Data/composants/pneus.cdx";
-	unsigned short int idActuel = id + 1; //indique l'id actuellement lu dans le fichier
+	int idActuel = id + 1; //indique l'id actuellement lu dans le fichier
 
 	std::ifstream engine(chemin.c_str());
 
@@ -51,7 +51,7 @@ Pneus* Pneus::chargerPneus(const unsigned short int& id, const unsigned short in
 
 		if(idActuel==id)
 		{
-			unsigned short int curseur;
+			int curseur;
 			var.erase(0,var.find_first_of(";")+1);
 
 		      curseur=var.find_first_of(";");
@@ -81,7 +81,7 @@ void Pneus::listerPneus()
 	std::ifstream flux(chemin.c_str());
 	if(flux)
 	{
-		unsigned short int curseur;
+		int curseur;
 		std::cout<<"   |Marque     |rang  |Prix  |\n\n";
 		while(std::getline(flux, var))
 		{
@@ -104,7 +104,7 @@ void Pneus::listerPneus()
 
 			if(marque.size()<12)
 			{
-				for(unsigned short int i=0; i<12-marque.size(); i++)
+				for (size_t i=0; i<12-marque.size(); i++)
 				{
 					espace2+=" ";
 				}
@@ -112,7 +112,7 @@ void Pneus::listerPneus()
 
 			if(id.size()<3)
 			{
-				for(unsigned short int i=0; i<3-id.size(); i++)
+				for (size_t i=0; i<3-id.size(); i++)
 				{
 					espace5+=" ";
 				}
@@ -132,13 +132,13 @@ std::string Pneus::getMarque() const
 	return m_marque;
 }
 
-unsigned short int Pneus::getDurabilite() const
+int Pneus::getDurabilite() const
 {
 	return m_durabilite;
 }
 
 
-unsigned short int Pneus::getPrix() const
+int Pneus::getPrix() const
 {
 	return m_prix;
 }
@@ -152,7 +152,7 @@ char Pneus::getRang() const
 
 
 //mutateurs
-void Pneus::setDurabilite(const unsigned short int& valeur)
+void Pneus::setDurabilite(const int& valeur)
 {
 	m_durabilite=valeur;
 }

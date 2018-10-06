@@ -3,9 +3,9 @@
 
 #include"course.h"
 
-bool preparatifsCourse(const Circuit& Map, const Profil& Player, Voiture*& VoiturePlayer, unsigned short int const& prix)
+bool preparatifsCourse(const Circuit& Map, const Profil& Player, Voiture*& VoiturePlayer, int const& prix)
 {
-	unsigned short int prixCourse;
+	int prixCourse;
 	bool paye = false;
 
 	prixCourse = (VoiturePlayer->getConsommation() * 0.01f * Map.getTaille() * VoiturePlayer->getPrixCarburantMoteur());
@@ -63,8 +63,8 @@ bool preparatifsCourse(const Circuit& Map, const Profil& Player, Voiture*& Voitu
 std::string randNomAdversaire()
 {
 	std::string nomAdversaire;
-	unsigned short int nbAdversaires = 0;
-	unsigned short int ligneALire;
+	int nbAdversaires = 0;
+	int ligneALire;
 
 	if(1) //On separe les deux flux par un bloc
 	{
@@ -87,7 +87,7 @@ std::string randNomAdversaire()
 	else
 	{
 		ligneALire = std::rand()%nbAdversaires; // on randomise
-		for(unsigned short int ligne = 0; ligne <= ligneALire; ligne++)
+		for (size_t ligne = 0; ligne <= ligneALire; ligne++)
 		{
 			std::getline(pilotestxt, nomAdversaire);
 			nomAdversaire.erase(nomAdversaire.size() - 1, nomAdversaire.size()); //On delete le caractère de retour a la ligne
@@ -97,9 +97,9 @@ std::string randNomAdversaire()
 	return nomAdversaire;
 }
 
-bool antiCorruption(const std::string& chemin, const unsigned short int& nbLignes)
+bool antiCorruption(const std::string& chemin, const int& nbLignes)
 {
-	unsigned short int lignesTotales = 0;
+	int lignesTotales = 0;
 	std::string contenueLigne;
 
 	std::ifstream fichier(chemin.c_str());
@@ -127,18 +127,18 @@ bool antiCorruption(const std::string& chemin, const unsigned short int& nbLigne
 }
 
 
-void chargerAdversaires(Voiture* Adversaire[7], unsigned short int difficulteProfil, unsigned short int difficulteCircuit)
+void chargerAdversaires(Voiture* Adversaire[7], int difficulteProfil, int difficulteCircuit)
 {
-	unsigned short int randomDifficulte;	//difficulté calculée en fonction de la difficulté du joueur
-	unsigned short int difficulteTotale;	//difficulté pour calculer l'id et le rang de la voiture
+	int randomDifficulte;	//difficulté calculée en fonction de la difficulté du joueur
+	int difficulteTotale;	//difficulté pour calculer l'id et le rang de la voiture
 	char compteurRang= 'D';				//rang, en fonction de la difficulté totale
-	unsigned short int compteur = 0;		//permet de compter l'id de la voiture en fonction du fichier
-	unsigned short int id = compteur;
+	int compteur = 0;		//permet de compter l'id de la voiture en fonction du fichier
+	int id = compteur;
 	std::string temp;					//permet de stocker une ligne pour compter les lignes
 
 	difficulteProfil *= (difficulteCircuit / 10);
 
-	for(unsigned short int joueur = 0; joueur <= 6; ++joueur)
+	for (size_t joueur = 0; joueur <= 6; ++joueur)
 	{
 		if(std::rand() % 2 == 0)	// 1/2 chances d'augmenter ou diminuer la difficulté du joueur
 		{
@@ -236,9 +236,9 @@ void chargerAdversaires(Voiture* Adversaire[7], unsigned short int difficultePro
 
 void chargerMessagesAccidents(std::string messageAccident[8])
 {
-	unsigned short int random;
-	unsigned short int exclu[8];
-	unsigned short int nbLignes=0;
+	int random;
+	int exclu[8];
+	int nbLignes=0;
 
 	if(1)
 	{
@@ -249,7 +249,7 @@ void chargerMessagesAccidents(std::string messageAccident[8])
 		}
 	}
 
-	for(unsigned short int compteur=0; compteur <=7; ++compteur)
+	for (size_t compteur=0; compteur <=7; ++compteur)
 	{
 		std::ifstream fichier("Data/console/accident.txt");
 		random = std::rand()%(nbLignes +1);
@@ -261,7 +261,7 @@ void chargerMessagesAccidents(std::string messageAccident[8])
 
 		exclu[compteur] = random;
 
-		for(unsigned short int ligne = 1; ligne <=random; ++ligne)
+		for (size_t ligne = 1; ligne <=random; ++ligne)
 		{
 			std::getline(fichier, messageAccident[compteur]);
 		}
@@ -269,15 +269,15 @@ void chargerMessagesAccidents(std::string messageAccident[8])
 }
 
 
-std::string* chargerCommentaireMeteo(const unsigned short int& meteo)
+std::string* chargerCommentaireMeteo(const int& meteo)
 {
-	unsigned short int ligneSoleil = 0;
-	unsigned short int lignePluie = 0;
-	unsigned short int ligneNeige = 0;
-	unsigned short int ligneGlace = 0;
+	int ligneSoleil = 0;
+	int lignePluie = 0;
+	int ligneNeige = 0;
+	int ligneGlace = 0;
 	std::string *ligne = new std::string;
 	size_t curseur;
-	unsigned short int random;
+	int random;
 	if(1)
 	{
 		std::ifstream fichier("Data/console/meteo.txt");
@@ -328,7 +328,7 @@ std::string* chargerCommentaireMeteo(const unsigned short int& meteo)
 	random += 1;
 
 	std::ifstream fichier("Data/console/meteo.txt");
-	for(unsigned short int compteur = 1; compteur < random; ++compteur)
+	for (size_t compteur = 1; compteur < random; ++compteur)
 	{
 		std::getline(fichier, *ligne);
 	}
@@ -337,22 +337,22 @@ std::string* chargerCommentaireMeteo(const unsigned short int& meteo)
 }
 
 
-void calculerScore(unsigned short int score[8], Voiture* Adversaire[7], const Voiture* Player1, const Circuit& Map)
+void calculerScore(int score[8], Voiture* Adversaire[7], const Voiture* Player1, const Circuit& Map)
 {
 	score[0]=((Player1->getVitesse()/2)+(Player1->getAcceleration()*2/Map.getVirages()))*((std::rand()%26)+75)/100;
 
-	for(unsigned short int i = 1; i <=6; i++)
+	for (size_t i = 1; i <=6; i++)
 	{
 		score[i]=((Adversaire[i]->getVitesse()/2)+(Adversaire[i]->getAcceleration()*2/Map.getVirages()))*((std::rand()%26)+75)/100;
 	}
 }
 
 
-void calculerProbaAccident(unsigned short int probaAccident[8], Voiture* Adversaire[7], const Voiture* Player1, const Circuit Map)
+void calculerProbaAccident(int probaAccident[8], Voiture* Adversaire[7], const Voiture* Player1, const Circuit Map)
 {
 	probaAccident[0]=((((Map.getVirages()*Map.getMeteo())/(Player1->getDurabilitePneus()/8))+(Map.getVent()/(Player1->getAerodynamisme()*0.75)))/2) + std::rand()%5;
 
-	for(unsigned short int i = 1; i <=6; i++)
+	for (size_t i = 1; i <=6; i++)
 	{
 		probaAccident[i]=((((Map.getVirages()*Map.getMeteo())/(Adversaire[i]->getDurabilitePneus()/8))+(Map.getVent()/(Adversaire[i]->getAerodynamisme()*0.75)))/2) + std::rand()%5;
 	}
@@ -404,7 +404,7 @@ void faireCourseLibre(Circuit Map, Voiture* Player1, Profil& Player)
 		std::string nomJoueur[7];
 		std::string pseudo;
 
-		for(unsigned short int numero = 0; numero <= 6; numero++)
+		for (size_t numero = 0; numero <= 6; numero++)
 		{
 			pseudo = randNomAdversaire(); //On randomise un nom dans le tableau pseudo.
 			while(pseudo == nomJoueur[0] || pseudo == nomJoueur[1] || pseudo == nomJoueur[2] || pseudo == nomJoueur[3] || pseudo == nomJoueur[4] || pseudo == nomJoueur[5] || pseudo == nomJoueur[6])
@@ -418,7 +418,7 @@ void faireCourseLibre(Circuit Map, Voiture* Player1, Profil& Player)
 		std::cout << "Bienvenue à tous et a toutes ! Aujourd'hui va se derouler l'evenement tant attendu par tous les fans de sportives, tout le monde s'est reuni et l'ambiance est a son comble sur le circuit: " << Map.getNom() << ".\nOn m'annonce qu'il totalise " << Map.getTaille() << " Km, et comprend pas moins de " << Map.getVirages() << " virages serres !\n" << *commentaireMeteo << " D'autre part, il y a un vent de Force " << Map.getVent() << " dans l'enceinte du circuit.\n\nSans attendre passons tout de suite a la liste des Participants:\n\n";
 
 		//on liste les concurants
-		for(unsigned short int numero = 0; numero <= 7; numero++)
+		for (size_t numero = 0; numero <= 7; numero++)
 		{
 			if(numero == 0)
 			{
@@ -448,8 +448,8 @@ void faireCourseLibre(Circuit Map, Voiture* Player1, Profil& Player)
 		msg("GO !");
 		sleep(1.0f);
 
-		unsigned short int score[8];
-		unsigned short int probaAccident[8];
+		int score[8];
+		int probaAccident[8];
 
 		//on calcule Score: celui qui a le plus grand est le vainqueur
 		calculerScore(score, Adversaire, Player1, Map);
@@ -458,7 +458,7 @@ void faireCourseLibre(Circuit Map, Voiture* Player1, Profil& Player)
 		calculerProbaAccident(probaAccident, Adversaire, Player1, Map);
 
 		//on calcule les voitures ayant un accident en fonction de la probabilite calculee precedement
-		for(unsigned short int njoueur = 0; njoueur <= 7; njoueur++)
+		for (size_t njoueur = 0; njoueur <= 7; njoueur++)
 		{
 			if(std::rand()%101 < probaAccident[njoueur])
 			{
@@ -484,7 +484,7 @@ void faireCourseLibre(Circuit Map, Voiture* Player1, Profil& Player)
 		std::cout<<"\n\nPressez [ENTREE] pour voir les resultats.\n";
 		videKBuffer();
 
-		unsigned short int scoreJoueur[8];
+		int scoreJoueur[8];
 
 		scoreJoueur[0] = score[0];
 		scoreJoueur[1] = score[1];
@@ -496,10 +496,10 @@ void faireCourseLibre(Circuit Map, Voiture* Player1, Profil& Player)
 		scoreJoueur[7] = score[7];
 
 		//classement des joueurs
-		unsigned short int temp;
+		int temp;
 		while(score[0] < score[1] || score[1] < score[2] || score[2]<score[3] || score[3]<score[4] || score[4]<score[5] || score[5]<score[6] || score[6]<score[7])
 		{
-			for(unsigned short int i = 1;i <= 7;i++)
+			for (size_t i = 1;i <= 7;i++)
 			{
 				if( score[i - 1] < score[i])
 				{
@@ -513,9 +513,9 @@ void faireCourseLibre(Circuit Map, Voiture* Player1, Profil& Player)
 		//on affiche les resultats
 		bool exclu[8] = {false};
 		bool placeExclue[8] = {false};
-		unsigned short int joueur;
+		int joueur;
 		std::cout<<"\n\n";
-		for(unsigned short int placeClassement = 0; placeClassement <=7 ;placeClassement++)
+		for (size_t placeClassement = 0; placeClassement <=7 ;placeClassement++)
 		{
 			if(placeExclue[placeClassement] == true)
 			{
@@ -572,7 +572,7 @@ void faireCourseLibre(Circuit Map, Voiture* Player1, Profil& Player)
 		videKBuffer();
 		clrscreen();
 
-		for(unsigned short int compteur = 0; compteur <= 6; ++compteur)
+		for (size_t compteur = 0; compteur <= 6; ++compteur)
 		{
 			delete Adversaire[compteur];
 		}
@@ -623,7 +623,7 @@ void faireCourseChampionnat(Circuit Map, Voiture* Player1, Profil& Player)
 			//On initialise les noms des adversaires
 			std::string nomJoueur[7];
 			std::string pseudo;
-			for(unsigned short int numero = 0; numero <= 6; numero++)
+			for (size_t numero = 0; numero <= 6; numero++)
 			{
 				pseudo = randNomAdversaire(); //On randomise un nom dans le tableau pseudo.
 				while(pseudo == nomJoueur[0] || pseudo == nomJoueur[1] || pseudo == nomJoueur[2] || pseudo == nomJoueur[3] || pseudo == nomJoueur[4] || pseudo == nomJoueur[5] || pseudo == nomJoueur[6])
@@ -637,7 +637,7 @@ void faireCourseChampionnat(Circuit Map, Voiture* Player1, Profil& Player)
 			std::cout << "Bienvenue à tous et a toutes ! Aujourd'hui va se derouler l'evenement tant attendu par tous les fans de sportives, tout le monde s'est reuni et l'ambiance est a son comble sur le circuit: " << Map.getNom() << ".\nOn m'annonce qu'il totalise " << Map.getTaille() << " Km, et comprend pas moins de " << Map.getVirages() << " virages serres !\n" << *commentaireMeteo << " D'autre part, il y a un vent de Force " << Map.getVent() << " dans l'enceinte du circuit.\n\nSans attendre passons tout de suite a la liste des Participants:\n\n";
 
 			//on liste les concurants
-			for(unsigned short int numero = 0; numero <= 7; numero++)
+			for (size_t numero = 0; numero <= 7; numero++)
 			{
 				if(numero == 0)
 				{
@@ -667,8 +667,8 @@ void faireCourseChampionnat(Circuit Map, Voiture* Player1, Profil& Player)
 			msg("GO !");
 			sleep(1.0f);
 
-			unsigned short int score[8];
-			unsigned short int probaAccident[8];
+			int score[8];
+			int probaAccident[8];
 			//on calcule Score: celui qui a le plus grand est le vainqueur
 			calculerScore(score, Adversaire, Player1, Map);
 
@@ -676,7 +676,7 @@ void faireCourseChampionnat(Circuit Map, Voiture* Player1, Profil& Player)
 			calculerProbaAccident(score, Adversaire, Player1, Map);
 
 			//on calcule les voitures ayant un accident en fonction de la probabilite calculee precedement
-			for(unsigned short int njoueur = 0; njoueur <= 7; njoueur++)
+			for (size_t njoueur = 0; njoueur <= 7; njoueur++)
 			{
 				if(std::rand()%101 < probaAccident[njoueur])
 				{
@@ -703,8 +703,8 @@ void faireCourseChampionnat(Circuit Map, Voiture* Player1, Profil& Player)
 			std::cout<<"\n\nPressez [ENTREE] pour voir les resultats.\n";
 			videKBuffer();
 
-			unsigned short int joueur;
-			unsigned short int scoreJoueur[8];
+			int joueur;
+			int scoreJoueur[8];
 			scoreJoueur[0] = score[0];
 			scoreJoueur[1] = score[1];
 			scoreJoueur[2] = score[2];
@@ -715,10 +715,10 @@ void faireCourseChampionnat(Circuit Map, Voiture* Player1, Profil& Player)
 			scoreJoueur[7] = score[7];
 
 			//classement des joueurs
-			unsigned short int temp;
+			int temp;
 			while(score[0] < score[1] || score[1] < score[2] || score[2]<score[3] || score[3]<score[4] || score[4]<score[5] || score[5]<score[6] || score[6]<score[7])
 			{
-				for(unsigned short int i = 1;i <= 7;i++)
+				for (size_t i = 1;i <= 7;i++)
 				{
 					if( score[i - 1] < score[i])
 					{
@@ -733,7 +733,7 @@ void faireCourseChampionnat(Circuit Map, Voiture* Player1, Profil& Player)
 			bool exclu[8] = {false};
 			bool placeExclue[8] = {false};
 			std::cout<<"\n\n";
-			for(unsigned short int placeClassement = 0; placeClassement <=7 ;placeClassement++)
+			for (size_t placeClassement = 0; placeClassement <=7 ;placeClassement++)
 			{
 				if(placeExclue[placeClassement] == true)
 				{
@@ -792,7 +792,7 @@ void faireCourseChampionnat(Circuit Map, Voiture* Player1, Profil& Player)
 			videKBuffer();
 			clrscreen();
 
-			for(unsigned short int compteur = 0; compteur <= 6; ++compteur)
+			for (size_t compteur = 0; compteur <= 6; ++compteur)
 			{
 				delete Adversaire[compteur];
 			}

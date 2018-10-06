@@ -5,7 +5,7 @@
 
 
 //Constructeurs
-Circuit::Circuit(const std::string& nom, const unsigned short int& taille, const unsigned short int& virages, const unsigned short int& climat, const unsigned short int& difficulte, const unsigned short int& denivele) : m_nom(nom), m_taille(taille), m_virages(virages), m_meteo(Circuit::construireMeteo(climat)), m_vent(Circuit::construireVent()), m_climat(Circuit::construireClimat(climat)), m_difficulte(difficulte), m_denivele(denivele)
+Circuit::Circuit(const std::string& nom, const int& taille, const int& virages, const int& climat, const int& difficulte, const int& denivele) : m_nom(nom), m_taille(taille), m_virages(virages), m_meteo(Circuit::construireMeteo(climat)), m_vent(Circuit::construireVent()), m_climat(Circuit::construireClimat(climat)), m_difficulte(difficulte), m_denivele(denivele)
 {
 }
 
@@ -19,7 +19,7 @@ Circuit::~Circuit()
 
 
 //Methodes statiques
-void Circuit::chargerCircuit(const unsigned short int& id, Circuit*& CircuitCourant)
+void Circuit::chargerCircuit(const int& id, Circuit*& CircuitCourant)
 {
 	bool trouve = false;
 	std::string circuitCharge; //Variable de lecture de ligne
@@ -32,47 +32,47 @@ void Circuit::chargerCircuit(const unsigned short int& id, Circuit*& CircuitCour
 	}
 	else
 	{
-		for(unsigned short int boucle = 0; boucle < id; ++boucle)
+		for (int boucle = 0; boucle < id; ++boucle)
 		{
 			std::getline(tracks, circuitCharge);
 		}
 
 		iss.clear();
-		unsigned short int curseur;
+		int curseur;
 		curseur = circuitCharge.find_first_of(";"); //strpos() recherche la position du premier point virgule
 		std::string nomCharge;
 		nomCharge = circuitCharge.substr(0, curseur);
 		circuitCharge.erase(0, curseur + 1); // On retire le nom du circuit charge
 
-		unsigned short int tailleChargee;
+		int tailleChargee;
 		curseur = circuitCharge.find_first_of(";");
 		iss.str(circuitCharge.substr(0, curseur));
 		iss >> tailleChargee;
 		circuitCharge.erase(0, curseur + 1);
 		iss.clear();
 
-		unsigned short int viragesCharges;
+		int viragesCharges;
 		curseur = circuitCharge.find_first_of(";");
 		iss.str(circuitCharge.substr(0, curseur));
 		iss >> viragesCharges;
 		circuitCharge.erase(0, curseur + 1);
 		iss.clear();
 
-		unsigned short int meteoChargee;
+		int meteoChargee;
 		curseur = circuitCharge.find_first_of(";");
 		iss.str(circuitCharge.substr(0, curseur));
 		iss >> meteoChargee;
 		circuitCharge.erase(0, curseur + 1);
 		iss.clear();
 
-		unsigned short int difficulte;
+		int difficulte;
 		curseur = circuitCharge.find_first_of(";");
 		iss.str(circuitCharge.substr(0, curseur));
 		iss >> difficulte;
 		circuitCharge.erase(0, curseur + 1);
 		iss.clear();
 
-		unsigned short int denivele;
+		int denivele;
 		curseur = circuitCharge.find_first_of(";");
 		iss.str(circuitCharge.substr(0, curseur));
 		iss >> denivele;
@@ -89,9 +89,9 @@ void Circuit::chargerCircuit(const unsigned short int& id, Circuit*& CircuitCour
 }
 
 
-unsigned short int Circuit::listerCircuits()
+int Circuit::listerCircuits()
 {
-	unsigned short int nombreCircuits = 0; //id du circuit
+	int nombreCircuits = 0; //id du circuit
 	std::istringstream iss;
 	std::ifstream tracks("Data/Tracks.map");
 
@@ -105,41 +105,41 @@ unsigned short int Circuit::listerCircuits()
 
 		while(std::getline(tracks, circuitCharge))
 		{
-			unsigned short int curseur;
+			int curseur;
 			curseur = circuitCharge.find_first_of(";");
 			std::string nomCharge;
 			nomCharge = circuitCharge.substr(0, curseur);
 			circuitCharge.erase(0, curseur + 1); // On retire le nom du circuit charge
 
-			unsigned short int tailleChargee;
+			int tailleChargee;
 			curseur = circuitCharge.find_first_of(";");
 			iss.str(circuitCharge.substr(0, curseur));
 			iss >> tailleChargee;
 			circuitCharge.erase(0, curseur + 1);
 			iss.clear();
 
-			unsigned short int viragesCharges;
+			int viragesCharges;
 			curseur = circuitCharge.find_first_of(";");
 			iss.str(circuitCharge.substr(0, curseur));
 			iss >> viragesCharges;
 			circuitCharge.erase(0, curseur + 1);
 			iss.clear();
 
-			unsigned short int climatCharge;
+			int climatCharge;
 			curseur = circuitCharge.find_first_of(";");
 			iss.str(circuitCharge.substr(0, curseur));
 			iss >> climatCharge;
 			circuitCharge.erase(0, curseur + 1);
 			iss.clear();
 
-			unsigned short int difficulte;
+			int difficulte;
 			curseur = circuitCharge.find_first_of(";");
 			iss.str(circuitCharge.substr(0, curseur));
 			iss >> difficulte;
 			circuitCharge.erase(0, curseur + 1);
 			iss.clear();
 
-			unsigned short int denivele;
+			int denivele;
 			curseur = circuitCharge.find_first_of(";");
 			iss.str(circuitCharge.substr(0, curseur));
 			iss >> denivele;
@@ -173,10 +173,10 @@ unsigned short int Circuit::listerCircuits()
 }
 
 
-unsigned short int Circuit::construireMeteo(const unsigned short int& climat)
+int Circuit::construireMeteo(const int& climat)
 //le constructeur ne peut pas mettre de conditions dans la liste d'initialisation , donc on le fait ici
 {
-	unsigned short int meteo = std::rand()%12;
+	int meteo = std::rand()%12;
 	if(climat == 1)
 	{
 		if(meteo == 0 || meteo == 1 || meteo == 2 || meteo == 3)
@@ -257,10 +257,10 @@ unsigned short int Circuit::construireMeteo(const unsigned short int& climat)
 }
 
 
-unsigned short int Circuit::construireVent()
+int Circuit::construireVent()
 {
 //le constructeur ne peut pas mettre de conditions dans la liste d'initialisation , donc on le fait ici
-	unsigned short int vent = std::rand()%3;
+	int vent = std::rand()%3;
 	if(vent == 0)
 	{
 		vent = 1;
@@ -278,7 +278,7 @@ unsigned short int Circuit::construireVent()
 }
 
 
-std::string Circuit::construireClimat(const unsigned short int& climat)
+std::string Circuit::construireClimat(const int& climat)
 {
 	if(climat == 1)
 	{
@@ -311,37 +311,37 @@ std::string Circuit::getNom() const
 }
 
 
-unsigned short int Circuit::getTaille() const
+int Circuit::getTaille() const
 {
 	return m_taille;
 }
 
 
-unsigned short int Circuit::getVirages() const
+int Circuit::getVirages() const
 {
 	return m_virages;
 }
 
 
-unsigned short int Circuit::getMeteo() const
+int Circuit::getMeteo() const
 {
 	return m_meteo;
 }
 
 
-unsigned short int Circuit::getVent() const
+int Circuit::getVent() const
 {
 	return m_vent;
 }
 
 
-unsigned short int Circuit::getDifficulte() const
+int Circuit::getDifficulte() const
 {
 	return m_difficulte;
 }
 
 
-unsigned short int Circuit::getDenivele() const
+int Circuit::getDenivele() const
 {
 	return m_denivele;
 }

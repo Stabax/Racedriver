@@ -52,7 +52,7 @@ struct boost::cnv::printf : public boost::cnv::cnvbase<boost::cnv::printf>
     {
         typedef boost::mpl::vector<double, float,
                                    int, unsigned int,
-                                   short int, unsigned short int,
+                                   short int, int,
                                    long int, unsigned long int
                                    > managed_types;
 

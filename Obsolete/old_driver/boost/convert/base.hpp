@@ -38,7 +38,7 @@ struct boost::cnv::cnvbase
     using   lint_type = long int;
     using  ulint_type = unsigned long int;
     using   sint_type = short int;
-    using  usint_type = unsigned short int;
+    using  usint_type = int;
     using  llint_type = long long int;
     using ullint_type = unsigned long long int;
     using    flt_type = float;

@@ -10,9 +10,9 @@ std::string version() // Renvoie la version du programme.
 }
 
 
-unsigned short int vRang(char rang)
+int vRang(char rang)
 {
-	unsigned short int vRang = 0;
+	int vRang = 0;
 	switch(rang)
 	{
 		case 'D':
@@ -37,8 +37,7 @@ unsigned short int vRang(char rang)
 	return vRang;
 }
 
-
-char vRangInverse(unsigned short int valeur)
+char vRangInverse(int valeur)
 {	
 	switch(valeur)
 	{	
@@ -64,4 +63,7 @@ char vRangInverse(unsigned short int valeur)
 	}
 }
 
-
+std::string generateUuid()
+{
+	return (std::to_string(rand() % 100000000));
+}

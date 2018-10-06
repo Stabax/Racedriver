@@ -15,7 +15,7 @@ void miseAJour()
 	{
 		std::string ligneChargee;
 		std::istringstream iss;	//convertion string to int
-		unsigned short int OS = 2; //0 = linux, 1 = windows, 2 = bug
+		int OS = 2; //0 = linux, 1 = windows, 2 = bug
 		
 		std::getline(config, ligneChargee);
 		iss.str(ligneChargee);	//charge l'OS

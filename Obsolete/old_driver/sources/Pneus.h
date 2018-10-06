@@ -14,24 +14,24 @@ class Pneus
 	public:
 	
 	//Constructeurs
-	Pneus(const std::string& marque, const char& rang, const unsigned short int& usure);
+	Pneus(const std::string& marque, const char& rang, const int& usure);
 	
 	//Destructeur
 	~Pneus();
 	
 	//Méthodes statiques
-	static Pneus* chargerPneus(const unsigned short int& id, const unsigned short int& usure = 100);
+	static Pneus* chargerPneus(const int& id, const int& usure = 100);
 	static void listerPneus();
 	
 	//Accesseurs
 	std::string getMarque() const;
-	unsigned short int getDurabilite() const;
-	unsigned short int getPrix() const;
+	int getDurabilite() const;
+	int getPrix() const;
 	char getRang() const;
 	
 	
 	//Mutateurs
-	void setDurabilite(const unsigned short int& valeur);
+	void setDurabilite(const int& valeur);
 	
 	//Méthodes
 		//Aucune
@@ -42,9 +42,9 @@ class Pneus
 	protected:
 	//Attributs
 	std::string m_marque;
-	unsigned short int m_rang;
-	unsigned short int m_durabilite;
-	unsigned short int m_prix;
+	int m_rang;
+	int m_durabilite;
+	int m_prix;
 		//definit la voiture qui peut les porter, ainsi que la vitesse d'usure  des pneus
 };
 

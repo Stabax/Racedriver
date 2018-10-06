@@ -19,19 +19,19 @@ class Moteur
 		
 	public:
 	//constructeurs
-	Moteur(const std::string& marque, const std::string& modele, const char& rang, const unsigned short int& vitesse, const unsigned short int& acceleration, const std::string& carburant);
+	Moteur(const std::string& marque, const std::string& modele, const char& rang, const int& vitesse, const int& acceleration, const std::string& carburant);
 
 	//Destructeur
 	~Moteur();
 	
 	//Methodes statiques
-	static Moteur* chargerMoteur(const unsigned short int& id, const std::string& marqueChargee);
+	static Moteur* chargerMoteur(const int& id, const std::string& marqueChargee);
 	static void listerMoteurs(const std::string& marque);
-	static void infoMoteur(const unsigned short int& id, const std::string& marque, std::string& modele);
-	static void infoMoteur(const unsigned short int& id, const std::string& marque, unsigned int& prix);
-	static void infoMoteur(const unsigned short int& id, const std::string& marque, std::string& modele, unsigned short int& vitesse, unsigned short int& acceleration);
-	static void infoMoteur(const unsigned short int& id, const std::string& marque, std::string& modele, unsigned short int& vitesse, unsigned short int& acceleration, char& rang, unsigned int& prix);
-	static unsigned short int compterMoteurs(const std::string& marque);
+	static void infoMoteur(const int& id, const std::string& marque, std::string& modele);
+	static void infoMoteur(const int& id, const std::string& marque, unsigned int& prix);
+	static void infoMoteur(const int& id, const std::string& marque, std::string& modele, int& vitesse, int& acceleration);
+	static void infoMoteur(const int& id, const std::string& marque, std::string& modele, int& vitesse, int& acceleration, char& rang, unsigned int& prix);
+	static int compterMoteurs(const std::string& marque);
 	static float returnPrixCarburant(const std::string& carburant);
 	
 	//Accesseurs	
@@ -42,7 +42,7 @@ class Moteur
 	float getAcceleration() const;
 	std::string getTypeCarburant() const;
 	float getConsommation() const;
-	unsigned short int getPrix() const;
+	int getPrix() const;
 	float getPrixCarburant() const;
 
 	//mutateurs
@@ -58,7 +58,7 @@ class Moteur
 	//Attributs
 	std::string m_marque;
 	std::string m_modele;
-	unsigned short int m_prix;
+	int m_prix;
 	char m_rang;
 	float m_vitesse;
 	float m_acceleration;

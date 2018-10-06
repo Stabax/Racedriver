@@ -295,7 +295,7 @@ void menuChargementPartie(Profil*& Player, bool& quit)
 {
 	//Var
 	std::string sMenu;
-	unsigned short int menu;
+	int menu;
 	bool etat; //stocke le resultat du chargement
 	std::string nom;
 
@@ -368,7 +368,7 @@ void menuSuppressionPartie()
 	//Var
 	std::string sMenu;
 	char quitVerify = 'x';
-	unsigned short int menu;
+	int menu;
 	std::string nom;
 
 	//Debut
@@ -396,7 +396,7 @@ void menuSuppressionPartie()
 	}
 	else if(menu > 0 && menu <= Profil::compterSauvegardes())
 	{
-		for(unsigned short int i = 1; i <= Profil::compterSauvegardes(); i++)
+		for (size_t i = 1; i <= Profil::compterSauvegardes(); i++)
 		{
 			if(menu == i)
 			{

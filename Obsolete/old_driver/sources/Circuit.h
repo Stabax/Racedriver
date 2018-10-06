@@ -19,26 +19,26 @@ class Circuit
 		
 	public:
 	//Constructeurs
-	Circuit(const std::string& nom, const unsigned short int& taille, const unsigned short int& virages, const unsigned short int& climat, const unsigned short int& difficulte, const unsigned short int& denivele);
+	Circuit(const std::string& nom, const int& taille, const int& virages, const int& climat, const int& difficulte, const int& denivele);
 
 	//destructeur
 	~Circuit();
 	
 	//Methodes statiques
-	static void chargerCircuit(const unsigned short int& id, Circuit*& CircuitCourant);
-	static unsigned short int listerCircuits();
-	static unsigned short int construireMeteo(const unsigned short int& climat);
-	static unsigned short int construireVent();
-	static std::string construireClimat(const unsigned short int& climat);
+	static void chargerCircuit(const int& id, Circuit*& CircuitCourant);
+	static int listerCircuits();
+	static int construireMeteo(const int& climat);
+	static int construireVent();
+	static std::string construireClimat(const int& climat);
 	
 	//Accesseurs
 	std::string getNom() const;
-	unsigned short int getTaille() const;
-	unsigned short int getVirages() const;
-	unsigned short int getMeteo() const;
-	unsigned short int getVent() const;
-	unsigned short int getDifficulte() const;
-	unsigned short int getDenivele() const;
+	int getTaille() const;
+	int getVirages() const;
+	int getMeteo() const;
+	int getVent() const;
+	int getDifficulte() const;
+	int getDenivele() const;
 	
 	//Mutateurs
 	
@@ -50,13 +50,13 @@ class Circuit
 	protected:
 	//Attributs
 	std::string m_nom;
-	unsigned short int m_taille;
-	unsigned short int m_virages;
-	unsigned short int m_meteo;
-	unsigned short int m_vent;
+	int m_taille;
+	int m_virages;
+	int m_meteo;
+	int m_vent;
 	std::string m_climat;
-	unsigned short int m_difficulte;
-	unsigned short int m_denivele;	
+	int m_difficulte;
+	int m_denivele;	
 };
 
 

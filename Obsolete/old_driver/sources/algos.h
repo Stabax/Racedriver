@@ -6,5 +6,6 @@
 
 std::string version();
 
-unsigned short int vRang(char rang);
-char vRangInverse(unsigned short int valeur);
+int vRang(char rang);
+char vRangInverse(int valeur);
+std::string generateUuid();

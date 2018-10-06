@@ -8,8 +8,8 @@ Voiture* menuChoixVoiture(Profil& Player)
 	std::string sMenu;
 	Voiture* VoitureSelectionnee = 0;
 	Voiture* VoitureListee = 0;
-	unsigned short int menu;
-	unsigned short int nbBox = Player.getNbBox();
+	int menu;
+	int nbBox = Player.getNbBox();
 	bool quit = false;
 	while(quit != true)
 	{
@@ -18,7 +18,7 @@ Voiture* menuChoixVoiture(Profil& Player)
 		std::cout << "===============\n";
 		std::cout << "Selectionnez le vehicule qui va faire la course.\n";
 		std::cout << "===============\n\n";
-		for(unsigned short int numeroBox = 0; numeroBox < nbBox; numeroBox++)
+		for (size_t numeroBox = 0; numeroBox < nbBox; numeroBox++)
 		{
 			VoitureListee = Player.getBox(numeroBox);
 			if(Player.boxVide(numeroBox))
@@ -30,7 +30,7 @@ Voiture* menuChoixVoiture(Profil& Player)
 				std::cout << (numeroBox + 1) << ". Box " << (numeroBox + 1) << " [" << VoitureListee->getMarque() << " " << VoitureListee->getModele() << "]\n";
 			}
 		}
-		for(unsigned short int j = nbBox; j < 5; j++)
+		for (size_t j = nbBox; j < 5; j++)
 		{
 			std::cout << (j + 1) << ". Box " << (j + 1) << " [VEROUILLE]\n";
 		}
@@ -81,9 +81,9 @@ Voiture* menuChoixVoiture(Profil& Player)
 void menuCourseLibre(Profil& Player)
 {
 	std::string sMenu;
-	unsigned short int menu;
+	int menu;
 	Voiture* VoiturePlayer = 0;
-	unsigned short int nombreCircuits;
+	int nombreCircuits;
 	//Menu Principal
 	std::cout << "Course Libre\n";
 	std::cout << "===============\n";
@@ -134,9 +134,9 @@ void menuCourseLibre(Profil& Player)
 void menuCourseChampionnat(Profil& Player)
 {
 	std::string sMenu;
-	unsigned short int menu;
+	int menu;
 	Voiture* VoiturePlayer = 0;
-	unsigned short int nombreCircuits;
+	int nombreCircuits;
 	//Menu Principal
 	std::cout << "Course Libre\n";
 	std::cout << "===============\n";
@@ -184,11 +184,11 @@ void menuCourseChampionnat(Profil& Player)
 }
 
 
-unsigned short int menuConsulterGarage(Profil& Player, const unsigned short int& mode)
+int menuConsulterGarage(Profil& Player, const int& mode)
 {
 	std::string sMenu;
-	unsigned short int menu;
-	unsigned short int nbBox = Player.getNbBox();
+	int menu;
+	int nbBox = Player.getNbBox();
 	Voiture* Voiture = 0;
 
 	//Menu Principal
@@ -215,7 +215,7 @@ unsigned short int menuConsulterGarage(Profil& Player, const unsigned short int&
 		std::cout << "Selectionnez un vehicule a vendre.\n";
 	}
 	std::cout << "===============\n\n";
-	for(unsigned short int numeroBox = 0; numeroBox < nbBox; numeroBox++)
+	for (size_t numeroBox = 0; numeroBox < nbBox; numeroBox++)
 	{
 		Voiture = Player.getBox(numeroBox);
 		if(Player.boxVide(numeroBox))
@@ -227,7 +227,7 @@ unsigned short int menuConsulterGarage(Profil& Player, const unsigned short int&
 			std::cout << (numeroBox + 1) << ". Box " << (numeroBox + 1) << " [" << Voiture->getMarque() << " " << Voiture->getModele() << "]\n";
 		}
 	}
-	for(unsigned short int numeroBoxVerouille = nbBox; numeroBoxVerouille < 5; numeroBoxVerouille++)
+	for (size_t numeroBoxVerouille = nbBox; numeroBoxVerouille < 5; numeroBoxVerouille++)
 	{
 		std::cout << (numeroBoxVerouille + 1) << ". Box " << (numeroBoxVerouille + 1) << " [VEROUILLE]\n";
 	}
@@ -300,7 +300,7 @@ unsigned short int menuConsulterGarage(Profil& Player, const unsigned short int&
 }
 
 
-void menuConsulterBox(Profil& Player, const unsigned short int& numeroBox)
+void menuConsulterBox(Profil& Player, const int& numeroBox)
 {
 	Voiture* Voiture = Player.getBox(numeroBox);
 	//Menu Principal
@@ -339,7 +339,7 @@ void menuConsulterBox(Profil& Player, const unsigned short int& numeroBox)
 }
 
 
-void menuAtelier(Profil& Player, const unsigned short int& numeroBox)
+void menuAtelier(Profil& Player, const int& numeroBox)
 {
 	clrscreen();
 	char menu;
@@ -391,17 +391,17 @@ void menuAtelier(Profil& Player, const unsigned short int& numeroBox)
 }
 
 
-void menuAtelierSpoiler(Profil& Player, const unsigned short int& numeroBox)
+void menuAtelierSpoiler(Profil& Player, const int& numeroBox)
 {
 	Voiture* Voiture = Player.getBox(numeroBox);
 	char verif = 'x';
 
-	unsigned short int id = Voiture->getIdSpoiler();
+	int id = Voiture->getIdSpoiler();
 
-	unsigned short int idCharge = id + 1;
+	int idCharge = id + 1;
 	std::string modeleCharge;
 	unsigned int prixCharge;
-	unsigned short int aerodynamismeCharge;
+	int aerodynamismeCharge;
 	char rangCharge;
 
 	Spoiler::infoSpoiler(idCharge, modeleCharge, rangCharge, aerodynamismeCharge, prixCharge);
@@ -458,17 +458,17 @@ void menuAtelierSpoiler(Profil& Player, const unsigned short int& numeroBox)
 }
 
 
-void menuAtelierPriseAir(Profil& Player, const unsigned short int& numeroBox)
+void menuAtelierPriseAir(Profil& Player, const int& numeroBox)
 {
 	Voiture* Voiture = Player.getBox(numeroBox);
 	char verif = 'x';
 
-	unsigned short int id = Voiture->getIdSpoiler();
+	int id = Voiture->getIdSpoiler();
 
-	unsigned short int idCharge = id + 1;
+	int idCharge = id + 1;
 	std::string modeleCharge;
 	unsigned int prixCharge;
-	unsigned short int aerodynamismeCharge;
+	int aerodynamismeCharge;
 	char rangCharge;
 
 	PriseAir::infoPriseAir(idCharge, modeleCharge, rangCharge, aerodynamismeCharge, prixCharge);
@@ -526,7 +526,7 @@ void menuAtelierPriseAir(Profil& Player, const unsigned short int& numeroBox)
 }
 
 
-void menuAtelierMoteur(Profil& Player, const unsigned short int& numeroBox)
+void menuAtelierMoteur(Profil& Player, const int& numeroBox)
 {
 	clrscreen();
 
@@ -534,20 +534,20 @@ void menuAtelierMoteur(Profil& Player, const unsigned short int& numeroBox)
 
 	char verifAchat;
 	std::string sMenu;
-	unsigned short int menu;
-	unsigned short int tmenu = 0;
+	int menu;
+	int tmenu = 0;
 	
 	bool paye = false;
 	bool achat = false;
 	bool quit = false;
 	bool e2tour = false;
-	unsigned short int nbMoteurs = Moteur::compterMoteurs(Voiture->getMarque());
+	int nbMoteurs = Moteur::compterMoteurs(Voiture->getMarque());
 
 	std::string newNomMoteur = "Aucun";
 	char newRangMoteur = ' ';
 	unsigned int newPrixMoteur = 0;
-	unsigned short int newVitesseMoteur = 0;
-	unsigned short int newAccelerationMoteur = 0;
+	int newVitesseMoteur = 0;
+	int newAccelerationMoteur = 0;
 	short int diffVitesseMoteur = 0;
 	short int diffAccelerationMoteur = 0;
 
@@ -711,13 +711,13 @@ void menuAtelierMoteur(Profil& Player, const unsigned short int& numeroBox)
 }
 
 
-void menuMaintenance(Profil& Player, const unsigned short int& numeroBox)
+void menuMaintenance(Profil& Player, const int& numeroBox)
 {
 	clrscreen();
 	char menu;
 	bool quit = 0;
 	char verifAchat;
-	unsigned short int nitroManquante;
+	int nitroManquante;
 	Voiture* Voiture = Player.getBox(numeroBox);
 	unsigned int aPayer=0;
 	//Menu Principal
@@ -899,22 +899,22 @@ void menuAcheterBox(Profil& Player)
 void menuAchatVoiture(const char& rang, Profil& Player)
 {
 	std::string sMenu;
-	unsigned short int menu;
-	unsigned short int tmenu = 0;
+	int menu;
+	int tmenu = 0;
 	bool quit = false;
 	bool achat = false;
 	bool e2tour = false;
-	unsigned short int numeroBox = 0;
+	int numeroBox = 0;
 	
 	std::string marqueVoiture = "N/A";
 	std::string modeleVoiture = "N/A";
-	unsigned short int nitroMaxVoiture = 0;
-	unsigned short int aerodynamismeVoiture = 0;
+	int nitroMaxVoiture = 0;
+	int aerodynamismeVoiture = 0;
 
-	unsigned short int idMoteurVoiture =0;
+	int idMoteurVoiture =0;
 	std::string nomMoteurVoiture = "N/A";
-	unsigned short int vitesseMoteurVoiture = 0;
-	unsigned short int accelerationMoteurVoiture = 0;
+	int vitesseMoteurVoiture = 0;
+	int accelerationMoteurVoiture = 0;
 
 	unsigned int prixVoiture = 0;
 	
@@ -1101,12 +1101,12 @@ void menuConcessionaireAchat(Profil& Player)
 }
 
 
-void menuVenteVoiture(Profil& Player, const unsigned short int& numeroBox)
+void menuVenteVoiture(Profil& Player, const int& numeroBox)
 {
 	char verif;
 	Voiture* Voiture = Player.getBox(numeroBox);
 	std::cout << Voiture->getPrix();
-	unsigned short int prixVente = Voiture->getPrix() * 0.70f;
+	int prixVente = Voiture->getPrix() * 0.70f;
 	std::string sPrixVente;
 	std::ostringstream oss;
 
@@ -1153,7 +1153,7 @@ void menuDifficulte(Profil& Player)
 {
 	std::string menu;	//un string car le le passe en iss
 	char choix;
-	unsigned short int difficulte;
+	int difficulte;
 	std::cout<<"Augmenter la difficulte augmente les gains\n";
 	std::cout<<"====================\n";
 	std::cout<<"Choisissez une difficulte\n";

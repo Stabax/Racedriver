@@ -82,13 +82,13 @@ template <> struct promote_to_int<unsigned char> { typedef int type; };
 template <> struct promote_to_int<signed char> { typedef int type; };
 template <> struct promote_to_int<short int> { typedef int type; };
 
-// The unsigned short int promotion rule is this:
-// unsigned short int to signed int if a signed int can hold all values 
-// of unsigned short int, otherwise go to unsigned int.
-template <> struct promote_to_int<unsigned short int>
+// The int promotion rule is this:
+// int to signed int if a signed int can hold all values 
+// of int, otherwise go to unsigned int.
+template <> struct promote_to_int<int>
 { 
         typedef
-                detail::IF<sizeof(int) <= sizeof(unsigned short int),        
+                detail::IF<sizeof(int) <= sizeof(int),        
 // I had the logic reversed but ">" messes up the parsing.
                 unsigned int,
                 int>::RET type; 

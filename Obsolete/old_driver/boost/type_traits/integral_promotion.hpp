@@ -25,7 +25,7 @@ template<> struct need_promotion<char              > : public true_type {};
 template<> struct need_promotion<signed char       > : public true_type {};
 template<> struct need_promotion<unsigned char     > : public true_type {};
 template<> struct need_promotion<signed short int  > : public true_type {};
-template<> struct need_promotion<unsigned short int> : public true_type {};
+template<> struct need_promotion<int> : public true_type {};
 
 
 // Specializations for non-standard types.

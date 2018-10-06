@@ -5,7 +5,7 @@
 
 
 //Constructeurs
-Spoiler::Spoiler(const std::string& modele, const char& rang, const unsigned short int& aerodynamisme):m_nom(modele), m_rang(rang), m_aerodynamisme(aerodynamisme)
+Spoiler::Spoiler(const std::string& modele, const char& rang, const int& aerodynamisme):m_nom(modele), m_rang(rang), m_aerodynamisme(aerodynamisme)
 {
 }
 
@@ -20,12 +20,12 @@ Spoiler::~Spoiler()
 
 
 //Methodes statiques
-Spoiler* Spoiler::chargerSpoiler(const unsigned short int& id)
+Spoiler* Spoiler::chargerSpoiler(const int& id)
 {
 	Spoiler* SpoilerCharge = 0; //Spoiler a creer
 	std::string var=""; //contient les lignes du fichier
 	std::string chemin = "Data/composants/spoiler.cdx";
-	unsigned short int idActuel = id + 1; //indique l'id actuellement lu dans le fichier
+	int idActuel = id + 1; //indique l'id actuellement lu dans le fichier
 
 	std::ifstream engine(chemin.c_str());
 
@@ -50,7 +50,7 @@ Spoiler* Spoiler::chargerSpoiler(const unsigned short int& id)
 
 		if(idActuel==id)
 		{
-			unsigned short int curseur;
+			int curseur;
 			var.erase(0,var.find_first_of(";")+1);
 
 			curseur=var.find_first_of(";");
@@ -63,7 +63,7 @@ Spoiler* Spoiler::chargerSpoiler(const unsigned short int& id)
 
 			std::string sAerodynamisme=var;
 
-			unsigned short int aerodynamisme;
+			int aerodynamisme;
 
 			std::istringstream iss;
 			iss.str(sAerodynamisme);
@@ -86,14 +86,14 @@ Spoiler* Spoiler::chargerSpoiler(const unsigned short int& id)
 }
 
 
-void Spoiler::infoSpoiler(const unsigned short int& id, unsigned int& prix)
+void Spoiler::infoSpoiler(const int& id, unsigned int& prix)
 {
 	std::string var = ""; //contient les lignes du fichier
 	std::string chemin ="Data/composants/spoiler.cdx";
 	std::ifstream engine(chemin.c_str());
 	std::istringstream iss;
-	unsigned short int idActuel = 0; //indique l'id actuellement lu dans le fichier
-	unsigned short int curseur;
+	int idActuel = 0; //indique l'id actuellement lu dans le fichier
+	int curseur;
 	char rang;
 
 	if(!engine)
@@ -132,14 +132,14 @@ void Spoiler::infoSpoiler(const unsigned short int& id, unsigned int& prix)
 	}
 }
 
-void Spoiler::infoSpoiler(const unsigned short int& id, std::string& modele, char& rang, unsigned short int& aero, unsigned int& prix)
+void Spoiler::infoSpoiler(const int& id, std::string& modele, char& rang, int& aero, unsigned int& prix)
 {
 	std::string var = ""; //contient les lignes du fichier
 	std::string chemin ="Data/composants/spoiler.cdx";
 	std::ifstream engine(chemin.c_str());
 	std::istringstream iss;
-	unsigned short int idActuel = 0; //indique l'id actuellement lu dans le fichier
-	unsigned short int curseur;
+	int idActuel = 0; //indique l'id actuellement lu dans le fichier
+	int curseur;
 
 	if(!engine)
 	{
@@ -208,7 +208,7 @@ char Spoiler::getRang() const
 }
 
 
-unsigned short int Spoiler::getAerodynamisme() const
+int Spoiler::getAerodynamisme() const
 {
 	return m_aerodynamisme;
 }

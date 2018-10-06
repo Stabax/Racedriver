@@ -46,10 +46,10 @@
 #pragma message save
 #pragma message disable misalgndmem
 struct itmlst_3 {
-  unsigned short int buflen;
-  unsigned short int itmcode;
+  int buflen;
+  int itmcode;
   void *bufadr;
-  unsigned short int *retlen;
+  int *retlen;
 };
 #pragma message restore
 #pragma member_alignment restore

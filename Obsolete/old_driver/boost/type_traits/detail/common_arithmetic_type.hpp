@@ -79,7 +79,7 @@ template<> struct arithmetic_type<8>
 };
 
 // For each of the standard signed integer types, there exists a corresponding
-// (but different) standard unsigned integer type: "unsigned char", "unsigned short int",
+// (but different) standard unsigned integer type: "unsigned char", "int",
 // "unsigned int", "unsigned long int", and "unsigned long long int"
 
 template<> struct arithmetic_type<9>

@@ -107,7 +107,7 @@ protected:
     }
     void load(unsigned char & t)
     {
-        unsigned short int i;
+        int i;
         load(i);
         t = i;
     }

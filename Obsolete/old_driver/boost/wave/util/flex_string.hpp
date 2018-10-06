@@ -188,7 +188,7 @@ namespace flex_string_details
 
     template <> struct get_unsigned<short int>
     {
-        typedef unsigned short int result;
+        typedef int result;
     };
 
     template <> struct get_unsigned<int>

@@ -1,8 +1,0 @@
-Ces binaires (Linux/Windows) permettent l'extraction d'une archive téléchargée via le launcher de racedriver, ainsi on utilisera dans le programme
-
-Paramètres de "unpack" :
-unpack -qq -o update.zip //q= quiet, qq= muet, o= ne pas prompter l'utilisateur si le fichier existe deja dans la destination
-
-ce qui donne :
-
-execl( "/Update/unpack", "unpack", "-qq -o update.zip", (char*)0 ); //On termine par un pointeur void pour dire que les arguments sont finis

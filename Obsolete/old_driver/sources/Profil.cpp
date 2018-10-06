@@ -5,13 +5,13 @@
 
 
 //Constructeurs
-Profil::Profil(const std::string& uuid, const unsigned short int& numero, const std::string& nom) : m_uuid(uuid), m_numero(numero), m_nom(nom), m_credits(2000), m_difficulte(3), m_nbBox(1), m_box({0}), m_nbCourses(0), m_victoires(0), m_defaites(0), m_accidents(0), m_creditsGagnes(0), m_voituresAchetees(0), m_nbCoursesCL(0), m_victoiresCL(0), m_defaitesCL(0), m_accidentsCL(0), m_creditsGagnesCL(0), m_sauvegardeAuto(false)
+Profil::Profil(const std::string& uuid, const int& numero, const std::string& nom) : m_uuid(uuid), m_numero(numero), m_nom(nom), m_credits(2000), m_difficulte(3), m_nbBox(1), m_box({0}), m_nbCourses(0), m_victoires(0), m_defaites(0), m_accidents(0), m_creditsGagnes(0), m_voituresAchetees(0), m_nbCoursesCL(0), m_victoiresCL(0), m_defaitesCL(0), m_accidentsCL(0), m_creditsGagnesCL(0), m_sauvegardeAuto(false)
 {
 
 }
 
 
-Profil::Profil(const std::string& uuid, const unsigned short int& numero, const std::string& nom, const unsigned int& credits, const bool& sauvegardeAuto, const unsigned short int& difficulte, const unsigned short int& nbBox, const unsigned short int& nbCourses, const unsigned short int& victoires, const unsigned short int& defaites, const unsigned short int& accidents, const unsigned short int& creditsGagnes, const unsigned short int& nbCoursesCL, const unsigned short int& victoiresCL, const unsigned short int& defaitesCL, const unsigned short int& accidentsCL, const unsigned short int& creditsGagnesCL, const unsigned short int& voituresAchetees) : m_uuid(uuid), m_numero(numero), m_nom(nom), m_credits(credits), m_difficulte(difficulte), m_nbBox(nbBox), m_box({0}), m_nbCourses(nbCourses), m_victoires(victoires), m_defaites(defaites), m_accidents(accidents), m_creditsGagnes(creditsGagnes), m_voituresAchetees(voituresAchetees), m_nbCoursesCL(nbCoursesCL), m_victoiresCL(victoiresCL), m_defaitesCL(defaitesCL), m_accidentsCL(accidentsCL), m_creditsGagnesCL(creditsGagnesCL), m_sauvegardeAuto(sauvegardeAuto)
+Profil::Profil(const std::string& uuid, const int& numero, const std::string& nom, const unsigned int& credits, const bool& sauvegardeAuto, const int& difficulte, const int& nbBox, const int& nbCourses, const int& victoires, const int& defaites, const int& accidents, const int& creditsGagnes, const int& nbCoursesCL, const int& victoiresCL, const int& defaitesCL, const int& accidentsCL, const int& creditsGagnesCL, const int& voituresAchetees) : m_uuid(uuid), m_numero(numero), m_nom(nom), m_credits(credits), m_difficulte(difficulte), m_nbBox(nbBox), m_box({0}), m_nbCourses(nbCourses), m_victoires(victoires), m_defaites(defaites), m_accidents(accidents), m_creditsGagnes(creditsGagnes), m_voituresAchetees(voituresAchetees), m_nbCoursesCL(nbCoursesCL), m_victoiresCL(victoiresCL), m_defaitesCL(defaitesCL), m_accidentsCL(accidentsCL), m_creditsGagnesCL(creditsGagnesCL), m_sauvegardeAuto(sauvegardeAuto)
 {
 
 }
@@ -21,7 +21,7 @@ Profil::Profil(const std::string& uuid, const unsigned short int& numero, const 
 //Destructeur
 Profil::~Profil()
 {
-	for(unsigned short int i = 0; i < 5; i++)
+	for (size_t i = 0; i < 5; i++)
 	{
 		if(m_box[i] != 0 )
 		{
@@ -33,11 +33,11 @@ Profil::~Profil()
 
 
 //Methodes Statiques
-bool Profil::compatible(Profil& Player, const unsigned short int& numeroBox, const char& rangNewPiece)
+bool Profil::compatible(Profil& Player, const int& numeroBox, const char& rangNewPiece)
 {
 	bool compatible = false;
-	unsigned short int rangPiece = 0;
-	unsigned short int rangVoitureBox = 0;
+	int rangPiece = 0;
+	int rangVoitureBox = 0;
 	Voiture *VoitureBox = Player.getBox(numeroBox);
 
 	rangVoitureBox = vRang(VoitureBox->getRang());
@@ -57,7 +57,7 @@ bool Profil::compatible(Profil& Player, const unsigned short int& numeroBox, con
 
 void Profil::listerSauvegardes()
 {
-	unsigned short int i = 1;
+	int i = 1;
 	std::string numeroSave;    // string which will contain the result
 	std::string nomProfil;
 	std::ostringstream oss;   // stream utilise pour la conversion
@@ -73,7 +73,7 @@ void Profil::listerSauvegardes()
 
 		if(fichier)
 		{
-			for(unsigned short int ligne = 1; ligne <= 2; ligne++) //le nom est stocké sur la deuxieme ligne
+			for (size_t ligne = 1; ligne <= 2; ligne++) //le nom est stocké sur la deuxieme ligne
 			{
 				getline(fichier, nomProfil);
 			}
@@ -89,9 +89,9 @@ void Profil::listerSauvegardes()
 }
 
 
-unsigned short int Profil::compterSauvegardes()
+int Profil::compterSauvegardes()
 {
-	unsigned short int i = 1;
+	int i = 1;
 	std::string numeroSave;          // string which will contain the result
 	std::ostringstream oss;   // stream utilise pour la conversion
 	bool ouvert = true;
@@ -116,11 +116,11 @@ unsigned short int Profil::compterSauvegardes()
 }
 
 
-bool Profil::chargerProfil(const unsigned short int& numeroSave, Profil*& ProfilCharge)
+bool Profil::chargerProfil(const int& numeroSave, Profil*& ProfilCharge)
 {
 	bool statut = false; // true si la lecture de fichier est une reussite, false si elle echoue.
-	unsigned short int ligne = 1;
-	unsigned short int box = 0;
+	int ligne = 1;
+	int box = 0;
 	std::string ligneChargee; //Variable de lecture de ligne
 
 	std::string numeroProfil;
@@ -169,41 +169,41 @@ bool Profil::chargerProfil(const unsigned short int& numeroSave, Profil*& Profil
 			std::istringstream iss; //Objet de conversion String > int
 
 			//variables de chargement
-			unsigned short int tailleString;
+			int tailleString;
 
 			std::string uuidCharge;
 			std::string nomCharge;
 			unsigned int creditsCharges;
-			unsigned short int difficulteChargee;
-			unsigned short int nbBoxCharges;
+			int difficulteChargee;
+			int nbBoxCharges;
 
-			unsigned short int coursesChargees;
-			unsigned short int victoiresChargees;
-			unsigned short int defaitesChargees;
-			unsigned short int accidentsCharges;
-			unsigned short int creditsGagnesCharges;
+			int coursesChargees;
+			int victoiresChargees;
+			int defaitesChargees;
+			int accidentsCharges;
+			int creditsGagnesCharges;
 
-			unsigned short int coursesChargeesCL;
-			unsigned short int victoiresChargeesCL;
-			unsigned short int defaitesChargeesCL;
-			unsigned short int accidentsChargesCL;
-			unsigned short int creditsGagnesChargesCL;
+			int coursesChargeesCL;
+			int victoiresChargeesCL;
+			int defaitesChargeesCL;
+			int accidentsChargesCL;
+			int creditsGagnesChargesCL;
 
-			unsigned short int voituresAcheteesChargees;
+			int voituresAcheteesChargees;
 			bool sauvegardeAuto;
 
 			//Chargement voitures/box
 			std::string marqueChargee;
 			std::string modeleCharge;
-			unsigned short int idMoteurCharge;
-			unsigned short int idSpoilerCharge;
-			unsigned short int idPriseAirChargee;
+			int idMoteurCharge;
+			int idSpoilerCharge;
+			int idPriseAirChargee;
 			char rangCharge;
-			unsigned short int nitroMaxChargee;
-			unsigned short int aerodynamismeVoitureCharge;
-			unsigned short int idPneusCharges;
-			unsigned short int pneusCharges;
-			unsigned short int etat;
+			int nitroMaxChargee;
+			int aerodynamismeVoitureCharge;
+			int idPneusCharges;
+			int pneusCharges;
+			int etat;
 
 			while(getline(save, ligneChargee))
 			{
@@ -424,7 +424,7 @@ bool Profil::chargerProfil(const unsigned short int& numeroSave, Profil*& Profil
 }
 
 
-void Profil::supprimerProfil(const unsigned short int& numeroSave)
+void Profil::supprimerProfil(const int& numeroSave)
 {
 	bool test;
 	bool fail = false;
@@ -435,7 +435,7 @@ void Profil::supprimerProfil(const unsigned short int& numeroSave)
 	std::string newCheminFichier;
 	std::string cheminLock;
 	std::string newCheminLock;
-	unsigned short int nbSaves = compterSauvegardes();
+	int nbSaves = compterSauvegardes();
 
 	oss << numeroSave;      // on insere le int dans le stream oss
 	numeroProfil = oss.str(); // range le int dans la variable numeroSave
@@ -459,7 +459,7 @@ void Profil::supprimerProfil(const unsigned short int& numeroSave)
 
 	if(nbSaves > numeroSave)
 	{
-		for(unsigned short int i = numeroSave; i < nbSaves; i++)
+		for (size_t i = numeroSave; i < nbSaves; i++)
 		{
 			oss.str("");
 			oss << i;      // on insere le int dans le stream oss
@@ -522,7 +522,7 @@ void Profil::sauvegarderProfil()
 			save << m_sauvegardeAuto << ";"<< m_difficulte << ";" << m_nbBox << "\n"; //Difficulté / Nombre de box deverouillés
 			save << m_nbCourses << ";" << m_victoires << ";" << m_defaites << ";" << m_accidents << ";" << m_creditsGagnes << ";" << m_voituresAchetees << "\n"; //On inscrit les stats totaux dans le fichier
 			save << m_nbCoursesCL << ";" << m_victoiresCL << ";" << m_defaitesCL << ";" << m_accidentsCL << ";" << m_creditsGagnesCL << "\n"; //On inscrit les stats totaux dans le fichier
-			for(unsigned short int i = 0; i < 5; i++)
+			for (size_t i = 0; i < 5; i++)
 			{
 				if(m_box[i] == 0)
 				{
@@ -560,7 +560,7 @@ void Profil::sauvegarderProfil()
 
 void Profil::creerProfil(std::string& nom, Profil*& ProfilCree)
 {
-	unsigned short int numeroSave = compterSauvegardes() + 1;
+	int numeroSave = compterSauvegardes() + 1;
 	std::string sNumeroSave;
 	std::string nomFichier;
 	std::ostringstream oss;
@@ -570,8 +570,8 @@ void Profil::creerProfil(std::string& nom, Profil*& ProfilCree)
 
 	nomFichier = "Saves/Profil" + sNumeroSave + ".save";
 
-	boost::uuids::uuid uuid = boost::uuids::random_generator()(); //On génére un identifiant unique au profil.
-	ProfilCree = new Profil(boost::uuids::to_string(uuid), numeroSave, nom); //On construit le profil cree (la partie boost est la conversion en string de l'uuid)
+	std::string uuid = generateUuid(); //On génére un identifiant unique au profil.
+	ProfilCree = new Profil(uuid, numeroSave, nom); //On construit le profil cree (la partie boost est la conversion en string de l'uuid)
 	std::cout << "Creation de votre Profil\n";
 	std::cout << "===============\n\n";
 	std::cout << "Profil" << numeroSave << " cree avec succes !\n";
@@ -588,7 +588,7 @@ std::string Profil::getUuid() const
 	return m_uuid;
 }
 
-unsigned short int Profil::getNumero() const
+int Profil::getNumero() const
 {
 	return m_numero;
 }
@@ -605,36 +605,36 @@ unsigned int Profil::getCredits() const
 }
 
 
-unsigned short int Profil::getNbBox() const
+int Profil::getNbBox() const
 {
 	return m_nbBox;
 }
 
 
-Voiture* Profil::getBox(const unsigned short int& numeroBox) const
+Voiture* Profil::getBox(const int& numeroBox) const
 {
 	return m_box[numeroBox];
 }
 
 
-unsigned short int Profil::getNbCourses() const
+int Profil::getNbCourses() const
 {
 	return m_nbCourses;
 }
 
 
-unsigned short int Profil::getVictoires() const
+int Profil::getVictoires() const
 {
 	return m_victoires;
 }
 
-unsigned short int Profil::getDefaites() const
+int Profil::getDefaites() const
 {
 	return m_defaites;
 }
 
 
-unsigned short int Profil::getAccidents() const
+int Profil::getAccidents() const
 {
 	return m_accidents;
 }
@@ -653,18 +653,18 @@ float Profil::getVDRatio() const
 	return ratio;
 }
 
-unsigned short int Profil::getCreditsGagnes() const
+int Profil::getCreditsGagnes() const
 {
 	return m_creditsGagnes;
 }
 
-unsigned short int Profil::getVoituresAchetees() const
+int Profil::getVoituresAchetees() const
 {
 	return m_voituresAchetees;
 }
 
 
-unsigned short int Profil::getDifficulte() const
+int Profil::getDifficulte() const
 {
 	return m_difficulte;
 }
@@ -705,27 +705,27 @@ std::string Profil::getDifficulteString() const
 }
 
 
-void Profil::setBox(const unsigned short int& numeroBox, const std::string& marque, const std::string& modele, const unsigned short int& idMoteur, const unsigned short int& idSpoiler, const unsigned short int& idPriseAir, const char& rang, const unsigned short int& nitroMax, const unsigned short int& aerodynamismeVoiture, const unsigned short int& idPneus, const unsigned short int& pneus, const unsigned short int& etat)
+void Profil::setBox(const int& numeroBox, const std::string& marque, const std::string& modele, const int& idMoteur, const int& idSpoiler, const int& idPriseAir, const char& rang, const int& nitroMax, const int& aerodynamismeVoiture, const int& idPneus, const int& pneus, const int& etat)
 {
 	m_box[numeroBox] = new Voiture(marque, modele, idMoteur, idSpoiler, idPriseAir, rang, nitroMax, aerodynamismeVoiture, idPneus, pneus, etat);
 }
 
-void Profil::setBox(const unsigned short int& numeroBox, Voiture* Voiture)
+void Profil::setBox(const int& numeroBox, Voiture* Voiture)
 {
 	m_box[numeroBox] = Voiture;
 }
 
-void Profil::setBox(const unsigned short int& numeroBox)
+void Profil::setBox(const int& numeroBox)
 {
 	m_box[numeroBox] = 0;
 }
 
-void  Profil::setMoteurVoiture(const unsigned short int& numeroBox, Moteur* newMoteur, const unsigned short int& idMoteur)
+void  Profil::setMoteurVoiture(const int& numeroBox, Moteur* newMoteur, const int& idMoteur)
 {
 	m_box[numeroBox]->setMoteur(newMoteur, idMoteur);
 }
 
-void Profil::setDifficulte(const unsigned short int& newDifficulte)
+void Profil::setDifficulte(const int& newDifficulte)
 {
 	m_difficulte = newDifficulte;
 }
@@ -778,7 +778,7 @@ void Profil::ajouterAccident()
 }
 
 
-bool Profil::boxVide(unsigned short int numeroBox)
+bool Profil::boxVide(int numeroBox)
 {
 	bool vide;
 	if(m_box[numeroBox] == 0)
@@ -815,7 +815,7 @@ void Profil::changerNom(const std::string& newNom)
 }
 
 
-bool Profil::payer(const unsigned short int& prix)
+bool Profil::payer(const int& prix)
 {
 	bool paye;
 	if(prix > m_credits)
@@ -840,7 +840,7 @@ bool operator!=(Profil& Player, Profil& Player2)
 
 	if(Player.getUuid() == Player2.getUuid() && Player.getNumero() == Player2.getNumero() && Player.getNom() == Player2.getNom() && Player.getCredits() == Player2.getCredits() && Player.getNbBox() == Player2.getNbBox() && Player.getNbCourses() == Player2.getNbCourses() && Player.getVictoires() == Player2.getVictoires() && Player.getDefaites() == Player2.getDefaites() && Player.getAccidents() == Player2.getAccidents() && Player.getCreditsGagnes() == Player2.getCreditsGagnes() && Player.getVoituresAchetees() == Player2.getVoituresAchetees() && Player.getDifficulte() == Player2.getDifficulte() && Player.getSauvegardeAuto() == Player2.getSauvegardeAuto()) //On utilise les accesseurs pour comparer
 	{
-		for(unsigned short int numeroBox = 0; numeroBox < Player.getNbBox(); numeroBox++)
+		for (size_t numeroBox = 0; numeroBox < Player.getNbBox(); numeroBox++)
 		{
 			Voiture1 = Player.getBox(numeroBox);
 			Voiture2 = Player.getBox(numeroBox);

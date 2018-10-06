@@ -4,7 +4,7 @@ RM = rm -rf
 
 CXXFLAGS = -std=c++11 -Wall -Wextra -Wshadow -Wpedantic -Wpointer-arith -Wconversion -s -O2 -Os -Icurl/include -Iboost -I.
 
-LDFLAGS = -Lcurl/lib -lcurl
+LDFLAGS = -Lbin -lcurl
 
 NAME = racedriver
 

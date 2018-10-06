@@ -4,7 +4,7 @@
 #include "Moteur.h"
 
 //Constructeurs
-Moteur::Moteur(const std::string& marque, const std::string& modele, const char& rang, const unsigned short int& vitesse, const unsigned short int& acceleration, const std::string& carburant) : m_marque(marque), m_modele(modele), m_prix(((getVitesse()+getAcceleration())*25)+(vRang(m_rang)*500)), m_rang(rang), m_vitesse(vitesse), m_acceleration(acceleration), m_typeCarburant(carburant), m_consommation(vitesse+acceleration), m_prixCarburant(Moteur::returnPrixCarburant(carburant))
+Moteur::Moteur(const std::string& marque, const std::string& modele, const char& rang, const int& vitesse, const int& acceleration, const std::string& carburant) : m_marque(marque), m_modele(modele), m_prix(((getVitesse()+getAcceleration())*25)+(vRang(m_rang)*500)), m_rang(rang), m_vitesse(vitesse), m_acceleration(acceleration), m_typeCarburant(carburant), m_consommation(vitesse+acceleration), m_prixCarburant(Moteur::returnPrixCarburant(carburant))
 {
 
 }
@@ -20,12 +20,12 @@ Moteur::~Moteur()
 
 
 //Methodes statiques
-Moteur* Moteur::chargerMoteur(const unsigned short int& id, const std::string& marqueChargee)
+Moteur* Moteur::chargerMoteur(const int& id, const std::string& marqueChargee)
 {
 	Moteur* MoteurCharge = 0; //moteur a creer
 	std::string var=""; //contient les lignes du fichier
 	std::string chemin = "Data/Moteurs/"+marqueChargee+".cdx";
-	unsigned short int idActuel = id + 1; //indique l'id actuellement lu dans le fichier
+	int idActuel = id + 1; //indique l'id actuellement lu dans le fichier
 
 	std::ifstream engine(chemin.c_str());
 
@@ -50,7 +50,7 @@ Moteur* Moteur::chargerMoteur(const unsigned short int& id, const std::string& m
 
 		if(idActuel==id)
 		{
-			unsigned short int curseur;
+			int curseur;
 			var.erase(0,var.find_first_of(";")+1);
 
 			curseur=var.find_first_of(";");
@@ -71,8 +71,8 @@ Moteur* Moteur::chargerMoteur(const unsigned short int& id, const std::string& m
 
 			std::string carburant=var;
 
-			unsigned short int vitesse;
-			unsigned short int acceleration;
+			int vitesse;
+			int acceleration;
 			std::istringstream iss(sVitesse);
 			if (iss>>vitesse)
 			{
@@ -113,7 +113,7 @@ void Moteur::listerMoteurs(const std::string& marque)
 	std::ifstream flux(chemin.c_str());
 	if(flux)
 	{
-		unsigned short int curseur;
+		int curseur;
 		std::cout<<"   |Modele     |Rang  |Vitesse  |Acceleration  |Carburant  |Prix |\n\n";
 		while(std::getline(flux, var))
 		{
@@ -150,7 +150,7 @@ void Moteur::listerMoteurs(const std::string& marque)
 
 				if(modele.size()<12)
 				{
-					for(unsigned short int i=0; i<12-modele.size(); i++)
+					for (size_t i=0; i<12-modele.size(); i++)
 					{
 						espace1+=" ";
 					}
@@ -158,7 +158,7 @@ void Moteur::listerMoteurs(const std::string& marque)
 
 				if(sVitesse.size()<10)
 				{
-					for(unsigned short int i = 0; i<10 - sVitesse.size(); i++)
+					for (size_t i = 0; i<10 - sVitesse.size(); i++)
 					{
 						espace2+=" ";
 					}
@@ -166,7 +166,7 @@ void Moteur::listerMoteurs(const std::string& marque)
 
 				if(sAcceleration.size()<15)
 				{
-					for(unsigned short int i=0; i<15 - sAcceleration.size(); i++)
+					for (size_t i=0; i<15 - sAcceleration.size(); i++)
 					{
 						espace3+=" ";
 					}
@@ -174,7 +174,7 @@ void Moteur::listerMoteurs(const std::string& marque)
 
 				if(carburant.size()<12)
 				{
-					for(unsigned short int i=0; i<12-carburant.size(); i++)
+					for (size_t i=0; i<12-carburant.size(); i++)
 					{
 						espace4+=" ";
 					}
@@ -182,14 +182,14 @@ void Moteur::listerMoteurs(const std::string& marque)
 
 				if(id.size()<3)
 				{
-					for(unsigned short int i=0; i<3-id.size(); i++)
+					for (size_t i=0; i<3-id.size(); i++)
 					{
 						espace5+=" ";
 					}
 				}
 
-				unsigned short int vitesse;
-				unsigned short int acceleration;
+				int vitesse;
+				int acceleration;
 				std::istringstream iss(sVitesse);
 				if (iss>>vitesse)
 				{
@@ -208,7 +208,7 @@ void Moteur::listerMoteurs(const std::string& marque)
 					error("Fichier corompu17.");
 				}
 
-				unsigned short int prix = ((vitesse + acceleration) * 25) + ( (vRang(rang)-1) * 500);
+				int prix = ((vitesse + acceleration) * 25) + ( (vRang(rang)-1) * 500);
 
 
 				std::cout<<id<<"."<<espace5<<modele<< espace1 <<rang<< espaceRang <<vitesse<< espace2 <<acceleration<< espace3 <<carburant<< espace4 << prix <<"c\n";
@@ -222,7 +222,7 @@ void Moteur::listerMoteurs(const std::string& marque)
 }
 
 
-void Moteur::infoMoteur(const unsigned short int& id, const std::string& marque, std::string& modele)
+void Moteur::infoMoteur(const int& id, const std::string& marque, std::string& modele)
 {
 	std::string var; //contient les lignes du fichier
 	std::string chemin ="Data/Moteurs/"+marque+".cdx";
@@ -234,7 +234,7 @@ void Moteur::infoMoteur(const unsigned short int& id, const std::string& marque,
 	}
 	else
 	{
-		unsigned short int idActuel; //indique l'id actuellement lu dans le fichier
+		int idActuel; //indique l'id actuellement lu dans le fichier
 
 		while(idActuel!=id && std::getline(engine, var))
 		{
@@ -250,7 +250,7 @@ void Moteur::infoMoteur(const unsigned short int& id, const std::string& marque,
 
 		if(idActuel==id)
 		{
-			unsigned short int curseur;
+			int curseur;
 			var.erase(0,var.find_first_of(";")+1);
 
 			curseur=var.find_first_of(";");
@@ -265,17 +265,17 @@ void Moteur::infoMoteur(const unsigned short int& id, const std::string& marque,
 }
 
 
-void Moteur::infoMoteur(const unsigned short int& id, const std::string& marque, unsigned int& prix)
+void Moteur::infoMoteur(const int& id, const std::string& marque, unsigned int& prix)
 {
 	std::string var = ""; //contient les lignes du fichier
 	std::string chemin ="Data/Moteurs/"+marque+".cdx";
 	std::ifstream engine(chemin.c_str());
 	std::istringstream iss;
-	unsigned short int idActuel = 0; //indique l'id actuellement lu dans le fichier
-	unsigned short int curseur;
+	int idActuel = 0; //indique l'id actuellement lu dans le fichier
+	int curseur;
 
-	unsigned short int vitesse;
-	unsigned short int acceleration;
+	int vitesse;
+	int acceleration;
 
 	std::string sVitesse;
 	std::string sAcceleration;
@@ -346,13 +346,13 @@ void Moteur::infoMoteur(const unsigned short int& id, const std::string& marque,
 }
 
 
-void Moteur::infoMoteur(const unsigned short int& id, const std::string& marque, std::string& modele, unsigned short int& vitesse, unsigned short int& acceleration)
+void Moteur::infoMoteur(const int& id, const std::string& marque, std::string& modele, int& vitesse, int& acceleration)
 {
 	std::string var; //contient les lignes du fichier
 	std::string chemin ="Data/Moteurs/"+marque+".cdx";
 	std::ifstream engine(chemin.c_str());
-	unsigned short int idActuel = 0; //indique l'id actuellement lu dans le fichier
-	unsigned short int curseur = 0;
+	int idActuel = 0; //indique l'id actuellement lu dans le fichier
+	int curseur = 0;
 	std::istringstream iss;
 
 	//Variables dont on va avoir besoin lors du chargement:
@@ -422,12 +422,12 @@ void Moteur::infoMoteur(const unsigned short int& id, const std::string& marque,
 }
 
 
-void Moteur::infoMoteur(const unsigned short int& id, const std::string& marque, std::string& modele, unsigned short int& vitesse, unsigned short int& acceleration, char& rang, unsigned int& prix)
+void Moteur::infoMoteur(const int& id, const std::string& marque, std::string& modele, int& vitesse, int& acceleration, char& rang, unsigned int& prix)
 {
 	std::string var; //contient les lignes du fichier
 	std::string chemin ="Data/Moteurs/"+marque+".cdx";
 	std::ifstream engine(chemin.c_str());
-	unsigned short int curseur;
+	int curseur;
 
 	if(!engine)
 	{
@@ -435,7 +435,7 @@ void Moteur::infoMoteur(const unsigned short int& id, const std::string& marque,
 	}
 	else
 	{
-		unsigned short int idActuel; //indique l'id actuellement lu dans le fichier
+		int idActuel; //indique l'id actuellement lu dans le fichier
 
 		while(idActuel!=id && std::getline(engine, var))
 		{
@@ -498,13 +498,13 @@ void Moteur::infoMoteur(const unsigned short int& id, const std::string& marque,
 }
 
 
-unsigned short int Moteur::compterMoteurs(const std::string& marque)
+int Moteur::compterMoteurs(const std::string& marque)
 {
 
 	std::string chemin ="Data/Moteurs/"+marque+".cdx";
 	std::ifstream engine(chemin.c_str());
-	unsigned short int id; //indique l'id actuellement lu dans le fichier
-	unsigned short int nbMoteur=0;
+	int id; //indique l'id actuellement lu dans le fichier
+	int nbMoteur=0;
 	std::string var;
 
 	if(engine)
@@ -597,7 +597,7 @@ float Moteur::getConsommation() const
 }
 
 
-unsigned short int Moteur::getPrix() const
+int Moteur::getPrix() const
 {
 	return m_prix;
 }

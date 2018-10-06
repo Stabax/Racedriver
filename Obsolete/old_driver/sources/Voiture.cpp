@@ -5,7 +5,7 @@
 
 
 //Constructeurs
-Voiture::Voiture(const std::string& marque, const std::string& modele, const unsigned short int& idMoteur, const unsigned short int& idSpoiler, const unsigned short int& idPriseAir, const char& rang, const unsigned short int& nitroMax, const unsigned short int& aerodynamismeVoiture, const unsigned short int& idPneus, const unsigned short int& usurePneus, const unsigned short int& etat) : m_moteur(Moteur::chargerMoteur(idMoteur, marque)), m_idMoteur(idMoteur), m_spoiler(Spoiler::chargerSpoiler(idSpoiler)), m_idSpoiler(idSpoiler),  m_priseAir(PriseAir::chargerPriseAir(idPriseAir)), m_idPriseAir(idPriseAir), m_niveauNitro(nitroMax), m_aerodynamisme((m_priseAir->getAerodynamisme()/3 )+(m_spoiler->getAerodynamisme()/3)+(aerodynamismeVoiture/3)+1), m_vitesse(m_moteur->getVitesse()+(m_aerodynamisme/3)), m_acceleration(((m_niveauNitro+m_moteur->getAcceleration())+(m_aerodynamisme))/10), m_marque(marque), m_modele(modele), m_rang(rang), m_typeCarburant(m_moteur->getTypeCarburant()), m_consommation(m_moteur->getConsommation()), m_nitroMax(nitroMax), m_aerodynamismeVoiture(aerodynamismeVoiture), m_pneus(Pneus::chargerPneus(idPneus, usurePneus)), m_idPneus(idPneus), m_etat(etat)
+Voiture::Voiture(const std::string& marque, const std::string& modele, const int& idMoteur, const int& idSpoiler, const int& idPriseAir, const char& rang, const int& nitroMax, const int& aerodynamismeVoiture, const int& idPneus, const int& usurePneus, const int& etat) : m_moteur(Moteur::chargerMoteur(idMoteur, marque)), m_idMoteur(idMoteur), m_spoiler(Spoiler::chargerSpoiler(idSpoiler)), m_idSpoiler(idSpoiler),  m_priseAir(PriseAir::chargerPriseAir(idPriseAir)), m_idPriseAir(idPriseAir), m_niveauNitro(nitroMax), m_aerodynamisme((m_priseAir->getAerodynamisme()/3 )+(m_spoiler->getAerodynamisme()/3)+(aerodynamismeVoiture/3)+1), m_vitesse(m_moteur->getVitesse()+(m_aerodynamisme/3)), m_acceleration(((m_niveauNitro+m_moteur->getAcceleration())+(m_aerodynamisme))/10), m_marque(marque), m_modele(modele), m_rang(rang), m_typeCarburant(m_moteur->getTypeCarburant()), m_consommation(m_moteur->getConsommation()), m_nitroMax(nitroMax), m_aerodynamismeVoiture(aerodynamismeVoiture), m_pneus(Pneus::chargerPneus(idPneus, usurePneus)), m_idPneus(idPneus), m_etat(etat)
 {
 
 }
@@ -24,7 +24,7 @@ Voiture::~Voiture()
 
 
 //Methodes statiques
-Voiture* Voiture::chargerVoiture(const unsigned short int& id, const char& rangCharge)
+Voiture* Voiture::chargerVoiture(const int& id, const char& rangCharge)
 {
 	Voiture* VoitureCharge = 0; //moteur a creer
 	std::string var=""; //contient les lignes du fichier
@@ -40,7 +40,7 @@ Voiture* Voiture::chargerVoiture(const unsigned short int& id, const char& rangC
 	}
 	else
 	{
-		unsigned short int idActuel = id + 1; //indique l'id actuellement lu dans le fichier
+		int idActuel = id + 1; //indique l'id actuellement lu dans le fichier
 		while(idActuel!=id && std::getline(engine, var)) //on lit dans le fichier
 		{
 			//on utilise while(std::getline(flux, string) pour "Tant qu'il y a une ligne a lire"
@@ -56,7 +56,7 @@ Voiture* Voiture::chargerVoiture(const unsigned short int& id, const char& rangC
 		}
 		if(idActuel==id)
 		{
-			unsigned short int curseur;
+			int curseur;
 			curseur=var.find_first_of(";");
 			var.erase(0,curseur+1);
 
@@ -86,11 +86,11 @@ Voiture* Voiture::chargerVoiture(const unsigned short int& id, const char& rangC
 
 			std::string sAerodynamisme=var;
 
-			unsigned short int idMoteur;
-			unsigned short int idSpoiler;
-			unsigned short int nitroMax;
-			unsigned short int idPriseAir;
-			unsigned short int aerodynamisme;
+			int idMoteur;
+			int idSpoiler;
+			int nitroMax;
+			int idPriseAir;
+			int aerodynamisme;
 
 			iss.str(sIdMoteur);
 			if (iss>>idMoteur)
@@ -160,7 +160,7 @@ void Voiture::listerVoitures(const char& rang)
 	std::ifstream flux(chemin.c_str());
 	if(flux)
 	{
-		unsigned short int curseur;
+		int curseur;
 		std::cout<<"   |Marque   |Modele     |Capacite nitro  |Aerodynamisme  |Prix  |\n\n";
 		while(std::getline(flux, var))
 		{
@@ -203,7 +203,7 @@ void Voiture::listerVoitures(const char& rang)
 
 			if(marque.size()<10)
 			{
-				for(unsigned short int i=0; i<10-marque.size(); i++)
+				for (size_t i=0; i<10-marque.size(); i++)
 				{
 					espace1+=" ";
 				}
@@ -211,7 +211,7 @@ void Voiture::listerVoitures(const char& rang)
 
 			if(modele.size()<12)
 			{
-				for(unsigned short int i=0; i<12-modele.size(); i++)
+				for (size_t i=0; i<12-modele.size(); i++)
 				{
 					espace2+=" ";
 				}
@@ -219,7 +219,7 @@ void Voiture::listerVoitures(const char& rang)
 
 			if(ssNitroMax.size()<17)
 			{
-				for(unsigned short int i = 0; i<17 - ssNitroMax.size(); i++)
+				for (size_t i = 0; i<17 - ssNitroMax.size(); i++)
 				{
 					espace3+=" ";
 				}
@@ -227,7 +227,7 @@ void Voiture::listerVoitures(const char& rang)
 
 			if(ssAerodynamisme.size()<16)
 			{
-				for(unsigned short int i=0; i<16-ssAerodynamisme.size(); i++)
+				for (size_t i=0; i<16-ssAerodynamisme.size(); i++)
 				{
 					espace4+=" ";
 				}
@@ -235,7 +235,7 @@ void Voiture::listerVoitures(const char& rang)
 
 			if(id.size()<3)
 			{
-				for(unsigned short int i=0; i<3-id.size(); i++)
+				for (size_t i=0; i<3-id.size(); i++)
 				{
 					espace5+=" ";
 				}
@@ -243,9 +243,9 @@ void Voiture::listerVoitures(const char& rang)
 
 
 
-			unsigned short int nitroMax;
-			unsigned short int aerodynamisme;
-			unsigned short int idMoteur;
+			int nitroMax;
+			int aerodynamisme;
+			int idMoteur;
 			std::istringstream iss(sNitroMax);
 			if (iss>>nitroMax)
 			{
@@ -284,14 +284,14 @@ void Voiture::listerVoitures(const char& rang)
 }
 
 
-unsigned short int Voiture::compterVoitures(const char& rang)
+int Voiture::compterVoitures(const char& rang)
 {
 	std::string sRang;
 	sRang=rang;
 	std::string chemin ="Data/Voitures/"+sRang+".cdx";
 	std::ifstream engine(chemin.c_str());
-	unsigned short int id; //indique l'id actuellement lu dans le fichier
-	unsigned short int nbVoiture=0;
+	int id; //indique l'id actuellement lu dans le fichier
+	int nbVoiture=0;
 	std::string var;
 
 	if(engine)
@@ -319,7 +319,7 @@ unsigned short int Voiture::compterVoitures(const char& rang)
 }
 
 
-void Voiture::infoVoiture(const unsigned short int& id, const char& rang, std::string& marque, std::string& modele, unsigned short int& idMoteur, unsigned short int& nitroMax, unsigned short int& aerodynamisme, unsigned int& prix)
+void Voiture::infoVoiture(const int& id, const char& rang, std::string& marque, std::string& modele, int& idMoteur, int& nitroMax, int& aerodynamisme, unsigned int& prix)
 {
 	std::string var; //contient les lignes du fichier
 	std::string sRang;
@@ -335,7 +335,7 @@ void Voiture::infoVoiture(const unsigned short int& id, const char& rang, std::s
 	}
 	else
 	{
-		unsigned short int idActuel; //indique l'id actuellement lu dans le fichier
+		int idActuel; //indique l'id actuellement lu dans le fichier
 
 		while(idActuel!=id && std::getline(engine, var))
 		{
@@ -351,7 +351,7 @@ void Voiture::infoVoiture(const unsigned short int& id, const char& rang, std::s
 
 		if(idActuel==id)
 		{
-			unsigned short int curseur;
+			int curseur;
 			var.erase(0,var.find_first_of(";")+1);
 
 			curseur=var.find_first_of(";");
@@ -469,59 +469,59 @@ float Voiture::getAcceleration() const
 }
 
 
-unsigned short int Voiture::getDurabilitePneus() const
+int Voiture::getDurabilitePneus() const
 {
 	return m_pneus->getDurabilite();
 }
 
 
-unsigned short int Voiture::getAerodynamisme() const
+int Voiture::getAerodynamisme() const
 {
 	return m_aerodynamisme;
 }
 
 
-unsigned short int Voiture::getIdMoteur() const
+int Voiture::getIdMoteur() const
 {
 	return m_idMoteur;
 }
 
 
-unsigned short int Voiture::getIdSpoiler() const
+int Voiture::getIdSpoiler() const
 {
 	return m_idSpoiler;
 }
 
 
-unsigned short int Voiture::getIdPriseAir() const
+int Voiture::getIdPriseAir() const
 {
 	return m_idPriseAir;
 }
 
 
-unsigned short int Voiture::getNitroMax() const
+int Voiture::getNitroMax() const
 {
 	return m_nitroMax;
 }
 
 
-unsigned short int Voiture::getNiveauNitro() const
+int Voiture::getNiveauNitro() const
 {
 	return m_niveauNitro;
 }
 
-unsigned short int Voiture::getEtat() const
+int Voiture::getEtat() const
 {
 	return m_etat;
 }
 
-unsigned short int Voiture::getAerodynamismeVoiture() const
+int Voiture::getAerodynamismeVoiture() const
 {
 	return m_aerodynamismeVoiture;
 }
 
 
-unsigned short int Voiture::getConsommation() const
+int Voiture::getConsommation() const
 {
 	return m_moteur->getConsommation();
 }
@@ -546,7 +546,7 @@ unsigned int Voiture::getPrix() const
 }
 
 
-unsigned short int Voiture::getPrixMoteur() const
+int Voiture::getPrixMoteur() const
 {
 	return m_moteur->getPrix();
 }
@@ -564,7 +564,7 @@ char Voiture::getRangSpoiler() const
 }
 
 
-unsigned short int Voiture::getAerodynamismeSpoiler() const
+int Voiture::getAerodynamismeSpoiler() const
 {
 	return m_spoiler->getAerodynamisme();
 }
@@ -582,13 +582,13 @@ char Voiture::getRangPriseAir() const
 }
 
 
-unsigned short int Voiture::getAerodynamismePriseAir() const
+int Voiture::getAerodynamismePriseAir() const
 {
 	return m_priseAir->getAerodynamisme();
 }
 
 
-unsigned short int Voiture::getIdPneus() const
+int Voiture::getIdPneus() const
 {
 	return m_idPneus;
 }
@@ -606,7 +606,7 @@ std::string Voiture::getMarquePneus() const
 }
 
 
-void Voiture::setMoteur(Moteur* newMoteur, const unsigned short int& idMoteur)
+void Voiture::setMoteur(Moteur* newMoteur, const int& idMoteur)
 {
 	m_moteur = newMoteur;
 	m_idMoteur= idMoteur;
@@ -614,7 +614,7 @@ void Voiture::setMoteur(Moteur* newMoteur, const unsigned short int& idMoteur)
 }
 
 
-void Voiture::setSpoiler(Spoiler* newSpoiler, const unsigned short int& idSpoiler)
+void Voiture::setSpoiler(Spoiler* newSpoiler, const int& idSpoiler)
 {
 	m_spoiler = newSpoiler;
 	m_idSpoiler = idSpoiler;
@@ -622,7 +622,7 @@ void Voiture::setSpoiler(Spoiler* newSpoiler, const unsigned short int& idSpoile
 }
 
 
-void Voiture::setPriseAir(PriseAir* newPriseAir, const unsigned short int& idPriseAir)
+void Voiture::setPriseAir(PriseAir* newPriseAir, const int& idPriseAir)
 {
 	m_priseAir = newPriseAir;
 	m_idPriseAir = idPriseAir;
@@ -644,7 +644,7 @@ void Voiture::setNitro(const short int& ajouter)
 }
 
 
-void Voiture::retirerEtat(const unsigned short int& retirer)
+void Voiture::retirerEtat(const int& retirer)
 {
 	m_etat -=retirer;
 }

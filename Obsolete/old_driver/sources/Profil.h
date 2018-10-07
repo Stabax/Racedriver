@@ -7,14 +7,9 @@
 #include <iostream>
 #include <string>
 #include <cfloat>
-#include <uuid/uuid.hpp>            // librairie de classe
-#include <uuid/uuid_generators.hpp> // generateur d'id unique
-#include <uuid/uuid_io.hpp>
-
 #include "sha.h"
 #include "fonctions.h"
 #include "Voiture.h"
-
 
 class Profil
 {
@@ -24,7 +19,7 @@ class Profil
 	public:
 	//constructeurs
 	Profil(const std::string& uuid, const int& numero, const std::string& nom); //Nouveau Profil
-	Profil(const std::string& uuid, const int& numero, const std::string& nom, const unsigned int& credits, const bool& sauvegardeAuto, const int& difficulte, const int& nbBox, const int& nbCourses, const int& victoires, const int& defaites, const int& accidents, const int& creditsGagnes, const int& nbCoursesCL, const int& victoiresCL, const int& defaitesCL, const int& accidentsCL, const int& creditsGagnesCL, const int& voituresAchetees); //Profil Chargé
+	Profil(const std::string& uuid, const int& numero, const std::string& nom, const int& credits, const bool& sauvegardeAuto, const int& difficulte, const int& nbBox, const int& nbCourses, const int& victoires, const int& defaites, const int& accidents, const int& creditsGagnes, const int& nbCoursesCL, const int& victoiresCL, const int& defaitesCL, const int& accidentsCL, const int& creditsGagnesCL, const int& voituresAchetees); //Profil Chargé
 
 	//Destructeur
 	~Profil();
@@ -41,7 +36,7 @@ class Profil
 	std::string getUuid() const;	//profil
 	int getNumero() const;
 	std::string getNom() const;
-	unsigned int getCredits() const;
+	int getCredits() const;
 	int getNbBox() const;
 	Voiture* getBox(const int& numeroBox) const;
 	int getDifficulte() const;

@@ -1,25 +1,16 @@
-
 //PriseAir.cpp
-
 #include "PriseAir.h"
 
-
-//Constructeurs
-PriseAir::PriseAir(const std::string& modele, const char& rang, const int& aerodynamisme):m_nom(modele), m_rang(rang), m_aerodynamisme(aerodynamisme)
+PriseAir::PriseAir(const std::string& modele, const char& rang, const int& aerodynamisme)
+ : m_nom(modele), m_rang(rang), m_aerodynamisme(aerodynamisme)
 {
 }
 
-
-
-//Destructeur
 PriseAir::~PriseAir()
 {
 
 }
 
-
-
-//Methodes statiques
 PriseAir* PriseAir::chargerPriseAir(const int& id)
 {
 	PriseAir* PriseAirCharge = 0; //PriseAir a creer
@@ -85,8 +76,7 @@ PriseAir* PriseAir::chargerPriseAir(const int& id)
 	return PriseAirCharge;
 }
 
-
-void PriseAir::infoPriseAir(const int& id, unsigned int& prix)
+void PriseAir::infoPriseAir(const int& id, int& prix)
 {
 	std::string var = ""; //contient les lignes du fichier
 	std::string chemin ="Data/composants/priseair.cdx";
@@ -132,8 +122,7 @@ void PriseAir::infoPriseAir(const int& id, unsigned int& prix)
 	}
 }
 
-
-void PriseAir::infoPriseAir(const int& id, std::string& modele, char& rang, int& aero, unsigned int& prix)
+void PriseAir::infoPriseAir(const int& id, std::string& modele, char& rang, int& aero, int& prix)
 {
 	std::string var = ""; //contient les lignes du fichier
 	std::string chemin ="Data/composants/priseair.cdx";
@@ -194,32 +183,17 @@ void PriseAir::infoPriseAir(const int& id, std::string& modele, char& rang, int&
 	}
 }
 
-
-
-//Accesseurs et Mutateurs
 std::string PriseAir::getNom() const
 {
 	return m_nom;
 }
-
 
 char PriseAir::getRang() const
 {
 	return m_rang;
 }
 
-
 int PriseAir::getAerodynamisme() const
 {
 	return m_aerodynamisme;
 }
-
-
-
-//Methodes
-	//Aucune
-
-
-
-//Operateurs methodes
-	//Aucun

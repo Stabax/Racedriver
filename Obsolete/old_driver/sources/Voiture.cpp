@@ -5,7 +5,8 @@
 
 
 //Constructeurs
-Voiture::Voiture(const std::string& marque, const std::string& modele, const int& idMoteur, const int& idSpoiler, const int& idPriseAir, const char& rang, const int& nitroMax, const int& aerodynamismeVoiture, const int& idPneus, const int& usurePneus, const int& etat) : m_moteur(Moteur::chargerMoteur(idMoteur, marque)), m_idMoteur(idMoteur), m_spoiler(Spoiler::chargerSpoiler(idSpoiler)), m_idSpoiler(idSpoiler),  m_priseAir(PriseAir::chargerPriseAir(idPriseAir)), m_idPriseAir(idPriseAir), m_niveauNitro(nitroMax), m_aerodynamisme((m_priseAir->getAerodynamisme()/3 )+(m_spoiler->getAerodynamisme()/3)+(aerodynamismeVoiture/3)+1), m_vitesse(m_moteur->getVitesse()+(m_aerodynamisme/3)), m_acceleration(((m_niveauNitro+m_moteur->getAcceleration())+(m_aerodynamisme))/10), m_marque(marque), m_modele(modele), m_rang(rang), m_typeCarburant(m_moteur->getTypeCarburant()), m_consommation(m_moteur->getConsommation()), m_nitroMax(nitroMax), m_aerodynamismeVoiture(aerodynamismeVoiture), m_pneus(Pneus::chargerPneus(idPneus, usurePneus)), m_idPneus(idPneus), m_etat(etat)
+Voiture::Voiture(const std::string& marque, const std::string& modele, const int& idMoteur, const int& idSpoiler, const int& idPriseAir, const char& rang, const int& nitroMax, const int& aerodynamismeVoiture, const int& idPneus, const int& usurePneus, const int& etat)
+ : m_moteur(Moteur::chargerMoteur(idMoteur, marque)), m_idMoteur(idMoteur), m_spoiler(Spoiler::chargerSpoiler(idSpoiler)), m_idSpoiler(idSpoiler),  m_priseAir(PriseAir::chargerPriseAir(idPriseAir)), m_idPriseAir(idPriseAir), m_niveauNitro(nitroMax), m_aerodynamisme((m_priseAir->getAerodynamisme()/3 )+(m_spoiler->getAerodynamisme()/3)+(aerodynamismeVoiture/3)+1), m_vitesse(m_moteur->getVitesse()+(m_aerodynamisme/3)), m_acceleration(((m_niveauNitro+m_moteur->getAcceleration())+(m_aerodynamisme))/10), m_marque(marque), m_modele(modele), m_rang(rang), m_typeCarburant(m_moteur->getTypeCarburant()), m_consommation(m_moteur->getConsommation()), m_nitroMax(nitroMax), m_aerodynamismeVoiture(aerodynamismeVoiture), m_pneus(Pneus::chargerPneus(idPneus, usurePneus)), m_idPneus(idPneus), m_etat(etat)
 {
 
 }
@@ -155,7 +156,7 @@ void Voiture::listerVoitures(const char& rang)
 	std::string chemin ="Data/Voitures/"+sRang+".cdx";
 
 	std::string var;
-	unsigned int prixMoteur=0;
+	int prixMoteur=0;
 
 	std::ifstream flux(chemin.c_str());
 	if(flux)
@@ -276,13 +277,12 @@ void Voiture::listerVoitures(const char& rang)
 
 			Moteur::infoMoteur(idMoteur, marque, prixMoteur);
 
-			unsigned int prix=roundf( (prixMoteur + 0 + 0 + 0 )  *0.85+ (( aerodynamisme + nitroMax ) * 100)+ (( vRang(rang) - 1 ) * 20000));
+			int prix=roundf( (prixMoteur + 0 + 0 + 0 )  *0.85+ (( aerodynamisme + nitroMax ) * 100)+ (( vRang(rang) - 1 ) * 20000));
 
 			std::cout<< id << "." << espace5 << marque << espace1 << modele << espace2 << ssNitroMax << espace3 << ssAerodynamisme << espace4 << prix << "c\n";
 		}
 	}
 }
-
 
 int Voiture::compterVoitures(const char& rang)
 {
@@ -318,8 +318,7 @@ int Voiture::compterVoitures(const char& rang)
 	return nbVoiture;
 }
 
-
-void Voiture::infoVoiture(const int& id, const char& rang, std::string& marque, std::string& modele, int& idMoteur, int& nitroMax, int& aerodynamisme, unsigned int& prix)
+void Voiture::infoVoiture(const int& id, const char& rang, std::string& marque, std::string& modele, int& idMoteur, int& nitroMax, int& aerodynamisme, int& prix)
 {
 	std::string var; //contient les lignes du fichier
 	std::string sRang;
@@ -408,7 +407,7 @@ void Voiture::infoVoiture(const int& id, const char& rang, std::string& marque, 
 			}
 
 			Moteur::infoMoteur(idMoteur, marque, nomMoteur);
-			unsigned int prixMoteur=0;
+			int prixMoteur=0;
 			Moteur::infoMoteur(idMoteur, marque, prixMoteur);
 			prix=roundf( (prixMoteur + 0 + 0 + 0 )  *0.85+ (( aerodynamisme + nitroMax ) * 100)+ (( vRang(rang) - 1 ) * 20000));
 		}
@@ -419,14 +418,10 @@ void Voiture::infoVoiture(const int& id, const char& rang, std::string& marque, 
 	}
 }
 
-
-
-//Accesseurs et Mutateurs
 std::string Voiture::getMarque() const
 {
 	return m_marque;
 }
-
 
 std::string Voiture::getModele() const
 {
@@ -532,19 +527,17 @@ float Voiture::getPrixCarburantMoteur() const
 	return m_moteur->getPrixCarburant();
 }
 
-
-unsigned int Voiture::getPrix() const
+int Voiture::getPrix() const
 {
-	unsigned int prixMoteur=0;
-	unsigned int prixSpoiler=0;
-	unsigned int prixPriseAir=0;
+	int prixMoteur=0;
+	int prixSpoiler=0;
+	int prixPriseAir=0;
 	Moteur::infoMoteur(m_idMoteur, m_marque, prixMoteur);
 	Spoiler::infoSpoiler(m_idSpoiler, prixSpoiler);
 	PriseAir::infoPriseAir(m_idPriseAir, prixPriseAir);
 
-	return roundf( (prixMoteur + prixSpoiler + prixPriseAir + 0 )  *0.9+ (( m_aerodynamismeVoiture + m_nitroMax ) * 100)+ (( vRang(m_rang) - 1 ) * 20000));
+	return static_cast<int>(roundf( (prixMoteur + prixSpoiler + prixPriseAir + 0 )  *0.9+ (( m_aerodynamismeVoiture + m_nitroMax ) * 100)+ (( vRang(m_rang) - 1 ) * 20000)));
 }
-
 
 int Voiture::getPrixMoteur() const
 {
@@ -557,7 +550,6 @@ std::string Voiture::getNomSpoiler() const
 	return m_spoiler->getNom();
 }
 
-
 char Voiture::getRangSpoiler() const
 {
 	return m_spoiler->getRang();
@@ -569,42 +561,35 @@ int Voiture::getAerodynamismeSpoiler() const
 	return m_spoiler->getAerodynamisme();
 }
 
-
 std::string Voiture::getNomPriseAir() const
 {
 	return m_priseAir->getNom();
 }
-
 
 char Voiture::getRangPriseAir() const
 {
 	return m_priseAir->getRang();
 }
 
-
 int Voiture::getAerodynamismePriseAir() const
 {
 	return m_priseAir->getAerodynamisme();
 }
-
 
 int Voiture::getIdPneus() const
 {
 	return m_idPneus;
 }
 
-
 char Voiture::getRangPneus() const
 {
 	return m_pneus->getRang();
 }
 
-
 std::string Voiture::getMarquePneus() const
 {
 	return m_pneus->getMarque();
 }
-
 
 void Voiture::setMoteur(Moteur* newMoteur, const int& idMoteur)
 {
@@ -613,14 +598,12 @@ void Voiture::setMoteur(Moteur* newMoteur, const int& idMoteur)
 	updateAttributs();
 }
 
-
 void Voiture::setSpoiler(Spoiler* newSpoiler, const int& idSpoiler)
 {
 	m_spoiler = newSpoiler;
 	m_idSpoiler = idSpoiler;
 	updateAttributs();
 }
-
 
 void Voiture::setPriseAir(PriseAir* newPriseAir, const int& idPriseAir)
 {
@@ -629,34 +612,28 @@ void Voiture::setPriseAir(PriseAir* newPriseAir, const int& idPriseAir)
 	updateAttributs();
 }
 
-
-void Voiture::setPneus(const short int& ajouter)
+void Voiture::setPneus(const int& ajouter)
 {
 	m_pneus+=ajouter;
 	updateAttributs();
 }
 
-
-void Voiture::setNitro(const short int& ajouter)
+void Voiture::setNitro(const int& ajouter)
 {
 	m_niveauNitro+=ajouter;
 	updateAttributs();
 }
-
 
 void Voiture::retirerEtat(const int& retirer)
 {
 	m_etat -=retirer;
 }
 
-
-//Methodes
 void Voiture::pleinNitro()
 {
 	m_niveauNitro = m_nitroMax;
 	updateAttributs();
 }
-
 
 void Voiture::pleinCarburant()
 {
@@ -664,33 +641,25 @@ void Voiture::pleinCarburant()
 	updateAttributs();
 }
 
-
 void Voiture::changerPneus()
 {
 	m_pneus->setDurabilite(100);
 }
-
 
 void Voiture::reparer()
 {
 	m_etat=100;
 }
 
-
 void Voiture::updateAttributs()
 {
-	m_aerodynamisme = ( m_priseAir->getAerodynamisme() / 3 ) + ( m_spoiler->getAerodynamisme() /3 ) + (m_aerodynamismeVoiture /3);
+	m_aerodynamisme = static_cast<float>((m_priseAir->getAerodynamisme() / 3) + (m_spoiler->getAerodynamisme() / 3) + (m_aerodynamismeVoiture / 3));
 
 	m_aerodynamisme+=1;
 
 	m_vitesse = m_moteur->getVitesse() + ( m_aerodynamisme / 3 );
 	m_niveauNitro = m_nitroMax;
-	m_acceleration = (( m_niveauNitro + m_moteur->getAcceleration() ) + (m_aerodynamisme))/10;
+	m_acceleration = static_cast<float>((( m_niveauNitro + m_moteur->getAcceleration() ) + (m_aerodynamisme))/10);
 	m_typeCarburant = m_moteur->getTypeCarburant();
 	m_consommation = m_moteur->getConsommation();
 }
-
-
-
-//Operateurs Methodes
-	//Aucun

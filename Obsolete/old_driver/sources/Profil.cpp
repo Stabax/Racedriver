@@ -1,24 +1,16 @@
-
 //Profils.cpp
-
 #include "Profil.h"
 
-
-//Constructeurs
 Profil::Profil(const std::string& uuid, const int& numero, const std::string& nom) : m_uuid(uuid), m_numero(numero), m_nom(nom), m_credits(2000), m_difficulte(3), m_nbBox(1), m_box({0}), m_nbCourses(0), m_victoires(0), m_defaites(0), m_accidents(0), m_creditsGagnes(0), m_voituresAchetees(0), m_nbCoursesCL(0), m_victoiresCL(0), m_defaitesCL(0), m_accidentsCL(0), m_creditsGagnesCL(0), m_sauvegardeAuto(false)
 {
 
 }
 
-
-Profil::Profil(const std::string& uuid, const int& numero, const std::string& nom, const unsigned int& credits, const bool& sauvegardeAuto, const int& difficulte, const int& nbBox, const int& nbCourses, const int& victoires, const int& defaites, const int& accidents, const int& creditsGagnes, const int& nbCoursesCL, const int& victoiresCL, const int& defaitesCL, const int& accidentsCL, const int& creditsGagnesCL, const int& voituresAchetees) : m_uuid(uuid), m_numero(numero), m_nom(nom), m_credits(credits), m_difficulte(difficulte), m_nbBox(nbBox), m_box({0}), m_nbCourses(nbCourses), m_victoires(victoires), m_defaites(defaites), m_accidents(accidents), m_creditsGagnes(creditsGagnes), m_voituresAchetees(voituresAchetees), m_nbCoursesCL(nbCoursesCL), m_victoiresCL(victoiresCL), m_defaitesCL(defaitesCL), m_accidentsCL(accidentsCL), m_creditsGagnesCL(creditsGagnesCL), m_sauvegardeAuto(sauvegardeAuto)
+Profil::Profil(const std::string& uuid, const int& numero, const std::string& nom, const int& credits, const bool& sauvegardeAuto, const int& difficulte, const int& nbBox, const int& nbCourses, const int& victoires, const int& defaites, const int& accidents, const int& creditsGagnes, const int& nbCoursesCL, const int& victoiresCL, const int& defaitesCL, const int& accidentsCL, const int& creditsGagnesCL, const int& voituresAchetees) : m_uuid(uuid), m_numero(numero), m_nom(nom), m_credits(credits), m_difficulte(difficulte), m_nbBox(nbBox), m_box({0}), m_nbCourses(nbCourses), m_victoires(victoires), m_defaites(defaites), m_accidents(accidents), m_creditsGagnes(creditsGagnes), m_voituresAchetees(voituresAchetees), m_nbCoursesCL(nbCoursesCL), m_victoiresCL(victoiresCL), m_defaitesCL(defaitesCL), m_accidentsCL(accidentsCL), m_creditsGagnesCL(creditsGagnesCL), m_sauvegardeAuto(sauvegardeAuto)
 {
 
 }
 
-
-
-//Destructeur
 Profil::~Profil()
 {
 	for (size_t i = 0; i < 5; i++)
@@ -30,9 +22,6 @@ Profil::~Profil()
 	}
 }
 
-
-
-//Methodes Statiques
 bool Profil::compatible(Profil& Player, const int& numeroBox, const char& rangNewPiece)
 {
 	bool compatible = false;
@@ -54,7 +43,6 @@ bool Profil::compatible(Profil& Player, const int& numeroBox, const char& rangNe
 	return compatible;
 }
 
-
 void Profil::listerSauvegardes()
 {
 	int i = 1;
@@ -62,8 +50,6 @@ void Profil::listerSauvegardes()
 	std::string nomProfil;
 	std::ostringstream oss;   // stream utilise pour la conversion
 	bool ouvert = true;
-
-
 	do
 	{
 		oss.str(""); //On vide le contenu de oss
@@ -87,7 +73,6 @@ void Profil::listerSauvegardes()
 	}while(ouvert);
 	std::cout << "\n"; // on separe le bloc de profils du choix annuler
 }
-
 
 int Profil::compterSauvegardes()
 {
@@ -114,7 +99,6 @@ int Profil::compterSauvegardes()
 	}while(ouvert);
 	return i - 1; //Un tour de test supplementaire est fait, d'ou le -1
 }
-
 
 bool Profil::chargerProfil(const int& numeroSave, Profil*& ProfilCharge)
 {
@@ -173,7 +157,7 @@ bool Profil::chargerProfil(const int& numeroSave, Profil*& ProfilCharge)
 
 			std::string uuidCharge;
 			std::string nomCharge;
-			unsigned int creditsCharges;
+			int creditsCharges;
 			int difficulteChargee;
 			int nbBoxCharges;
 
@@ -423,7 +407,6 @@ bool Profil::chargerProfil(const int& numeroSave, Profil*& ProfilCharge)
 	return statut;
 }
 
-
 void Profil::supprimerProfil(const int& numeroSave)
 {
 	bool test;
@@ -439,24 +422,20 @@ void Profil::supprimerProfil(const int& numeroSave)
 
 	oss << numeroSave;      // on insere le int dans le stream oss
 	numeroProfil = oss.str(); // range le int dans la variable numeroSave
-
 	cheminFichier = "Saves/Profil" + numeroProfil + ".save";
 	cheminLock = "Saves/Profil" + numeroProfil + ".lock";
-
 	if(remove(cheminFichier.c_str()))
 	{
 		clrscreen();
 		error("Impossible de supprimer le profil");
 		fail = true;
 	}
-
 	if(remove(cheminLock.c_str()))
 	{
 		clrscreen();
 		error("Impossible de supprimer le verrou du profil");
 		fail = true;
 	}
-
 	if(nbSaves > numeroSave)
 	{
 		for (size_t i = numeroSave; i < nbSaves; i++)
@@ -502,15 +481,12 @@ void Profil::sauvegarderProfil()
 	std::string sNumeroSave;
 	std::string nomFichier;
 	std::string nomLock;
-
 	std::ostringstream oss;   // stream utilise pour la conversion int > string
 
 	oss << m_numero;      // on insere le int dans le stream oss
 	sNumeroSave = oss.str(); // range le int dans la variable numeroSave
 	oss << ""; //equivalent de iss.clear()
-
 	nomFichier = "Saves/Profil" + sNumeroSave + ".save";
-
 	if(1) //on crée un bloc supplémentaire
 	{
 		std::ofstream save(nomFichier.c_str());
@@ -539,11 +515,9 @@ void Profil::sauvegarderProfil()
 			error("Impossible d'ecraser le fichier de profil");
 		}
 	}
-
 	//Une fois la sauvegarde faite on crée le Lock
 	nomLock = "Saves/Profil" + sNumeroSave + ".lock";
 	std::ofstream lock(nomLock.c_str()); //flux d'écriture dans le lock
-
 	std::string ligneChargee;
 	std::string saveContent;
 
@@ -556,7 +530,6 @@ void Profil::sauvegarderProfil()
 		lock << getHashFromFile(nomFichier); //On inscrit le lock dans le fichier
 	}
 }
-
 
 void Profil::creerProfil(std::string& nom, Profil*& ProfilCree)
 {
@@ -580,9 +553,6 @@ void Profil::creerProfil(std::string& nom, Profil*& ProfilCree)
 	videKBuffer();
 }
 
-
-
-//Accesseurs et Mutateurs
 std::string Profil::getUuid() const
 {
 	return m_uuid;
@@ -599,7 +569,7 @@ std::string Profil::getNom() const
 }
 
 
-unsigned int Profil::getCredits() const
+int Profil::getCredits() const
 {
 	return m_credits;
 }
@@ -644,7 +614,7 @@ float Profil::getVDRatio() const
 	float ratio;
 	if( m_defaites != 0)
 	{
-		ratio = m_victoires / m_defaites;
+		ratio = static_cast<int>(m_victoires / m_defaites);
 	}
 	else
 	{
@@ -752,8 +722,6 @@ void Profil::ajouterCredits(const int& somme)
 	m_credits += somme;
 }
 
-
-//Methodes
 void Profil::ajouterCourse()
 {
 	m_nbCourses++;
@@ -776,7 +744,6 @@ void Profil::ajouterAccident()
 {
 	m_accidents++;
 }
-
 
 bool Profil::boxVide(int numeroBox)
 {
@@ -813,7 +780,6 @@ void Profil::changerNom(const std::string& newNom)
 {
 	m_nom = newNom;
 }
-
 
 bool Profil::payer(const int& prix)
 {

@@ -28,9 +28,9 @@ class Moteur
 	static Moteur* chargerMoteur(const int& id, const std::string& marqueChargee);
 	static void listerMoteurs(const std::string& marque);
 	static void infoMoteur(const int& id, const std::string& marque, std::string& modele);
-	static void infoMoteur(const int& id, const std::string& marque, unsigned int& prix);
+	static void infoMoteur(const int& id, const std::string& marque, int& prix);
 	static void infoMoteur(const int& id, const std::string& marque, std::string& modele, int& vitesse, int& acceleration);
-	static void infoMoteur(const int& id, const std::string& marque, std::string& modele, int& vitesse, int& acceleration, char& rang, unsigned int& prix);
+	static void infoMoteur(const int& id, const std::string& marque, std::string& modele, int& vitesse, int& acceleration, char& rang, int& prix);
 	static int compterMoteurs(const std::string& marque);
 	static float returnPrixCarburant(const std::string& carburant);
 	

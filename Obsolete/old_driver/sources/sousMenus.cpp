@@ -56,7 +56,7 @@ Voiture* menuChoixVoiture(Profil& Player)
 				clrscreen();
 				error("Le box est vide.");
 			}
-			else	
+			else
 			{
 				clrscreen(); //On flushe l'ancien ecran
 				VoitureSelectionnee = Player.getBox(menu - 1);
@@ -400,7 +400,7 @@ void menuAtelierSpoiler(Profil& Player, const int& numeroBox)
 
 	int idCharge = id + 1;
 	std::string modeleCharge;
-	unsigned int prixCharge;
+	int prixCharge;
 	int aerodynamismeCharge;
 	char rangCharge;
 
@@ -467,7 +467,7 @@ void menuAtelierPriseAir(Profil& Player, const int& numeroBox)
 
 	int idCharge = id + 1;
 	std::string modeleCharge;
-	unsigned int prixCharge;
+	int prixCharge;
 	int aerodynamismeCharge;
 	char rangCharge;
 
@@ -545,11 +545,11 @@ void menuAtelierMoteur(Profil& Player, const int& numeroBox)
 
 	std::string newNomMoteur = "Aucun";
 	char newRangMoteur = ' ';
-	unsigned int newPrixMoteur = 0;
+	int newPrixMoteur = 0;
 	int newVitesseMoteur = 0;
 	int newAccelerationMoteur = 0;
-	short int diffVitesseMoteur = 0;
-	short int diffAccelerationMoteur = 0;
+	int diffVitesseMoteur = 0;
+	int diffAccelerationMoteur = 0;
 
 	while(quit != true)
 	{
@@ -719,7 +719,7 @@ void menuMaintenance(Profil& Player, const int& numeroBox)
 	char verifAchat;
 	int nitroManquante;
 	Voiture* Voiture = Player.getBox(numeroBox);
-	unsigned int aPayer=0;
+	int aPayer=0;
 	//Menu Principal
 	while(quit != 1)
 	{
@@ -916,7 +916,7 @@ void menuAchatVoiture(const char& rang, Profil& Player)
 	int vitesseMoteurVoiture = 0;
 	int accelerationMoteurVoiture = 0;
 
-	unsigned int prixVoiture = 0;
+	int prixVoiture = 0;
 	
 	while(quit != true)
 	{

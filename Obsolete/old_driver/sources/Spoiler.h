@@ -22,8 +22,8 @@ class Spoiler
 	
 	//Méthodes statiques
 	static Spoiler* chargerSpoiler(const int& id);
-	static void infoSpoiler(const int& id, unsigned int& prix);
-	static void infoSpoiler(const int& id, std::string& modele, char& rang, int& aero, unsigned int& prix);
+	static void infoSpoiler(const int& id, int& prix);
+	static void infoSpoiler(const int& id, std::string& modele, char& rang, int& aero, int& prix);
 	
 	//Accesseurs et Mutateurs
 	std::string getNom() const;

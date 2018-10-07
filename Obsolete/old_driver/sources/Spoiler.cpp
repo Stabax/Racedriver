@@ -1,25 +1,16 @@
-
 //Spoiler.cpp
-
 #include "Spoiler.h"
 
-
-//Constructeurs
-Spoiler::Spoiler(const std::string& modele, const char& rang, const int& aerodynamisme):m_nom(modele), m_rang(rang), m_aerodynamisme(aerodynamisme)
+Spoiler::Spoiler(const std::string& modele, const char& rang, const int& aerodynamisme)
+ : m_nom(modele), m_rang(rang), m_aerodynamisme(aerodynamisme)
 {
 }
 
-
-
-//Destructeur
 Spoiler::~Spoiler()
 {
 
 }
 
-
-
-//Methodes statiques
 Spoiler* Spoiler::chargerSpoiler(const int& id)
 {
 	Spoiler* SpoilerCharge = 0; //Spoiler a creer
@@ -85,8 +76,7 @@ Spoiler* Spoiler::chargerSpoiler(const int& id)
 	return SpoilerCharge;
 }
 
-
-void Spoiler::infoSpoiler(const int& id, unsigned int& prix)
+void Spoiler::infoSpoiler(const int& id, int& prix)
 {
 	std::string var = ""; //contient les lignes du fichier
 	std::string chemin ="Data/composants/spoiler.cdx";
@@ -132,7 +122,7 @@ void Spoiler::infoSpoiler(const int& id, unsigned int& prix)
 	}
 }
 
-void Spoiler::infoSpoiler(const int& id, std::string& modele, char& rang, int& aero, unsigned int& prix)
+void Spoiler::infoSpoiler(const int& id, std::string& modele, char& rang, int& aero, int& prix)
 {
 	std::string var = ""; //contient les lignes du fichier
 	std::string chemin ="Data/composants/spoiler.cdx";
@@ -193,32 +183,17 @@ void Spoiler::infoSpoiler(const int& id, std::string& modele, char& rang, int& a
 	}
 }
 
-
-
-//Accesseurs et Mutateurs
 std::string Spoiler::getNom() const
 {
 	return m_nom;
 }
-
 
 char Spoiler::getRang() const
 {
 	return m_rang;
 }
 
-
 int Spoiler::getAerodynamisme() const
 {
 	return m_aerodynamisme;
 }
-
-
-
-//Methodes
-	//Aucune
-
-
-
-//Operateurs Methodes
-	//Aucun

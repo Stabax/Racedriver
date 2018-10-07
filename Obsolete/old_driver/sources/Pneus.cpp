@@ -5,7 +5,8 @@
 
 
 //Constructeurs
-Pneus::Pneus(const std::string& marque, const char& rang, const int& usure): m_marque(marque), m_rang(rang), m_durabilite(usure), m_prix(vRang(m_rang)*1500)
+Pneus::Pneus(const std::string& marque, const char& rang, const int& usure)
+ : m_marque(marque), m_rang(rang), m_durabilite(usure), m_prix(vRang(m_rang)*1500)
 {
 
 }
@@ -76,7 +77,7 @@ void Pneus::listerPneus()
 	std::string chemin ="Data/composants/pneus.cdx";
 
 	std::string var;
-	unsigned int prixPneus=0;
+	int prixPneus=0;
 
 	std::ifstream flux(chemin.c_str());
 	if(flux)

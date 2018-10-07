@@ -25,8 +25,8 @@ class PriseAir
 	
 	//Methodes statiques
 	static PriseAir* chargerPriseAir(const int& id);
-	static void infoPriseAir(const int& id, unsigned int& prix);
-	static void infoPriseAir(const int& id, std::string& modele, char& rang, int& aero, unsigned int& prix);	
+	static void infoPriseAir(const int& id, int& prix);
+	static void infoPriseAir(const int& id, std::string& modele, char& rang, int& aero, int& prix);	
 		
 	//Accesseurs et Mutateurs
 	std::string getNom() const;

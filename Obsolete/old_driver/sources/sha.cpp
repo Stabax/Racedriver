@@ -20,7 +20,7 @@ const unsigned long SHA256::sha256_k[64] = //UL = uint32
              0x748f82ee, 0x78a5636f, 0x84c87814, 0x8cc70208,
              0x90befffa, 0xa4506ceb, 0xbef9a3f7, 0xc67178f2};
  
-void SHA256::transform(const unsigned char *message, unsigned int block_nb)
+void SHA256::transform(const unsigned char *message, int block_nb)
 {
     uint32 w[64];
     uint32 wv[8];
@@ -72,10 +72,10 @@ void SHA256::init()
     m_tot_len = 0;
 }
  
-void SHA256::update(const unsigned char *message, unsigned int len)
+void SHA256::update(const unsigned char *message, int len)
 {
-    unsigned int block_nb;
-    unsigned int new_len, rem_len, tmp_len;
+    int block_nb;
+    int new_len, rem_len, tmp_len;
     const unsigned char *shifted_message;
     tmp_len = SHA224_256_BLOCK_SIZE - m_len;
     rem_len = len < tmp_len ? len : tmp_len;
@@ -97,9 +97,9 @@ void SHA256::update(const unsigned char *message, unsigned int len)
  
 void SHA256::final(unsigned char *digest)
 {
-    unsigned int block_nb;
-    unsigned int pm_len;
-    unsigned int len_b;
+    int block_nb;
+    int pm_len;
+    int len_b;
     int i;
     block_nb = (1 + ((SHA224_256_BLOCK_SIZE - 9)
                      < (m_len % SHA224_256_BLOCK_SIZE)));
@@ -126,7 +126,7 @@ std::string sha256(std::string input)
  
     char buf[2*SHA256::DIGEST_SIZE+1];
     buf[2*SHA256::DIGEST_SIZE] = 0;
-    for (int i = 0; i < SHA256::DIGEST_SIZE; i++)
+    for (size_t i = 0; i < SHA256::DIGEST_SIZE; i++)
         sprintf(buf+i*2, "%02x", digest[i]);
     return std::string(buf);
 }

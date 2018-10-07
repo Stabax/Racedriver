@@ -27,7 +27,7 @@ class Voiture
 	//Méthodes statiques
 	static Voiture* chargerVoiture(const int& id, const char& rangCharge);
 	static void listerVoitures(const char& rang);
-	static void infoVoiture(const int& id, const char& rang, std::string& marque, std::string& modele, int& idMoteur, int& nitroMax, int& aerodynamisme, unsigned int& prix);
+	static void infoVoiture(const int& id, const char& rang, std::string& marque, std::string& modele, int& idMoteur, int& nitroMax, int& aerodynamisme, int& prix);
 	static int compterVoitures(const char& rang);
 	
 	//Accesseurs et Mutateurs
@@ -48,7 +48,7 @@ class Voiture
 	int getEtat() const;
 	int getAerodynamismeVoiture() const;
 	int getConsommation() const;
-	unsigned int getPrix() const;
+	int getPrix() const;
 	int getIdPneus() const;
 	
 	std::string getNomMoteur() const;	//infos moteur
@@ -68,8 +68,8 @@ class Voiture
 	void setMoteur(Moteur* newMoteur, const int& idMoteur);
 	void setSpoiler(Spoiler* newSpoiler, const int& idSpoiler);
 	void setPriseAir(PriseAir* newPriseAir, const int& idPriseAir);
-	void setPneus(const short int& ajouter);
-	void setNitro(const short int& ajouter);
+	void setPneus(const int& ajouter);
+	void setNitro(const int& ajouter);
 	
 	void retirerEtat(const int& retirer);
 	
@@ -110,7 +110,7 @@ class Voiture
 	char m_rang;
 	
 	std::string m_typeCarburant;		//change en fonction du moteur
-	int m_consommation;	//change en fonction du moteur
+	float m_consommation;	//change en fonction du moteur
 
 	int m_nitroMax;	//non modifiable pour une voiture donnée
 	int m_aerodynamismeVoiture;	//non modifiable pour une voiture donnée

@@ -71,7 +71,10 @@ int main(/* int argc, char * argv[] */)
 	{
 		clrscreen();
 		std::srand(std::time(0)); //INITIALISATION DE L'ALEATOIRE
-		miseAJour();//on verifie et fait les mises à jour
+		{
+			Launcher launcher;
+			launcher.update(); //on verifie et fait les mises à jour
+		}
 		std::cout << "Chargement en Cours...\n";
 		sleep(2.0f);
 		clrscreen();

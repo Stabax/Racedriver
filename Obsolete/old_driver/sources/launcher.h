@@ -11,6 +11,14 @@
 
 #include "fonctions.h"
 
-void miseAJour();
+class Launcher
+{
+public:
+  void removeUpdatePackage();
+  void update();
+
+private:
+
+};
 
 #endif

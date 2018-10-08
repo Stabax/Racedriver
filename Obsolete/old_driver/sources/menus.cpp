@@ -1,5 +1,6 @@
 //menus.cpp
-#include "menus.h"
+#include <unistd.h>
+#include "menus.hh"
 
 void menuCourse(Profil& Player)
 {

@@ -43,9 +43,10 @@ Les conventions de ce programme sont:
 */
 
 #include <ctime>
-#include "launcher.h"
-#include "menusPrincipaux.h"
-#include "fonctions.h"
+#include <unistd.h>
+#include "Launcher.hh"
+#include "menusPrincipaux.hh"
+#include "fonctions.hh"
 
 namespace GLOBAL
 {
@@ -67,7 +68,7 @@ int main(int argc, char **argv)
 		launcher.update(); //on verifie et fait les mises à jour
 	}
 	std::cout << "Chargement en Cours...\n";
-	sleep(2.0f);
+	usleep(2000);
 	clrscreen();
 	std::cout << "Pour jouer dans les meilleures conditions,\nbasculez en plein ecran !\n\n";
 	menuRacedriver();//on lance le coeur du jeu

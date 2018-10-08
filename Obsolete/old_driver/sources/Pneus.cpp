@@ -1,5 +1,5 @@
 //Pneus.cpp
-#include "Pneus.h"
+#include "Pneus.hh"
 
 Pneus::Pneus(const std::string& marque, const char& rang, const int& usure)
  : m_marque(marque), m_rang(rang), m_durabilite(usure), m_prix(vRang(m_rang)*1500)

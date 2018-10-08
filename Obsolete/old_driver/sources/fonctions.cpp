@@ -1,5 +1,5 @@
 //fonctions.cpp
-#include "fonctions.h"
+#include "fonctions.hh"
 
 std::string getHashFromFile(std::string path)
 {

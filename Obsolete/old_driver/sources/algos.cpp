@@ -1,5 +1,5 @@
 //algos.cpp
-#include"algos.h"
+#include"algos.hh"
 
 int vRang(char rang)
 {

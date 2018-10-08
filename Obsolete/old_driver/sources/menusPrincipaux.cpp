@@ -1,7 +1,6 @@
-
 //menusPrincipaux.cpp
-
-#include"menusPrincipaux.h"
+#include <unistd.h>
+#include"menusPrincipaux.hh"
 
 void menuRacedriver()
 {
@@ -17,8 +16,6 @@ void menuRacedriver()
 		std::cout << " _  _, _// /_/ // /__ /  __/  /_/ /_  /   _  / __ |/ //  __/  /    \n";
 		std::cout << " /_/ |_| \\__,_/ \\___/ \\___//_____/ /_/    /_/  _____/ \\___//_/     \n";
 		std::cout << "[" << GAME_VERSION << "]\n\n";
-
-
 		//Menu Principal
 		std::cout << "Menu principal\n";
 		std::cout << "===============\n\n";
@@ -62,7 +59,6 @@ void menuRacedriver()
 	}
 	delete Player;
 }
-
 
 void menuJeu(Profil& Player, bool& quitGame)
 {
@@ -290,16 +286,12 @@ void menuJeu(Profil& Player, bool& quitGame)
 	}
 }
 
-
 void menuChargementPartie(Profil*& Player, bool& quit)
 {
-	//Var
 	std::string sMenu;
 	int menu;
 	bool etat; //stocke le resultat du chargement
 	std::string nom;
-
-	//Debut
 	//Menu Chargement profil
 	std::cout << "Charger un Profil: \n";
 	std::cout << "===============\n";
@@ -315,8 +307,6 @@ void menuChargementPartie(Profil*& Player, bool& quit)
 
 	iss.str(sMenu); // On extrait la taille du circuit et on le stocke dans la variable de conversion "iss1".
 	iss >> menu; // on convertit la string recuperee plus haut en entier
-
-
 	//Redirection de l'utilisateur selon son choix grâce a un switch.
 	if(menu == 0)
 	{
@@ -329,7 +319,6 @@ void menuChargementPartie(Profil*& Player, bool& quit)
 				{
 					menuJeu(*Player, quit);//Redirection de l'utilisateur dans le menu de jeu
 				}
-
 	}
 	else //equivalent de default
 	{
@@ -337,7 +326,6 @@ void menuChargementPartie(Profil*& Player, bool& quit)
 		error("Ce profil n'existe pas");
 	}
 }
-
 
 void menuCreationPartie(Profil*& Player, bool& quit)
 {
@@ -361,7 +349,6 @@ void menuCreationPartie(Profil*& Player, bool& quit)
 		menuJeu(*Player, quit);
 	}
 }
-
 
 void menuSuppressionPartie()
 {
@@ -387,8 +374,6 @@ void menuSuppressionPartie()
 
 	iss.str(sMenu); // On extrait la taille du circuit et on le stocke dans la variable de conversion "iss1".
 	iss >> menu; // on convertit la string recuperee plus haut en entier
-
-
 	//Redirection de l'utilisateur selon son choix grâce a un switch.
 	if(menu == 0)
 	{
@@ -444,7 +429,6 @@ void menuSuppressionPartie()
 		error("Ce profil n'existe pas");
 	}
 }
-
 
 void menuApropos()
 {

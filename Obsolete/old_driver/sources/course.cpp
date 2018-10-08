@@ -1,5 +1,6 @@
 //course.cpp
-#include"course.h"
+#include <unistd.h>
+#include"course.hh"
 
 bool preparatifsCourse(const Circuit& Map, const Profil& Player, Voiture*& VoiturePlayer, int const& prix)
 {

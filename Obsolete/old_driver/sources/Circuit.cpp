@@ -1,24 +1,14 @@
-
 //Circuit.cpp
-
 #include "Circuit.h"
 
-
-//Constructeurs
 Circuit::Circuit(const std::string& nom, const int& taille, const int& virages, const int& climat, const int& difficulte, const int& denivele) : m_nom(nom), m_taille(taille), m_virages(virages), m_meteo(Circuit::construireMeteo(climat)), m_vent(Circuit::construireVent()), m_climat(Circuit::construireClimat(climat)), m_difficulte(difficulte), m_denivele(denivele)
 {
 }
 
-
-
-//Destructeur
 Circuit::~Circuit()
 {
 }
 
-
-
-//Methodes statiques
 void Circuit::chargerCircuit(const int& id, Circuit*& CircuitCourant)
 {
 	bool trouve = false;
@@ -87,7 +77,6 @@ void Circuit::chargerCircuit(const int& id, Circuit*& CircuitCourant)
 		error("Le circuit n'existe pas");
 	}
 }
-
 
 int Circuit::listerCircuits()
 {
@@ -172,7 +161,6 @@ int Circuit::listerCircuits()
 	return nombreCircuits;
 }
 
-
 int Circuit::construireMeteo(const int& climat)
 //le constructeur ne peut pas mettre de conditions dans la liste d'initialisation , donc on le fait ici
 {
@@ -256,7 +244,6 @@ int Circuit::construireMeteo(const int& climat)
 	return meteo;
 }
 
-
 int Circuit::construireVent()
 {
 //le constructeur ne peut pas mettre de conditions dans la liste d'initialisation , donc on le fait ici
@@ -276,7 +263,6 @@ int Circuit::construireVent()
 
 	return vent;
 }
-
 
 std::string Circuit::construireClimat(const int& climat)
 {
@@ -302,20 +288,15 @@ std::string Circuit::construireClimat(const int& climat)
 	}
 }
 
-
-
-//Accesseurs
 std::string Circuit::getNom() const
 {
 	return m_nom;
 }
 
-
 int Circuit::getTaille() const
 {
 	return m_taille;
 }
-
 
 int Circuit::getVirages() const
 {
@@ -345,15 +326,3 @@ int Circuit::getDenivele() const
 {
 	return m_denivele;
 }
-
-
-
-// Mutateurs
-
-
-
-//Methodes
-
-
-
-//Operateurs methodes

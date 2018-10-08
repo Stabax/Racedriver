@@ -1,10 +1,8 @@
-
 //algos.h
+#include <string>
+#include <fstream>
 
-#include<string>
-#include<fstream>
-
-std::string version();
+#define GAME_VERSION  "Alpha 1.8.0"
 
 int vRang(char rang);
 char vRangInverse(int valeur);

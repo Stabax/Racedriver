@@ -1,27 +1,17 @@
-//Pneu.cpp
-
+//Pneus.cpp
 #include "Pneus.h"
 
-
-
-//Constructeurs
 Pneus::Pneus(const std::string& marque, const char& rang, const int& usure)
  : m_marque(marque), m_rang(rang), m_durabilite(usure), m_prix(vRang(m_rang)*1500)
 {
 
 }
 
-
-
-//Destructeur
 Pneus::~Pneus()
 {
 
 }
 
-
-
-//Methodes statiques
 Pneus* Pneus::chargerPneus(const int& id, const int& usure)
 {
 	Pneus* PneusCharge = 0; //Pneus a creer
@@ -70,7 +60,6 @@ Pneus* Pneus::chargerPneus(const int& id, const int& usure)
 	}
 	return PneusCharge;
 }
-
 
 void Pneus::listerPneus()
 {
@@ -125,9 +114,6 @@ void Pneus::listerPneus()
 	}
 }
 
-
-
-//Accesseurs et Mutateurs
 std::string Pneus::getMarque() const
 {
 	return m_marque;
@@ -144,26 +130,12 @@ int Pneus::getPrix() const
 	return m_prix;
 }
 
-
 char Pneus::getRang() const
 {
 	return m_rang;
 }
 
-
-
-//mutateurs
 void Pneus::setDurabilite(const int& valeur)
 {
 	m_durabilite=valeur;
 }
-
-
-
-//Methodes
-	//Aucune
-
-
-
-//Opérateurs méthodes
-	//Aucune

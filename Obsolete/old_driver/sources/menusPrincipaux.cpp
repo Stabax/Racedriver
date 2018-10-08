@@ -16,7 +16,7 @@ void menuRacedriver()
 		std::cout << " __  /_/ /  __ `/  ___/  _ \\_  / / /_  ___/_  /__ | / /  _ \\_  ___/\n";
 		std::cout << " _  _, _// /_/ // /__ /  __/  /_/ /_  /   _  / __ |/ //  __/  /    \n";
 		std::cout << " /_/ |_| \\__,_/ \\___/ \\___//_____/ /_/    /_/  _____/ \\___//_/     \n";
-		std::cout << "[" << version() << "]\n\n";
+		std::cout << "[" << GAME_VERSION << "]\n\n";
 
 
 		//Menu Principal
@@ -467,7 +467,7 @@ void menuApropos()
 	std::cout << "Ce jeu est developpe en C++ par:\n";
 	std::cout << "~Baxlan(contact: Cavalioz@Hotmail.fr)\n";
 	std::cout << "~Stalker2106(contact: Stalker2106x@GMail.com)\n\n";
-	std::cout << "La version actuelle du programme est [Racedriver " << version() << "]\n\n";
+	std::cout << "La version actuelle du programme est [Racedriver " << GAME_VERSION << "]\n\n";
 	std::cout << "===============\n";
 	std::cout << "Appuyez sur Entree pour retourner au menu principal...\n";
 	videKBuffer(); //On appelle le videur de buffer qui va demander la pression d'entree, vu que le buffer est vide. (=pause, en version portable)

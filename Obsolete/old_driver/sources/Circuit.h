@@ -1,37 +1,26 @@
-
 //Circuit.h
-
-#ifndef circuit_h
-#define circuit_h
+#ifndef CIRCUIT_HH_
+#define CIRCUIT_HH_
 
 #include <iostream>
 #include <string>
 #include <fstream>
 #include <cstdlib>
 #include <sstream>
-
 #include"fonctions.h"
 
 class Circuit
 {
-	//Fonctions amies
-		//Aucune
-		
-	public:
-	//Constructeurs
+public:
 	Circuit(const std::string& nom, const int& taille, const int& virages, const int& climat, const int& difficulte, const int& denivele);
-
-	//destructeur
 	~Circuit();
-	
-	//Methodes statiques
+
 	static void chargerCircuit(const int& id, Circuit*& CircuitCourant);
 	static int listerCircuits();
 	static int construireMeteo(const int& climat);
 	static int construireVent();
 	static std::string construireClimat(const int& climat);
-	
-	//Accesseurs
+
 	std::string getNom() const;
 	int getTaille() const;
 	int getVirages() const;
@@ -39,16 +28,8 @@ class Circuit
 	int getVent() const;
 	int getDifficulte() const;
 	int getDenivele() const;
-	
-	//Mutateurs
-	
-	//Méthodes
-		
-	//Opérateurs méthodes ( =, (), [] )
-	
 
-	protected:
-	//Attributs
+protected:
 	std::string m_nom;
 	int m_taille;
 	int m_virages;
@@ -56,8 +37,7 @@ class Circuit
 	int m_vent;
 	std::string m_climat;
 	int m_difficulte;
-	int m_denivele;	
+	int m_denivele;
 };
 
-
-#endif
+#endif /* !CIRCUIT_HH_ */

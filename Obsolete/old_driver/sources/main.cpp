@@ -1,4 +1,3 @@
-
 /**
 ===============
 
@@ -43,8 +42,10 @@ Les conventions de ce programme sont:
 ===============
 */
 
-
-//main.cpp
+#include <ctime>
+#include "launcher.h"
+#include "menusPrincipaux.h"
+#include "fonctions.h"
 
 namespace GLOBAL
 {
@@ -57,46 +58,18 @@ namespace GLOBAL
 	bool debloqueAchievement = false;
 }
 
-#include <unistd.h>
-
-#include "launcher.h"
-#include "menusPrincipaux.h"
-#include "fonctions.h"
-
-
-//argc = nombre d'arguments, argv = tableau de string contenant les arguments. argv[0] est toujours le nom de l'executable
-int main(/* int argc, char * argv[] */)
+int main(int argc, char **argv)
 {
-	try
+	clrscreen();
+	std::srand(std::time(0)); //INITIALISATION DE L'ALEATOIRE
 	{
-		clrscreen();
-		std::srand(std::time(0)); //INITIALISATION DE L'ALEATOIRE
-		{
-			Launcher launcher;
-			launcher.update(); //on verifie et fait les mises à jour
-		}
-		std::cout << "Chargement en Cours...\n";
-		sleep(2.0f);
-		clrscreen();
-		std::cout << "Pour jouer dans les meilleures conditions,\nbasculez en plein ecran !\n\n";
-		menuRacedriver();//on lance le coeur du jeu
+		Launcher launcher;
+		launcher.update(); //on verifie et fait les mises à jour
 	}
-	catch(std::bad_alloc const& erreur) //on attrape une eventuelle erreur d'allocation de memoire
-	{
-		error(erreur.what());
-	}
-	catch(std::exception const& erreur)	//on attrape une eventuelle erreur standard
-	{
-    	error(erreur.what());
-	}
-	catch(std::string erreur)
-	{
-		error(erreur);
-	}
-	catch(...) 	//on attrape une eventuelle erreur que nous ne pouvons définir
-	{
-		error("Le programme a rencontre un probleme non defini.");
-	}
-
+	std::cout << "Chargement en Cours...\n";
+	sleep(2.0f);
+	clrscreen();
+	std::cout << "Pour jouer dans les meilleures conditions,\nbasculez en plein ecran !\n\n";
+	menuRacedriver();//on lance le coeur du jeu
 	return 0;
 }

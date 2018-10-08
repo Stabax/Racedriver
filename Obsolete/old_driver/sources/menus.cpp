@@ -1,8 +1,5 @@
-
 //menus.cpp
-
 #include "menus.h"
-
 
 void menuCourse(Profil& Player)
 {
@@ -53,7 +50,6 @@ void menuCourse(Profil& Player)
 		}
 	}
 }
-
 
 void menuGarage(Profil& Player)
 {
@@ -106,7 +102,6 @@ void menuGarage(Profil& Player)
 	}
 }
 
-
 void menuConcessionaire(Profil& Player)
 {
 	char menu;
@@ -141,7 +136,6 @@ void menuConcessionaire(Profil& Player)
 	}
 }
 
-
 void menuStats(Profil& Player)
 {
 	std::cout << "Stats du Profil: " << Player.getNom() << "\n";
@@ -164,7 +158,6 @@ void menuStats(Profil& Player)
 	videKBuffer();
 	clrscreen();
 }
-
 
 void menuSauvegarde(Profil& Player)
 {
@@ -222,7 +215,6 @@ void menuSauvegarde(Profil& Player)
 		clrscreen();
 	}
 }
-
 
 void menuOptions(Profil& Player)
 {

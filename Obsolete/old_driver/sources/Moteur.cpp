@@ -1,26 +1,17 @@
-
 //Moteur.cpp
-
 #include "Moteur.h"
 
-//Constructeurs
 Moteur::Moteur(const std::string& marque, const std::string& modele, const char& rang, const int& vitesse, const int& acceleration, const std::string& carburant)
  : m_marque(marque), m_modele(modele), m_prix(((getVitesse()+getAcceleration())*25)+(vRang(m_rang)*500)), m_rang(rang), m_vitesse(vitesse), m_acceleration(acceleration), m_typeCarburant(carburant), m_consommation(vitesse+acceleration), m_prixCarburant(Moteur::returnPrixCarburant(carburant))
 {
 
 }
 
-
-
-//Destructeur
 Moteur::~Moteur()
 {
 
 }
 
-
-
-//Methodes statiques
 Moteur* Moteur::chargerMoteur(const int& id, const std::string& marqueChargee)
 {
 	Moteur* MoteurCharge = 0; //moteur a creer
@@ -101,7 +92,6 @@ Moteur* Moteur::chargerMoteur(const int& id, const std::string& marqueChargee)
 	}
 	return MoteurCharge;
 }
-
 
 void Moteur::listerMoteurs(const std::string& marque)
 {
@@ -222,7 +212,6 @@ void Moteur::listerMoteurs(const std::string& marque)
 	}
 }
 
-
 void Moteur::infoMoteur(const int& id, const std::string& marque, std::string& modele)
 {
 	std::string var; //contient les lignes du fichier
@@ -264,7 +253,6 @@ void Moteur::infoMoteur(const int& id, const std::string& marque, std::string& m
 		}
 	}
 }
-
 
 void Moteur::infoMoteur(const int& id, const std::string& marque, int& prix)
 {
@@ -346,7 +334,6 @@ void Moteur::infoMoteur(const int& id, const std::string& marque, int& prix)
 	}
 }
 
-
 void Moteur::infoMoteur(const int& id, const std::string& marque, std::string& modele, int& vitesse, int& acceleration)
 {
 	std::string var; //contient les lignes du fichier
@@ -421,7 +408,6 @@ void Moteur::infoMoteur(const int& id, const std::string& marque, std::string& m
 		}
 	}
 }
-
 
 void Moteur::infoMoteur(const int& id, const std::string& marque, std::string& modele, int& vitesse, int& acceleration, char& rang, int& prix)
 {
@@ -498,7 +484,6 @@ void Moteur::infoMoteur(const int& id, const std::string& marque, std::string& m
 	}
 }
 
-
 int Moteur::compterMoteurs(const std::string& marque)
 {
 
@@ -532,7 +517,6 @@ int Moteur::compterMoteurs(const std::string& marque)
 	return nbMoteur;
 }
 
-
 float Moteur::returnPrixCarburant(const std::string& carburant)
 {
 	if(carburant=="Diesel")
@@ -553,9 +537,6 @@ float Moteur::returnPrixCarburant(const std::string& carburant)
 	}
 }
 
-
-
-//Accesseurs et Mutateurs
 std::string Moteur::getModele() const
 {
 	return m_modele;
@@ -608,13 +589,3 @@ float Moteur::getPrixCarburant() const
 {
 	return m_prixCarburant;
 }
-
-
-
-//Methodes
-	//Aucune
-
-
-
-//Operateurs methodes
-	//Aucun

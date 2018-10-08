@@ -13,18 +13,11 @@
 
 class Profil
 {
-	//Fonctions amies
-		//Aucune
-
-	public:
-	//constructeurs
+public:
 	Profil(const std::string& uuid, const int& numero, const std::string& nom); //Nouveau Profil
 	Profil(const std::string& uuid, const int& numero, const std::string& nom, const int& credits, const bool& sauvegardeAuto, const int& difficulte, const int& nbBox, const int& nbCourses, const int& victoires, const int& defaites, const int& accidents, const int& creditsGagnes, const int& nbCoursesCL, const int& victoiresCL, const int& defaitesCL, const int& accidentsCL, const int& creditsGagnesCL, const int& voituresAchetees); //Profil Chargé
-
-	//Destructeur
 	~Profil();
 
-	//Methodes statiques
 	static void listerSauvegardes();
 	static int compterSauvegardes();
 	static void supprimerProfil(const int& numeroSave);
@@ -32,7 +25,6 @@ class Profil
 	static void creerProfil(std::string& nom, Profil*& ProfilCree);
 	static bool compatible(Profil& Player, const int& numeroBox, const char& rangNewPiece);
 
-	//Accesseurs et Mutateurs
 	std::string getUuid() const;	//profil
 	int getNumero() const;
 	std::string getNom() const;
@@ -66,7 +58,6 @@ class Profil
 	void ajouterDefaite();
 	void ajouterAccident();
 
-	//Méthodes
 	bool boxVide(int numeroBox);
 
 	void changerNom(const std::string& newNom);
@@ -75,11 +66,7 @@ class Profil
 	bool payer(const int& prix);
 	void sauvegarderProfil();
 
-	//Opérateurs méthodes
-		//Aucun
-
-	protected:
-	//Attributs
+protected:
 	std::string m_uuid; //unique identifier
 	int m_numero;
 	std::string m_nom;

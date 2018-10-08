@@ -1,50 +1,30 @@
-
 //PriseAir.h
-
-#ifndef priseair
-#define priseair
+#ifndef PRISEAIR_HH_
+#define PRISEAIR_HH_
 
 #include <string>
 #include <sstream>
-
 #include "fonctions.h"
 #include"algos.h"
 
-
 class PriseAir
 {
-	//Fonctions amies
-		//Aucune
-		
-	public:
-	//Constructeurs
+public:
 	PriseAir(const std::string& modele, const char& rang, const int& aerodynamisme);
-	
-	//Destructeur
 	~PriseAir();
-	
-	//Methodes statiques
+
 	static PriseAir* chargerPriseAir(const int& id);
 	static void infoPriseAir(const int& id, int& prix);
 	static void infoPriseAir(const int& id, std::string& modele, char& rang, int& aero, int& prix);	
-		
-	//Accesseurs et Mutateurs
+
 	std::string getNom() const;
 	char getRang() const;
 	int getAerodynamisme() const;
 
-	//Méthodes
-		//Aucune
-		
-	//Opérateurs méthodes
-		//Aucun
-		
-	protected:
-	//Attributs
+protected:
 	std::string m_nom;
 	char m_rang;
 	int m_aerodynamisme;
 };
 
-
-#endif
+#endif /* !PRISEAIR_HH_ */

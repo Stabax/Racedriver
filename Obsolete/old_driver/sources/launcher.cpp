@@ -20,7 +20,7 @@ void Launcher::update()
 		clrscreen();
 		error("Echec de lecture du fichier de configuration config.ini.");
 		std::cout<<">La verification de la derniere version ne peut être effectuee.\n";
-		std::cout<<">Vous allez jouer avec une version potentiellement obsolete de Racedriver.\n";	
+		std::cout<<">Vous allez jouer avec une version potentiellement obsolete de Racedriver.\n";
 		std::cout<<">Appuyez sur [ENTREE] pour continuer.\n";
 		videKBuffer();
 	}

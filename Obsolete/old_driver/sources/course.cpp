@@ -1,6 +1,4 @@
-
 //course.cpp
-
 #include"course.h"
 
 bool preparatifsCourse(const Circuit& Map, const Profil& Player, Voiture*& VoiturePlayer, int const& prix)
@@ -10,7 +8,6 @@ bool preparatifsCourse(const Circuit& Map, const Profil& Player, Voiture*& Voitu
 
 	prixCourse = (VoiturePlayer->getConsommation() * 0.01f * Map.getTaille() * VoiturePlayer->getPrixCarburantMoteur());
 	prixCourse += prix;
-
 	if(Player.getCredits() < prixCourse)
 	{
 		error("Vous ne disposez pas d'assez de crédits pour payer les preparatifs.");
@@ -126,7 +123,6 @@ bool antiCorruption(const std::string& chemin, const int& nbLignes)
 	}
 }
 
-
 void chargerAdversaires(Voiture* Adversaire[7], int difficulteProfil, int difficulteCircuit)
 {
 	int randomDifficulte;	//difficulté calculée en fonction de la difficulté du joueur
@@ -233,7 +229,6 @@ void chargerAdversaires(Voiture* Adversaire[7], int difficulteProfil, int diffic
 	}
 }
 
-
 void chargerMessagesAccidents(std::string messageAccident[8])
 {
 	int random;
@@ -267,7 +262,6 @@ void chargerMessagesAccidents(std::string messageAccident[8])
 		}
 	}
 }
-
 
 std::string* chargerCommentaireMeteo(const int& meteo)
 {
@@ -336,7 +330,6 @@ std::string* chargerCommentaireMeteo(const int& meteo)
 	return ligne;//ligne est un pointeur pour qu'il y ait une erreur de segmentation si meteo.txt est mal rempli.
 }
 
-
 void calculerScore(int score[8], Voiture* Adversaire[7], const Voiture* Player1, const Circuit& Map)
 {
 	score[0]=((Player1->getVitesse()/2)+(Player1->getAcceleration()*2/Map.getVirages()))*((std::rand()%26)+75)/100;
@@ -347,7 +340,6 @@ void calculerScore(int score[8], Voiture* Adversaire[7], const Voiture* Player1,
 	}
 }
 
-
 void calculerProbaAccident(int probaAccident[8], Voiture* Adversaire[7], const Voiture* Player1, const Circuit Map)
 {
 	probaAccident[0]=((((Map.getVirages()*Map.getMeteo())/(Player1->getDurabilitePneus()/8))+(Map.getVent()/(Player1->getAerodynamisme()*0.75)))/2) + std::rand()%5;
@@ -357,7 +349,6 @@ void calculerProbaAccident(int probaAccident[8], Voiture* Adversaire[7], const V
 		probaAccident[i]=((((Map.getVirages()*Map.getMeteo())/(Adversaire[i]->getDurabilitePneus()/8))+(Map.getVent()/(Adversaire[i]->getAerodynamisme()*0.75)))/2) + std::rand()%5;
 	}
 }
-
 
 void faireCourseLibre(Circuit Map, Voiture* Player1, Profil& Player)
 {
@@ -429,8 +420,6 @@ void faireCourseLibre(Circuit Map, Voiture* Player1, Profil& Player)
 				std::cout << nomJoueur[numero - 1] << " - " << Adversaire[numero - 1]->getMarque() << " " << Adversaire[numero - 1]->getModele() << "\n";
 			}
 		}
-
-
 		delete commentaireMeteo;
 		std::cout<<"\n\nPressez [ENTREE] pour commencer la course.\n";
 		videKBuffer();
@@ -480,12 +469,9 @@ void faireCourseLibre(Circuit Map, Voiture* Player1, Profil& Player)
 				}
 			}
 		}
-
 		std::cout<<"\n\nPressez [ENTREE] pour voir les resultats.\n";
 		videKBuffer();
-
 		int scoreJoueur[8];
-
 		scoreJoueur[0] = score[0];
 		scoreJoueur[1] = score[1];
 		scoreJoueur[2] = score[2];
@@ -494,7 +480,6 @@ void faireCourseLibre(Circuit Map, Voiture* Player1, Profil& Player)
 		scoreJoueur[5] = score[5];
 		scoreJoueur[6] = score[6];
 		scoreJoueur[7] = score[7];
-
 		//classement des joueurs
 		int temp;
 		while(score[0] < score[1] || score[1] < score[2] || score[2]<score[3] || score[3]<score[4] || score[4]<score[5] || score[5]<score[6] || score[6]<score[7])
@@ -509,7 +494,6 @@ void faireCourseLibre(Circuit Map, Voiture* Player1, Profil& Player)
 				}
 			}
 		}
-
 		//on affiche les resultats
 		bool exclu[8] = {false};
 		bool placeExclue[8] = {false};
@@ -552,8 +536,6 @@ void faireCourseLibre(Circuit Map, Voiture* Player1, Profil& Player)
 				std::cout << nomJoueur[joueur - 1] << " - " << score[placeClassement] << " Points.\n";
 				exclu[joueur] = true;
 			}
-
-
 			if(joueur == 0 && placeClassement < 3) //Si le joueur finit sur le podium
 			{
 				Player.ajouterVictoire();
@@ -565,13 +547,10 @@ void faireCourseLibre(Circuit Map, Voiture* Player1, Profil& Player)
 			placeExclue[placeClassement]=true;
 			sleep(0.5f);
 		}
-
 		Player.ajouterCourse();
-
 		std::cout<<"\n\nPressez [ENTREE] pour continuer.\n";
 		videKBuffer();
 		clrscreen();
-
 		for (size_t compteur = 0; compteur <= 6; ++compteur)
 		{
 			delete Adversaire[compteur];
@@ -582,7 +561,6 @@ void faireCourseLibre(Circuit Map, Voiture* Player1, Profil& Player)
 		Player.sauvegarderProfil();
 	}
 }
-
 
 void faireCourseChampionnat(Circuit Map, Voiture* Player1, Profil& Player)
 {
@@ -632,10 +610,7 @@ void faireCourseChampionnat(Circuit Map, Voiture* Player1, Profil& Player)
 				}
 				nomJoueur[numero] = pseudo;
 			}
-
-
 			std::cout << "Bienvenue à tous et a toutes ! Aujourd'hui va se derouler l'evenement tant attendu par tous les fans de sportives, tout le monde s'est reuni et l'ambiance est a son comble sur le circuit: " << Map.getNom() << ".\nOn m'annonce qu'il totalise " << Map.getTaille() << " Km, et comprend pas moins de " << Map.getVirages() << " virages serres !\n" << *commentaireMeteo << " D'autre part, il y a un vent de Force " << Map.getVent() << " dans l'enceinte du circuit.\n\nSans attendre passons tout de suite a la liste des Participants:\n\n";
-
 			//on liste les concurants
 			for (size_t numero = 0; numero <= 7; numero++)
 			{
@@ -648,12 +623,9 @@ void faireCourseChampionnat(Circuit Map, Voiture* Player1, Profil& Player)
 					std::cout << nomJoueur[numero - 1] << " - " << Adversaire[numero - 1]->getMarque() << " " << Adversaire[numero - 1]->getModele() << "\n";
 				}
 			}
-
-
 			delete commentaireMeteo;
 			std::cout<<"\n\nPressez [ENTREE] pour commencer la course.\n";
 			videKBuffer();
-
 			clrscreen();
 			msg("Depart dans 3...");
 			sleep(1.0f);
@@ -666,7 +638,6 @@ void faireCourseChampionnat(Circuit Map, Voiture* Player1, Profil& Player)
 			clrscreen();
 			msg("GO !");
 			sleep(1.0f);
-
 			int score[8];
 			int probaAccident[8];
 			//on calcule Score: celui qui a le plus grand est le vainqueur
@@ -699,10 +670,8 @@ void faireCourseChampionnat(Circuit Map, Voiture* Player1, Profil& Player)
 					}
 				}
 			}
-
 			std::cout<<"\n\nPressez [ENTREE] pour voir les resultats.\n";
 			videKBuffer();
-
 			int joueur;
 			int scoreJoueur[8];
 			scoreJoueur[0] = score[0];
@@ -713,7 +682,6 @@ void faireCourseChampionnat(Circuit Map, Voiture* Player1, Profil& Player)
 			scoreJoueur[5] = score[5];
 			scoreJoueur[6] = score[6];
 			scoreJoueur[7] = score[7];
-
 			//classement des joueurs
 			int temp;
 			while(score[0] < score[1] || score[1] < score[2] || score[2]<score[3] || score[3]<score[4] || score[4]<score[5] || score[5]<score[6] || score[6]<score[7])
@@ -728,7 +696,6 @@ void faireCourseChampionnat(Circuit Map, Voiture* Player1, Profil& Player)
 					}
 				}
 			}
-
 			//on affiche les resultats
 			bool exclu[8] = {false};
 			bool placeExclue[8] = {false};
@@ -757,7 +724,6 @@ void faireCourseChampionnat(Circuit Map, Voiture* Player1, Profil& Player)
 					{
 						joueur++;
 					}
-
 				}
 				if(joueur == 0 && exclu[0] == false) //Si le joueur est le Joueur1 on affiche son nom
 				{
@@ -766,12 +732,9 @@ void faireCourseChampionnat(Circuit Map, Voiture* Player1, Profil& Player)
 				}
 				else //Sinon on met des nom d'IA
 				{
-
 					std::cout << nomJoueur[joueur - 1] << " - " << score[placeClassement] << " Points.\n";
 					exclu[joueur] = true;
 				}
-
-
 				if(joueur == 0 && placeClassement < 3) //Si le joueur finit sur le podium
 				{
 					Player.ajouterVictoire();
@@ -785,13 +748,10 @@ void faireCourseChampionnat(Circuit Map, Voiture* Player1, Profil& Player)
 				placeExclue[placeClassement]=true;
 				sleep(0.5f);
 			}
-
 			Player.ajouterCourse();
-
 			std::cout<<"\n\nPressez [ENTREE] pour continuer.\n";
 			videKBuffer();
 			clrscreen();
-
 			for (size_t compteur = 0; compteur <= 6; ++compteur)
 			{
 				delete Adversaire[compteur];

@@ -1,13 +1,10 @@
-
 //course.h
-
-#ifndef course
-#define course
+#ifndef COURSE_HH_
+#define COURSE_HH_
 
 #include <unistd.h>
 #include <cmath>
 #include <fstream>
-
 #include "Circuit.h"
 #include "fonctions.h"
 #include "Profil.h"
@@ -25,4 +22,4 @@ void faireCourseLibre(Circuit Map, Voiture* Player1, Profil& Player);
 void faireCourseChampionnat(Circuit Map, Voiture* Player1, Profil& Player);
 void faireCourseCarriere(Circuit Map, Voiture* Player1, Profil& Player);
 
-#endif
+#endif /* COURSE_HH_ */

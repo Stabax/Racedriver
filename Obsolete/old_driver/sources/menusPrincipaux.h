@@ -1,10 +1,8 @@
-
 //menusPrincipaux.h
+#ifndef MENUSPRINCIPAUX_HH_
+#define MENUSPRINCIPAUX_HH_
 
-#ifndef menusPrincipaux_h
-#define menusPrincipaux_h
-
-#include"menus.h"
+#include "menus.h"
 
 void menuRacedriver();
 void menuJeu(Profil& Player, bool& quitter);
@@ -15,4 +13,4 @@ void menuSuppressionPartie();
 
 void menuApropos(); //Menu promotionnel
 
-#endif
+#endif /* !MENUSPRINCIPAUX_HH_ */

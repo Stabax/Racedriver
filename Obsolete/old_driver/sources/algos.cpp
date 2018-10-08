@@ -1,14 +1,5 @@
-
 //algos.cpp
-
 #include"algos.h"
-
-
-std::string version() // Renvoie la version du programme.
-{
-	return "Alpha 1.8.0";
-}
-
 
 int vRang(char rang)
 {
@@ -38,28 +29,28 @@ int vRang(char rang)
 }
 
 char vRangInverse(int valeur)
-{	
+{
 	switch(valeur)
-	{	
+	{
 		case 2:
 			return 'C';
 			break;
-		
+
 		case 3:
 			return 'B';
 			break;
-		
+
 		case 4:
 			return 'A';
 			break;
-		
+
 		case 5:
 			return 'S';
 			break;
-			
+
 		default:
 			return 'D';
-			break;	
+			break;
 	}
 }
 

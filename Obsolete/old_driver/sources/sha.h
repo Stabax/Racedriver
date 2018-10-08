@@ -1,14 +1,14 @@
 #ifndef SHA256_H
 #define SHA256_H
 #include <string>
- 
+
 class SHA256
 {
 protected:
     typedef unsigned char uint8;
     typedef unsigned long uint32;
     typedef unsigned long int uint64;
- 
+
     const static uint32 sha256_k[];
     static const int SHA224_256_BLOCK_SIZE = (512/8);
 public:
@@ -16,7 +16,7 @@ public:
     void update(const unsigned char *message, int len);
     void final(unsigned char *digest);
     static const int DIGEST_SIZE = ( 256 / 8);
- 
+
 protected:
     void transform(const unsigned char *message, int block_nb);
     int m_tot_len;
@@ -24,9 +24,9 @@ protected:
     unsigned char m_block[2*SHA224_256_BLOCK_SIZE];
     uint32 m_h[8];
 };
- 
+
 std::string sha256(std::string input);
- 
+
 #define SHA2_SHFR(x, n)    (x >> n)
 #define SHA2_ROTR(x, n)   ((x >> n) | (x << ((sizeof(x) << 3) - n)))
 #define SHA2_ROTL(x, n)   ((x << n) | (x >> ((sizeof(x) << 3) - n)))

@@ -16,7 +16,6 @@ class Moteur
 {
 public:
 	Moteur(const std::string& marque, const std::string& modele, const char& rang, const int& vitesse, const int& acceleration, const std::string& carburant);
-
 	~Moteur();
 
 	static Moteur* chargerMoteur(const int& id, const std::string& marqueChargee);

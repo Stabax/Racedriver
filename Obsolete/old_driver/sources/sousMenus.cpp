@@ -1,6 +1,4 @@
-
 //sousMenus.cpp
-
 #include"sousMenus.h"
 
 Voiture* menuChoixVoiture(Profil& Player)
@@ -77,7 +75,6 @@ Voiture* menuChoixVoiture(Profil& Player)
 	return VoitureSelectionnee;
 }
 
-
 void menuCourseLibre(Profil& Player)
 {
 	std::string sMenu;
@@ -99,7 +96,6 @@ void menuCourseLibre(Profil& Player)
 
 	iss.str(sMenu); // On extrait la taille du circuit et on le stocke dans la variable de conversion "iss1".
 	iss >> menu; // on convertit la string recuperee plus haut en entier
-
 	//Redirection de l'utilisateur selon son choix grâce a un if + for.
 	if(menu == 0)
 	{
@@ -109,8 +105,8 @@ void menuCourseLibre(Profil& Player)
 	{
 		Circuit* CircuitCourant = 0;
 		Circuit::chargerCircuit(menu, CircuitCourant);
-		clrscreen(); //On flushe l'ancien ecran	
-		
+		clrscreen(); //On flushe l'ancien ecran
+
 		VoiturePlayer = menuChoixVoiture(Player);
 		if(VoiturePlayer == 0)
 		{
@@ -129,7 +125,6 @@ void menuCourseLibre(Profil& Player)
 		saisieInvalide();
 	}
 }
-
 
 void menuCourseChampionnat(Profil& Player)
 {
@@ -152,7 +147,6 @@ void menuCourseChampionnat(Profil& Player)
 
 	iss.str(sMenu); // On extrait la taille du circuit et on le stocke dans la variable de conversion "iss1".
 	iss >> menu; // on convertit la string recuperee plus haut en entier
-
 	//Redirection de l'utilisateur selon son choix grâce a un if + for.
 	if(menu == 0)
 	{
@@ -162,8 +156,7 @@ void menuCourseChampionnat(Profil& Player)
 	{
 		Circuit* CircuitCourant = 0;
 		Circuit::chargerCircuit(menu, CircuitCourant);
-		clrscreen(); //On flushe l'ancien ecran	
-		
+		clrscreen(); //On flushe l'ancien ecran
 		VoiturePlayer = menuChoixVoiture(Player);
 		if(VoiturePlayer == 0)
 		{
@@ -182,7 +175,6 @@ void menuCourseChampionnat(Profil& Player)
 		saisieInvalide();
 	}
 }
-
 
 int menuConsulterGarage(Profil& Player, const int& mode)
 {
@@ -240,7 +232,7 @@ int menuConsulterGarage(Profil& Player, const int& mode)
 	std::istringstream iss;
 
 	iss.str(sMenu);
-	iss >> menu; // on convertit la string recuperee plus haut en entier	
+	iss >> menu; // on convertit la string recuperee plus haut en entier
 	if(menu == 0)
 	{
 		clrscreen(); //On flushe l'ancien ecran et quitte
@@ -259,7 +251,7 @@ int menuConsulterGarage(Profil& Player, const int& mode)
 				error("Le box est vide.");
 			}
 		}
-		else if(mode == 0)	
+		else if(mode == 0)
 		{
 			clrscreen(); //On flushe l'ancien ecran
 			menuConsulterBox(Player, menu - 1);
@@ -299,7 +291,6 @@ int menuConsulterGarage(Profil& Player, const int& mode)
 	return menu; //On renvoie l'emplacement choisi
 }
 
-
 void menuConsulterBox(Profil& Player, const int& numeroBox)
 {
 	Voiture* Voiture = Player.getBox(numeroBox);
@@ -338,13 +329,11 @@ void menuConsulterBox(Profil& Player, const int& numeroBox)
 	videKBuffer();
 }
 
-
 void menuAtelier(Profil& Player, const int& numeroBox)
 {
 	clrscreen();
 	char menu;
 	bool quit = false;
-
 	Voiture* Voiture = Player.getBox(numeroBox);
 
 	while(quit != true)
@@ -372,15 +361,15 @@ void menuAtelier(Profil& Player, const int& numeroBox)
 				break;
 			case '1':
 				clrscreen(); //On flushe l'ancien ecran
-				menuAtelierMoteur(Player, numeroBox);			
+				menuAtelierMoteur(Player, numeroBox);
 				break;
 			case '2':
 				clrscreen(); //On flushe l'ancien ecran
-				menuAtelierPriseAir(Player, numeroBox);	
+				menuAtelierPriseAir(Player, numeroBox);
 				break;
 			case '3':
 				clrscreen(); //On flushe l'ancien ecran
-				menuAtelierSpoiler(Player, numeroBox);	
+				menuAtelierSpoiler(Player, numeroBox);
 				break;
 			default:
 				clrscreen(); //On flushe l'ancien ecran
@@ -390,14 +379,11 @@ void menuAtelier(Profil& Player, const int& numeroBox)
 	}
 }
 
-
 void menuAtelierSpoiler(Profil& Player, const int& numeroBox)
 {
 	Voiture* Voiture = Player.getBox(numeroBox);
 	char verif = 'x';
-
 	int id = Voiture->getIdSpoiler();
-
 	int idCharge = id + 1;
 	std::string modeleCharge;
 	int prixCharge;
@@ -405,7 +391,6 @@ void menuAtelierSpoiler(Profil& Player, const int& numeroBox)
 	char rangCharge;
 
 	Spoiler::infoSpoiler(idCharge, modeleCharge, rangCharge, aerodynamismeCharge, prixCharge);
-
 	clrscreen(); //On flushe l'ancien ecran	
 	std::cout << "/!\\ Attention ! /!\\\n";
 	std::cout << "====================\n";
@@ -457,7 +442,6 @@ void menuAtelierSpoiler(Profil& Player, const int& numeroBox)
 	}
 }
 
-
 void menuAtelierPriseAir(Profil& Player, const int& numeroBox)
 {
 	Voiture* Voiture = Player.getBox(numeroBox);
@@ -472,7 +456,6 @@ void menuAtelierPriseAir(Profil& Player, const int& numeroBox)
 	char rangCharge;
 
 	PriseAir::infoPriseAir(idCharge, modeleCharge, rangCharge, aerodynamismeCharge, prixCharge);
-
 	clrscreen(); //On flushe l'ancien ecran	
 	std::cout << "/!\\ Attention ! /!\\\n";
 	std::cout << "====================\n";
@@ -525,7 +508,6 @@ void menuAtelierPriseAir(Profil& Player, const int& numeroBox)
 	}
 }
 
-
 void menuAtelierMoteur(Profil& Player, const int& numeroBox)
 {
 	clrscreen();
@@ -536,13 +518,11 @@ void menuAtelierMoteur(Profil& Player, const int& numeroBox)
 	std::string sMenu;
 	int menu;
 	int tmenu = 0;
-	
 	bool paye = false;
 	bool achat = false;
 	bool quit = false;
 	bool e2tour = false;
 	int nbMoteurs = Moteur::compterMoteurs(Voiture->getMarque());
-
 	std::string newNomMoteur = "Aucun";
 	char newRangMoteur = ' ';
 	int newPrixMoteur = 0;
@@ -567,13 +547,13 @@ void menuAtelierMoteur(Profil& Player, const int& numeroBox)
 		std::cout << " |Modele: " << newNomMoteur << " (Actuel: " << Voiture->getNomMoteur() << ")\n";
 		std::cout << " |Vitesse: " << newVitesseMoteur << "      (Actuelle: " << Voiture->getVitesseMoteur() << " [";
 		if(diffVitesseMoteur >= 0)
-		{ 
+		{
 			std::cout << '+';
-		} 
+		}
 		std::cout << diffVitesseMoteur << "])\n";
 		std::cout << " |Acceleration: " << newAccelerationMoteur << " (Actuelle: " << Voiture->getAccelerationMoteur() << " [";
 		if(diffAccelerationMoteur >= 0)
-		{ 
+		{
 			std::cout << '+';
 		}
 		std::cout << diffAccelerationMoteur << "])\n";
@@ -709,7 +689,6 @@ void menuAtelierMoteur(Profil& Player, const int& numeroBox)
 		Player.sauvegarderProfil();
 	}
 }
-
 
 void menuMaintenance(Profil& Player, const int& numeroBox)
 {
@@ -849,12 +828,10 @@ void menuMaintenance(Profil& Player, const int& numeroBox)
 	}
 }
 
-
-
 void menuAcheterBox(Profil& Player)
 {
 	char verif = 'x';
-	clrscreen(); //On flushe l'ancien ecran	
+	clrscreen(); //On flushe l'ancien ecran
 	std::cout << "/!\\ Attention ! /!\\\n";
 	std::cout << "====================\n";
 	std::cout << "Credits: " << Player.getCredits() << "c\n";
@@ -895,7 +872,6 @@ void menuAcheterBox(Profil& Player)
 	}
 }
 
-
 void menuAchatVoiture(const char& rang, Profil& Player)
 {
 	std::string sMenu;
@@ -905,19 +881,16 @@ void menuAchatVoiture(const char& rang, Profil& Player)
 	bool achat = false;
 	bool e2tour = false;
 	int numeroBox = 0;
-	
 	std::string marqueVoiture = "N/A";
 	std::string modeleVoiture = "N/A";
 	int nitroMaxVoiture = 0;
 	int aerodynamismeVoiture = 0;
-
 	int idMoteurVoiture =0;
 	std::string nomMoteurVoiture = "N/A";
 	int vitesseMoteurVoiture = 0;
 	int accelerationMoteurVoiture = 0;
-
 	int prixVoiture = 0;
-	
+
 	while(quit != true)
 	{
 		char verifAchat = 'x';
@@ -1044,7 +1017,6 @@ void menuAchatVoiture(const char& rang, Profil& Player)
 	}
 }
 
-
 void menuConcessionaireAchat(Profil& Player)
 {
 	char menu;
@@ -1100,7 +1072,6 @@ void menuConcessionaireAchat(Profil& Player)
 	}
 }
 
-
 void menuVenteVoiture(Profil& Player, const int& numeroBox)
 {
 	char verif;
@@ -1112,7 +1083,7 @@ void menuVenteVoiture(Profil& Player, const int& numeroBox)
 
 	oss << prixVente;      // on insere le int dans le stream oss
 	sPrixVente = oss.str(); // range le int dans la variable string
-	
+
 	clrscreen(); //On flushe l'ancien ecran	
 	std::cout << "/!\\ Attention ! /!\\\n";
 	std::cout << "====================\n";
@@ -1148,17 +1119,16 @@ void menuVenteVoiture(Profil& Player, const int& numeroBox)
 	}
 }
 
-
 void menuDifficulte(Profil& Player)
 {
 	std::string menu;	//un string car le le passe en iss
 	char choix;
 	int difficulte;
+	
 	std::cout<<"Augmenter la difficulte augmente les gains\n";
 	std::cout<<"====================\n";
 	std::cout<<"Choisissez une difficulte\n";
 	std::cout<<"====================\n\n";
-	
 	std::cout << "1. DEBUTANT\n";
 	std::cout << "2. FACILE\n";
 	std::cout << "3. NORMAL\n";
@@ -1169,7 +1139,6 @@ void menuDifficulte(Profil& Player)
 	std::cout << "Choix ? ";
 	std::cin >> menu; // l'utilisateur entre le menu qu'il souhaite ouvrir
 	videKBuffer();
-	
 	std::istringstream iss(menu);
 	iss>>difficulte;
 	choix=menu[0];
@@ -1214,12 +1183,10 @@ void menuDifficulte(Profil& Player)
 	}
 }
 
-
 void menuChangementNomProfil(Profil& Player)
 {
-	//Var
 	std::string nom;
-	
+
 	//Menu Creation de profil
 	std::cout << "Changement de nom\n";
 	std::cout << "===============\n\n";
@@ -1240,6 +1207,3 @@ void menuChangementNomProfil(Profil& Player)
 		Player.sauvegarderProfil();
 	}
 }
-
-
-

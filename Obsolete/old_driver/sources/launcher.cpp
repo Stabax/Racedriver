@@ -1,7 +1,6 @@
 
 //Launcher.cpp
 
-#include "unistd.h"
 #include "launcher.h"
 
 #define SERVER_PATH "http://racedriver.url.ph/"

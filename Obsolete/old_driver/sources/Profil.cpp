@@ -475,7 +475,6 @@ void Profil::supprimerProfil(const int& numeroSave)
 	}
 }
 
-
 void Profil::sauvegarderProfil()
 {
 	std::string sNumeroSave;
@@ -568,30 +567,25 @@ std::string Profil::getNom() const
 	return m_nom;
 }
 
-
 int Profil::getCredits() const
 {
 	return m_credits;
 }
-
 
 int Profil::getNbBox() const
 {
 	return m_nbBox;
 }
 
-
 Voiture* Profil::getBox(const int& numeroBox) const
 {
 	return m_box[numeroBox];
 }
 
-
 int Profil::getNbCourses() const
 {
 	return m_nbCourses;
 }
-
 
 int Profil::getVictoires() const
 {
@@ -602,7 +596,6 @@ int Profil::getDefaites() const
 {
 	return m_defaites;
 }
-
 
 int Profil::getAccidents() const
 {
@@ -645,7 +638,6 @@ bool Profil::getSauvegardeAuto() const
 	return m_sauvegardeAuto;
 }
 
-
 std::string Profil::getDifficulteString() const
 {
 	std::string difficulte;
@@ -673,7 +665,6 @@ std::string Profil::getDifficulteString() const
 
 	return difficulte;
 }
-
 
 void Profil::setBox(const int& numeroBox, const std::string& marque, const std::string& modele, const int& idMoteur, const int& idSpoiler, const int& idPriseAir, const char& rang, const int& nitroMax, const int& aerodynamismeVoiture, const int& idPneus, const int& pneus, const int& etat)
 {
@@ -727,18 +718,15 @@ void Profil::ajouterCourse()
 	m_nbCourses++;
 }
 
-
 void Profil::ajouterVictoire()
 {
 	m_victoires++;
 }
 
-
 void Profil::ajouterDefaite()
 {
 	m_defaites++;
 }
-
 
 void Profil::ajouterAccident()
 {

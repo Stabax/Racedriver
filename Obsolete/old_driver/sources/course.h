@@ -2,7 +2,6 @@
 #ifndef COURSE_HH_
 #define COURSE_HH_
 
-#include <unistd.h>
 #include <cmath>
 #include <fstream>
 #include "Circuit.h"

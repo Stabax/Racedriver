@@ -44,7 +44,7 @@ Les conventions de ce programme sont:
 
 #include <ctime>
 #include <unistd.h>
-#include "Menu.hh"
+#include "Terminal.hh"
 #include "Launcher.hh"
 #include "menusPrincipaux.hh"
 #include "fonctions.hh"
@@ -62,9 +62,9 @@ namespace GLOBAL
 
 int main(int argc, char **argv)
 {
-	Menu menu;
+	Terminal term;
 
-	menu.initTerminal();
+	term.test();
 	return (0);
 	// !!!!!!!!!!!! OLD !!!!!!!!!!!!
 	clrscreen();

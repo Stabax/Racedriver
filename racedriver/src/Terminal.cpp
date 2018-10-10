@@ -1,6 +1,7 @@
 #include "Terminal.hh"
 #include <cstdio>
 #include <cstdlib>
+#include <unistd.h>
 
 Terminal::Terminal()
 {
@@ -17,8 +18,10 @@ Terminal::~Terminal()
 
 void Terminal::test()
 {
-	mvprintw(5, 5, "Hello World !!!");	/* Print Hello World */
-	blit();
+	*this << "toto sese la uic";
+	sleep(2);
+	clearScreen();
+	printAt(Point(5, 5), "Hello World !!!");	/* Print Hello World */
 	getch();
 }
 
@@ -51,15 +54,30 @@ Point Terminal::getMousePos()
 
 void Terminal::print(const std::string &str)
 {
-	printw(_screen, str.c_str());
+	waddstr(_screen, str.c_str());
+	blit();
 }
 
 void Terminal::printAt(Point point, const std::string &str)
 {
-	mvprintw(point.x, point.y, str.c_str());
+	mvwaddstr(_screen, point.y, point.x, str.c_str());
+	blit();
 }
 
 WINDOW *Terminal::addChildWindow(Point pos, Point size)
 {
   return (subwin(_screen, size.y, size.x, pos.y, pos.x));
+}
+
+//I/O Streaming
+
+Terminal &operator<<(Terminal &term, const std::string str)
+{
+  return (term << str.c_str());
+}
+
+Terminal &operator<<(Terminal &term, const char *str)
+{
+  term.print(str);
+  return (term);
 }

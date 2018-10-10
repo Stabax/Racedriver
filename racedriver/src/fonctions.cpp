@@ -21,7 +21,5 @@ std::string getHashFromFile(std::string path)
 
 void error(std::string message)
 {
-	std::cout << "::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::\n";
-	std::cout << ":: ERREUR: " << message << "\n";
-	std::cout << "::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::\n\n";
+	msg("ERREUR: "+message);
 }

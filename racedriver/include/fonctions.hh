@@ -31,9 +31,7 @@ std::string getHashFromFile(std::string path);
 
 inline void saisieInvalide()
 {
-	std::cout << ":::::::::::::::::::::::::::\n";
-      std::cout << "::/!\\ Entree Invalide /!\\::\n";
-	std::cout << ":::::::::::::::::::::::::::\n\n";
+  msg("/!\\ Entree Invalide /!\\");
 }
 
 void error(std::string message); //le compilateur ne veut pas inliner: message peut être trop grand donc inefficace

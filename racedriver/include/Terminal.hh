@@ -21,9 +21,11 @@ public:
   void printAt(Point point, const std::string &str);
   WINDOW *addChildWindow(Point pos, Point size);
 
+  friend Terminal &operator<<(Terminal &term, const std::string str);
+  friend Terminal &operator<<(Terminal &term, const char *str);
+
 private:
   WINDOW *_screen;
 };
-
 
 #endif /* !TERMINAL_HH_ */

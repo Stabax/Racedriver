@@ -44,10 +44,7 @@ Les conventions de ce programme sont:
 
 #include <ctime>
 #include <unistd.h>
-#include "Terminal.hh"
-#include "Launcher.hh"
-#include "menusPrincipaux.hh"
-#include "fonctions.hh"
+#include "Game.hh"
 
 namespace GLOBAL
 {
@@ -62,21 +59,6 @@ namespace GLOBAL
 
 int main(int argc, char **argv)
 {
-	Terminal term;
-
-	term.test();
-	return (0);
-	// !!!!!!!!!!!! OLD !!!!!!!!!!!!
-	clrscreen();
-	std::srand(std::time(0)); //INITIALISATION DE L'ALEATOIRE
-	{
-		Launcher launcher;
-		launcher.update(); //on verifie et fait les mises à jour
-	}
-	std::cout << "Chargement en Cours...\n";
-	usleep(2000);
-	clrscreen();
-	std::cout << "Pour jouer dans les meilleures conditions,\nbasculez en plein ecran !\n\n";
-	menuRacedriver();//on lance le coeur du jeu
-	return 0;
+	Game racedriver;
+	return (racedriver.main());
 }

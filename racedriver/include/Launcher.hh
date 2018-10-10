@@ -5,7 +5,7 @@
 #define launcher_H
 
 #include <iostream>
-#include <curl/curl.h>
+#include <libcurl/include/curl.h>
 #include <sstream>
 #include <fstream>
 

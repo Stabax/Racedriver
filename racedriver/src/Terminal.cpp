@@ -17,7 +17,7 @@ Terminal::~Terminal()
 
 void Terminal::test()
 {
-	mvprintw(5, 5, "Hello World !!!");	/* Print Hello World		  */
+	mvprintw(5, 5, "Hello World !!!");	/* Print Hello World */
 	blit();
 	getch();
 }
@@ -49,3 +49,17 @@ Point Terminal::getMousePos()
 	return (point);
 }
 
+void Terminal::print(const std::string &str)
+{
+	printw(_screen, str.c_str());
+}
+
+void Terminal::printAt(Point point, const std::string &str)
+{
+	mvprintw(point.x, point.y, str.c_str());
+}
+
+WINDOW *Terminal::addChildWindow(Point pos, Point size)
+{
+  return (subwin(_screen, size.y, size.x, pos.y, pos.x));
+}

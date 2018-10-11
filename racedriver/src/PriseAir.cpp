@@ -1,5 +1,6 @@
 //PriseAir.cpp
 #include "PriseAir.hh"
+#include "Menu.hh"
 
 PriseAir::PriseAir(const std::string& modele, const char& rang, const int& aerodynamisme)
  : m_nom(modele), m_rang(rang), m_aerodynamisme(aerodynamisme)

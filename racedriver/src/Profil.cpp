@@ -1,5 +1,6 @@
 //Profils.cpp
 #include "Profil.hh"
+#include "Menu.hh"
 
 Profil::Profil(const std::string& uuid, const int& numero, const std::string& nom) : m_uuid(uuid), m_numero(numero), m_nom(nom), m_credits(2000), m_difficulte(3), m_nbBox(1), m_box({0}), m_nbCourses(0), m_victoires(0), m_defaites(0), m_accidents(0), m_creditsGagnes(0), m_voituresAchetees(0), m_nbCoursesCL(0), m_victoiresCL(0), m_defaitesCL(0), m_accidentsCL(0), m_creditsGagnesCL(0), m_sauvegardeAuto(false)
 {
@@ -320,7 +321,7 @@ bool Profil::chargerProfil(const int& numeroSave, Profil*& ProfilCharge)
 				else if(ligne >= 7 && ligne <= 11)
 				{
 					 //ligne 6 a 10 - Voiture Box 0 a 4
-					if(ligneChargee[0] != '0')
+					if(ligneChargee[0] != 0)
 					{
 						tailleString = ligneChargee.find_first_of(";"); //find first of recherche la position du premier point virgule
 						marqueChargee = ligneChargee.substr(0, tailleString);

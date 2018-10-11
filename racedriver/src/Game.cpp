@@ -124,14 +124,9 @@ void Game::update()
 	//si la verion actuelle est differente de la version disponible, on telecharge la derniere version de racedriver
 	if(version != stringLatestVersion)
 	{
-		char choix = 'x';
-		while(choix != 'O' && choix != 'o' && choix != 'N' && choix != 'n')
-		{
-			Menu::msg("Votre client est obsolete, une mise a jour est disponible !");
-			_term << "Souhaitez vous telecharger la derniere version de Racedriver ? [O/n]\n";
-			choix = static_cast<char>(std::getchar());
-		}
-		if(choix == 'N' || choix == 'n')
+		Menu::msg("Votre client est obsolete, une mise a jour est disponible !");
+		_term << "Vous allez telecharger la derniere version de Racedriver.\n";
+		if (!Menu::askConfirmation())
 		{
 			_term << ">Vous jouerez avec une version obsolete de Racedriver.\n";
 			_term << ">Appuyez sur [ENTREE] pour continuer.\n";

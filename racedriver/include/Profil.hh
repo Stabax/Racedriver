@@ -8,7 +8,6 @@
 #include <string>
 #include <cfloat>
 #include "sha/sha.h"
-#include "fonctions.hh"
 #include "Voiture.hh"
 
 class Profil

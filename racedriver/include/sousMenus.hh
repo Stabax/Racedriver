@@ -3,7 +3,6 @@
 #define SOUSMENUS_HH_
 
 #include <iostream>
-#include "fonctions.hh"
 #include "Profil.hh"
 #include "Circuit.hh"
 #include "course.hh"

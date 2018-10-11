@@ -27,7 +27,6 @@ SRCS = 	$(SRCDIR)/Game.cpp							\
 				$(SRCDIR)/algos.cpp							\
 				$(SRCDIR)/Circuit.cpp						\
 				$(SRCDIR)/course.cpp						\
-				$(SRCDIR)/fonctions.cpp					\
 				$(SRCDIR)/main.cpp							\
 				$(SRCDIR)/menus.cpp							\
 				$(SRCDIR)/menusPrincipaux.cpp		\

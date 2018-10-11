@@ -244,7 +244,7 @@ static CURLcode glob_range(URLGlob *glob, char **patternp,
     pat->type = UPTNumRange;
     pat->content.NumRange.padlength = 0;
 
-    if(*pattern == '0') {
+    if(*pattern == 0) {
       /* leading zero specified, count them! */
       c = pattern;
       while(ISDIGIT(*c)) {

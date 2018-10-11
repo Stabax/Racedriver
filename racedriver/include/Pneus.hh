@@ -6,7 +6,6 @@
 #include <string>
 #include <sstream>
 
-#include "fonctions.hh"
 #include"algos.hh"
 #include"Game.hh"
 

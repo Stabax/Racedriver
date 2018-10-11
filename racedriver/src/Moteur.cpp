@@ -1,5 +1,6 @@
 //Moteur.cpp
 #include "Moteur.hh"
+#include "Menu.hh"
 
 Moteur::Moteur(const std::string& marque, const std::string& modele, const char& rang, const int& vitesse, const int& acceleration, const std::string& carburant)
  : m_marque(marque), m_modele(modele), m_prix(((getVitesse()+getAcceleration())*25)+(vRang(m_rang)*500)), m_rang(rang), m_vitesse(vitesse), m_acceleration(acceleration), m_typeCarburant(carburant), m_consommation(vitesse+acceleration), m_prixCarburant(Moteur::returnPrixCarburant(carburant))

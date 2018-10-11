@@ -1,5 +1,6 @@
 //Voiture.cpp
-#include"Voiture.hh"
+#include "Voiture.hh"
+#include "Menu.hh"
 
 Voiture::Voiture(const std::string& marque, const std::string& modele, const int& idMoteur, const int& idSpoiler, const int& idPriseAir, const char& rang, const int& nitroMax, const int& aerodynamismeVoiture, const int& idPneus, const int& usurePneus, const int& etat)
  : m_moteur(Moteur::chargerMoteur(idMoteur, marque)), m_idMoteur(idMoteur), m_spoiler(Spoiler::chargerSpoiler(idSpoiler)), m_idSpoiler(idSpoiler),  m_priseAir(PriseAir::chargerPriseAir(idPriseAir)), m_idPriseAir(idPriseAir), m_niveauNitro(nitroMax), m_aerodynamisme((m_priseAir->getAerodynamisme()/3 )+(m_spoiler->getAerodynamisme()/3)+(aerodynamismeVoiture/3)+1), m_vitesse(m_moteur->getVitesse()+(m_aerodynamisme/3)), m_acceleration(((m_niveauNitro+m_moteur->getAcceleration())+(m_aerodynamisme))/10), m_marque(marque), m_modele(modele), m_rang(rang), m_typeCarburant(m_moteur->getTypeCarburant()), m_consommation(m_moteur->getConsommation()), m_nitroMax(nitroMax), m_aerodynamismeVoiture(aerodynamismeVoiture), m_pneus(Pneus::chargerPneus(idPneus, usurePneus)), m_idPneus(idPneus), m_etat(etat)

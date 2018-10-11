@@ -535,7 +535,7 @@ SANITIZEcode rename_if_reserved_dos_device_name(char **const sanitized,
              curl_strnequal(p, "NUL", 3)) ? 3 :
             (curl_strnequal(p, "CLOCK$", 6)) ? 6 :
             (curl_strnequal(p, "COM", 3) || curl_strnequal(p, "LPT", 3)) ?
-              (('1' <= p[3] && p[3] <= '9') ? 4 : 3) : 0;
+              ((1 <= p[3] && p[3] <= '9') ? 4 : 3) : 0;
 
     if(!x)
       continue;

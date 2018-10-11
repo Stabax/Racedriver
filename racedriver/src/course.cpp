@@ -16,44 +16,32 @@ bool preparatifsCourse(const Circuit& Map, const Profil& Player, Voiture*& Voitu
 	}
 	else
 	{
-		char verif;
-		do
+		Terminal::get().clearScreen(); //On flushe l'ancien ecran
+		if(VoiturePlayer->getNiveauNitro() < VoiturePlayer->getNitroMax())
 		{
-			Terminal::get().clearScreen(); //On flushe l'ancien ecran
-			if(VoiturePlayer->getNiveauNitro() < VoiturePlayer->getNitroMax())
-			{
-				Menu::msg("Attention: Votre reservoir de nitro n'est pas plein.\n");
-			}
-			if(VoiturePlayer->getDurabilitePneus() < 55)
-			{
-				Menu::msg("Attention: Pneus deteriores.\n");
-			}
-			Terminal::get() << "\nPreparatifs\n";
-			Terminal::get() << "====================\n";
-			Terminal::get() << "Credits: " << Player.getCredits() << "c\n";
-			Terminal::get() << "====================\n";
-			Terminal::get() << "Le montant total des preparatifs du circuit: " << Map.getNom() << "\n";
-			Terminal::get() << "S'elevent a " << prixCourse << "c\n\n";
-			Terminal::get() << "Souhaitez-vous vraiment faire cette course ? [O/n]\n";
-			Terminal::get() << "====================\n";
-			verif = getch();
-			if(verif == 'o' || verif == 'N')
-			{
-					Terminal::get().clearScreen();
-					paye = true;
-			}
-			else if(verif == 'o' || verif == 'N')
-			{
-					Terminal::get().clearScreen();
-					paye = false;
-					Menu::error("Paiement annule par l'utilisateur");
-			}
-			else
-			{
-					Terminal::get().clearScreen();
-					saisieInvalide();
-			}
-		}while(verif != 'o' && verif != 'N' && verif != 'o' && verif != 'N');
+			Menu::msg("Attention: Votre reservoir de nitro n'est pas plein.\n");
+		}
+		if(VoiturePlayer->getDurabilitePneus() < 55)
+		{
+			Menu::msg("Attention: Pneus deteriores.\n");
+		}
+		Terminal::get() << "\nPreparatifs\n";
+		Terminal::get() << "====================\n";
+		Terminal::get() << "Credits: " << Player.getCredits() << "c\n";
+		Terminal::get() << "====================\n";
+		Terminal::get() << "Le montant total des preparatifs du circuit: " << Map.getNom() << "\n";
+		Terminal::get() << "S'elevent a " << prixCourse << "c\n\n";
+		if(Menu::askConfirmation())
+		{
+				Terminal::get().clearScreen();
+				paye = true;
+		}
+		else
+		{
+				Terminal::get().clearScreen();
+				paye = false;
+				Menu::error("Paiement annule par l'utilisateur");
+		}
 	}
 	return paye;
 }

@@ -1,11 +1,11 @@
 //menusPrincipaux.cpp
 #include <unistd.h>
-#include"menusPrincipaux.hh"
+#include "Menu.hh"
+#include "menusPrincipaux.hh"
 
 void menuRacedriver()
 {
 	bool quit = false;
-	char menu = '0';
 	Profil* Player = 0;	//On instancie un joueur non charge
 
 	while(quit != true)
@@ -20,35 +20,32 @@ void menuRacedriver()
 		Terminal::get() << "3. Supprimer profils\n\n";
 		Terminal::get() << "4. A Propos\n";
 		Terminal::get() << "0. Quitter\n";
-		Terminal::get() << "===============\n";
-		Terminal::get() << "Choix ? ";
-		menu = getch(); // l'utilisateur entre le menu qu'il souhaite ouvrir
 		//Redirection de l'utilisateur selon son choix grâce a un switch.
-		switch(menu)
+		switch(Menu::askChoice())
 		{
-			case '0':
+			case 0:
 				Terminal::get().clearScreen(); //On flushe l'ancien ecran
 				quit = true;
 				break;
-			case '1':
+			case 1:
 				Terminal::get().clearScreen(); //On flushe l'ancien ecran
 				menuChargementPartie(Player, quit);
 				break;
-			case '2':
+			case 2:
 				Terminal::get().clearScreen(); //On flushe l'ancien ecran
 				menuCreationPartie(Player, quit);
 				break;
-			case '3':
+			case 3:
 				Terminal::get().clearScreen(); //On flushe l'ancien ecran
 				menuSuppressionPartie();
 				break;
-			case '4':
+			case 4:
 				Terminal::get().clearScreen(); //On flushe l'ancien ecran
 				menuApropos();
 				break;
 			default:
 				Terminal::get().clearScreen(); //On flushe l'ancien ecran
-				saisieInvalide();
+				Menu::error("Saisie invalide");
 				break;
 		}
 	}
@@ -58,7 +55,6 @@ void menuRacedriver()
 void menuJeu(Profil& Player, bool& quitGame)
 {
 	bool quit = false;
-	char menu = '0';
 	bool quitVerify = false;
 	Profil* PlayerSaved = 0; //On cree un profil temporaire
 	std::ostringstream oss;
@@ -67,40 +63,29 @@ void menuJeu(Profil& Player, bool& quitGame)
 	Terminal::get().clearScreen();
 	while(quit != true)
 	{
+		Terminal::get() << "Menu Jeu\n";
+		Terminal::get() << "===============\n\n";
+		Terminal::get() << "1. Course\n\n";
+		Terminal::get() << "2. Garage\n";
+		Terminal::get() << "3. Concessionaire\n";
+		Terminal::get() << "4. Stats\n\n";
 		if(!Player.getSauvegardeAuto())
 		{
-			Terminal::get() << "Menu Jeu\n";
-			Terminal::get() << "===============\n\n";
-			Terminal::get() << "1. Course\n\n";
-			Terminal::get() << "2. Garage\n";
-			Terminal::get() << "3. Concessionaire\n";
-			Terminal::get() << "4. Stats\n\n";
 			Terminal::get() << "5. Sauvegarder\n";
 			Terminal::get() << "6. Options\n";
 			Terminal::get() << "7. Menu Principal\n\n";
 			Terminal::get() << "0. Quitter\n";
-			Terminal::get() << "===============\n";
-			Terminal::get() << "Choix ? ";
 		}
 		else
 		{
-			Terminal::get() << "Menu Jeu\n";
-			Terminal::get() << "===============\n\n";
-			Terminal::get() << "1. Course\n\n";
-			Terminal::get() << "2. Garage\n";
-			Terminal::get() << "3. Concessionaire\n";
-			Terminal::get() << "4. Stats\n\n";
 			Terminal::get() << "5. Options\n";
 			Terminal::get() << "6. Menu Principal\n\n";
 			Terminal::get() << "0. Quitter\n";
-			Terminal::get() << "===============\n";
-			Terminal::get() << "Choix ? ";
 		}
-		menu = getch(); // l'utilisateur entre le menu qu'il souhaite ouvrir
 		//Redirection de l'utilisateur selon son choix grâce a un switch.
-		switch(menu)
+		switch(Menu::askChoice())
 		{
-			case '0':
+			case 0:
 			{
 				oss.str("");
 				Terminal::get().clearScreen(); //On flushe l'ancien ecran
@@ -133,7 +118,7 @@ void menuJeu(Profil& Player, bool& quitGame)
 							else
 							{
 								Terminal::get().clearScreen();
-								saisieInvalide();
+								Menu::error("Saisie invalide");
 							}
 						}
 					}
@@ -142,23 +127,23 @@ void menuJeu(Profil& Player, bool& quitGame)
 				quitGame = true;
 			}
 			break;
-			case '1':
+			case 1:
 				Terminal::get().clearScreen(); //On flushe l'ancien ecran
 				menuCourse(Player);
 				break;
-			case '2':
+			case 2:
 				Terminal::get().clearScreen(); //On flushe l'ancien ecran
 				menuGarage(Player);
 				break;
-			case '3':
+			case 3:
 				Terminal::get().clearScreen(); //On flushe l'ancien ecran
 				menuConcessionaire(Player);
 				break;
-			case '4':
+			case 4:
 				Terminal::get().clearScreen(); //On flushe l'ancien ecran
 				menuStats(Player);
 				break;
-			case '5':
+			case 5:
 				Terminal::get().clearScreen(); //On flushe l'ancien ecran
 				if(Player.getSauvegardeAuto())
 				{
@@ -170,7 +155,7 @@ void menuJeu(Profil& Player, bool& quitGame)
 				}
 				Terminal::get().clearScreen();
 				break;
-			case '6':
+			case 6:
 			{
 				Terminal::get().clearScreen(); //On flushe l'ancien ecran
 				if(Player.getSauvegardeAuto())
@@ -206,7 +191,7 @@ void menuJeu(Profil& Player, bool& quitGame)
 								else
 								{
 									Terminal::get().clearScreen();
-									saisieInvalide();
+									Menu::error("Saisie invalide");
 								}
 							}
 						}
@@ -220,11 +205,11 @@ void menuJeu(Profil& Player, bool& quitGame)
 				Terminal::get().clearScreen();
 				break;
 			}
-			case '7':
+			case 7:
 			{
 				if(Player.getSauvegardeAuto())
 				{
-					saisieInvalide();
+					Menu::error("Saisie invalide");
 				}
 				else
 				{
@@ -259,7 +244,7 @@ void menuJeu(Profil& Player, bool& quitGame)
 								else
 								{
 									Terminal::get().clearScreen();
-									saisieInvalide();
+									Menu::error("Saisie invalide");
 								}
 							}
 						}
@@ -271,7 +256,7 @@ void menuJeu(Profil& Player, bool& quitGame)
 			break;
 			default:
 				Terminal::get().clearScreen(); //On flushe l'ancien ecran
-				saisieInvalide();
+				Menu::error("Saisie invalide");
 				break;
 		}
 	}
@@ -290,13 +275,7 @@ void menuChargementPartie(Profil*& Player, bool& quit)
 	Terminal::get() << "===============\n\n";
 	Profil::listerSauvegardes();
 	Terminal::get() << "0. Annuler\n";
-	Terminal::get() << "===============\n";
-	Terminal::get() << "Choix ?";
-	menu = getch(); // l'utilisateur entre le menu qu'il souhaite ouvrir
-	std::istringstream iss;
-
-	iss.str(sMenu); // On extrait la taille du circuit et on le stocke dans la variable de conversion "iss1".
-	iss >> menu; // on convertit la string recuperee plus haut en entier
+	menu = Menu::askChoice();
 	//Redirection de l'utilisateur selon son choix grâce a un switch.
 	if(menu == 0)
 	{
@@ -330,7 +309,7 @@ void menuCreationPartie(Profil*& Player, bool& quit)
 	Terminal::get() << "===============\n";
 	Terminal::get() << "Nom: ";
 	nom = getString(); // l'utilisateur entre son nom
-	if(nom[0] != '0')
+	if(nom[0] != 0)
 	{
 		Profil::creerProfil(nom, Player);
 		Player->sauvegarderProfil();
@@ -341,7 +320,6 @@ void menuCreationPartie(Profil*& Player, bool& quit)
 void menuSuppressionPartie()
 {
 	//Var
-	std::string sMenu;
 	char quitVerify = 'x';
 	int menu;
 	std::string nom;
@@ -354,13 +332,7 @@ void menuSuppressionPartie()
 	Terminal::get() << "===============\n\n";
 	Profil::listerSauvegardes();
 	Terminal::get() << "0. Annuler\n";
-	Terminal::get() << "===============\n";
-	Terminal::get() << "Choix ?";
-	sMenu = getString(); // l'utilisateur entre le menu qu'il souhaite ouvrir
-	std::istringstream iss;
-
-	iss.str(sMenu); // On extrait la taille du circuit et on le stocke dans la variable de conversion "iss1".
-	iss >> menu; // on convertit la string recuperee plus haut en entier
+	menu = Menu::askChoice(); // l'utilisateur entre le menu qu'il souhaite ouvrir
 	//Redirection de l'utilisateur selon son choix grâce a un switch.
 	if(menu == 0)
 	{
@@ -402,7 +374,7 @@ void menuSuppressionPartie()
 							break;
 						default:
 							Terminal::get().clearScreen();
-							saisieInvalide();
+							Menu::error("Saisie invalide");
 							break;
 					}
 				}

@@ -1,4 +1,5 @@
 //sousMenus.cpp
+#include "Menu.hh"
 #include "sousMenus.hh"
 
 Voiture* menuChoixVoiture(Profil& Player)
@@ -34,13 +35,7 @@ Voiture* menuChoixVoiture(Profil& Player)
 		}
 		Terminal::get() << "\n"; //On separe le bloc
 		Terminal::get() << "0. Retour\n";
-		Terminal::get() << "===============\n";
-		Terminal::get() << "Choix ? ";
-		sMenu = getString(); // l'utilisateur confirme
-		std::istringstream iss;
-
-		iss.str(sMenu);
-		iss >> menu; // on convertit la string recuperee plus haut en entier	
+		menu = Menu::askChoice();
 		if(menu == 0)
 		{
 			Terminal::get().clearScreen(); //On flushe l'ancien ecran
@@ -68,7 +63,7 @@ Voiture* menuChoixVoiture(Profil& Player)
 		else
 		{
 			Terminal::get().clearScreen(); //On flushe l'ancien ecran
-			saisieInvalide();
+			Menu::error("Saisie invalide");
 		}
 	}
 	return VoitureSelectionnee;
@@ -87,13 +82,7 @@ void menuCourseLibre(Profil& Player)
 	Terminal::get() << "===============\n\n";
 	nombreCircuits = Circuit::listerCircuits();
 	Terminal::get() << "0. Annuler\n";
-	Terminal::get() << "===============\n";
-	Terminal::get() << "Choix ? ";
-	sMenu = getString(); // l'utilisateur choisit un menu
-	std::istringstream iss;
-
-	iss.str(sMenu); // On extrait la taille du circuit et on le stocke dans la variable de conversion "iss1".
-	iss >> menu; // on convertit la string recuperee plus haut en entier
+	menu = Menu::askChoice();
 	//Redirection de l'utilisateur selon son choix grâce a un if + for.
 	if(menu == 0)
 	{
@@ -120,7 +109,7 @@ void menuCourseLibre(Profil& Player)
 	else
 	{
 		Terminal::get().clearScreen(); //On flushe l'ancien ecran
-		saisieInvalide();
+		Menu::error("Saisie invalide");
 	}
 }
 
@@ -137,13 +126,7 @@ void menuCourseChampionnat(Profil& Player)
 	Terminal::get() << "===============\n\n";
 	nombreCircuits = Circuit::listerCircuits();
 	Terminal::get() << "0. Annuler\n";
-	Terminal::get() << "===============\n";
-	Terminal::get() << "Choix ? ";
-	sMenu = getString();
-	std::istringstream iss;
-
-	iss.str(sMenu); // On extrait la taille du circuit et on le stocke dans la variable de conversion "iss1".
-	iss >> menu; // on convertit la string recuperee plus haut en entier
+	menu = Menu::askChoice();
 	//Redirection de l'utilisateur selon son choix grâce a un if + for.
 	if(menu == 0)
 	{
@@ -169,7 +152,7 @@ void menuCourseChampionnat(Profil& Player)
 	else
 	{
 		Terminal::get().clearScreen(); //On flushe l'ancien ecran
-		saisieInvalide();
+		Menu::error("Saisie invalide");
 	}
 }
 
@@ -222,13 +205,7 @@ int menuConsulterGarage(Profil& Player, const int& mode)
 	}
 	Terminal::get() << "\n"; //On separe le bloc
 	Terminal::get() << "0. Retour\n";
-	Terminal::get() << "===============\n";
-	Terminal::get() << "Choix ? ";
-	sMenu = getString();
-	std::istringstream iss;
-
-	iss.str(sMenu);
-	iss >> menu; // on convertit la string recuperee plus haut en entier
+	menu = Menu::askChoice();
 	if(menu == 0)
 	{
 		Terminal::get().clearScreen(); //On flushe l'ancien ecran et quitte
@@ -282,7 +259,7 @@ int menuConsulterGarage(Profil& Player, const int& mode)
 	else
 	{
 		Terminal::get().clearScreen(); //On flushe l'ancien ecran
-		saisieInvalide();
+		Menu::error("Saisie invalide");
 	}
 	return menu; //On renvoie l'emplacement choisi
 }
@@ -328,7 +305,6 @@ void menuConsulterBox(Profil& Player, const int& numeroBox)
 void menuAtelier(Profil& Player, const int& numeroBox)
 {
 	Terminal::get().clearScreen();
-	char menu;
 	bool quit = false;
 	Voiture* Voiture = Player.getBox(numeroBox);
 
@@ -344,31 +320,28 @@ void menuAtelier(Profil& Player, const int& numeroBox)
 		Terminal::get() << "2. Prise d'air\n";
 		Terminal::get() << "3. Spoiler\n\n";
 		Terminal::get() << "0. Retour\n";
-		Terminal::get() << "===============\n";
-		Terminal::get() << "Choix ? ";
-		menu = getch();
 		//Redirection de l'utilisateur selon son choix grâce a un switch.
-		switch(menu)
+		switch(Menu::askChoice())
 		{
-			case '0':
+			case 0:
 				Terminal::get().clearScreen(); //On flushe l'ancien ecran
 				quit = true;
 				break;
-			case '1':
+			case 1:
 				Terminal::get().clearScreen(); //On flushe l'ancien ecran
 				menuAtelierMoteur(Player, numeroBox);
 				break;
-			case '2':
+			case 2:
 				Terminal::get().clearScreen(); //On flushe l'ancien ecran
 				menuAtelierPriseAir(Player, numeroBox);
 				break;
-			case '3':
+			case 3:
 				Terminal::get().clearScreen(); //On flushe l'ancien ecran
 				menuAtelierSpoiler(Player, numeroBox);
 				break;
 			default:
 				Terminal::get().clearScreen(); //On flushe l'ancien ecran
-				saisieInvalide();
+				Menu::error("Saisie invalide");
 				break;
 		}
 	}
@@ -428,7 +401,7 @@ void menuAtelierSpoiler(Profil& Player, const int& numeroBox)
 	}
 	else
 	{
-			saisieInvalide();
+			Menu::error("Saisie invalide");
 	}
 	if(Player.getSauvegardeAuto())
 	{
@@ -493,7 +466,7 @@ void menuAtelierPriseAir(Profil& Player, const int& numeroBox)
 	}
 	else
 	{
-			saisieInvalide();
+			Menu::error("Saisie invalide");
 	}
 	if(Player.getSauvegardeAuto())
 	{
@@ -554,13 +527,7 @@ void menuAtelierMoteur(Profil& Player, const int& numeroBox)
 		Moteur::listerMoteurs(Voiture->getMarque());
 		Terminal::get() << "\n";
 		Terminal::get() << "0. Retour\n";
-		Terminal::get() << "===============\n";
-		Terminal::get() << "Choix ? ";
-		sMenu = getString(); // l'utilisateur entre le menu qu'il souhaite ouvrir
-		std::istringstream iss;
-
-		iss.str(sMenu);
-		iss >> menu; // on convertit la string recuperee plus haut en entier	
+		menu = Menu::askChoice();
 		if(menu == 0)
 		{
 				Terminal::get().clearScreen(); //On flushe l'ancien ecran
@@ -645,7 +612,7 @@ void menuAtelierMoteur(Profil& Player, const int& numeroBox)
 									break;
 								default:
 									Terminal::get().clearScreen();
-									saisieInvalide();
+									Menu::error("Saisie invalide");
 									break;
 							}
 							if(achat == true)
@@ -672,7 +639,7 @@ void menuAtelierMoteur(Profil& Player, const int& numeroBox)
 		else
 		{
 				Terminal::get().clearScreen(); //On flushe l'ancien ecran
-				saisieInvalide();
+				Menu::error("Saisie invalide");
 		}
 	}
 	if(Player.getSauvegardeAuto())
@@ -684,7 +651,6 @@ void menuAtelierMoteur(Profil& Player, const int& numeroBox)
 void menuMaintenance(Profil& Player, const int& numeroBox)
 {
 	Terminal::get().clearScreen();
-	char menu;
 	bool quit = 0;
 	char verifAchat;
 	int nitroManquante;
@@ -702,29 +668,21 @@ void menuMaintenance(Profil& Player, const int& numeroBox)
 		Terminal::get() << "2. Plein Nitro\n";
 		Terminal::get() << "3. Reparer\n\n";
 		Terminal::get() << "0. Retour\n";
-		Terminal::get() << "===============\n";
-		Terminal::get() << "Choix ? ";
-		menu = getch(); // l'utilisateur entre le menu qu'il souhaite ouvrir
 		//Redirection de l'utilisateur selon son choix grâce a un switch.
-		switch(menu)
+		switch(Menu::askChoice())
 		{
-			case '0':
+			case 0:
 				Terminal::get().clearScreen(); //On flushe l'ancien ecran
 				quit = 1;
 				break;
-			case '1':
+			case 1:
 				Terminal::get().clearScreen(); //On flushe l'ancien ecran
 				Terminal::get() << "/!\\ Attention ! /!\\\n";
 				Terminal::get() << "====================\n";
 				Terminal::get() << "Credits: " << Player.getCredits() << "c\n";
 				Terminal::get() << "====================\n";
-				Terminal::get() << "Changer les pneus de ce vehicule\n";
-				Terminal::get() << "vous coutera 2000c \n";
-				Terminal::get() << "Etes-vous sur ? [O/n]\n";
-				Terminal::get() << "====================\n";
-				verifAchat = getch();
-				Terminal::get().clearScreen();
-				if(verifAchat == 'o' || verifAchat == 'O')
+				Terminal::get() << "Changer les pneus de ce vehicule vous coutera 2000c\n";
+				if(Menu::askConfirmation())
 				{
 					if(Player.payer(2000))
 					{
@@ -732,12 +690,12 @@ void menuMaintenance(Profil& Player, const int& numeroBox)
 						Menu::msg("Pneus Changes avec succes !");
 					}
 				}
-				else if(verifAchat == 'n' || verifAchat == 'n')
+				else
 				{
 					Menu::msg("Transaction annulee.");
 				}
 				break;
-			case '2':
+			case 2:
 				Terminal::get().clearScreen(); //On flushe l'ancien ecran
 				if(Voiture->getNitroMax() == 0)
 				{
@@ -752,11 +710,7 @@ void menuMaintenance(Profil& Player, const int& numeroBox)
 					Terminal::get() << "====================\n";
 					Terminal::get() << "Remplir la Nitro de ce vehicule (Restant: " << Voiture->getNiveauNitro() << "L/" << Voiture->getNitroMax() << "L)\n";
 					Terminal::get() << "Pour remplir les " << nitroManquante << "L manquants, cela vous coutera " << nitroManquante * 100 << "c\n";
-					Terminal::get() << "Etes-vous sur ? [O/n]\n";
-					Terminal::get() << "====================\n";
-					verifAchat = getch();
-					Terminal::get().clearScreen();
-					if(verifAchat == 'o' || verifAchat == 'O')
+					if (Menu::askConfirmation())
 					{
 						if(Player.payer(nitroManquante * 100 ))
 						{
@@ -764,13 +718,13 @@ void menuMaintenance(Profil& Player, const int& numeroBox)
 							Menu::msg("Nitro au max !");
 						}
 					}
-					else if(verifAchat == 'n' || verifAchat == 'n')
+					else
 					{
 						Menu::msg("Transaction annulee.");
 					}
 				}
 				break;
-			case '3':
+			case 3:
 				if(Voiture->getEtat()==100)
 				{
 					Menu::msg("Votre voiture est en parfait etat.");
@@ -805,7 +759,7 @@ void menuMaintenance(Profil& Player, const int& numeroBox)
 				break;
 			default:
 				Terminal::get().clearScreen(); //On flushe l'ancien ecran
-				saisieInvalide();
+				Menu::error("Saisie invalide");
 				break;
 		}
 	}
@@ -817,7 +771,6 @@ void menuMaintenance(Profil& Player, const int& numeroBox)
 
 void menuAcheterBox(Profil& Player)
 {
-	char verif = 'x';
 	Terminal::get().clearScreen(); //On flushe l'ancien ecran
 	Terminal::get() << "/!\\ Attention ! /!\\\n";
 	Terminal::get() << "====================\n";
@@ -825,32 +778,9 @@ void menuAcheterBox(Profil& Player)
 	Terminal::get() << "====================\n";
 	Terminal::get() << "Vous allez acheter un " << Player.getNbBox() + 1 << "eme Box,\n";
 	Terminal::get() << "Prix: " << Player.getNbBox() * 20000 << "c\n\n";
-	Terminal::get() << "Souhaitez-vous vraiment continuer ? [O/n]\n";
-	Terminal::get() << "====================\n";
-	verif = getch();
-	switch(verif)
+	if(Menu::askConfirmation())
 	{
-		case 'o':
-			Terminal::get().clearScreen();
-			Player.acheterBox();
-			verif = 'n'; // on quitte la verification
-			break;
-		case 'O':
-			Terminal::get().clearScreen();
-			Player.acheterBox();
-			verif = 'n'; // on quitte la verification
-			break;
-		case 'n':
-			Terminal::get().clearScreen(); // la variable de verification prend la valeur n donc on sort de la verification, mais quit vaut faux
-			break;
-		case 'N':
-			Terminal::get().clearScreen(); // la variable de verification prend la valeur n donc on sort de la verification, mais quit vaut faux
-			verif = 'n'; // on quitte la verification
-			break;
-		default:
-			Terminal::get().clearScreen();
-			saisieInvalide();
-			break;
+		Player.acheterBox();
 	}
 	if(Player.getSauvegardeAuto())
 	{
@@ -879,7 +809,6 @@ void menuAchatVoiture(const char& rang, Profil& Player)
 
 	while(quit != true)
 	{
-		char verifAchat = 'x';
 		//Menu Principal
 		Terminal::get() << "Concessionnaire - [Rang " << rang << "]\n";
 		Terminal::get() << "===============\n";
@@ -902,13 +831,7 @@ void menuAchatVoiture(const char& rang, Profil& Player)
 		Terminal::get() << " |Capa. Nitro: " << nitroMaxVoiture << "L\n";
 		Terminal::get() << " |Aerodynamisme: " << aerodynamismeVoiture << "%\n";
 		Terminal::get() << " |Prix: " << prixVoiture << "c\n\n";
-		Terminal::get() << "===============\n";
-		Terminal::get() << "Choix ? ";
-		sMenu = getString(); // l'utilisateur entre le menu qu'il souhaite ouvrir
-		std::istringstream iss;
-
-		iss.str(sMenu); // On extrait la taille du circuit et on le stocke dans la variable de conversion "iss1".
-		iss >> menu; // on convertit la string recuperee plus haut en entier
+		menu = Menu::askChoice();
 		if(menu == 0) //Redirection de l'utilisateur selon son choix grâce a un switch.
 		{
 				Terminal::get().clearScreen(); //On flushe l'ancien ecran
@@ -926,64 +849,41 @@ void menuAchatVoiture(const char& rang, Profil& Player)
 			}
 			else
 			{
-				while(verifAchat != 'n') // Boucle de confirmation
+				Terminal::get().clearScreen(); //On flushe l'ancien ecran
+				Terminal::get() << "/!\\ Attention ! /!\\\n";
+				Terminal::get() << "====================\n";
+				Terminal::get() << "Credits: " << Player.getCredits() << "c\n";
+				Terminal::get() << "====================\n";
+				Terminal::get() << "Vous allez acheter le vehicule:\n";
+				Terminal::get() << marqueVoiture << " " << modeleVoiture << "\n";
+				Terminal::get() << "Prix: " << prixVoiture << "c\n\n";
+				if (Menu::askConfirmation())
 				{
-					Terminal::get().clearScreen(); //On flushe l'ancien ecran
-					Terminal::get() << "/!\\ Attention ! /!\\\n";
-					Terminal::get() << "====================\n";
-					Terminal::get() << "Credits: " << Player.getCredits() << "c\n";
-					Terminal::get() << "====================\n";
-					Terminal::get() << "Vous allez acheter le vehicule:\n";
-					Terminal::get() << marqueVoiture << " " << modeleVoiture << "\n";
-					Terminal::get() << "Prix: " << prixVoiture << "c\n\n";
-					Terminal::get() << "Etes-vous sur ? [O/n]\n";
-					Terminal::get() << "====================\n";
-					verifAchat = getch();
-					switch(verifAchat)
+					Terminal::get().clearScreen();
+					achat = true;
+				}
+				else
+				{
+					Terminal::get().clearScreen(); // la variable de verification prend la valeur n donc on sort de la verification, mais quit vaut faux
+					Menu::msg("Transaction annulee.");
+				}
+				if(achat == true)
+				{
+					Terminal::get().clearScreen();
+					numeroBox = menuConsulterGarage(Player, 2); //on demande a l'utilisateur ou stocker la voiture
+					Terminal::get().clearScreen();
+					if(numeroBox == 0)
 					{
-						case 'o':
-							Terminal::get().clearScreen();
-							verifAchat = 'n'; // on quitte la verification
-							achat = true;
-							break;
-						case 'O':
-							Terminal::get().clearScreen();
-							verifAchat = 'n'; // on quitte la verification
-							achat = true;
-							break;
-						case 'n':
-							Terminal::get().clearScreen(); // la variable de verification prend la valeur n donc on sort de la verification, mais quit vaut faux
-							Menu::msg("Transaction annulee.");
-							verifAchat = 'n'; // on quitte
-							break;
-						case 'N':
-							Terminal::get().clearScreen(); // la variable de verification prend la valeur n donc on sort de la verification, mais quit vaut faux
-							Menu::msg("Transaction annulee.");
-							verifAchat = 'n'; // on quitte
-							break;
-						default:
-							Terminal::get().clearScreen();
-							saisieInvalide();
-							break;
+						Menu::msg("Transaction annulee.");
 					}
-					if(achat == true)
+					else
 					{
-						Terminal::get().clearScreen();
-						numeroBox = menuConsulterGarage(Player, 2); //on demande a l'utilisateur ou stocker la voiture
-						Terminal::get().clearScreen();
-						if(numeroBox == 0)
+						numeroBox -= 1;
+						if(Player.payer(prixVoiture))
 						{
-							Menu::msg("Transaction annulee.");
-						}
-						else
-						{
-							numeroBox -= 1;
-							if(Player.payer(prixVoiture))
-							{
-								Player.setBox(numeroBox, Voiture::chargerVoiture(menu, rang));
-								Player.ajouterVoitureAchetee();
-								Menu::msg("Vehicule achete avec succes !");
-							}
+							Player.setBox(numeroBox, Voiture::chargerVoiture(menu, rang));
+							Player.ajouterVoitureAchetee();
+							Menu::msg("Vehicule achete avec succes !");
 						}
 					}
 				}
@@ -992,7 +892,7 @@ void menuAchatVoiture(const char& rang, Profil& Player)
 		else
 		{
 				Terminal::get().clearScreen(); //On flushe l'ancien ecran
-				saisieInvalide();
+				Menu::error("Saisie invalide");
 		}
 	}
 	if(Player.getSauvegardeAuto())
@@ -1003,7 +903,6 @@ void menuAchatVoiture(const char& rang, Profil& Player)
 
 void menuConcessionaireAchat(Profil& Player)
 {
-	char menu;
 	//Menu Principal
 	Terminal::get() << "Concessionnaire\n";
 	Terminal::get() << "===============\n";
@@ -1015,42 +914,39 @@ void menuConcessionaireAchat(Profil& Player)
 	Terminal::get() << "4. Rang [A]\n";
 	Terminal::get() << "5. Rang [S]\n\n";
 	Terminal::get() << "0. Retour\n";
-	Terminal::get() << "===============\n";
-	Terminal::get() << "Choix ? ";
-	menu = getch(); // l'utilisateur entre le menu qu'il souhaite ouvrir
 	//Redirection de l'utilisateur selon son choix grâce a un switch.
-	switch(menu)
+	switch(Menu::askChoice())
 	{
-		case '0':
+		case 0:
 			Terminal::get().clearScreen(); //On flushe l'ancien ecran
 			break;
-		case '1':
+		case 1:
 			Terminal::get().clearScreen(); //On flushe l'ancien ecran
 			menuAchatVoiture('D', Player);
 			break;
-		case '2':
+		case 2:
 			Terminal::get().clearScreen(); //On flushe l'ancien ecran
 			menuAchatVoiture('C', Player);
 			//menuAchatVoiture('C', Player);
 			break;
-		case '3':
+		case 3:
 			Terminal::get().clearScreen(); //On flushe l'ancien ecran
 			menuAchatVoiture('B', Player);
 			//menuAchatVoiture('B', Player);
 			break;
-		case '4':
+		case 4:
 			Terminal::get().clearScreen(); //On flushe l'ancien ecran
 			menuAchatVoiture('A', Player);
 			//menuAchatVoiture('A', Player);
 			break;
-		case '5':
+		case 5:
 			Terminal::get().clearScreen(); //On flushe l'ancien ecran
 			menuAchatVoiture('S', Player);
 			//menuAchatVoiture('S', Player);
 			break;
 		default:
 			Terminal::get().clearScreen(); //On flushe l'ancien ecran
-			saisieInvalide();
+			Menu::error("Saisie invalide");
 			break;
 	}
 }
@@ -1093,7 +989,7 @@ void menuVenteVoiture(Profil& Player, const int& numeroBox)
 	else
 	{
 			Terminal::get().clearScreen();
-			saisieInvalide();
+			Menu::error("Saisie invalide");
 	}
 	if(Player.getSauvegardeAuto())
 	{
@@ -1104,7 +1000,6 @@ void menuVenteVoiture(Profil& Player, const int& numeroBox)
 void menuDifficulte(Profil& Player)
 {
 	std::string menu;	//un string car le le passe en iss
-	char choix;
 	int difficulte;
 	
 	Terminal::get() <<"Augmenter la difficulte augmente les gains\n";
@@ -1117,45 +1012,39 @@ void menuDifficulte(Profil& Player)
 	Terminal::get() << "4. DIFFICILE\n";
 	Terminal::get() << "5. EXPERT\n\n";
 	Terminal::get() << "0. Retour\n";
-	Terminal::get() << "===============\n";
-	Terminal::get() << "Choix ? ";
-	menu = getString(); // l'utilisateur entre le menu qu'il souhaite ouvrir
-	std::istringstream iss(menu);
-	iss>>difficulte;
-	choix=menu[0];
 	//Redirection de l'utilisateur selon son choix grâce a un switch.
-	switch(choix)
+	switch(Menu::askChoice())
 	{
-		case '0':
+		case 0:
 			Terminal::get().clearScreen(); //On flushe l'ancien ecran
 			break;
-		case '1':
+		case 1:
 			Terminal::get().clearScreen(); //On flushe l'ancien ecran
 			Player.setDifficulte(difficulte);
 			break;
-		case '2':
+		case 2:
 			Terminal::get().clearScreen(); //On flushe l'ancien ecran
 			Player.setDifficulte(difficulte);
 			//menuAchatVoiture('C', Player);
 			break;
-		case '3':
+		case 3:
 			Terminal::get().clearScreen(); //On flushe l'ancien ecran
 			Player.setDifficulte(difficulte);
 			//menuAchatVoiture('B', Player);
 			break;
-		case '4':
+		case 4:
 			Terminal::get().clearScreen(); //On flushe l'ancien ecran
 			Player.setDifficulte(difficulte);
 			//menuAchatVoiture('A', Player);
 			break;
-		case '5':
+		case 5:
 			Terminal::get().clearScreen(); //On flushe l'ancien ecran
 			Player.setDifficulte(difficulte);
 			//menuAchatVoiture('S', Player);
 			break;
 		default:
 			Terminal::get().clearScreen(); //On flushe l'ancien ecran
-			saisieInvalide();
+			Menu::error("Saisie invalide");
 			break;
 	}
 	if(Player.getSauvegardeAuto())

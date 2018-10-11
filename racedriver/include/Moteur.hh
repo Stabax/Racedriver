@@ -8,7 +8,6 @@
 #include <fstream>
 #include <sstream>
 
-#include "fonctions.hh"
 #include"algos.hh"
 #include"Game.hh"
 

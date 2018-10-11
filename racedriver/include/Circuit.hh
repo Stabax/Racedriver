@@ -7,7 +7,6 @@
 #include <fstream>
 #include <cstdlib>
 #include <sstream>
-#include"fonctions.hh"
 #include"Game.hh"
 
 class Circuit

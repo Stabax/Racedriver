@@ -722,7 +722,7 @@ static int check_hex_digest(const char *hex_digest,
   size_t i;
   for(i = 0; hex_digest[i]; ++i) {
     char c = hex_digest[i];
-    if(!(('0' <= c && c <= '9') || ('a' <= c && c <= 'z') ||
+    if(!((0 <= c && c <= '9') || ('a' <= c && c <= 'z') ||
          ('A' <= c && c <= 'Z'))) {
       return 0;
     }

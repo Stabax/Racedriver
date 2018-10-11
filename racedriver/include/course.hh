@@ -5,7 +5,6 @@
 #include <cmath>
 #include <fstream>
 #include "Circuit.hh"
-#include "fonctions.hh"
 #include "Profil.hh"
 
 bool preparatifsCourse(const Circuit& Map, const Profil& Player, Voiture*& VoiturePlayer, int const& prix = 0);

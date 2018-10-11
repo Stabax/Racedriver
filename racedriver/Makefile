@@ -23,6 +23,7 @@ LDFLAGS		= -L$(BINDIR) -lcurl -lpdcurses -static-libgcc
 NAME = $(BINDIR)/Racedriver
 
 SRCS = 	$(SRCDIR)/Game.cpp							\
+				$(SRCDIR)/Menu.cpp							\
 				$(SRCDIR)/algos.cpp							\
 				$(SRCDIR)/Circuit.cpp						\
 				$(SRCDIR)/course.cpp						\

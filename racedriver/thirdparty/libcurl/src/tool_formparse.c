@@ -146,9 +146,9 @@ static int read_field_headers(struct OperationConfig *config,
 
     switch(c) {
     case EOF:
-      if(ferror(fp)) {
+      if(fMenu::error(fp)) {
         fprintf(config->global->errors,
-                "Header file %s read error: %s\n", filename, strerror(errno));
+                "Header file %s read error: %s\n", filename, strMenu::error(errno));
         return -1;
       }
       return 0;    /* Done. */
@@ -280,7 +280,7 @@ static int get_param_part(struct OperationConfig *config, char endchar,
         fp = fopen(hdrfile, FOPEN_READTEXT);
         if(!fp)
           warnf(config->global, "Cannot read from %s: %s\n", hdrfile,
-                strerror(errno));
+                strMenu::error(errno));
         else {
           int i = read_field_headers(config, hdrfile, fp, &headers);
 
@@ -478,7 +478,7 @@ static CURLcode file_or_stdin(curl_mimepart *part, const char *file)
       if(!stdinsize)
         sip->data = NULL;  /* Has been freed if no data. */
       sip->size = stdinsize;
-      if(ferror(stdin))
+      if(fMenu::error(stdin))
         result = CURLE_READ_ERROR;
     }
   }

@@ -30,7 +30,7 @@ void menuCourse(Profil& Player)
 
 			case '1':
 				Terminal::get().clearScreen(); //On flushe l'ancien ecran
-				error("Non implementee.");
+				Menu::error("Non implementee.");
 				break;
 
 			case '2':
@@ -257,7 +257,7 @@ void menuOptions(Profil& Player)
 				break;
 			case '3':
 				Terminal::get().clearScreen(); //On flushe l'ancien ecran
-				error("non implemente");
+				Menu::error("non implemente");
 				break;
 			case '4':
 				Terminal::get().clearScreen(); //On flushe l'ancien ecran

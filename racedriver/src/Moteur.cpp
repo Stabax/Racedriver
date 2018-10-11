@@ -23,7 +23,7 @@ Moteur* Moteur::chargerMoteur(const int& id, const std::string& marqueChargee)
 
 	if(!engine)
 	{
-		error("Echec de lecture du fichier "+marqueChargee+".cdx");
+		Menu::error("Echec de lecture du fichier "+marqueChargee+".cdx");
 	}
 	else
 	{
@@ -35,7 +35,7 @@ Moteur* Moteur::chargerMoteur(const int& id, const std::string& marqueChargee)
 			}
 			else
 			{
-				error("Fichier corrompu12");
+				Menu::error("Fichier corrompu12");
 			}
 			//on utilise while(std::getline(flux, string) pour "Tant qu'il y a une ligne a lire"
 		}
@@ -71,7 +71,7 @@ Moteur* Moteur::chargerMoteur(const int& id, const std::string& marqueChargee)
 			}
 			else
 			{
-				error("Fichier corompu13.");
+				Menu::error("Fichier corompu13.");
 			}
 			iss.clear();
 			iss.str(sAcceleration);
@@ -80,14 +80,14 @@ Moteur* Moteur::chargerMoteur(const int& id, const std::string& marqueChargee)
 			}
 			else
 			{
-				error("Fichier corompu14.");
+				Menu::error("Fichier corompu14.");
 			}
 
 			MoteurCharge = new Moteur(marqueChargee, modele, rang, vitesse, acceleration, carburant);
 		}
 		else
 		{
-			error("Fichier corompu15.");
+			Menu::error("Fichier corompu15.");
 		}
 	}
 	return MoteurCharge;
@@ -187,7 +187,7 @@ void Moteur::listerMoteurs(const std::string& marque)
 				}
 				else
 				{
-					error("Fichier corompu16.");
+					Menu::error("Fichier corompu16.");
 				}
 				iss.clear();
 				iss.str(sAcceleration);
@@ -196,7 +196,7 @@ void Moteur::listerMoteurs(const std::string& marque)
 				}
 				else
 				{
-					error("Fichier corompu17.");
+					Menu::error("Fichier corompu17.");
 				}
 
 				int prix = ((vitesse + acceleration) * 25) + ( (vRang(rang)-1) * 500);
@@ -208,7 +208,7 @@ void Moteur::listerMoteurs(const std::string& marque)
 	}
 	else
 	{
-		error("Fichier corrompu");
+		Menu::error("Fichier corrompu");
 	}
 }
 
@@ -220,7 +220,7 @@ void Moteur::infoMoteur(const int& id, const std::string& marque, std::string& m
 
 	if(!engine)
 	{
-		error("Echec de lecture du fichier "+marque+".cdx");
+		Menu::error("Echec de lecture du fichier "+marque+".cdx");
 	}
 	else
 	{
@@ -234,7 +234,7 @@ void Moteur::infoMoteur(const int& id, const std::string& marque, std::string& m
 			}
 			else
 			{
-				error("Fichier corrompu18");
+				Menu::error("Fichier corrompu18");
 			}
 		}
 
@@ -249,7 +249,7 @@ void Moteur::infoMoteur(const int& id, const std::string& marque, std::string& m
 		}
 		else
 		{
-			error("Fichier corompu21.");
+			Menu::error("Fichier corompu21.");
 		}
 	}
 }
@@ -272,7 +272,7 @@ void Moteur::infoMoteur(const int& id, const std::string& marque, int& prix)
 
 	if(!engine)
 	{
-		error("Echec de lecture du fichier "+marque+".cdx");
+		Menu::error("Echec de lecture du fichier "+marque+".cdx");
 	}
 	else
 	{
@@ -284,7 +284,7 @@ void Moteur::infoMoteur(const int& id, const std::string& marque, int& prix)
 			}
 			else
 			{
-				error("Fichier corrompu18b");
+				Menu::error("Fichier corrompu18b");
 			}
 			iss.clear();
 		}
@@ -313,7 +313,7 @@ void Moteur::infoMoteur(const int& id, const std::string& marque, int& prix)
 			}
 			else
 			{
-				error("Fichier corompu19b.");
+				Menu::error("Fichier corompu19b.");
 			}
 			iss.clear();
 			iss.str(sAcceleration);
@@ -322,14 +322,14 @@ void Moteur::infoMoteur(const int& id, const std::string& marque, int& prix)
 			}
 			else
 			{
-				error("Fichier corompu20b.");
+				Menu::error("Fichier corompu20b.");
 			}
 
 			prix = (((vitesse + acceleration) * 25) + ( (vRang(rang)-1)) * 500);
 		}
 		else
 		{
-			error("Fichier corompu21b.");
+			Menu::error("Fichier corompu21b.");
 		}
 	}
 }
@@ -349,7 +349,7 @@ void Moteur::infoMoteur(const int& id, const std::string& marque, std::string& m
 
 	if(!engine)
 	{
-		error("Echec de lecture du fichier "+marque+".cdx");
+		Menu::error("Echec de lecture du fichier "+marque+".cdx");
 	}
 	else
 	{
@@ -362,7 +362,7 @@ void Moteur::infoMoteur(const int& id, const std::string& marque, std::string& m
 			}
 			else
 			{
-				error("Fichier corrompu18");
+				Menu::error("Fichier corrompu18");
 			}
 			iss.clear();
 		}
@@ -390,7 +390,7 @@ void Moteur::infoMoteur(const int& id, const std::string& marque, std::string& m
 			}
 			else
 			{
-				error("Fichier corompu19.");
+				Menu::error("Fichier corompu19.");
 			}
 			iss.clear();
 			iss.str(sAcceleration);
@@ -399,12 +399,12 @@ void Moteur::infoMoteur(const int& id, const std::string& marque, std::string& m
 			}
 			else
 			{
-				error("Fichier corompu20.");
+				Menu::error("Fichier corompu20.");
 			}
 		}
 		else
 		{
-			error("Fichier corompu21.");
+			Menu::error("Fichier corompu21.");
 		}
 	}
 }
@@ -418,7 +418,7 @@ void Moteur::infoMoteur(const int& id, const std::string& marque, std::string& m
 
 	if(!engine)
 	{
-		error("Echec de lecture du fichier "+marque+".cdx");
+		Menu::error("Echec de lecture du fichier "+marque+".cdx");
 	}
 	else
 	{
@@ -432,7 +432,7 @@ void Moteur::infoMoteur(const int& id, const std::string& marque, std::string& m
 			}
 			else
 			{
-				error("Fichier corrompu18");
+				Menu::error("Fichier corrompu18");
 			}
 		}
 
@@ -463,7 +463,7 @@ void Moteur::infoMoteur(const int& id, const std::string& marque, std::string& m
 			}
 			else
 			{
-				error("Fichier corompu19.");
+				Menu::error("Fichier corompu19.");
 			}
 			iss.clear();
 			iss.str(sAcceleration);
@@ -472,14 +472,14 @@ void Moteur::infoMoteur(const int& id, const std::string& marque, std::string& m
 			}
 			else
 			{
-				error("Fichier corompu20.");
+				Menu::error("Fichier corompu20.");
 			}
 
 			prix = ((vitesse + acceleration) * 25) + ( (vRang(rang)-1) * 500);
 		}
 		else
 		{
-			error("Fichier corompu21.");
+			Menu::error("Fichier corompu21.");
 		}
 	}
 }
@@ -505,14 +505,14 @@ int Moteur::compterMoteurs(const std::string& marque)
 			}
 			else
 			{
-				error("Fichier corrompu22");
+				Menu::error("Fichier corrompu22");
 			}
 			//on utilise while(std::getline(flux, string) pour "Tant qu'il y a une ligne a lire"
 		}
 	}
 	else
 	{
-		error("Fichier corrompu23");
+		Menu::error("Fichier corrompu23");
 	}
 	return nbMoteur;
 }

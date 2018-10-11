@@ -51,7 +51,7 @@ Voiture* menuChoixVoiture(Profil& Player)
 			if(Player.boxVide(menu - 1))
 			{
 				Terminal::get().clearScreen();
-				error("Le box est vide.");
+				Menu::error("Le box est vide.");
 			}
 			else
 			{
@@ -63,7 +63,7 @@ Voiture* menuChoixVoiture(Profil& Player)
 		else if(menu > nbBox && menu <= 5)
 		{
 			Terminal::get().clearScreen();
-			error("Ce box est verrouille.");
+			Menu::error("Ce box est verrouille.");
 		}
 		else
 		{
@@ -108,7 +108,7 @@ void menuCourseLibre(Profil& Player)
 		VoiturePlayer = menuChoixVoiture(Player);
 		if(VoiturePlayer == 0)
 		{
-			error("Aucune voiture selectionnee.");
+			Menu::error("Aucune voiture selectionnee.");
 		}
 		else
 		{
@@ -157,7 +157,7 @@ void menuCourseChampionnat(Profil& Player)
 		VoiturePlayer = menuChoixVoiture(Player);
 		if(VoiturePlayer == 0)
 		{
-			error("Aucune voiture selectionnee.");
+			Menu::error("Aucune voiture selectionnee.");
 		}
 		else
 		{
@@ -244,7 +244,7 @@ int menuConsulterGarage(Profil& Player, const int& mode)
 			else
 			{
 				Terminal::get().clearScreen();
-				error("Le box est vide.");
+				Menu::error("Le box est vide.");
 			}
 		}
 		else if(mode == 0)
@@ -261,7 +261,7 @@ int menuConsulterGarage(Profil& Player, const int& mode)
 		else if(mode == 2)
 		{
 			Terminal::get().clearScreen();
-			error("Le box est deja occupe.");
+			Menu::error("Le box est deja occupe.");
 		}
 		else if(mode == 3)
 		{
@@ -277,7 +277,7 @@ int menuConsulterGarage(Profil& Player, const int& mode)
 	else if(menu > nbBox && menu <= 5)
 	{
 		Terminal::get().clearScreen();
-		error("Ce box est verrouille.");
+		Menu::error("Ce box est verrouille.");
 	}
 	else
 	{
@@ -412,12 +412,12 @@ void menuAtelierSpoiler(Profil& Player, const int& numeroBox)
 			if(Player.payer(prixCharge))
 			{
 				Voiture->setSpoiler(Spoiler::chargerSpoiler(idCharge), id);
-				msg("Spoiler amelioree avec succes !");
+				Menu::msg("Spoiler amelioree avec succes !");
 			}
 		}
 		else
 		{
-			error("Cette pièce n'est pas compatible avec votre vehicule");
+			Menu::error("Cette pièce n'est pas compatible avec votre vehicule");
 		}
 		verif = 'n'; // on quitte la verification
 	}
@@ -476,12 +476,12 @@ void menuAtelierPriseAir(Profil& Player, const int& numeroBox)
 				if(Player.payer(prixCharge))
 				{
 					Voiture->setPriseAir(PriseAir::chargerPriseAir(idCharge), id);
-					msg("Prise d'air amelioree avec succes !");
+					Menu::msg("Prise d'air amelioree avec succes !");
 				}
 			}
 			else
 			{
-				error("Cette pièce n'est pas compatible avec votre vehicule");
+				Menu::error("Cette pièce n'est pas compatible avec votre vehicule");
 			}
 			verif = 'n'; // on quitte la verification
 
@@ -574,7 +574,7 @@ void menuAtelierMoteur(Profil& Player, const int& numeroBox)
 			if(menu == Voiture->getIdMoteur())
 			{
 				Terminal::get().clearScreen();
-				msg("Votre vehicule est deja equipe de cette piece. ("+newNomMoteur+")");
+				Menu::msg("Votre vehicule est deja equipe de cette piece. ("+newNomMoteur+")");
 				newNomMoteur = "N/A";
 				newVitesseMoteur = 0;
 				newAccelerationMoteur = 0;
@@ -656,7 +656,7 @@ void menuAtelierMoteur(Profil& Player, const int& numeroBox)
 								{
 									Player.ajouterCredits(Voiture->getPrixMoteur() * 0.6f);
 									Player.setMoteurVoiture(numeroBox, Moteur::chargerMoteur(tmenu, Voiture->getMarque()), menu);
-									msg("La piece a ete achetee et installee avec succes !");
+									Menu::msg("La piece a ete achetee et installee avec succes !");
 								}
 							}
 						}
@@ -664,7 +664,7 @@ void menuAtelierMoteur(Profil& Player, const int& numeroBox)
 					else
 					{
 						Terminal::get().clearScreen();
-						error("La piece choisie n'est pas compatible avec votre voiture.");
+						Menu::error("La piece choisie n'est pas compatible avec votre voiture.");
 					}
 				}
 			}
@@ -729,19 +729,19 @@ void menuMaintenance(Profil& Player, const int& numeroBox)
 					if(Player.payer(2000))
 					{
 						Voiture->changerPneus();
-						msg("Pneus Changes avec succes !");
+						Menu::msg("Pneus Changes avec succes !");
 					}
 				}
 				else if(verifAchat == 'n' || verifAchat == 'n')
 				{
-					msg("Transaction annulee.");
+					Menu::msg("Transaction annulee.");
 				}
 				break;
 			case '2':
 				Terminal::get().clearScreen(); //On flushe l'ancien ecran
 				if(Voiture->getNitroMax() == 0)
 				{
-					error("Votre vehicule n'est pas equipe d'un reservoir de Nitro.");
+					Menu::error("Votre vehicule n'est pas equipe d'un reservoir de Nitro.");
 				}
 				else
 				{
@@ -761,19 +761,19 @@ void menuMaintenance(Profil& Player, const int& numeroBox)
 						if(Player.payer(nitroManquante * 100 ))
 						{
 							Voiture->changerPneus();
-							msg("Nitro au max !");
+							Menu::msg("Nitro au max !");
 						}
 					}
 					else if(verifAchat == 'n' || verifAchat == 'n')
 					{
-						msg("Transaction annulee.");
+						Menu::msg("Transaction annulee.");
 					}
 				}
 				break;
 			case '3':
 				if(Voiture->getEtat()==100)
 				{
-					msg("Votre voiture est en parfait etat.");
+					Menu::msg("Votre voiture est en parfait etat.");
 				}
 				else
 				{
@@ -794,12 +794,12 @@ void menuMaintenance(Profil& Player, const int& numeroBox)
 						if(Player.payer(aPayer))
 						{
 							Voiture->reparer();
-							msg("voiture reparee avec succes !");
+							Menu::msg("voiture reparee avec succes !");
 						}
 					}
 					else if(verifAchat == 'n' || verifAchat == 'n')
 					{
-						msg("Transaction annulee.");
+						Menu::msg("Transaction annulee.");
 					}
 				}
 				break;
@@ -953,12 +953,12 @@ void menuAchatVoiture(const char& rang, Profil& Player)
 							break;
 						case 'n':
 							Terminal::get().clearScreen(); // la variable de verification prend la valeur n donc on sort de la verification, mais quit vaut faux
-							msg("Transaction annulee.");
+							Menu::msg("Transaction annulee.");
 							verifAchat = 'n'; // on quitte
 							break;
 						case 'N':
 							Terminal::get().clearScreen(); // la variable de verification prend la valeur n donc on sort de la verification, mais quit vaut faux
-							msg("Transaction annulee.");
+							Menu::msg("Transaction annulee.");
 							verifAchat = 'n'; // on quitte
 							break;
 						default:
@@ -973,7 +973,7 @@ void menuAchatVoiture(const char& rang, Profil& Player)
 						Terminal::get().clearScreen();
 						if(numeroBox == 0)
 						{
-							msg("Transaction annulee.");
+							Menu::msg("Transaction annulee.");
 						}
 						else
 						{
@@ -982,7 +982,7 @@ void menuAchatVoiture(const char& rang, Profil& Player)
 							{
 								Player.setBox(numeroBox, Voiture::chargerVoiture(menu, rang));
 								Player.ajouterVoitureAchetee();
-								msg("Vehicule achete avec succes !");
+								Menu::msg("Vehicule achete avec succes !");
 							}
 						}
 					}
@@ -1082,12 +1082,12 @@ void menuVenteVoiture(Profil& Player, const int& numeroBox)
 			Terminal::get().clearScreen();
 			Player.ajouterCredits(Voiture->getPrix() * 0.5);
 			Player.setBox(numeroBox);
-			msg(Voiture->getModele()+" vendue avec succes pour "+sPrixVente+"c");
+			Menu::msg(Voiture->getModele()+" vendue avec succes pour "+sPrixVente+"c");
 	}
 	else if(verif == 'n' || verif == 'N')
 	{
 			Terminal::get().clearScreen(); // la variable de verification prend la valeur n donc on sort de la verification, mais quit vaut faux
-			msg("Transaction annulee par l'utilisateur.");
+			Menu::msg("Transaction annulee par l'utilisateur.");
 			verif = 'n'; // on quitte la verification
 	}
 	else
@@ -1180,7 +1180,7 @@ void menuChangementNomProfil(Profil& Player)
 	if(nom != "0")
 	{
 		Player.changerNom(nom);
-		msg("Le nom de votre profil est maintenant : \""+nom+"\"");
+		Menu::msg("Le nom de votre profil est maintenant : \""+nom+"\"");
 	}
 	if(Player.getSauvegardeAuto())
 	{

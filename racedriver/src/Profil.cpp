@@ -127,12 +127,12 @@ bool Profil::chargerProfil(const int& numeroSave, Profil*& ProfilCharge)
 
 	if(!save) //Si la lecture echoue
 	{
-		error("Echec de lecture du fichier de sauvegarde");
+		Menu::error("Echec de lecture du fichier de sauvegarde");
 		statut = false; //Le fichier ne peut être charge, donc la fonction renvoie un echec
 	}
 	else if(!lockFichier)
 	{
-		error("Echec de lecture du fichier de verouillage de la sauvegarde");
+		Menu::error("Echec de lecture du fichier de verouillage de la sauvegarde");
 		statut = false; //Le fichier ne peut être charge, donc la fonction renvoie un echec
 	}
 	else
@@ -145,7 +145,7 @@ bool Profil::chargerProfil(const int& numeroSave, Profil*& ProfilCharge)
 
 		if(stringSaveLock != stringLockLock) //On compare
 		{
-			error("Fichier de sauvegarde inutilisable.");
+			Menu::error("Fichier de sauvegarde inutilisable.");
 			statut = false; //Le fichier ne peut être charge, donc la fonction renvoie un echec
 		}
 		else
@@ -401,7 +401,7 @@ bool Profil::chargerProfil(const int& numeroSave, Profil*& ProfilCharge)
 		else
 		{
 			statut = false; //echec du chargement
-			error("Fichier de sauvegarde corrompu.");
+			Menu::error("Fichier de sauvegarde corrompu.");
 		}
 	}
 	return statut;
@@ -427,13 +427,13 @@ void Profil::supprimerProfil(const int& numeroSave)
 	if(remove(cheminFichier.c_str()))
 	{
 		Terminal::get().clearScreen();
-		error("Impossible de supprimer le profil");
+		Menu::error("Impossible de supprimer le profil");
 		fail = true;
 	}
 	if(remove(cheminLock.c_str()))
 	{
 		Terminal::get().clearScreen();
-		error("Impossible de supprimer le verrou du profil");
+		Menu::error("Impossible de supprimer le verrou du profil");
 		fail = true;
 	}
 	if(nbSaves > numeroSave)
@@ -456,14 +456,14 @@ void Profil::supprimerProfil(const int& numeroSave)
 			if(test == 1)
 			{
 				Terminal::get().clearScreen();
-				error("Impossible de renommer les profils suivants.");
+				Menu::error("Impossible de renommer les profils suivants.");
 				fail = true;
 			}
 			test = rename(cheminLock.c_str(), newCheminLock.c_str()); //On decale tous les locks d'un cran
 			if(test == 1)
 			{
 				Terminal::get().clearScreen();
-				error("Impossible de renommer les verrous des profils suivants.");
+				Menu::error("Impossible de renommer les verrous des profils suivants.");
 				fail = true;
 			}
 		}
@@ -471,7 +471,7 @@ void Profil::supprimerProfil(const int& numeroSave)
 	if(fail == false)
 	{
 		Terminal::get().clearScreen();
-		msg("Profil"+numeroProfil+" supprime avec succes !");
+		Menu::msg("Profil"+numeroProfil+" supprime avec succes !");
 	}
 }
 
@@ -511,7 +511,7 @@ void Profil::sauvegarderProfil()
 		}
 		else
 		{
-			error("Impossible d'ecraser le fichier de profil");
+			Menu::error("Impossible d'ecraser le fichier de profil");
 		}
 	}
 	//Une fois la sauvegarde faite on crée le Lock
@@ -522,7 +522,7 @@ void Profil::sauvegarderProfil()
 
 	if(!lock)
 	{
-		error("Impossible de lire le lock en ecriture.");
+		Menu::error("Impossible de lire le lock en ecriture.");
 	}
 	else
 	{
@@ -761,7 +761,7 @@ void Profil::acheterBox()
 
 		oss << m_nbBox;      // on insere le int dans le stream oss
 		sNbBox = oss.str(); // range le int dans la variable numeroSave
-		msg("Box "+sNbBox+" achete avec succes !");
+		Menu::msg("Box "+sNbBox+" achete avec succes !");
 	}
 }
 
@@ -775,7 +775,7 @@ bool Profil::payer(const int& prix)
 	bool paye;
 	if(prix > m_credits)
 	{
-		error("Vous ne disposez pas d'assez de Credits !");
+		Menu::error("Vous ne disposez pas d'assez de Credits !");
 		paye = false;
 	}
 	else

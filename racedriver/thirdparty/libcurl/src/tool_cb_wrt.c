@@ -49,7 +49,7 @@ bool tool_create_output_file(struct OutStruct *outs,
     if(file) {
       fclose(file);
       warnf(global, "Refusing to overwrite %s: %s\n", outs->filename,
-            strerror(EEXIST));
+            strMenu::error(EEXIST));
       return FALSE;
     }
   }
@@ -58,7 +58,7 @@ bool tool_create_output_file(struct OutStruct *outs,
   file = fopen(outs->filename, append?"ab":"wb");
   if(!file) {
     warnf(global, "Failed to create the file %s: %s\n", outs->filename,
-          strerror(errno));
+          strMenu::error(errno));
     return FALSE;
   }
   outs->s_isreg = TRUE;

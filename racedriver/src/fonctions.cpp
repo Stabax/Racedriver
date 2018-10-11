@@ -18,8 +18,3 @@ std::string getHashFromFile(std::string path)
 
 	return lock;
 }
-
-void error(std::string message)
-{
-	msg("ERREUR: "+message);
-}

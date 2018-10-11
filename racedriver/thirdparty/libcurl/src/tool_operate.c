@@ -94,7 +94,7 @@ CURLcode curl_easy_perform_ev(CURL *easy);
   "this situation and\nhow to fix it, please visit the web page mentioned " \
   "above.\n"
 
-static bool is_fatal_error(CURLcode code)
+static bool is_fatal_Menu::error(CURLcode code)
 {
   switch(code) {
   /* TODO: Should CURLE_SSL_CACERT be included as critical error ? */
@@ -737,7 +737,7 @@ static CURLcode operate_do(struct GlobalConfig *global,
           if(!strcmp(uploadfile, ".")) {
             if(curlx_nonblock((curl_socket_t)infd, TRUE) < 0)
               warnf(config->global,
-                    "fcntl failed on fd=%d: %s\n", infd, strerror(errno));
+                    "fcntl failed on fd=%d: %s\n", infd, strMenu::error(errno));
           }
         }
 
@@ -1759,7 +1759,7 @@ static CURLcode operate_do(struct GlobalConfig *global,
                       "Metalink: fetching (%s) from (%s) FAILED (%s)\n",
                       mlfile->filename, this_url,
                       (errorbuffer[0]) ?
-                      errorbuffer : curl_easy_strerror(result));
+                      errorbuffer : curl_easy_strMenu::error(result));
             }
           }
           if(metalink && !metalink_next_res)
@@ -1802,7 +1802,7 @@ static CURLcode operate_do(struct GlobalConfig *global,
         }
         else if(result && global->showerror) {
           fprintf(global->errors, "curl: (%d) %s\n", result, (errorbuffer[0]) ?
-                  errorbuffer : curl_easy_strerror(result));
+                  errorbuffer : curl_easy_strMenu::error(result));
           if(result == CURLE_SSL_CACERT)
             fputs(CURL_CA_CERT_ERRORMSG, global->errors);
         }
@@ -1827,7 +1827,7 @@ static CURLcode operate_do(struct GlobalConfig *global,
           int rc = fwrite_xattr(curl, fileno(outs.stream));
           if(rc)
             warnf(config->global, "Error setting extended attributes: %s\n",
-                  strerror(errno));
+                  strMenu::error(errno));
         }
 
         /* Close the file */
@@ -1904,7 +1904,7 @@ static CURLcode operate_do(struct GlobalConfig *global,
 
         if(metalink) {
           /* Should exit if error is fatal. */
-          if(is_fatal_error(result)) {
+          if(is_fatal_Menu::error(result)) {
             break;
           }
           if(!metalink_next_res)
@@ -1918,7 +1918,7 @@ static CURLcode operate_do(struct GlobalConfig *global,
         }
         else if(urlnum > 1) {
           /* when url globbing, exit loop upon critical error */
-          if(is_fatal_error(result))
+          if(is_fatal_Menu::error(result))
             break;
         }
         else if(result)
@@ -1939,7 +1939,7 @@ static CURLcode operate_do(struct GlobalConfig *global,
 
       if(infilenum > 1) {
         /* when file globbing, exit loop upon critical error */
-        if(is_fatal_error(result))
+        if(is_fatal_Menu::error(result))
           break;
       }
       else if(result)
@@ -1968,7 +1968,7 @@ static CURLcode operate_do(struct GlobalConfig *global,
     /*
     ** Bail out upon critical errors or --fail-early
     */
-    if(is_fatal_error(result) || (result && global->fail_early))
+    if(is_fatal_Menu::error(result) || (result && global->fail_early))
       goto quit_curl;
 
   } /* for-loop through all URLs */

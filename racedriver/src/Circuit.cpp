@@ -1,5 +1,6 @@
 //Circuit.cpp
 #include "Circuit.hh"
+#include "Menu.hh"
 
 Circuit::Circuit(const std::string& nom, const int& taille, const int& virages, const int& climat, const int& difficulte, const int& denivele) : m_nom(nom), m_taille(taille), m_virages(virages), m_meteo(Circuit::construireMeteo(climat)), m_vent(Circuit::construireVent()), m_climat(Circuit::construireClimat(climat)), m_difficulte(difficulte), m_denivele(denivele)
 {
@@ -18,7 +19,7 @@ void Circuit::chargerCircuit(const int& id, Circuit*& CircuitCourant)
 
 	if(!tracks.is_open()) //Si la lecture echoue
 	{
-		error("Echec de lecture du fichier tracks.map");
+		Menu::error("Echec de lecture du fichier tracks.map");
 	}
 	else
 	{
@@ -74,7 +75,7 @@ void Circuit::chargerCircuit(const int& id, Circuit*& CircuitCourant)
 	}
 	if(trouve == false)
 	{
-		error("Le circuit n'existe pas");
+		Menu::error("Le circuit n'existe pas");
 	}
 }
 
@@ -86,7 +87,7 @@ int Circuit::listerCircuits()
 
 	if(!tracks.is_open()) //Si la lecture echoue
 	{
-		error("Echec de lecture du fichier tracks.map"); //Le fichier ne peut être charge, on affiche une erreur
+		Menu::error("Echec de lecture du fichier tracks.map"); //Le fichier ne peut être charge, on affiche une erreur
 	}
 	else
 	{

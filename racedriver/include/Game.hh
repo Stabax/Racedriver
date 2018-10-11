@@ -13,8 +13,6 @@ public:
   Game();
   int main();
   Terminal &getTerm();
-  void error(const std::string &str);
-  void msg(const std::string &str);
   void printASCIILogo();
   void removeUpdatePackage();
   void update();

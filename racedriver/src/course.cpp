@@ -1,6 +1,7 @@
 //course.cpp
 #include <unistd.h>
-#include"course.hh"
+#include "Menu.hh"
+#include "course.hh"
 
 bool preparatifsCourse(const Circuit& Map, const Profil& Player, Voiture*& VoiturePlayer, int const& prix)
 {
@@ -11,7 +12,7 @@ bool preparatifsCourse(const Circuit& Map, const Profil& Player, Voiture*& Voitu
 	prixCourse += prix;
 	if(Player.getCredits() < prixCourse)
 	{
-		error("Vous ne disposez pas d'assez de crédits pour payer les preparatifs.");
+		Menu::error("Vous ne disposez pas d'assez de crédits pour payer les preparatifs.");
 	}
 	else
 	{
@@ -21,11 +22,11 @@ bool preparatifsCourse(const Circuit& Map, const Profil& Player, Voiture*& Voitu
 			Terminal::get().clearScreen(); //On flushe l'ancien ecran
 			if(VoiturePlayer->getNiveauNitro() < VoiturePlayer->getNitroMax())
 			{
-				msg("Attention: Votre reservoir de nitro n'est pas plein.\n");
+				Menu::msg("Attention: Votre reservoir de nitro n'est pas plein.\n");
 			}
 			if(VoiturePlayer->getDurabilitePneus() < 55)
 			{
-				msg("Attention: Pneus deteriores.\n");
+				Menu::msg("Attention: Pneus deteriores.\n");
 			}
 			Terminal::get() << "\nPreparatifs\n";
 			Terminal::get() << "====================\n";
@@ -45,7 +46,7 @@ bool preparatifsCourse(const Circuit& Map, const Profil& Player, Voiture*& Voitu
 			{
 					Terminal::get().clearScreen();
 					paye = false;
-					error("Paiement annule par l'utilisateur");
+					Menu::error("Paiement annule par l'utilisateur");
 			}
 			else
 			{
@@ -79,7 +80,7 @@ std::string randNomAdversaire()
 
 	if(!pilotestxt)
 	{
-		error("Echec de lecture du fichier pilotes.txt");
+		Menu::error("Echec de lecture du fichier pilotes.txt");
 	}
 	else
 	{
@@ -110,7 +111,7 @@ bool antiCorruption(const std::string& chemin, const int& nbLignes)
 	}
 	else
 	{
-		error("Echec de lecture du fichier");
+		Menu::error("Echec de lecture du fichier");
 	}
 
 	if(lignesTotales < nbLignes)
@@ -297,7 +298,7 @@ std::string* chargerCommentaireMeteo(const int& meteo)
 			}
 			else
 			{
-				error("Le fichier meteo.txt est corrompu. Verifiez qu'il y ait des messages pour toutes les meteos (1,2,3,4), et qu'ils soient dans l'ordre croissant.");
+				Menu::error("Le fichier meteo.txt est corrompu. Verifiez qu'il y ait des messages pour toutes les meteos (1,2,3,4), et qu'ils soient dans l'ordre croissant.");
 				ligne->erase();
 				ligne=0;
 			}
@@ -354,33 +355,33 @@ void faireCourseLibre(Circuit Map, Voiture* Player1, Profil& Player)
 {
 	if(Player1 == 0)
 	{
-		error("Vous n'avez pas de voiture disponible !");
+		Menu::error("Vous n'avez pas de voiture disponible !");
 	}
 	else if(antiCorruption("Data/console/pilotes.txt", 7) == false)
 	{
-		error("Le fichier pilotes.txt ne contient pas assez d'informations.");
+		Menu::error("Le fichier pilotes.txt ne contient pas assez d'informations.");
 	}
 	else if(antiCorruption("Data/console/accident.txt", 8) == false)
 	{
-		error("Le fichier accident.txt ne contient pas assez d'informations.");
+		Menu::error("Le fichier accident.txt ne contient pas assez d'informations.");
 	}
 	else if(Player1->getEtat() < 20)
 	{
-		error("Votre vehicule est trop endommage pour concourir.");
+		Menu::error("Votre vehicule est trop endommage pour concourir.");
 	}
 	else if(Player1->getDurabilitePneus() < 15)
 	{
-		error("Vos pneus sont trop uses pour concourir.");
+		Menu::error("Vos pneus sont trop uses pour concourir.");
 	}
 	else //Si tout va bien
 	{
 		if(Player1->getNiveauNitro() < Player1->getNitroMax())
 		{
-			msg("Attention: Votre reservoir de nitro n'est pas plein.\n");
+			Menu::msg("Attention: Votre reservoir de nitro n'est pas plein.\n");
 		}
 		if(Player1->getDurabilitePneus() < 55)
 		{
-			msg("Attention: Pneus deteriores.\n");
+			Menu::msg("Attention: Pneus deteriores.\n");
 		}
 
 		Voiture* Adversaire[7];
@@ -425,16 +426,16 @@ void faireCourseLibre(Circuit Map, Voiture* Player1, Profil& Player)
 		getch();
 
 		Terminal::get().clearScreen();
-		msg("Depart dans 3...");
+		Menu::msg("Depart dans 3...");
 		sleep(1.0f);
 		Terminal::get().clearScreen();
-		msg("Depart dans 2...");
+		Menu::msg("Depart dans 2...");
 		sleep(1.0f);
 		Terminal::get().clearScreen();
-		msg("Depart dans 1...");
+		Menu::msg("Depart dans 1...");
 		sleep(1.0f);
 		Terminal::get().clearScreen();
-		msg("GO !");
+		Menu::msg("GO !");
 		sleep(1.0f);
 
 		int score[8];
@@ -566,23 +567,23 @@ void faireCourseChampionnat(Circuit Map, Voiture* Player1, Profil& Player)
 {
 	if(Player1 == 0)
 	{
-		error("Vous n'avez pas de voiture disponible !");
+		Menu::error("Vous n'avez pas de voiture disponible !");
 	}
 	else if(antiCorruption("Data/console/pilotes.txt", 7) == false)
 	{
-		error("Le fichier pilotes.txt ne contient pas assez d'informations.");
+		Menu::error("Le fichier pilotes.txt ne contient pas assez d'informations.");
 	}
 	else if(antiCorruption("Data/console/accident.txt", 8) == false)
 	{
-		error("Le fichier pilotes.txt ne contient pas assez d'informations.");
+		Menu::error("Le fichier pilotes.txt ne contient pas assez d'informations.");
 	}
 	else if(Player1->getEtat() < 20)
 	{
-		error("Votre vehicule est trop endommage pour concourir.");
+		Menu::error("Votre vehicule est trop endommage pour concourir.");
 	}
 	else if(Player1->getDurabilitePneus() < 15)
 	{
-		error("Vos pneus sont trop uses pour concourir.");
+		Menu::error("Vos pneus sont trop uses pour concourir.");
 	}
 	else //Si tout va bien
 	{
@@ -627,16 +628,16 @@ void faireCourseChampionnat(Circuit Map, Voiture* Player1, Profil& Player)
 			Terminal::get() <<"\n\nPressez [ENTREE] pour commencer la course.\n";
 			getch();
 			Terminal::get().clearScreen();
-			msg("Depart dans 3...");
+			Menu::msg("Depart dans 3...");
 			sleep(1.0f);
 			Terminal::get().clearScreen();
-			msg("Depart dans 2...");
+			Menu::msg("Depart dans 2...");
 			sleep(1.0f);
 			Terminal::get().clearScreen();
-			msg("Depart dans 1...");
+			Menu::msg("Depart dans 1...");
 			sleep(1.0f);
 			Terminal::get().clearScreen();
-			msg("GO !");
+			Menu::msg("GO !");
 			sleep(1.0f);
 			int score[8];
 			int probaAccident[8];

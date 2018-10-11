@@ -313,7 +313,7 @@ void menuChargementPartie(Profil*& Player, bool& quit)
 	else //equivalent de default
 	{
 		Terminal::get().clearScreen(); //On flushe l'ancien ecran
-		error("Ce profil n'existe pas");
+		Menu::error("Ce profil n'existe pas");
 	}
 }
 
@@ -412,7 +412,7 @@ void menuSuppressionPartie()
 	else //equivalent de default
 	{
 		Terminal::get().clearScreen(); //On flushe l'ancien ecran
-		error("Ce profil n'existe pas");
+		Menu::error("Ce profil n'existe pas");
 	}
 }
 

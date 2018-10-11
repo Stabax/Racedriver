@@ -22,7 +22,7 @@ Spoiler* Spoiler::chargerSpoiler(const int& id)
 
 	if(!engine)
 	{
-		error("Echec de lecture du fichier spoiler.cdx");
+		Menu::error("Echec de lecture du fichier spoiler.cdx");
 	}
 	else
 	{
@@ -34,7 +34,7 @@ Spoiler* Spoiler::chargerSpoiler(const int& id)
 			}
 			else
 			{
-				error("Fichier corrompu12");
+				Menu::error("Fichier corrompu12");
 			}
 			//on utilise while(std::getline(flux, string) pour "Tant qu'il y a une ligne a lire"
 		}
@@ -63,14 +63,14 @@ Spoiler* Spoiler::chargerSpoiler(const int& id)
 			}
 			else
 			{
-				error("Fichier corompu14.");
+				Menu::error("Fichier corompu14.");
 			}
 
 			SpoilerCharge = new Spoiler(modele, rang, aerodynamisme);
 		}
 		else
 		{
-			error("Fichier corompu15.");
+			Menu::error("Fichier corompu15.");
 		}
 	}
 	return SpoilerCharge;
@@ -88,7 +88,7 @@ void Spoiler::infoSpoiler(const int& id, int& prix)
 
 	if(!engine)
 	{
-		error("Echec de lecture du fichier spoiler.cdx");
+		Menu::error("Echec de lecture du fichier spoiler.cdx");
 	}
 	else
 	{
@@ -100,7 +100,7 @@ void Spoiler::infoSpoiler(const int& id, int& prix)
 			}
 			else
 			{
-				error("Fichier corrompu18b");
+				Menu::error("Fichier corrompu18b");
 			}
 			iss.clear();
 		}
@@ -117,7 +117,7 @@ void Spoiler::infoSpoiler(const int& id, int& prix)
 		}
 		else
 		{
-			error("Fichier corompu21b.");
+			Menu::error("Fichier corompu21b.");
 		}
 	}
 }
@@ -133,7 +133,7 @@ void Spoiler::infoSpoiler(const int& id, std::string& modele, char& rang, int& a
 
 	if(!engine)
 	{
-		error("Echec de lecture du fichier spoiler.cdx");
+		Menu::error("Echec de lecture du fichier spoiler.cdx");
 	}
 	else
 	{
@@ -145,7 +145,7 @@ void Spoiler::infoSpoiler(const int& id, std::string& modele, char& rang, int& a
 			}
 			else
 			{
-				error("Fichier corrompu18b");
+				Menu::error("Fichier corrompu18b");
 			}
 			iss.clear();
 		}
@@ -170,7 +170,7 @@ void Spoiler::infoSpoiler(const int& id, std::string& modele, char& rang, int& a
 			}
 			else
 			{
-				error("Fichier corrompu ta mere");
+				Menu::error("Fichier corrompu ta mere");
 			}
 
 			prix =  vRang(rang) * 300 + id * 200;
@@ -178,7 +178,7 @@ void Spoiler::infoSpoiler(const int& id, std::string& modele, char& rang, int& a
 		}
 		else
 		{
-			error("Fichier corompu21b.");
+			Menu::error("Fichier corompu21b.");
 		}
 	}
 }

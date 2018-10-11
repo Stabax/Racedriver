@@ -23,7 +23,7 @@ Pneus* Pneus::chargerPneus(const int& id, const int& usure)
 
 	if(!engine)
 	{
-		error("Echec de lecture du fichier pneus.cdx");	
+		Menu::error("Echec de lecture du fichier pneus.cdx");	
 	}
 	else
 	{
@@ -35,7 +35,7 @@ Pneus* Pneus::chargerPneus(const int& id, const int& usure)
 			}
 			else
 			{
-				error("Fichier corrompu12");
+				Menu::error("Fichier corrompu12");
 			}
 			//on utilise while(std::getline(flux, string) pour "Tant qu'il y a une ligne a lire"
 		}
@@ -55,7 +55,7 @@ Pneus* Pneus::chargerPneus(const int& id, const int& usure)
 		}
 		else
 		{
-			error("Fichier corompu15.");
+			Menu::error("Fichier corompu15.");
 		}
 	}
 	return PneusCharge;

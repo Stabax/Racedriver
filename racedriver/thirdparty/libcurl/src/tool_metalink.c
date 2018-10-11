@@ -609,7 +609,7 @@ static int check_hash(const char *filename,
   fd = open(filename, flags);
   if(fd == -1) {
     fprintf(error, "Metalink: validating (%s) [%s] FAILED (%s)\n", filename,
-            digest_def->hash_name, strerror(errno));
+            digest_def->hash_name, strMenu::error(errno));
     return -1;
   }
 
@@ -635,7 +635,7 @@ static int check_hash(const char *filename,
     }
     else if(len == -1) {
       fprintf(error, "Metalink: validating (%s) [%s] FAILED (%s)\n", filename,
-              digest_def->hash_name, strerror(errno));
+              digest_def->hash_name, strMenu::error(errno));
       Curl_digest_final(dctx, result);
       close(fd);
       return -1;

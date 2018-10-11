@@ -3,6 +3,7 @@
 #include <libcurl/include/curl.h>
 #include <sstream>
 #include <fstream>
+#include "Menu.hh"
 #include "Game.hh"
 #include "menusPrincipaux.hh"
 
@@ -28,11 +29,6 @@ int Game::main()
 	return 0;
 }
 
-Terminal &Game::getTerm()
-{
-	return (_term);
-}
-
 void Game::printASCIILogo()
 {
 	_term << " ________                  ________       _____                    \n"
@@ -40,18 +36,6 @@ void Game::printASCIILogo()
 				<< " __  /_/ /  __ `/  ___/  _ \\_  / / /_  ___/_  /__ | / /  _ \\_  ___/\n"
 				<< " _  _, _// /_/ // /__ /  __/  /_/ /_  /   _  / __ |/ //  __/  /\n"
 				<< " /_/ |_| \\__,_/ \\___/ \\___//_____/ /_/    /_/  _____/ \\___//_/\n";
-}
-
-void Game::error(const std::string &str)
-{
-	msg("ERREUR: "+str);
-}
-
-void Game::msg(const std::string &str)
-{
-	_term << "::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::\n"
-	      << ":: " << str << "\n"
-	      << "::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::\n\n";
 }
 
 void Game::removeUpdatePackage()
@@ -66,7 +50,7 @@ void Game::update()
 	if(!config)
 	{
 		Terminal::get().clearScreen();
-		error("Echec de lecture du fichier de configuration config.ini.");
+		Menu::error("Echec de lecture du fichier de configuration config.ini.");
 		_term << ">La verification de la derniere version ne peut être effectuee.\n"
 		      << ">Vous allez jouer avec une version potentiellement obsolete de Racedriver.\n"
 	      	<< ">Appuyez sur [ENTREE] pour continuer.\n";
@@ -89,7 +73,7 @@ void Game::update()
 	if(version.size() < 3 || version.size() > 5 || (OS != 1 && OS != 0) || version.find_first_of(".") != 1)
 	{
 		Terminal::get().clearScreen();
-		error("Fichier de configuration corompu");
+		Menu::error("Fichier de configuration corompu");
 		_term << ">La verification de la derniere version ne peut être effectuee.\n"
 		      << ">Vous allez jouer avec une version potentiellement obsolete de Racedriver.\n"
 		      << ">Appuyez sur [ENTREE] pour continuer.\n";
@@ -126,7 +110,7 @@ void Game::update()
 	if(CURLE_OK != resVersion)
 	{
 		//echec du telechargement
-		error("La recuperation du fichier de mise a jour a echoue. Verifiez votre connexion.");
+		Menu::error("La recuperation du fichier de mise a jour a echoue. Verifiez votre connexion.");
 		_term << ">La lecture du fichier de mise a jour est impossible.\n"
 		      << ">Vous jouerez avec une version potentiellement obsolete de Racedriver.\n"
 		      << ">Appuyez sur [ENTREE] pour continuer.\n";
@@ -143,7 +127,7 @@ void Game::update()
 		char choix = 'x';
 		while(choix != 'O' && choix != 'o' && choix != 'N' && choix != 'n')
 		{
-			msg("Votre client est obsolete, une mise a jour est disponible !");
+			Menu::msg("Votre client est obsolete, une mise a jour est disponible !");
 			_term << "Souhaitez vous telecharger la derniere version de Racedriver ? [O/n]\n";
 			choix = static_cast<char>(std::getchar());
 		}
@@ -182,13 +166,13 @@ void Game::update()
 		//echec du dl
 		if(CURLE_OK != resUpdate)
 		{
-			error("Le telechargement de la mise a jour a echoue.");
+			Menu::error("Le telechargement de la mise a jour a echoue.");
 			_term <<">Vous jouerez avec une version obsolete de Racedriver.\n"
 			      <<">Appuyez sur [ENTREE] pour continuer.\n";
 			getch();
 			return;
 		}
-		msg("Le client a ete mis a jour avec succes !");
+		Menu::msg("Le client a ete mis a jour avec succes !");
 		_term << ">Vous devez redemmarer le launcher pour appliquer les modifications.\n";
 		if(OS == 0) //Si on est sur linux... car windows n'a pas install.sh
 		{
@@ -202,7 +186,7 @@ void Game::update()
 		OS == 0 ? execl("Update/unpack", "unpack", "-qq", "-o", "Update/update.zip", NULL) : execl("Update/unpack.exe", "unpack.exe", "-qq", "-o", "Update/update.zip", NULL);
 		//le programme se termine ici grace à l'apel à execl()
 	}
-	msg("Le client est a jour !");
+	Menu::msg("Le client est a jour !");
 	_term << ">Appuyez sur [Entree] pour continuer.\n";
 	getch();
 }

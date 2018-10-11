@@ -27,7 +27,7 @@ Voiture* Voiture::chargerVoiture(const int& id, const char& rangCharge)
 
 	if(!engine)
 	{
-		error("Echec de lecture du fichier "+sRang+".cdx");
+		Menu::error("Echec de lecture du fichier "+sRang+".cdx");
 	}
 	else
 	{
@@ -41,7 +41,7 @@ Voiture* Voiture::chargerVoiture(const int& id, const char& rangCharge)
 			}
 			else
 			{
-				error("Fichier corrompu1a.");
+				Menu::error("Fichier corrompu1a.");
 			}
 			iss.clear();
 		}
@@ -89,7 +89,7 @@ Voiture* Voiture::chargerVoiture(const int& id, const char& rangCharge)
 			}
 			else
 			{
-				error("Fichier corrompu1b.");
+				Menu::error("Fichier corrompu1b.");
 			}
 			iss.clear();
 			iss.str(sIdSpoiler);
@@ -98,7 +98,7 @@ Voiture* Voiture::chargerVoiture(const int& id, const char& rangCharge)
 			}
 			else
 			{
-				error("Fichier corrompu2.");
+				Menu::error("Fichier corrompu2.");
 			}
 			iss.clear();
 			iss.str(sIdPriseAir);
@@ -107,7 +107,7 @@ Voiture* Voiture::chargerVoiture(const int& id, const char& rangCharge)
 			}
 			else
 			{
-				error("Fichier corrompu3.");
+				Menu::error("Fichier corrompu3.");
 			}
 			iss.clear();
 			iss.str(sNitroMax);
@@ -116,7 +116,7 @@ Voiture* Voiture::chargerVoiture(const int& id, const char& rangCharge)
 			}
 			else
 			{
-				error("Fichier corrompu4.");
+				Menu::error("Fichier corrompu4.");
 			}
 			iss.clear();
 			iss.str(sAerodynamisme);
@@ -125,14 +125,14 @@ Voiture* Voiture::chargerVoiture(const int& id, const char& rangCharge)
 			}
 			else
 			{
-				error("Fichier corrompu4.");
+				Menu::error("Fichier corrompu4.");
 			}
 			iss.clear();
 			VoitureCharge = new Voiture(marque, modele, idMoteur, idSpoiler, idPriseAir, rangCharge, nitroMax, aerodynamisme, 1);
 		}
 		else
 		{
-			error("Fichier corrompu.");
+			Menu::error("Fichier corrompu.");
 		}
 	}
 	return VoitureCharge;
@@ -222,7 +222,7 @@ void Voiture::listerVoitures(const char& rang)
 			}
 			else
 			{
-				error("Fichier corrompu9.");
+				Menu::error("Fichier corrompu9.");
 			}
 			iss.clear();
 			iss.str(sAerodynamisme);
@@ -231,7 +231,7 @@ void Voiture::listerVoitures(const char& rang)
 			}
 			else
 			{
-				error("Fichier corrompu10.");
+				Menu::error("Fichier corrompu10.");
 			}
 			iss.clear();
 			iss.str(sIdMoteur);
@@ -240,7 +240,7 @@ void Voiture::listerVoitures(const char& rang)
 			}
 			else
 			{
-				error("Fichier corrompu11.");
+				Menu::error("Fichier corrompu11.");
 			}
 			Moteur::infoMoteur(idMoteur, marque, prixMoteur);
 			int prix = roundf( (prixMoteur + 0 + 0 + 0 )  *0.85+ (( aerodynamisme + nitroMax ) * 100)+ (( vRang(rang) - 1 ) * 20000));
@@ -271,14 +271,14 @@ int Voiture::compterVoitures(const char& rang)
 			}
 			else
 			{
-				error("Fichier corrompu6");
+				Menu::error("Fichier corrompu6");
 			}
 			//on utilise while(std::getline(flux, string) pour "Tant qu'il y a une ligne a lire"
 		}
 	}
 	else
 	{
-		error("Fichier corrompu7");
+		Menu::error("Fichier corrompu7");
 	}
 	return nbVoiture;
 }
@@ -294,7 +294,7 @@ void Voiture::infoVoiture(const int& id, const char& rang, std::string& marque, 
 
 	if(!engine)
 	{
-		error("Echec de lecture du fichier "+sRang+".cdx");
+		Menu::error("Echec de lecture du fichier "+sRang+".cdx");
 	}
 	else
 	{
@@ -307,7 +307,7 @@ void Voiture::infoVoiture(const int& id, const char& rang, std::string& marque, 
 			}
 			else
 			{
-				error("Fichier corrompu8");
+				Menu::error("Fichier corrompu8");
 			}
 		}
 		if(idActuel==id)
@@ -339,7 +339,7 @@ void Voiture::infoVoiture(const int& id, const char& rang, std::string& marque, 
 			}
 			else
 			{
-				error("Fichier corrompu9.");
+				Menu::error("Fichier corrompu9.");
 			}
 			iss.clear();
 			iss.str(sAerodynamisme);
@@ -348,7 +348,7 @@ void Voiture::infoVoiture(const int& id, const char& rang, std::string& marque, 
 			}
 			else
 			{
-				error("Fichier corrompu10.");
+				Menu::error("Fichier corrompu10.");
 			}
 			iss.clear();
 			iss.str(sIdMoteur);
@@ -357,7 +357,7 @@ void Voiture::infoVoiture(const int& id, const char& rang, std::string& marque, 
 			}
 			else
 			{
-				error("Fichier corrompu11.");
+				Menu::error("Fichier corrompu11.");
 			}
 			Moteur::infoMoteur(idMoteur, marque, nomMoteur);
 			int prixMoteur=0;
@@ -366,7 +366,7 @@ void Voiture::infoVoiture(const int& id, const char& rang, std::string& marque, 
 		}
 		else
 		{
-			error("Fichier corrompu12.");
+			Menu::error("Fichier corrompu12.");
 		}
 	}
 }

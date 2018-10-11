@@ -31,7 +31,7 @@
 
 #include "memdebug.h" /* keep this as LAST include */
 
-#define GLOBERROR(string, column, code) \
+#define GLOBMenu::error(string, column, code) \
   glob->error = string, glob->pos = column, code
 
 static CURLcode glob_fixed(URLGlob *glob, char *fixed, size_t len)
@@ -45,11 +45,11 @@ static CURLcode glob_fixed(URLGlob *glob, char *fixed, size_t len)
   pat->content.Set.elements = malloc(sizeof(char *));
 
   if(!pat->content.Set.elements)
-    return GLOBERROR("out of memory", 0, CURLE_OUT_OF_MEMORY);
+    return GLOBMenu::error("out of memory", 0, CURLE_OUT_OF_MEMORY);
 
   pat->content.Set.elements[0] = malloc(len + 1);
   if(!pat->content.Set.elements[0])
-    return GLOBERROR("out of memory", 0, CURLE_OUT_OF_MEMORY);
+    return GLOBMenu::error("out of memory", 0, CURLE_OUT_OF_MEMORY);
 
   memcpy(pat->content.Set.elements[0], fixed, len);
   pat->content.Set.elements[0][len] = 0;
@@ -99,20 +99,20 @@ static CURLcode glob_set(URLGlob *glob, char **patternp,
   while(!done) {
     switch (*pattern) {
     case '\0':                  /* URL ended while set was still open */
-      return GLOBERROR("unmatched brace", opos, CURLE_URL_MALFORMAT);
+      return GLOBMenu::error("unmatched brace", opos, CURLE_URL_MALFORMAT);
 
     case '{':
     case '[':                   /* no nested expressions at this time */
-      return GLOBERROR("nested brace", *posp, CURLE_URL_MALFORMAT);
+      return GLOBMenu::error("nested brace", *posp, CURLE_URL_MALFORMAT);
 
     case '}':                           /* set element completed */
       if(opattern == pattern)
-        return GLOBERROR("empty string within braces", *posp,
+        return GLOBMenu::error("empty string within braces", *posp,
                          CURLE_URL_MALFORMAT);
 
       /* add 1 to size since it'll be incremented below */
       if(multiply(amount, pat->content.Set.size + 1))
-        return GLOBERROR("range overflow", 0, CURLE_URL_MALFORMAT);
+        return GLOBMenu::error("range overflow", 0, CURLE_URL_MALFORMAT);
 
       /* FALLTHROUGH */
     case ',':
@@ -122,7 +122,7 @@ static CURLcode glob_set(URLGlob *glob, char **patternp,
         char **new_arr = realloc(pat->content.Set.elements,
                                  (pat->content.Set.size + 1) * sizeof(char *));
         if(!new_arr)
-          return GLOBERROR("out of memory", 0, CURLE_OUT_OF_MEMORY);
+          return GLOBMenu::error("out of memory", 0, CURLE_OUT_OF_MEMORY);
 
         pat->content.Set.elements = new_arr;
       }
@@ -130,12 +130,12 @@ static CURLcode glob_set(URLGlob *glob, char **patternp,
         pat->content.Set.elements = malloc(sizeof(char *));
 
       if(!pat->content.Set.elements)
-        return GLOBERROR("out of memory", 0, CURLE_OUT_OF_MEMORY);
+        return GLOBMenu::error("out of memory", 0, CURLE_OUT_OF_MEMORY);
 
       pat->content.Set.elements[pat->content.Set.size] =
         strdup(glob->glob_buffer);
       if(!pat->content.Set.elements[pat->content.Set.size])
-        return GLOBERROR("out of memory", 0, CURLE_OUT_OF_MEMORY);
+        return GLOBMenu::error("out of memory", 0, CURLE_OUT_OF_MEMORY);
       ++pat->content.Set.size;
 
       if(*pattern == '}') {
@@ -150,7 +150,7 @@ static CURLcode glob_set(URLGlob *glob, char **patternp,
       break;
 
     case ']':                           /* illegal closing bracket */
-      return GLOBERROR("unexpected close bracket", *posp, CURLE_URL_MALFORMAT);
+      return GLOBMenu::error("unexpected close bracket", *posp, CURLE_URL_MALFORMAT);
 
     case '\\':                          /* escaped character, skip '\' */
       if(pattern[1]) {
@@ -222,7 +222,7 @@ static CURLcode glob_range(URLGlob *glob, char **patternp,
        (min_c != max_c && (min_c > max_c || step > (unsigned)(max_c - min_c) ||
                            (max_c - min_c) > ('z' - 'a'))))
       /* the pattern is not well-formed */
-      return GLOBERROR("bad range", *posp, CURLE_URL_MALFORMAT);
+      return GLOBMenu::error("bad range", *posp, CURLE_URL_MALFORMAT);
 
     /* if there was a ":[num]" thing, use that as step or else use 1 */
     pat->content.CharRange.step = (int)step;
@@ -232,7 +232,7 @@ static CURLcode glob_range(URLGlob *glob, char **patternp,
     if(multiply(amount, ((pat->content.CharRange.max_c -
                           pat->content.CharRange.min_c) /
                          pat->content.CharRange.step + 1)))
-      return GLOBERROR("range overflow", *posp, CURLE_URL_MALFORMAT);
+      return GLOBMenu::error("range overflow", *posp, CURLE_URL_MALFORMAT);
   }
   else if(ISDIGIT(*pattern)) {
     /* numeric range detected */
@@ -299,7 +299,7 @@ static CURLcode glob_range(URLGlob *glob, char **patternp,
        (min_n == max_n && step_n != 1) ||
        (min_n != max_n && (min_n > max_n || step_n > (max_n - min_n))))
       /* the pattern is not well-formed */
-      return GLOBERROR("bad range", *posp, CURLE_URL_MALFORMAT);
+      return GLOBMenu::error("bad range", *posp, CURLE_URL_MALFORMAT);
 
     /* typecasting to ints are fine here since we make sure above that we
        are within 31 bits */
@@ -310,10 +310,10 @@ static CURLcode glob_range(URLGlob *glob, char **patternp,
     if(multiply(amount, ((pat->content.NumRange.max_n -
                           pat->content.NumRange.min_n) /
                          pat->content.NumRange.step + 1)))
-      return GLOBERROR("range overflow", *posp, CURLE_URL_MALFORMAT);
+      return GLOBMenu::error("range overflow", *posp, CURLE_URL_MALFORMAT);
   }
   else
-    return GLOBERROR("bad range specification", *posp, CURLE_URL_MALFORMAT);
+    return GLOBMenu::error("bad range specification", *posp, CURLE_URL_MALFORMAT);
 
   *patternp = pattern;
   return CURLE_OK;
@@ -379,7 +379,7 @@ static CURLcode glob_parse(URLGlob *glob, char *pattern,
         break;
       }
       if(*pattern == '}' || *pattern == ']')
-        return GLOBERROR("unmatched close brace/bracket", pos,
+        return GLOBMenu::error("unmatched close brace/bracket", pos,
                          CURLE_URL_MALFORMAT);
 
       /* only allow \ to escape known "special letters" */
@@ -422,7 +422,7 @@ static CURLcode glob_parse(URLGlob *glob, char *pattern,
     }
 
     if(++glob->size >= GLOB_PATTERN_NUM)
-      return GLOBERROR("too many globs", pos, CURLE_URL_MALFORMAT);
+      return GLOBMenu::error("too many globs", pos, CURLE_URL_MALFORMAT);
   }
   return res;
 }

@@ -7,6 +7,7 @@
 #include "Profil.hh"
 #include "Circuit.hh"
 #include "course.hh"
+#include"Game.hh"
 
 Voiture* menuChoixVoiture(Profil& Player);
 

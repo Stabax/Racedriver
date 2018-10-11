@@ -10,6 +10,7 @@
 
 #include "fonctions.hh"
 #include"algos.hh"
+#include"Game.hh"
 
 
 class Moteur

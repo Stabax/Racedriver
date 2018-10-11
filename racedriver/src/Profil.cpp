@@ -63,7 +63,7 @@ void Profil::listerSauvegardes()
 			{
 				getline(fichier, nomProfil);
 			}
-			std::cout << i << ". Profil " << i << ": " << nomProfil << "\n";
+			Game::instance->getTerm() << i << ". Profil " << i << ": " << nomProfil << "\n";
 			i++; // on incremente
 		}
 		else
@@ -71,7 +71,7 @@ void Profil::listerSauvegardes()
 			ouvert = false;
 		}
 	}while(ouvert);
-	std::cout << "\n"; // on separe le bloc de profils du choix annuler
+	Game::instance->getTerm() << "\n"; // on separe le bloc de profils du choix annuler
 }
 
 int Profil::compterSauvegardes()
@@ -140,7 +140,7 @@ bool Profil::chargerProfil(const int& numeroSave, Profil*& ProfilCharge)
 		//On assigne les valeurs aux différents hashs.
 		getline(lockFichier, stringLockLock); //On recupere le contenu dans le lock
 
-		std::cout << saveContent;
+		Game::instance->getTerm() << saveContent;
 		stringSaveLock = getHashFromFile(cheminFichier); //On recupere le hash du fichier
 
 		if(stringSaveLock != stringLockLock) //On compare
@@ -426,13 +426,13 @@ void Profil::supprimerProfil(const int& numeroSave)
 	cheminLock = "Saves/Profil" + numeroProfil + ".lock";
 	if(remove(cheminFichier.c_str()))
 	{
-		clrscreen();
+		Game::instance->getTerm().clearScreen();
 		error("Impossible de supprimer le profil");
 		fail = true;
 	}
 	if(remove(cheminLock.c_str()))
 	{
-		clrscreen();
+		Game::instance->getTerm().clearScreen();
 		error("Impossible de supprimer le verrou du profil");
 		fail = true;
 	}
@@ -455,14 +455,14 @@ void Profil::supprimerProfil(const int& numeroSave)
 			test = rename(cheminFichier.c_str(), newCheminFichier.c_str()); //On decale toutes les saves d'un cran
 			if(test == 1)
 			{
-				clrscreen();
+				Game::instance->getTerm().clearScreen();
 				error("Impossible de renommer les profils suivants.");
 				fail = true;
 			}
 			test = rename(cheminLock.c_str(), newCheminLock.c_str()); //On decale tous les locks d'un cran
 			if(test == 1)
 			{
-				clrscreen();
+				Game::instance->getTerm().clearScreen();
 				error("Impossible de renommer les verrous des profils suivants.");
 				fail = true;
 			}
@@ -470,7 +470,7 @@ void Profil::supprimerProfil(const int& numeroSave)
 	}
 	if(fail == false)
 	{
-		clrscreen();
+		Game::instance->getTerm().clearScreen();
 		msg("Profil"+numeroProfil+" supprime avec succes !");
 	}
 }
@@ -544,11 +544,11 @@ void Profil::creerProfil(std::string& nom, Profil*& ProfilCree)
 
 	std::string uuid = generateUuid(); //On génére un identifiant unique au profil.
 	ProfilCree = new Profil(uuid, numeroSave, nom); //On construit le profil cree (la partie boost est la conversion en string de l'uuid)
-	std::cout << "Creation de votre Profil\n";
-	std::cout << "===============\n\n";
-	std::cout << "Profil" << numeroSave << " cree avec succes !\n";
-	std::cout << "===============\n";
-	std::cout << "Appuyez sur Entree pour continuer...\n";
+	Game::instance->getTerm() << "Creation de votre Profil\n";
+	Game::instance->getTerm() << "===============\n\n";
+	Game::instance->getTerm() << "Profil" << numeroSave << " cree avec succes !\n";
+	Game::instance->getTerm() << "===============\n";
+	Game::instance->getTerm() << "Appuyez sur Entree pour continuer...\n";
 	videKBuffer();
 }
 

@@ -148,7 +148,7 @@ void Voiture::listerVoitures(const char& rang)
 	if(flux)
 	{
 		int curseur;
-		std::cout<<"   |Marque   |Modele     |Capacite nitro  |Aerodynamisme  |Prix  |\n\n";
+		Game::instance->getTerm() <<"   |Marque   |Modele     |Capacite nitro  |Aerodynamisme  |Prix  |\n\n";
 		while(std::getline(flux, var))
 		{
 			curseur=var.find_first_of(";");
@@ -244,7 +244,7 @@ void Voiture::listerVoitures(const char& rang)
 			}
 			Moteur::infoMoteur(idMoteur, marque, prixMoteur);
 			int prix = roundf( (prixMoteur + 0 + 0 + 0 )  *0.85+ (( aerodynamisme + nitroMax ) * 100)+ (( vRang(rang) - 1 ) * 20000));
-			std::cout<< id << "." << espace5 << marque << espace1 << modele << espace2 << ssNitroMax << espace3 << ssAerodynamisme << espace4 << prix << "c\n";
+			Game::instance->getTerm() << id << "." << espace5 << marque << espace1 << modele << espace2 << ssNitroMax << espace3 << ssAerodynamisme << espace4 << prix << "c\n";
 		}
 	}
 }

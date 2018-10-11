@@ -10,49 +10,44 @@ void menuRacedriver()
 
 	while(quit != true)
 	{
-		std::cout << " ________                  ________       _____                    \n";
-		std::cout << " ___  __ \\_____ ______________  __ \\_________(_)__   ______________\n";
-		std::cout << " __  /_/ /  __ `/  ___/  _ \\_  / / /_  ___/_  /__ | / /  _ \\_  ___/\n";
-		std::cout << " _  _, _// /_/ // /__ /  __/  /_/ /_  /   _  / __ |/ //  __/  /    \n";
-		std::cout << " /_/ |_| \\__,_/ \\___/ \\___//_____/ /_/    /_/  _____/ \\___//_/     \n";
-		std::cout << "[" << GAME_VERSION << "]\n\n";
+		Game::instance->printASCIILogo();
+		Game::instance->getTerm() << "[" << GAME_VERSION << "]\n\n";
 		//Menu Principal
-		std::cout << "Menu principal\n";
-		std::cout << "===============\n\n";
-		std::cout << "1. Continuer partie\n";
-		std::cout << "2. Nouvelle partie\n";
-		std::cout << "3. Supprimer profils\n\n";
-		std::cout << "4. A Propos\n";
-		std::cout << "0. Quitter\n";
-		std::cout << "===============\n";
-		std::cout << "Choix ? ";
-		std::cin >> menu; // l'utilisateur entre le menu qu'il souhaite ouvrir
-		videKBuffer();
+		Game::instance->getTerm() << "Menu principal\n";
+		Game::instance->getTerm() << "===============\n\n";
+		Game::instance->getTerm() << "1. Continuer partie\n";
+		Game::instance->getTerm() << "2. Nouvelle partie\n";
+		Game::instance->getTerm() << "3. Supprimer profils\n\n";
+		Game::instance->getTerm() << "4. A Propos\n";
+		Game::instance->getTerm() << "0. Quitter\n";
+		Game::instance->getTerm() << "===============\n";
+		Game::instance->getTerm() << "Choix ? ";
+		menu = getch(); // l'utilisateur entre le menu qu'il souhaite ouvrir
 		//Redirection de l'utilisateur selon son choix grâce a un switch.
 		switch(menu)
 		{
 			case '0':
-				clrscreen(); //On flushe l'ancien ecran
+				Game::instance->getTerm().clearScreen(); //On flushe l'ancien ecran
 				quit = true;
 				break;
 			case '1':
-				clrscreen(); //On flushe l'ancien ecran
+				Game::instance->getTerm().clearScreen(); //On flushe l'ancien ecran
 				menuChargementPartie(Player, quit);
 				break;
 			case '2':
-				clrscreen(); //On flushe l'ancien ecran
+				Game::instance->getTerm().clearScreen(); //On flushe l'ancien ecran
 				menuCreationPartie(Player, quit);
 				break;
 			case '3':
-				clrscreen(); //On flushe l'ancien ecran
+				Game::instance->getTerm().clearScreen(); //On flushe l'ancien ecran
 				menuSuppressionPartie();
 				break;
 			case '4':
-				clrscreen(); //On flushe l'ancien ecran
+				Game::instance->getTerm().clearScreen(); //On flushe l'ancien ecran
 				menuApropos();
 				break;
 			default:
-				clrscreen(); //On flushe l'ancien ecran
+				Game::instance->getTerm().clearScreen(); //On flushe l'ancien ecran
 				saisieInvalide();
 				break;
 		}
@@ -69,47 +64,46 @@ void menuJeu(Profil& Player, bool& quitGame)
 	std::ostringstream oss;
 	std::string numeroProfil;
 
-	clrscreen();
+	Game::instance->getTerm().clearScreen();
 	while(quit != true)
 	{
 		if(!Player.getSauvegardeAuto())
 		{
-			std::cout << "Menu Jeu\n";
-			std::cout << "===============\n\n";
-			std::cout << "1. Course\n\n";
-			std::cout << "2. Garage\n";
-			std::cout << "3. Concessionaire\n";
-			std::cout << "4. Stats\n\n";
-			std::cout << "5. Sauvegarder\n";
-			std::cout << "6. Options\n";
-			std::cout << "7. Menu Principal\n\n";
-			std::cout << "0. Quitter\n";
-			std::cout << "===============\n";
-			std::cout << "Choix ? ";
+			Game::instance->getTerm() << "Menu Jeu\n";
+			Game::instance->getTerm() << "===============\n\n";
+			Game::instance->getTerm() << "1. Course\n\n";
+			Game::instance->getTerm() << "2. Garage\n";
+			Game::instance->getTerm() << "3. Concessionaire\n";
+			Game::instance->getTerm() << "4. Stats\n\n";
+			Game::instance->getTerm() << "5. Sauvegarder\n";
+			Game::instance->getTerm() << "6. Options\n";
+			Game::instance->getTerm() << "7. Menu Principal\n\n";
+			Game::instance->getTerm() << "0. Quitter\n";
+			Game::instance->getTerm() << "===============\n";
+			Game::instance->getTerm() << "Choix ? ";
 		}
 		else
 		{
-			std::cout << "Menu Jeu\n";
-			std::cout << "===============\n\n";
-			std::cout << "1. Course\n\n";
-			std::cout << "2. Garage\n";
-			std::cout << "3. Concessionaire\n";
-			std::cout << "4. Stats\n\n";
-			std::cout << "5. Options\n";
-			std::cout << "6. Menu Principal\n\n";
-			std::cout << "0. Quitter\n";
-			std::cout << "===============\n";
-			std::cout << "Choix ? ";
+			Game::instance->getTerm() << "Menu Jeu\n";
+			Game::instance->getTerm() << "===============\n\n";
+			Game::instance->getTerm() << "1. Course\n\n";
+			Game::instance->getTerm() << "2. Garage\n";
+			Game::instance->getTerm() << "3. Concessionaire\n";
+			Game::instance->getTerm() << "4. Stats\n\n";
+			Game::instance->getTerm() << "5. Options\n";
+			Game::instance->getTerm() << "6. Menu Principal\n\n";
+			Game::instance->getTerm() << "0. Quitter\n";
+			Game::instance->getTerm() << "===============\n";
+			Game::instance->getTerm() << "Choix ? ";
 		}
-		std::cin >> menu; // l'utilisateur entre le menu qu'il souhaite ouvrir
-		videKBuffer();
+		menu = getch(); // l'utilisateur entre le menu qu'il souhaite ouvrir
 		//Redirection de l'utilisateur selon son choix grâce a un switch.
 		switch(menu)
 		{
 			case '0':
 			{
 				oss.str("");
-				clrscreen(); //On flushe l'ancien ecran
+				Game::instance->getTerm().clearScreen(); //On flushe l'ancien ecran
 				oss << Player.getNumero();      // on insere le int dans le stream oss
 				numeroProfil = oss.str(); // range le int dans la variable numeroSave
 				std::ifstream fichier("Saves/Profil"+numeroProfil+".save");
@@ -122,12 +116,11 @@ void menuJeu(Profil& Player, bool& quitGame)
 						while(quitVerify != true) // Boucle de confirmation
 						{
 							char verification;
-							std::cout << "/!\\ Attention ! /!\\\n";
-							std::cout << "====================\n";
-							std::cout << "Voulez vous sauvegarder votre partie ? [O/n]\n\n";
-							std::cout << "====================\n";
-							std::cin >> verification;
-							videKBuffer();
+							Game::instance->getTerm() << "/!\\ Attention ! /!\\\n";
+							Game::instance->getTerm() << "====================\n";
+							Game::instance->getTerm() << "Voulez vous sauvegarder votre partie ? [O/n]\n\n";
+							Game::instance->getTerm() << "====================\n";
+							verification = getch();
 							if(verification == 'o' || verification == 'O')
 							{
 								Player.sauvegarderProfil();
@@ -139,7 +132,7 @@ void menuJeu(Profil& Player, bool& quitGame)
 							}
 							else
 							{
-								clrscreen();
+								Game::instance->getTerm().clearScreen();
 								saisieInvalide();
 							}
 						}
@@ -150,23 +143,23 @@ void menuJeu(Profil& Player, bool& quitGame)
 			}
 			break;
 			case '1':
-				clrscreen(); //On flushe l'ancien ecran
+				Game::instance->getTerm().clearScreen(); //On flushe l'ancien ecran
 				menuCourse(Player);
 				break;
 			case '2':
-				clrscreen(); //On flushe l'ancien ecran
+				Game::instance->getTerm().clearScreen(); //On flushe l'ancien ecran
 				menuGarage(Player);
 				break;
 			case '3':
-				clrscreen(); //On flushe l'ancien ecran
+				Game::instance->getTerm().clearScreen(); //On flushe l'ancien ecran
 				menuConcessionaire(Player);
 				break;
 			case '4':
-				clrscreen(); //On flushe l'ancien ecran
+				Game::instance->getTerm().clearScreen(); //On flushe l'ancien ecran
 				menuStats(Player);
 				break;
 			case '5':
-				clrscreen(); //On flushe l'ancien ecran
+				Game::instance->getTerm().clearScreen(); //On flushe l'ancien ecran
 				if(Player.getSauvegardeAuto())
 				{
 					menuOptions(Player);
@@ -175,15 +168,15 @@ void menuJeu(Profil& Player, bool& quitGame)
 				{
 					menuSauvegarde(Player);
 				}
-				clrscreen();
+				Game::instance->getTerm().clearScreen();
 				break;
 			case '6':
 			{
-				clrscreen(); //On flushe l'ancien ecran
+				Game::instance->getTerm().clearScreen(); //On flushe l'ancien ecran
 				if(Player.getSauvegardeAuto())
 				{
 					oss.str("");
-					clrscreen(); //On flushe l'ancien ecran
+					Game::instance->getTerm().clearScreen(); //On flushe l'ancien ecran
 					oss << Player.getNumero();      // on insere le int dans le stream oss
 					numeroProfil = oss.str(); // range le int dans la variable numeroSave
 					std::ifstream fichier("Saves/Profil"+numeroProfil+".save");
@@ -196,12 +189,11 @@ void menuJeu(Profil& Player, bool& quitGame)
 							while(quitVerify != true) // Boucle de confirmation
 							{
 								char verification;
-								std::cout << "/!\\ Attention ! /!\\\n";
-								std::cout << "====================\n";
-								std::cout << "Voulez vous sauvegarder votre partie ? [O/n]\n\n";
-								std::cout << "====================\n";
-								std::cin >> verification;
-								videKBuffer();
+								Game::instance->getTerm() << "/!\\ Attention ! /!\\\n";
+								Game::instance->getTerm() << "====================\n";
+								Game::instance->getTerm() << "Voulez vous sauvegarder votre partie ? [O/n]\n\n";
+								Game::instance->getTerm() << "====================\n";
+								verification = getch();
 								if(verification == 'o' || verification == 'O')
 								{
 									Player.sauvegarderProfil();
@@ -213,7 +205,7 @@ void menuJeu(Profil& Player, bool& quitGame)
 								}
 								else
 								{
-									clrscreen();
+									Game::instance->getTerm().clearScreen();
 									saisieInvalide();
 								}
 							}
@@ -225,7 +217,7 @@ void menuJeu(Profil& Player, bool& quitGame)
 				{
 					menuOptions(Player);
 				}
-				clrscreen();
+				Game::instance->getTerm().clearScreen();
 				break;
 			}
 			case '7':
@@ -237,7 +229,7 @@ void menuJeu(Profil& Player, bool& quitGame)
 				else
 				{
 					oss.str("");
-					clrscreen(); //On flushe l'ancien ecran
+					Game::instance->getTerm().clearScreen(); //On flushe l'ancien ecran
 					oss << Player.getNumero();      // on insere le int dans le stream oss
 					numeroProfil = oss.str(); // range le int dans la variable numeroSave
 					std::ifstream fichier("Saves/Profil"+numeroProfil+".save");
@@ -250,12 +242,11 @@ void menuJeu(Profil& Player, bool& quitGame)
 							while(quitVerify != true) // Boucle de confirmation
 							{
 								char verification = 'x';
-								std::cout << "/!\\ Attention ! /!\\\n";
-								std::cout << "====================\n";
-								std::cout << "Voulez vous sauvegarder votre partie ? [O/n]\n\n";
-								std::cout << "====================\n";
-								std::cin >> verification;
-								videKBuffer();
+								Game::instance->getTerm() << "/!\\ Attention ! /!\\\n";
+								Game::instance->getTerm() << "====================\n";
+								Game::instance->getTerm() << "Voulez vous sauvegarder votre partie ? [O/n]\n\n";
+								Game::instance->getTerm() << "====================\n";
+								verification = getch();
 								if(verification == 'o' || verification == 'O')
 								{
 									Player.sauvegarderProfil();
@@ -267,7 +258,7 @@ void menuJeu(Profil& Player, bool& quitGame)
 								}
 								else
 								{
-									clrscreen();
+									Game::instance->getTerm().clearScreen();
 									saisieInvalide();
 								}
 							}
@@ -275,11 +266,11 @@ void menuJeu(Profil& Player, bool& quitGame)
 					}
 					quit = true;
 				}
-				clrscreen();
+				Game::instance->getTerm().clearScreen();
 			}
 			break;
 			default:
-				clrscreen(); //On flushe l'ancien ecran
+				Game::instance->getTerm().clearScreen(); //On flushe l'ancien ecran
 				saisieInvalide();
 				break;
 		}
@@ -293,16 +284,15 @@ void menuChargementPartie(Profil*& Player, bool& quit)
 	bool etat; //stocke le resultat du chargement
 	std::string nom;
 	//Menu Chargement profil
-	std::cout << "Charger un Profil: \n";
-	std::cout << "===============\n";
-	std::cout << "Selectionnez un profil a charger.\n";
-	std::cout << "===============\n\n";
+	Game::instance->getTerm() << "Charger un Profil: \n";
+	Game::instance->getTerm() << "===============\n";
+	Game::instance->getTerm() << "Selectionnez un profil a charger.\n";
+	Game::instance->getTerm() << "===============\n\n";
 	Profil::listerSauvegardes();
-	std::cout << "0. Annuler\n";
-	std::cout << "===============\n";
-	std::cout << "Choix ?";
-	std::cin >> sMenu; // l'utilisateur entre le menu qu'il souhaite ouvrir
-	videKBuffer();
+	Game::instance->getTerm() << "0. Annuler\n";
+	Game::instance->getTerm() << "===============\n";
+	Game::instance->getTerm() << "Choix ?";
+	menu = getch(); // l'utilisateur entre le menu qu'il souhaite ouvrir
 	std::istringstream iss;
 
 	iss.str(sMenu); // On extrait la taille du circuit et on le stocke dans la variable de conversion "iss1".
@@ -310,7 +300,7 @@ void menuChargementPartie(Profil*& Player, bool& quit)
 	//Redirection de l'utilisateur selon son choix grâce a un switch.
 	if(menu == 0)
 	{
-			clrscreen(); //On flushe l'ancien ecran
+			Game::instance->getTerm().clearScreen(); //On flushe l'ancien ecran
 	}
 	else if(menu > 0 && menu <= Profil::compterSauvegardes())
 	{
@@ -322,7 +312,7 @@ void menuChargementPartie(Profil*& Player, bool& quit)
 	}
 	else //equivalent de default
 	{
-		clrscreen(); //On flushe l'ancien ecran
+		Game::instance->getTerm().clearScreen(); //On flushe l'ancien ecran
 		error("Ce profil n'existe pas");
 	}
 }
@@ -333,15 +323,14 @@ void menuCreationPartie(Profil*& Player, bool& quit)
 	std::string nom;
 
 	//Menu Creation de profil
-	std::cout << "Creation de votre Profil\n";
-	std::cout << "===============\n\n";
-	std::cout << "Saisissez le nom du Profil.\n\n";
-	std::cout << "0. Annuler\n";
-	std::cout << "===============\n";
-	std::cout << "Nom: ";
-	std::cin >> nom; // l'utilisateur entre le menu qu'il souhaite ouvrir
-	videKBuffer();
-	clrscreen(); //on flushe l'ecran
+	Game::instance->getTerm() << "Creation de votre Profil\n";
+	Game::instance->getTerm() << "===============\n\n";
+	Game::instance->getTerm() << "Saisissez le nom du Profil.\n\n";
+	Game::instance->getTerm() << "0. Annuler\n";
+	Game::instance->getTerm() << "===============\n";
+	Game::instance->getTerm() << "Nom: ";
+	std::getline(std::cin, nom); // l'utilisateur entre son nom
+	Game::instance->getTerm().clearScreen(); //on flushe l'ecran
 	if(nom[0] != '0')
 	{
 		Profil::creerProfil(nom, Player);
@@ -360,16 +349,15 @@ void menuSuppressionPartie()
 
 	//Debut
 	//Menu Chargement profil
-	std::cout << "Supprimer un Profil: \n";
-	std::cout << "===============\n";
-	std::cout << "Selectionnez un profil a supprimer.\n";
-	std::cout << "===============\n\n";
+	Game::instance->getTerm() << "Supprimer un Profil: \n";
+	Game::instance->getTerm() << "===============\n";
+	Game::instance->getTerm() << "Selectionnez un profil a supprimer.\n";
+	Game::instance->getTerm() << "===============\n\n";
 	Profil::listerSauvegardes();
-	std::cout << "0. Annuler\n";
-	std::cout << "===============\n";
-	std::cout << "Choix ?";
-	std::cin >> sMenu; // l'utilisateur entre le menu qu'il souhaite ouvrir
-	videKBuffer();
+	Game::instance->getTerm() << "0. Annuler\n";
+	Game::instance->getTerm() << "===============\n";
+	Game::instance->getTerm() << "Choix ?";
+	std::getline(std::cin, sMenu); // l'utilisateur entre le menu qu'il souhaite ouvrir
 	std::istringstream iss;
 
 	iss.str(sMenu); // On extrait la taille du circuit et on le stocke dans la variable de conversion "iss1".
@@ -377,7 +365,7 @@ void menuSuppressionPartie()
 	//Redirection de l'utilisateur selon son choix grâce a un switch.
 	if(menu == 0)
 	{
-			clrscreen(); //On flushe l'ancien ecran
+			Game::instance->getTerm().clearScreen(); //On flushe l'ancien ecran
 	}
 	else if(menu > 0 && menu <= Profil::compterSauvegardes())
 	{
@@ -385,37 +373,36 @@ void menuSuppressionPartie()
 		{
 			if(menu == i)
 			{
-				clrscreen(); //On flushe l'ancien ecran
+				Game::instance->getTerm().clearScreen(); //On flushe l'ancien ecran
 				while(quitVerify != 'n') // Boucle de confirmation
 				{
-					std::cout << "/!\\ Attention ! /!\\\n";
-					std::cout << "====================\n";
-					std::cout << "La partie sera perdue !\n";
-					std::cout << "Souhaitez-vous vraiment supprimer Profil" << i << " ? [O/n]\n";
-					std::cout << "====================\n";
-					std::cin >> quitVerify;
-					videKBuffer();
+					Game::instance->getTerm() << "/!\\ Attention ! /!\\\n";
+					Game::instance->getTerm() << "====================\n";
+					Game::instance->getTerm() << "La partie sera perdue !\n";
+					Game::instance->getTerm() << "Souhaitez-vous vraiment supprimer Profil" << i << " ? [O/n]\n";
+					Game::instance->getTerm() << "====================\n";
+					quitVerify = getch(); // l'utilisateur confirme
 					switch(quitVerify)
 					{
 						case 'o':
-							clrscreen();
+							Game::instance->getTerm().clearScreen();
 							Profil::supprimerProfil(i);
 							quitVerify = 'n'; // on quitte la verification
 							break;
 						case 'O':
-							clrscreen();
+							Game::instance->getTerm().clearScreen();
 							Profil::supprimerProfil(i);
 							quitVerify = 'n'; // on quitte la verification
 							break;
 						case 'n':
-							clrscreen(); // la variable de verification prend la valeur n donc on sort de la verification, mais quit vaut faux
+							Game::instance->getTerm().clearScreen(); // la variable de verification prend la valeur n donc on sort de la verification, mais quit vaut faux
 							break;
 						case 'N':
-							clrscreen();
+							Game::instance->getTerm().clearScreen();
 							quitVerify = 'n'; // on quitte la verification
 							break;
 						default:
-							clrscreen();
+							Game::instance->getTerm().clearScreen();
 							saisieInvalide();
 							break;
 					}
@@ -425,7 +412,7 @@ void menuSuppressionPartie()
 	}
 	else //equivalent de default
 	{
-		clrscreen(); //On flushe l'ancien ecran
+		Game::instance->getTerm().clearScreen(); //On flushe l'ancien ecran
 		error("Ce profil n'existe pas");
 	}
 }
@@ -433,27 +420,27 @@ void menuSuppressionPartie()
 void menuApropos()
 {
 	//avant d'entrer dans le menu on flushe l'ecran
-	clrscreen();
+	Game::instance->getTerm().clearScreen();
 	//Menu A propos
-	std::cout << "A Propos de\n";
-	std::cout << "===============\n\n";
-	std::cout << " ________                  ________       _____                    \n";		// Dessin de Credits
+	Game::instance->getTerm() << "A Propos de\n";
+	Game::instance->getTerm() << "===============\n\n";
+	Game::instance->getTerm() << " ________                  ________       _____                    \n";		// Dessin de Credits
 	sleep(0.2f);
-	std::cout << " ___  __ \\_____ ______________  __ \\_________(_)__   ______________\n";		// En ASCII-ART
+	Game::instance->getTerm() << " ___  __ \\_____ ______________  __ \\_________(_)__   ______________\n";		// En ASCII-ART
 	sleep(0.2f);
-	std::cout << " __  /_/ /  __ `/  ___/  _ \\_  / / /_  ___/_  /__ | / /  _ \\_  ___/\n";		// Caractere \ et " doublement echappes
+	Game::instance->getTerm() << " __  /_/ /  __ `/  ___/  _ \\_  / / /_  ___/_  /__ | / /  _ \\_  ___/\n";		// Caractere \ et " doublement echappes
 	sleep(0.2f);
-	std::cout << " _  _, _// /_/ // /__ /  __/  /_/ /_  /   _  / __ |/ //  __/  /    \n";		// Pour palier aux warnings de compilo
+	Game::instance->getTerm() << " _  _, _// /_/ // /__ /  __/  /_/ /_  /   _  / __ |/ //  __/  /    \n";		// Pour palier aux warnings de compilo
 	sleep(0.2f);
-	std::cout << " /_/ |_| \\__,_/ \\___/ \\___//_____/ /_/    /_/  _____/ \\___//_/     \n\n";	// RACEDRIVER Police Speed from patorjk.com
+	Game::instance->getTerm() << " /_/ |_| \\__,_/ \\___/ \\___//_____/ /_/    /_/  _____/ \\___//_/     \n\n";	// RACEDRIVER Police Speed from patorjk.com
 	sleep(0.5f);
-	std::cout << "Racedriver est un jeu de course de voitures en console. \n";
-	std::cout << "Ce jeu est developpe en C++ par:\n";
-	std::cout << "~Baxlan(contact: Cavalioz@Hotmail.fr)\n";
-	std::cout << "~Stalker2106(contact: Stalker2106x@GMail.com)\n\n";
-	std::cout << "La version actuelle du programme est [Racedriver " << GAME_VERSION << "]\n\n";
-	std::cout << "===============\n";
-	std::cout << "Appuyez sur Entree pour retourner au menu principal...\n";
-	videKBuffer(); //On appelle le videur de buffer qui va demander la pression d'entree, vu que le buffer est vide. (=pause, en version portable)
-	clrscreen();
+	Game::instance->getTerm() << "Racedriver est un jeu de course de voitures en console. \n";
+	Game::instance->getTerm() << "Ce jeu est developpe en C++ par:\n";
+	Game::instance->getTerm() << "~Baxlan(contact: Cavalioz@Hotmail.fr)\n";
+	Game::instance->getTerm() << "~Stalker2106(contact: Stalker2106x@GMail.com)\n\n";
+	Game::instance->getTerm() << "La version actuelle du programme est [Racedriver " << GAME_VERSION << "]\n\n";
+	Game::instance->getTerm() << "===============\n";
+	Game::instance->getTerm() << "Appuyez sur Entree pour retourner au menu principal...\n";
+	getch(); //On appelle le videur de buffer qui va demander la pression d'entree, vu que le buffer est vide. (=pause, en version portable)
+	Game::instance->getTerm().clearScreen();
 }

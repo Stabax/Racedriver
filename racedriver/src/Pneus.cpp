@@ -72,7 +72,7 @@ void Pneus::listerPneus()
 	if(flux)
 	{
 		int curseur;
-		std::cout<<"   |Marque     |rang  |Prix  |\n\n";
+		Game::instance->getTerm() <<"   |Marque     |rang  |Prix  |\n\n";
 		while(std::getline(flux, var))
 		{
 
@@ -109,7 +109,7 @@ void Pneus::listerPneus()
 			}
 
 
-			std::cout<< id << "." << espace5 << marque << espace2 << rang << espace4 << "PRIX" << "c\n";
+			Game::instance->getTerm() << id << "." << espace5 << marque << espace2 << rang << espace4 << "PRIX" << "c\n";
 		}
 	}
 }

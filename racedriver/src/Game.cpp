@@ -30,6 +30,20 @@ int Game::main()
 	return 0;
 }
 
+Terminal &Game::getTerm()
+{
+	return (_term);
+}
+
+void Game::printASCIILogo()
+{
+	_term << " ________                  ________       _____                    \n"
+				<< " ___  __ \\_____ ______________  __ \\_________(_)__   ______________\n"
+				<< " __  /_/ /  __ `/  ___/  _ \\_  / / /_  ___/_  /__ | / /  _ \\_  ___/\n"
+				<< " _  _, _// /_/ // /__ /  __/  /_/ /_  /   _  / __ |/ //  __/  /    \n"
+				<< " /_/ |_| \\__,_/ \\___/ \\___//_____/ /_/    /_/  _____/ \\___//_/     \n";
+}
+
 void Game::error(const std::string &str)
 {
 	msg("ERREUR: "+str);
@@ -53,7 +67,7 @@ void Game::update()
 	std::ifstream config("Data/config.ini");
 	if(!config)
 	{
-		clrscreen();
+		Game::instance->getTerm().clearScreen();
 		error("Echec de lecture du fichier de configuration config.ini.");
 		_term << ">La verification de la derniere version ne peut être effectuee.\n"
 		      << ">Vous allez jouer avec une version potentiellement obsolete de Racedriver.\n"
@@ -76,7 +90,7 @@ void Game::update()
 	//si le fichier config est corrompu
 	if(version.size() < 3 || version.size() > 5 || (OS != 1 && OS != 0) || version.find_first_of(".") != 1)
 	{
-		clrscreen();
+		Game::instance->getTerm().clearScreen();
 		error("Fichier de configuration corompu");
 		_term << ">La verification de la derniere version ne peut être effectuee.\n"
 		      << ">Vous allez jouer avec une version potentiellement obsolete de Racedriver.\n"
@@ -90,7 +104,7 @@ void Game::update()
 	//création et ouverture d'un fichier en ecriture
 	FILE *versionFile = fopen("Update/version.cdx", "w");
 
-	std::cout << ">Connexion au serveur distant...\n";
+	Game::instance->getTerm() << ">Connexion au serveur distant...\n";
 	//on indique l'url cible
 	curl_easy_setopt(curlVersion, CURLOPT_URL, "/bin/version");
 

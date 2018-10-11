@@ -22,6 +22,7 @@ public:
   WINDOW *addChildWindow(Point pos, Point size);
 
   friend Terminal &operator<<(Terminal &term, const std::string str);
+  friend Terminal &operator<<(Terminal &term, int data);
   friend Terminal &operator<<(Terminal &term, const char *str);
 
 private:

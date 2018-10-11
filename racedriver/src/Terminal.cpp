@@ -76,6 +76,11 @@ Terminal &operator<<(Terminal &term, const std::string str)
   return (term << str.c_str());
 }
 
+Terminal &operator<<(Terminal &term, int data)
+{
+  return (term << std::to_string(data));
+}
+
 Terminal &operator<<(Terminal &term, const char *str)
 {
   term.print(str);

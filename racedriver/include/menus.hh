@@ -5,6 +5,7 @@
 #define menus
 
 #include "sousMenus.hh"
+#include"Game.hh"
 
 void menuCourse(Profil& Player); //Menu de selection du type de course
 void menuGarage(Profil& Player); //Menu de gestion des vehicules

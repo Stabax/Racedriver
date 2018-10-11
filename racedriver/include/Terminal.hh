@@ -15,6 +15,7 @@ public:
 
   void clearScreen();
   void blit();
+  void setFullscreen();
   void setCanonical(bool set);
   void setStdinTimeout(int milliseconds);
   Point getMousePos();
@@ -30,6 +31,8 @@ public:
 
 private:
   WINDOW *_screen;
+  int _rows;
+  int _cols;
 };
 
 #endif /* !TERMINAL_HH_ */

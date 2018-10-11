@@ -8,6 +8,7 @@ std::unique_ptr<Terminal> Terminal::instance = nullptr;
 Terminal::Terminal()
 {
 	_screen = initscr(); // Start Xcurses window
+	setFullscreen();
 	setCanonical(true);
 	mouse_set(ALL_MOUSE_EVENTS); //Enables mouse
 	curs_set(2); //Block cursor
@@ -22,6 +23,13 @@ Terminal::~Terminal()
 Terminal &Terminal::get()
 {
 	return (*instance.get());
+}
+
+void Terminal::setFullscreen()
+{
+	resize_term(2000, 2000);
+	getmaxyx(_screen, _rows, _cols); // Get the largest physical screen dimensions
+	resize_term(_rows * 0.75f, _cols * 0.75f);
 }
 
 void Terminal::clearScreen()

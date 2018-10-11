@@ -100,7 +100,11 @@
 	sauvegarde automatique
 	commentaire meteo chargé depuis meteo.txt
 
--== Alpha 2.0 ==-
+-== Alpha 2.0.0 ==-
+	migration du mode terminal vers XCurses
+	reorganisation du projet
+	
+-== Alpha 2.1.0 ==-
 
 	-arguments cheat
 	-redesigner chaque ecran

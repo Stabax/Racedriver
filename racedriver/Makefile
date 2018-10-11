@@ -16,9 +16,9 @@ CXX = g++
 
 RM = rm -rf
 
-CXXFLAGS	= -W -Wall -Wpedantic -Iinclude -I$(LIBDIR)
+CXXFLAGS	= -g3 -W -Wall -Wpedantic -Iinclude -I$(LIBDIR)
 
-LDFLAGS		= -L$(BINDIR) -lcurl -lpdcurses -static-libgcc -g3
+LDFLAGS		= -L$(BINDIR) -lcurl -lpdcurses -static-libgcc
 
 NAME = $(BINDIR)/Racedriver
 

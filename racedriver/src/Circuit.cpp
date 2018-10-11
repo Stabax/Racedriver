@@ -154,9 +154,9 @@ int Circuit::listerCircuits()
 			}
 
 			nombreCircuits++;
-			Game::instance->getTerm() << "|-" << nombreCircuits << ". " << nomCharge << " [" << tailleChargee << " Km / " << viragesCharges << " Virages, Denivele: " << denivele <<"m] (" << climatString << "), {Difficulte: "<< difficulte <<"}\n";
+			Terminal::get() << "|-" << nombreCircuits << ". " << nomCharge << " [" << tailleChargee << " Km / " << viragesCharges << " Virages, Denivele: " << denivele <<"m] (" << climatString << "), {Difficulte: "<< difficulte <<"}\n";
 		}
-		Game::instance->getTerm() << "\n"; //on separe le blocs de circuits de l'option retour
+		Terminal::get() << "\n"; //on separe le blocs de circuits de l'option retour
 	}
 	return nombreCircuits;
 }

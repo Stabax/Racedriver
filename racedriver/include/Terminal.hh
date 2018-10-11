@@ -11,7 +11,8 @@ public:
   Terminal();
   ~Terminal();
 
-  void test();
+  static Terminal &get();
+
   void clearScreen();
   void blit();
   void setCanonical(bool set);
@@ -20,6 +21,8 @@ public:
   void print(const std::string &str);
   void printAt(Point point, const std::string &str);
   WINDOW *addChildWindow(Point pos, Point size);
+
+  static std::unique_ptr<Terminal> instance;
 
   friend Terminal &operator<<(Terminal &term, const std::string str);
   friend Terminal &operator<<(Terminal &term, int data);

@@ -18,7 +18,7 @@ bool preparatifsCourse(const Circuit& Map, const Profil& Player, Voiture*& Voitu
 		char verif;
 		do
 		{
-			Game::instance->getTerm().clearScreen(); //On flushe l'ancien ecran
+			Terminal::get().clearScreen(); //On flushe l'ancien ecran
 			if(VoiturePlayer->getNiveauNitro() < VoiturePlayer->getNitroMax())
 			{
 				msg("Attention: Votre reservoir de nitro n'est pas plein.\n");
@@ -27,29 +27,29 @@ bool preparatifsCourse(const Circuit& Map, const Profil& Player, Voiture*& Voitu
 			{
 				msg("Attention: Pneus deteriores.\n");
 			}
-			Game::instance->getTerm() << "\nPreparatifs\n";
-			Game::instance->getTerm() << "====================\n";
-			Game::instance->getTerm() << "Credits: " << Player.getCredits() << "c\n";
-			Game::instance->getTerm() << "====================\n";
-			Game::instance->getTerm() << "Le montant total des preparatifs du circuit: " << Map.getNom() << "\n";
-			Game::instance->getTerm() << "S'elevent a " << prixCourse << "c\n\n";
-			Game::instance->getTerm() << "Souhaitez-vous vraiment faire cette course ? [O/n]\n";
-			Game::instance->getTerm() << "====================\n";
+			Terminal::get() << "\nPreparatifs\n";
+			Terminal::get() << "====================\n";
+			Terminal::get() << "Credits: " << Player.getCredits() << "c\n";
+			Terminal::get() << "====================\n";
+			Terminal::get() << "Le montant total des preparatifs du circuit: " << Map.getNom() << "\n";
+			Terminal::get() << "S'elevent a " << prixCourse << "c\n\n";
+			Terminal::get() << "Souhaitez-vous vraiment faire cette course ? [O/n]\n";
+			Terminal::get() << "====================\n";
 			verif = getch();
 			if(verif == 'o' || verif == 'N')
 			{
-					Game::instance->getTerm().clearScreen();
+					Terminal::get().clearScreen();
 					paye = true;
 			}
 			else if(verif == 'o' || verif == 'N')
 			{
-					Game::instance->getTerm().clearScreen();
+					Terminal::get().clearScreen();
 					paye = false;
 					error("Paiement annule par l'utilisateur");
 			}
 			else
 			{
-					Game::instance->getTerm().clearScreen();
+					Terminal::get().clearScreen();
 					saisieInvalide();
 			}
 		}while(verif != 'o' && verif != 'N' && verif != 'o' && verif != 'N');
@@ -406,34 +406,34 @@ void faireCourseLibre(Circuit Map, Voiture* Player1, Profil& Player)
 		}
 
 
-		Game::instance->getTerm() << "Bienvenue à tous et a toutes ! Aujourd'hui va se derouler l'evenement tant attendu par tous les fans de sportives, tout le monde s'est reuni et l'ambiance est a son comble sur le circuit: " << Map.getNom() << ".\nOn m'annonce qu'il totalise " << Map.getTaille() << " Km, et comprend pas moins de " << Map.getVirages() << " virages serres !\n" << *commentaireMeteo << " D'autre part, il y a un vent de Force " << Map.getVent() << " dans l'enceinte du circuit.\n\nSans attendre passons tout de suite a la liste des Participants:\n\n";
+		Terminal::get() << "Bienvenue à tous et a toutes ! Aujourd'hui va se derouler l'evenement tant attendu par tous les fans de sportives, tout le monde s'est reuni et l'ambiance est a son comble sur le circuit: " << Map.getNom() << ".\nOn m'annonce qu'il totalise " << Map.getTaille() << " Km, et comprend pas moins de " << Map.getVirages() << " virages serres !\n" << *commentaireMeteo << " D'autre part, il y a un vent de Force " << Map.getVent() << " dans l'enceinte du circuit.\n\nSans attendre passons tout de suite a la liste des Participants:\n\n";
 
 		//on liste les concurants
 		for (size_t numero = 0; numero <= 7; numero++)
 		{
 			if(numero == 0)
 			{
-				Game::instance->getTerm() << Player.getNom() << " - " << Player1->getMarque() << " " << Player1->getModele() << "\n";
+				Terminal::get() << Player.getNom() << " - " << Player1->getMarque() << " " << Player1->getModele() << "\n";
 			}
 			else
 			{
-				Game::instance->getTerm() << nomJoueur[numero - 1] << " - " << Adversaire[numero - 1]->getMarque() << " " << Adversaire[numero - 1]->getModele() << "\n";
+				Terminal::get() << nomJoueur[numero - 1] << " - " << Adversaire[numero - 1]->getMarque() << " " << Adversaire[numero - 1]->getModele() << "\n";
 			}
 		}
 		delete commentaireMeteo;
-		Game::instance->getTerm() <<"\n\nPressez [ENTREE] pour commencer la course.\n";
+		Terminal::get() <<"\n\nPressez [ENTREE] pour commencer la course.\n";
 		getch();
 
-		Game::instance->getTerm().clearScreen();
+		Terminal::get().clearScreen();
 		msg("Depart dans 3...");
 		sleep(1.0f);
-		Game::instance->getTerm().clearScreen();
+		Terminal::get().clearScreen();
 		msg("Depart dans 2...");
 		sleep(1.0f);
-		Game::instance->getTerm().clearScreen();
+		Terminal::get().clearScreen();
 		msg("Depart dans 1...");
 		sleep(1.0f);
-		Game::instance->getTerm().clearScreen();
+		Terminal::get().clearScreen();
 		msg("GO !");
 		sleep(1.0f);
 
@@ -461,15 +461,15 @@ void faireCourseLibre(Circuit Map, Voiture* Player1, Profil& Player)
 			{
 				if(njoueur == 0)
 				{
-					Game::instance->getTerm() << "Le joueur " << Player.getNom() << " " << messageAccident[njoueur - 1] <<"\n";
+					Terminal::get() << "Le joueur " << Player.getNom() << " " << messageAccident[njoueur - 1] <<"\n";
 				}
 				else
 				{
-					Game::instance->getTerm() << "Le joueur " << nomJoueur[njoueur - 1]<< " " << messageAccident[njoueur - 1] <<"\n";
+					Terminal::get() << "Le joueur " << nomJoueur[njoueur - 1]<< " " << messageAccident[njoueur - 1] <<"\n";
 				}
 			}
 		}
-		Game::instance->getTerm() <<"\n\nPressez [ENTREE] pour voir les resultats.\n";
+		Terminal::get() <<"\n\nPressez [ENTREE] pour voir les resultats.\n";
 		getch();
 		int scoreJoueur[8];
 		scoreJoueur[0] = score[0];
@@ -498,7 +498,7 @@ void faireCourseLibre(Circuit Map, Voiture* Player1, Profil& Player)
 		bool exclu[8] = {false};
 		bool placeExclue[8] = {false};
 		int joueur;
-		Game::instance->getTerm() <<"\n\n";
+		Terminal::get() <<"\n\n";
 		for (size_t placeClassement = 0; placeClassement <=7 ;placeClassement++)
 		{
 			if(placeExclue[placeClassement] == true)
@@ -506,7 +506,7 @@ void faireCourseLibre(Circuit Map, Voiture* Player1, Profil& Player)
 				placeClassement += 1;
 
 			}
-			Game::instance->getTerm() << "[" << placeClassement + 1 << "e] "; //On affiche le numéro de la place en début de ligne
+			Terminal::get() << "[" << placeClassement + 1 << "e] "; //On affiche le numéro de la place en début de ligne
 			joueur = 0;
 
 			if(exclu[0] == true)
@@ -527,13 +527,13 @@ void faireCourseLibre(Circuit Map, Voiture* Player1, Profil& Player)
 			}
 			if(joueur == 0 && exclu[0] == false) //Si le joueur est le Joueur1 on affiche son nom
 			{
-				Game::instance->getTerm() << Player.getNom() << " - " << score[placeClassement] << " Points.\n";
+				Terminal::get() << Player.getNom() << " - " << score[placeClassement] << " Points.\n";
 				exclu[0] = true;
 			}
 			else //Sinon on met des nom d'IA
 			{
 
-				Game::instance->getTerm() << nomJoueur[joueur - 1] << " - " << score[placeClassement] << " Points.\n";
+				Terminal::get() << nomJoueur[joueur - 1] << " - " << score[placeClassement] << " Points.\n";
 				exclu[joueur] = true;
 			}
 			if(joueur == 0 && placeClassement < 3) //Si le joueur finit sur le podium
@@ -548,9 +548,9 @@ void faireCourseLibre(Circuit Map, Voiture* Player1, Profil& Player)
 			sleep(0.5f);
 		}
 		Player.ajouterCourse();
-		Game::instance->getTerm() <<"\n\nPressez [ENTREE] pour continuer.\n";
+		Terminal::get() <<"\n\nPressez [ENTREE] pour continuer.\n";
 		getch();
-		Game::instance->getTerm().clearScreen();
+		Terminal::get().clearScreen();
 		for (size_t compteur = 0; compteur <= 6; ++compteur)
 		{
 			delete Adversaire[compteur];
@@ -610,32 +610,32 @@ void faireCourseChampionnat(Circuit Map, Voiture* Player1, Profil& Player)
 				}
 				nomJoueur[numero] = pseudo;
 			}
-			Game::instance->getTerm() << "Bienvenue à tous et a toutes ! Aujourd'hui va se derouler l'evenement tant attendu par tous les fans de sportives, tout le monde s'est reuni et l'ambiance est a son comble sur le circuit: " << Map.getNom() << ".\nOn m'annonce qu'il totalise " << Map.getTaille() << " Km, et comprend pas moins de " << Map.getVirages() << " virages serres !\n" << *commentaireMeteo << " D'autre part, il y a un vent de Force " << Map.getVent() << " dans l'enceinte du circuit.\n\nSans attendre passons tout de suite a la liste des Participants:\n\n";
+			Terminal::get() << "Bienvenue à tous et a toutes ! Aujourd'hui va se derouler l'evenement tant attendu par tous les fans de sportives, tout le monde s'est reuni et l'ambiance est a son comble sur le circuit: " << Map.getNom() << ".\nOn m'annonce qu'il totalise " << Map.getTaille() << " Km, et comprend pas moins de " << Map.getVirages() << " virages serres !\n" << *commentaireMeteo << " D'autre part, il y a un vent de Force " << Map.getVent() << " dans l'enceinte du circuit.\n\nSans attendre passons tout de suite a la liste des Participants:\n\n";
 			//on liste les concurants
 			for (size_t numero = 0; numero <= 7; numero++)
 			{
 				if(numero == 0)
 				{
-					Game::instance->getTerm() << Player.getNom() << " - " << Player1->getMarque() << " " << Player1->getModele() << "\n";
+					Terminal::get() << Player.getNom() << " - " << Player1->getMarque() << " " << Player1->getModele() << "\n";
 				}
 				else
 				{
-					Game::instance->getTerm() << nomJoueur[numero - 1] << " - " << Adversaire[numero - 1]->getMarque() << " " << Adversaire[numero - 1]->getModele() << "\n";
+					Terminal::get() << nomJoueur[numero - 1] << " - " << Adversaire[numero - 1]->getMarque() << " " << Adversaire[numero - 1]->getModele() << "\n";
 				}
 			}
 			delete commentaireMeteo;
-			Game::instance->getTerm() <<"\n\nPressez [ENTREE] pour commencer la course.\n";
+			Terminal::get() <<"\n\nPressez [ENTREE] pour commencer la course.\n";
 			getch();
-			Game::instance->getTerm().clearScreen();
+			Terminal::get().clearScreen();
 			msg("Depart dans 3...");
 			sleep(1.0f);
-			Game::instance->getTerm().clearScreen();
+			Terminal::get().clearScreen();
 			msg("Depart dans 2...");
 			sleep(1.0f);
-			Game::instance->getTerm().clearScreen();
+			Terminal::get().clearScreen();
 			msg("Depart dans 1...");
 			sleep(1.0f);
-			Game::instance->getTerm().clearScreen();
+			Terminal::get().clearScreen();
 			msg("GO !");
 			sleep(1.0f);
 			int score[8];
@@ -662,15 +662,15 @@ void faireCourseChampionnat(Circuit Map, Voiture* Player1, Profil& Player)
 				{
 					if(njoueur == 0)
 					{
-						Game::instance->getTerm() << "Le joueur " << Player.getNom() << " " << messageAccident[njoueur - 1] <<"\n";
+						Terminal::get() << "Le joueur " << Player.getNom() << " " << messageAccident[njoueur - 1] <<"\n";
 					}
 					else
 					{
-						Game::instance->getTerm() << "Le joueur " << nomJoueur[njoueur - 1]<< " " << messageAccident[njoueur - 1] <<"\n";
+						Terminal::get() << "Le joueur " << nomJoueur[njoueur - 1]<< " " << messageAccident[njoueur - 1] <<"\n";
 					}
 				}
 			}
-			Game::instance->getTerm() <<"\n\nPressez [ENTREE] pour voir les resultats.\n";
+			Terminal::get() <<"\n\nPressez [ENTREE] pour voir les resultats.\n";
 			getch();
 			int joueur;
 			int scoreJoueur[8];
@@ -699,7 +699,7 @@ void faireCourseChampionnat(Circuit Map, Voiture* Player1, Profil& Player)
 			//on affiche les resultats
 			bool exclu[8] = {false};
 			bool placeExclue[8] = {false};
-			Game::instance->getTerm() <<"\n\n";
+			Terminal::get() <<"\n\n";
 			for (size_t placeClassement = 0; placeClassement <=7 ;placeClassement++)
 			{
 				if(placeExclue[placeClassement] == true)
@@ -707,7 +707,7 @@ void faireCourseChampionnat(Circuit Map, Voiture* Player1, Profil& Player)
 					placeClassement += 1;
 
 				}
-				Game::instance->getTerm() << "[" << placeClassement + 1 << "e] "; //On affiche le numéro de la place en début de ligne
+				Terminal::get() << "[" << placeClassement + 1 << "e] "; //On affiche le numéro de la place en début de ligne
 				joueur = 0;
 
 				if(exclu[0] == true)
@@ -727,12 +727,12 @@ void faireCourseChampionnat(Circuit Map, Voiture* Player1, Profil& Player)
 				}
 				if(joueur == 0 && exclu[0] == false) //Si le joueur est le Joueur1 on affiche son nom
 				{
-					Game::instance->getTerm() << Player.getNom() << " - " << score[placeClassement] << " Points.\n";
+					Terminal::get() << Player.getNom() << " - " << score[placeClassement] << " Points.\n";
 					exclu[0] = true;
 				}
 				else //Sinon on met des nom d'IA
 				{
-					Game::instance->getTerm() << nomJoueur[joueur - 1] << " - " << score[placeClassement] << " Points.\n";
+					Terminal::get() << nomJoueur[joueur - 1] << " - " << score[placeClassement] << " Points.\n";
 					exclu[joueur] = true;
 				}
 				if(joueur == 0 && placeClassement < 3) //Si le joueur finit sur le podium
@@ -749,9 +749,9 @@ void faireCourseChampionnat(Circuit Map, Voiture* Player1, Profil& Player)
 				sleep(0.5f);
 			}
 			Player.ajouterCourse();
-			Game::instance->getTerm() <<"\n\nPressez [ENTREE] pour continuer.\n";
+			Terminal::get() <<"\n\nPressez [ENTREE] pour continuer.\n";
 			getch();
-			Game::instance->getTerm().clearScreen();
+			Terminal::get().clearScreen();
 			for (size_t compteur = 0; compteur <= 6; ++compteur)
 			{
 				delete Adversaire[compteur];

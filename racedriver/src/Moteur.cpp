@@ -95,7 +95,7 @@ Moteur* Moteur::chargerMoteur(const int& id, const std::string& marqueChargee)
 
 void Moteur::listerMoteurs(const std::string& marque)
 {
-	Game::instance->getTerm() <<"Liste des moteurs "<< marque <<" :\n\n";
+	Terminal::get() <<"Liste des moteurs "<< marque <<" :\n\n";
 
 	std::string chemin ="Data/Moteurs/"+marque+".cdx";
 
@@ -105,7 +105,7 @@ void Moteur::listerMoteurs(const std::string& marque)
 	if(flux)
 	{
 		int curseur;
-		Game::instance->getTerm() <<"   |Modele     |Rang  |Vitesse  |Acceleration  |Carburant  |Prix |\n\n";
+		Terminal::get() <<"   |Modele     |Rang  |Vitesse  |Acceleration  |Carburant  |Prix |\n\n";
 		while(std::getline(flux, var))
 		{
 				curseur=var.find_first_of(";");
@@ -202,7 +202,7 @@ void Moteur::listerMoteurs(const std::string& marque)
 				int prix = ((vitesse + acceleration) * 25) + ( (vRang(rang)-1) * 500);
 
 
-				Game::instance->getTerm() <<id<<"."<<espace5<<modele<< espace1 <<rang<< espaceRang <<vitesse<< espace2 <<acceleration<< espace3 <<carburant<< espace4 << prix <<"c\n";
+				Terminal::get() <<id<<"."<<espace5<<modele<< espace1 <<rang<< espaceRang <<vitesse<< espace2 <<acceleration<< espace3 <<carburant<< espace4 << prix <<"c\n";
 
 		}
 	}

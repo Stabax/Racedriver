@@ -3,12 +3,15 @@
 #include <cstdlib>
 #include <unistd.h>
 
+std::unique_ptr<Terminal> Terminal::instance = nullptr;
+
 Terminal::Terminal()
 {
 	_screen = initscr(); // Start Xcurses window
 	setCanonical(true);
 	mouse_set(ALL_MOUSE_EVENTS); //Enables mouse
 	curs_set(2); //Block cursor
+	Terminal::instance = std::unique_ptr<Terminal>(this);
 }
 
 Terminal::~Terminal()
@@ -16,18 +19,14 @@ Terminal::~Terminal()
 	endwin();	//Close Xcurses
 }
 
-void Terminal::test()
+Terminal &Terminal::get()
 {
-	*this << "toto sese la uic";
-	sleep(2);
-	clearScreen();
-	printAt(Point(5, 5), "Hello World !!!");	/* Print Hello World */
-	getch();
+	return (*instance.get());
 }
 
 void Terminal::clearScreen()
 {
-  werase(_screen);
+  wclear(_screen);
 }
 
 void Terminal::blit()

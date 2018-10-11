@@ -6,19 +6,13 @@
 #include <string>
 #include <limits>
 #include <fstream>
+#include <pdcurses/curses.h>
 #include "sha/sha.h"
 
 #define PWD_SALT	"RaceDriver"
-
-inline void clrscreen()
-{
-  std::cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"; //85 Retours
-}
-
-inline void videKBuffer()
-{
+/* historic videKBuffer relic
 	std::cin.ignore(std::numeric_limits<std::streamsize>::max(),'\n');
-}
+*/
 
 inline void msg(std::string message)
 {
@@ -32,6 +26,13 @@ std::string getHashFromFile(std::string path);
 inline void saisieInvalide()
 {
   msg("/!\\ Entree Invalide /!\\");
+}
+
+inline std::string getString()
+{
+	char str[256];
+	getnstr(str, 255);
+	return (std::string(str));
 }
 
 void error(std::string message); //le compilateur ne veut pas inliner: message peut être trop grand donc inefficace

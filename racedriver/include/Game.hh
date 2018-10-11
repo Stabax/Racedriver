@@ -4,6 +4,7 @@
 #include <memory>
 #include "Terminal.hh"
 
+#define GAME_VERSION  "Alpha 2.0.0"
 #define SERVER_PATH "http://racedriver.url.ph/"
 
 class Game

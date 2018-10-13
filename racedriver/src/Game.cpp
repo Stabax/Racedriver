@@ -24,7 +24,6 @@ int Game::main()
 	_term << "Chargement en Cours...\n";
 	usleep(2000);
 	_term.clearScreen();
-	_term << "Pour jouer dans les meilleures conditions,\nbasculez en plein ecran !\n\n";
 	menuRacedriver();//on lance le coeur du jeu
 	return 0;
 }
@@ -45,41 +44,6 @@ void Game::removeUpdatePackage()
 
 void Game::update()
 {
-	removeUpdatePackage();
-	std::ifstream config("Data/config.ini");
-	if(!config)
-	{
-		Terminal::get().clearScreen();
-		Menu::error("Echec de lecture du fichier de configuration config.ini.");
-		_term << ">La verification de la derniere version ne peut être effectuee.\n"
-		      << ">Vous allez jouer avec une version potentiellement obsolete de Racedriver.\n"
-	      	<< ">Appuyez sur [ENTREE] pour continuer.\n";
-	  getch();
-	}
-	std::string ligneChargee;
-	std::istringstream iss;	//convertion string to int
-	int OS = 2; //0 = linux, 1 = windows, 2 = bug
-
-	std::getline(config, ligneChargee);
-	iss.str(ligneChargee);	//charge l'OS
-	iss >> OS;
-
-	std::string version;	//version de l'utilisateur
-
-	std::getline(config, ligneChargee);
-	version = ligneChargee;	//charge la verion de l'utilisateur
-
-	//si le fichier config est corrompu
-	if(version.size() < 3 || version.size() > 5 || (OS != 1 && OS != 0) || version.find_first_of(".") != 1)
-	{
-		Terminal::get().clearScreen();
-		Menu::error("Fichier de configuration corompu");
-		_term << ">La verification de la derniere version ne peut être effectuee.\n"
-		      << ">Vous allez jouer avec une version potentiellement obsolete de Racedriver.\n"
-		      << ">Appuyez sur [ENTREE] pour continuer.\n";
-		getch();
-		return;
-	}
 	CURL *curlVersion = curl_easy_init(); //On crée un flux cURL et on "instancie" le flux
 	CURLcode resVersion; //CURLcode est un type enum de Curl stockant un état d'erreur.
 
@@ -110,9 +74,8 @@ void Game::update()
 	if(CURLE_OK != resVersion)
 	{
 		//echec du telechargement
-		Menu::error("La recuperation du fichier de mise a jour a echoue. Verifiez votre connexion.");
-		_term << ">La lecture du fichier de mise a jour est impossible.\n"
-		      << ">Vous jouerez avec une version potentiellement obsolete de Racedriver.\n"
+		Menu::error("La recuperation des informations de mise a jour a echoue. Verifiez votre connexion.");
+		_term << ">Vous allez jouer avec une version potentiellement obsolete de Racedriver.\n"
 		      << ">Appuyez sur [ENTREE] pour continuer.\n";
 		getch();
 		return;
@@ -122,13 +85,13 @@ void Game::update()
 	std::getline(latestVersion, stringLatestVersion);
 
 	//si la verion actuelle est differente de la version disponible, on telecharge la derniere version de racedriver
-	if(version != stringLatestVersion)
+	if(GAME_VERSION != stringLatestVersion)
 	{
 		Menu::msg("Votre client est obsolete, une mise a jour est disponible !");
 		_term << "Vous allez telecharger la derniere version de Racedriver.\n";
 		if (!Menu::askConfirmation())
 		{
-			_term << ">Vous jouerez avec une version obsolete de Racedriver.\n";
+			_term << ">Vous allez jouer avec une version obsolete de Racedriver.\n";
 			_term << ">Appuyez sur [ENTREE] pour continuer.\n";
 			getch();
 			return;
@@ -139,21 +102,13 @@ void Game::update()
 		std::string binURL;
 
 		curlUpdate = curl_easy_init();
-
-		if(OS == 0) //Si on est sur linux, on dl la version linux
-		{
-			binURL = "bin/linux/"+stringLatestVersion+".zip";
-		}
-		else if(OS == 1) //Si on est sur windows on dl la version windows
-		{
-			binURL = "bin/windows/"+stringLatestVersion+".zip";
-		}
+		binURL = "bin/"+stringLatestVersion+".zip";
 		_term << "\n>Connexion au serveur distant...\n";
 		curl_easy_setopt(curlUpdate, CURLOPT_URL, binURL.c_str());
 		curl_easy_setopt(curlUpdate, CURLOPT_WRITEFUNCTION, fwrite);
 		curl_easy_setopt(curlUpdate, CURLOPT_WRITEDATA, updateFile);
 
-		_term << ">Telechargement de Racedriver...\n\n";
+		_term << ">Telechargement de la mise à jour...\n\n";
 		resUpdate = curl_easy_perform(curlUpdate);
 
 		curl_easy_cleanup(curlUpdate);
@@ -168,17 +123,12 @@ void Game::update()
 			return;
 		}
 		Menu::msg("Le client a ete mis a jour avec succes !");
-		_term << ">Vous devez redemmarer le launcher pour appliquer les modifications.\n";
-		if(OS == 0) //Si on est sur linux... car windows n'a pas install.sh
-		{
-			_term << ">N'oubliez pas de terminer l'installation en lançant \"install.sh\"."
-			      << ">Lisez le README pour plus de precisions.\n";
-		}
+		_term << ">Vous devez redemmarer le jeu pour appliquer les modifications.\n";
 		_term << ">Appuyez sur [Entree] pour quitter.";
 		getch();
 		//décompression du .zip téléchargé
 		//opérateur ternaire: si OS == 0 (linux) on appelle execl pour unpack linux, sinon on appelle execl pour unpack.exe windows
-		OS == 0 ? execl("Update/unpack", "unpack", "-qq", "-o", "Update/update.zip", NULL) : execl("Update/unpack.exe", "unpack.exe", "-qq", "-o", "Update/update.zip", NULL);
+		//OS == 0 ? execl("Update/unpack", "unpack", "-qq", "-o", "Update/update.zip", NULL) : execl("Update/unpack.exe", "unpack.exe", "-qq", "-o", "Update/update.zip", NULL);
 		//le programme se termine ici grace à l'apel à execl()
 	}
 	Menu::msg("Le client est a jour !");

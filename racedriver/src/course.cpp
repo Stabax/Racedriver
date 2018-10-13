@@ -50,7 +50,7 @@ std::string randNomAdversaire()
 {
 	std::string nomAdversaire;
 	int nbAdversaires = 0;
-	int ligneALire;
+	size_t ligneALire;
 
 	if(1) //On separe les deux flux par un bloc
 	{
@@ -245,7 +245,7 @@ void chargerMessagesAccidents(std::string messageAccident[8])
 
 		exclu[compteur] = random;
 
-		for (size_t ligne = 1; ligne <=random; ++ligne)
+		for (int ligne = 1; ligne <=random; ++ligne)
 		{
 			std::getline(fichier, messageAccident[compteur]);
 		}
@@ -311,7 +311,7 @@ std::string* chargerCommentaireMeteo(const int& meteo)
 	random += 1;
 
 	std::ifstream fichier("Data/console/meteo.txt");
-	for (size_t compteur = 1; compteur < random; ++compteur)
+	for (int compteur = 1; compteur < random; ++compteur)
 	{
 		std::getline(fichier, *ligne);
 	}

@@ -2,8 +2,8 @@
 #define TERMINAL_HH_
 
 #include <memory>
-#include <pdcurses/curses.h>
 #include "Utils.hpp"
+#include <pdcurses/curses.h>
 
 class Terminal
 {

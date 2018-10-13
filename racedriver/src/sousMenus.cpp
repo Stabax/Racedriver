@@ -160,7 +160,7 @@ int menuConsulterGarage(Profil& Player, const int& mode)
 {
 	std::string sMenu;
 	int menu;
-	int nbBox = Player.getNbBox();
+	size_t nbBox = Player.getNbBox();
 	Voiture* Voiture = 0;
 
 	//Menu Principal

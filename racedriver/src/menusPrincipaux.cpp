@@ -13,13 +13,13 @@ void menuRacedriver()
 		Game::instance->printASCIILogo();
 		Terminal::get() << "[" << GAME_VERSION << "]\n\n";
 		//Menu Principal
-		Terminal::get() << "Menu principal\n";
-		Terminal::get() << "===============\n\n";
-		Terminal::get() << "1. Continuer partie\n";
-		Terminal::get() << "2. Nouvelle partie\n";
-		Terminal::get() << "3. Supprimer profils\n\n";
-		Terminal::get() << "4. A Propos\n";
-		Terminal::get() << "0. Quitter\n";
+		Terminal::get() << "Menu principal\n"
+										<< "===============\n\n"
+										<< "1. Continuer partie\n"
+										<< "2. Nouvelle partie\n"
+										<< "3. Supprimer profils\n\n"
+										<< "4. A Propos\n"
+										<< "0. Quitter\n";
 		//Redirection de l'utilisateur selon son choix grâce a un switch.
 		switch(Menu::askChoice())
 		{
@@ -63,24 +63,24 @@ void menuJeu(Profil& Player, bool& quitGame)
 	Terminal::get().clearScreen();
 	while(quit != true)
 	{
-		Terminal::get() << "Menu Jeu\n";
-		Terminal::get() << "===============\n\n";
-		Terminal::get() << "1. Course\n\n";
-		Terminal::get() << "2. Garage\n";
-		Terminal::get() << "3. Concessionaire\n";
-		Terminal::get() << "4. Stats\n\n";
+		Terminal::get() << "Menu Jeu\n"
+										<< "===============\n\n"
+										<< "1. Course\n\n"
+										<< "2. Garage\n"
+										<< "3. Concessionaire\n"
+										<< "4. Stats\n\n";
 		if(!Player.getSauvegardeAuto())
 		{
-			Terminal::get() << "5. Sauvegarder\n";
-			Terminal::get() << "6. Options\n";
-			Terminal::get() << "7. Menu Principal\n\n";
-			Terminal::get() << "0. Quitter\n";
+			Terminal::get() << "5. Sauvegarder\n"
+											<< "6. Options\n"
+											<< "7. Menu Principal\n\n"
+											<< "0. Quitter\n";
 		}
 		else
 		{
-			Terminal::get() << "5. Options\n";
-			Terminal::get() << "6. Menu Principal\n\n";
-			Terminal::get() << "0. Quitter\n";
+			Terminal::get() << "5. Options\n"
+											<< "6. Menu Principal\n\n"
+											<< "0. Quitter\n";
 		}
 		//Redirection de l'utilisateur selon son choix grâce a un switch.
 		switch(Menu::askChoice())
@@ -101,10 +101,10 @@ void menuJeu(Profil& Player, bool& quitGame)
 						while(quitVerify != true) // Boucle de confirmation
 						{
 							char verification;
-							Terminal::get() << "/!\\ Attention ! /!\\\n";
-							Terminal::get() << "====================\n";
-							Terminal::get() << "Voulez vous sauvegarder votre partie ? [O/n]\n\n";
-							Terminal::get() << "====================\n";
+							Terminal::get() << "/!\\ Attention ! /!\\\n"
+															<< "====================\n"
+															<< "Voulez vous sauvegarder votre partie ? [O/n]\n\n"
+															<< "====================\n";
 							verification = getch();
 							if(verification == 'o' || verification == 'O')
 							{
@@ -174,10 +174,10 @@ void menuJeu(Profil& Player, bool& quitGame)
 							while(quitVerify != true) // Boucle de confirmation
 							{
 								char verification;
-								Terminal::get() << "/!\\ Attention ! /!\\\n";
-								Terminal::get() << "====================\n";
-								Terminal::get() << "Voulez vous sauvegarder votre partie ? [O/n]\n\n";
-								Terminal::get() << "====================\n";
+								Terminal::get() << "/!\\ Attention ! /!\\\n"
+																<< "====================\n"
+																<< "Voulez vous sauvegarder votre partie ? [O/n]\n\n"
+																<< "====================\n";
 								verification = getch();
 								if(verification == 'o' || verification == 'O')
 								{
@@ -227,10 +227,10 @@ void menuJeu(Profil& Player, bool& quitGame)
 							while(quitVerify != true) // Boucle de confirmation
 							{
 								char verification = 'x';
-								Terminal::get() << "/!\\ Attention ! /!\\\n";
-								Terminal::get() << "====================\n";
-								Terminal::get() << "Voulez vous sauvegarder votre partie ? [O/n]\n\n";
-								Terminal::get() << "====================\n";
+								Terminal::get() << "/!\\ Attention ! /!\\\n"
+																<< "====================\n"
+																<< "Voulez vous sauvegarder votre partie ? [O/n]\n\n"
+																<< "====================\n";
 								verification = getch();
 								if(verification == 'o' || verification == 'O')
 								{
@@ -269,10 +269,10 @@ void menuChargementPartie(Profil*& Player, bool& quit)
 	bool etat; //stocke le resultat du chargement
 	std::string nom;
 	//Menu Chargement profil
-	Terminal::get() << "Charger un Profil: \n";
-	Terminal::get() << "===============\n";
-	Terminal::get() << "Selectionnez un profil a charger.\n";
-	Terminal::get() << "===============\n\n";
+	Terminal::get() << "Charger un Profil: \n"
+									<< "===============\n"
+									<< "Selectionnez un profil a charger.\n"
+									<< "===============\n\n";
 	Profil::listerSauvegardes();
 	Terminal::get() << "0. Annuler\n";
 	menu = Menu::askChoice();
@@ -302,12 +302,12 @@ void menuCreationPartie(Profil*& Player, bool& quit)
 	std::string nom;
 
 	//Menu Creation de profil
-	Terminal::get() << "Creation de votre Profil\n";
-	Terminal::get() << "===============\n\n";
-	Terminal::get() << "Saisissez le nom du Profil.\n\n";
-	Terminal::get() << "0. Annuler\n";
-	Terminal::get() << "===============\n";
-	Terminal::get() << "Nom: ";
+	Terminal::get() << "Creation de votre Profil\n"
+									<< "===============\n\n"
+									<< "Saisissez le nom du Profil.\n\n"
+									<< "0. Annuler\n"
+									<< "===============\n"
+									<< "Nom: ";
 	nom = getString(); // l'utilisateur entre son nom
 	if(nom[0] != 0)
 	{
@@ -326,10 +326,10 @@ void menuSuppressionPartie()
 
 	//Debut
 	//Menu Chargement profil
-	Terminal::get() << "Supprimer un Profil: \n";
-	Terminal::get() << "===============\n";
-	Terminal::get() << "Selectionnez un profil a supprimer.\n";
-	Terminal::get() << "===============\n\n";
+	Terminal::get() << "Supprimer un Profil: \n"
+									<< "===============\n"
+									<< "Selectionnez un profil a supprimer.\n"
+									<< "===============\n\n";
 	Profil::listerSauvegardes();
 	Terminal::get() << "0. Annuler\n";
 	menu = Menu::askChoice(); // l'utilisateur entre le menu qu'il souhaite ouvrir
@@ -347,11 +347,11 @@ void menuSuppressionPartie()
 				Terminal::get().clearScreen(); //On flushe l'ancien ecran
 				while(quitVerify != 'n') // Boucle de confirmation
 				{
-					Terminal::get() << "/!\\ Attention ! /!\\\n";
-					Terminal::get() << "====================\n";
-					Terminal::get() << "La partie sera perdue !\n";
-					Terminal::get() << "Souhaitez-vous vraiment supprimer Profil" << i << " ? [O/n]\n";
-					Terminal::get() << "====================\n";
+					Terminal::get() << "/!\\ Attention ! /!\\\n"
+													<< "====================\n"
+													<< "La partie sera perdue !\n"
+													<< "Souhaitez-vous vraiment supprimer Profil" << i << " ? [O/n]\n"
+													<< "====================\n";
 					quitVerify = getch(); // l'utilisateur confirme
 					switch(quitVerify)
 					{
@@ -395,16 +395,7 @@ void menuApropos()
 	//Menu A propos
 	Terminal::get() << "A Propos de\n";
 	Terminal::get() << "===============\n\n";
-	Terminal::get() << " ________                  ________       _____                    \n";		// Dessin de Credits
-	sleep(0.2f);
-	Terminal::get() << " ___  __ \\_____ ______________  __ \\_________(_)__   ______________\n";		// En ASCII-ART
-	sleep(0.2f);
-	Terminal::get() << " __  /_/ /  __ `/  ___/  _ \\_  / / /_  ___/_  /__ | / /  _ \\_  ___/\n";		// Caractere \ et " doublement echappes
-	sleep(0.2f);
-	Terminal::get() << " _  _, _// /_/ // /__ /  __/  /_/ /_  /   _  / __ |/ //  __/  /    \n";		// Pour palier aux warnings de compilo
-	sleep(0.2f);
-	Terminal::get() << " /_/ |_| \\__,_/ \\___/ \\___//_____/ /_/    /_/  _____/ \\___//_/     \n\n";	// RACEDRIVER Police Speed from patorjk.com
-	sleep(0.5f);
+	Game::instance->printASCIILogo();
 	Terminal::get() << "Racedriver est un jeu de course de voitures en console. \n";
 	Terminal::get() << "Ce jeu est developpe en C++ par:\n";
 	Terminal::get() << "~Baxlan(contact: Cavalioz@Hotmail.fr)\n";
@@ -413,5 +404,4 @@ void menuApropos()
 	Terminal::get() << "===============\n";
 	Terminal::get() << "Appuyez sur Entree pour retourner au menu principal...\n";
 	getch(); //On appelle le videur de buffer qui va demander la pression d'entree, vu que le buffer est vide. (=pause, en version portable)
-	Terminal::get().clearScreen();
 }

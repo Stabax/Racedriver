@@ -9,14 +9,14 @@ void menuCourse(Profil& Player)
 	while(quit != true)
 	{
 		//Menu Principal
-		Terminal::get() << "Menu Course\n";
-		Terminal::get() << "===============\n";
-		Terminal::get() << "Selectionnez un mode de course.\n";
-		Terminal::get() << "===============\n\n";
-		Terminal::get() << "1. Carriere\n";
-		Terminal::get() << "2. Championnat\n";
-		Terminal::get() << "3. Course Libre\n\n";
-		Terminal::get() << "0. Retour\n";
+		Terminal::get() << "Menu Course\n"
+										<< "===============\n"
+										<< "Selectionnez un mode de course.\n"
+										<< "===============\n\n"
+										<< "1. Carriere\n"
+										<< "2. Championnat\n"
+										<< "3. Course Libre\n\n"
+										<< "0. Retour\n";
 		//Redirection de l'utilisateur selon son choix grâce a un switch.
 		switch(Menu::askChoice())
 		{
@@ -54,15 +54,15 @@ void menuGarage(Profil& Player)
 	while(quit != true)
 	{
 		//Menu Principal
-		Terminal::get() << "Menu Garage\n";
-		Terminal::get() << "===============\n";
-		Terminal::get() << "Credits: " << Player.getCredits() << "c\n";
-		Terminal::get() << "===============\n\n";
-		Terminal::get() << "1. Consulter Garage\n";
-		Terminal::get() << "2. Visiter Atelier\n";
-		Terminal::get() << "3. Maintenance vehicules\n\n";
-		Terminal::get() << "4. Acheter Box \n\n";
-		Terminal::get() << "0. Retour\n";
+		Terminal::get() << "Menu Garage\n"
+										<< "===============\n"
+										<< "Credits: " << Player.getCredits() << "c\n"
+										<< "===============\n\n"
+										<< "1. Consulter Garage\n"
+										<< "2. Visiter Atelier\n"
+										<< "3. Maintenance vehicules\n\n"
+										<< "4. Acheter Box \n\n"
+										<< "0. Retour\n";
 		//Redirection de l'utilisateur selon son choix grâce a un switch.
 		switch(Menu::askChoice())
 		{
@@ -97,11 +97,11 @@ void menuGarage(Profil& Player)
 void menuConcessionaire(Profil& Player)
 {
 	//Menu Principal
-	Terminal::get() << "Concessionnaire\n";
-	Terminal::get() << "===============\n\n";
-	Terminal::get() << "1. Achat\n";
-	Terminal::get() << "2. Vente\n\n";
-	Terminal::get() << "0. Retour\n";
+	Terminal::get() << "Concessionnaire\n"
+									<< "===============\n\n"
+									<< "1. Achat\n"
+									<< "2. Vente\n\n"
+									<< "0. Retour\n";
 	//Redirection de l'utilisateur selon son choix grâce a un switch.
 	switch(Menu::askChoice())
 	{
@@ -125,23 +125,23 @@ void menuConcessionaire(Profil& Player)
 
 void menuStats(Profil& Player)
 {
-	Terminal::get() << "Stats du Profil: " << Player.getNom() << "\n";
-	Terminal::get() << "===============\n";
-	Terminal::get() << "[UUID: " << Player.getUuid() << "]\n\n";
-	Terminal::get() << "#Stats Course:\n";
-	Terminal::get() << " |Courses effectuees: " << Player.getNbCourses() << "\n";
-	Terminal::get() << " |\n";
-	Terminal::get() << " |Victoires: " << Player.getVictoires() << "\n";
-	Terminal::get() << " |Defaites: " << Player.getDefaites() << "\n";
-	Terminal::get() << " |[V/D Ratio: " << Player.getVDRatio() << "]\n";
-	Terminal::get() << " |\n";
-	Terminal::get() << " |Accidents: " << Player.getAccidents() << "\n\n";
-	Terminal::get() << "#Stats Carriere:\n";
-	Terminal::get() << " |Credits remportes: " << Player.getCreditsGagnes() << "c\n";
-	Terminal::get() << " |\n";
-	Terminal::get() << " |Voitures achetees: " << Player.getVoituresAchetees() << "\n\n";
-	Terminal::get() << "===============\n";
-	Terminal::get() << "Appuyez sur [Entree] pour retourner au menu principal...\n";
+	Terminal::get() << "Stats du Profil: " << Player.getNom() << "\n"
+									<< "===============\n"
+									<< "[UUID: " << Player.getUuid() << "]\n\n"
+									<< "#Stats Course:\n"
+									<< " |Courses effectuees: " << Player.getNbCourses() << "\n"
+									<< " |\n"
+									<< " |Victoires: " << Player.getVictoires() << "\n"
+									<< " |Defaites: " << Player.getDefaites() << "\n"
+									<< " |[V/D Ratio: " << Player.getVDRatio() << "]\n"
+									<< " |\n"
+									<< " |Accidents: " << Player.getAccidents() << "\n\n"
+									<< "#Stats Carriere:\n"
+									<< " |Credits remportes: " << Player.getCreditsGagnes() << "c\n"
+									<< " |\n"
+									<< " |Voitures achetees: " << Player.getVoituresAchetees() << "\n\n"
+									<< "===============\n"
+									<< "Appuyez sur [Entree] pour retourner au menu principal...\n";
 	getch();
 	Terminal::get().clearScreen();
 }
@@ -158,8 +158,8 @@ void menuSauvegarde(Profil& Player)
 	std::ifstream save(cheminFichier.c_str());
 
 	//Menu de sauvegarde de profil
-	Terminal::get() << "Sauvegarder votre Progression\n";
-	Terminal::get() << "===============\n";
+	Terminal::get() << "Sauvegarder votre Progression\n"
+									<< "===============\n";
 	if(save)
 	{
 		Terminal::get() << "Vous allez ecraser votre derniere sauvegarde (Profil" << Player.getNumero() << ": \"" << Player.getNom() << "\")\n\n";
@@ -171,29 +171,29 @@ void menuSauvegarde(Profil& Player)
 	if(Menu::askConfirmation())
 	{
 		Terminal::get().clearScreen(); //on flushe l'ecran
-		Terminal::get() << "Sauvegarder votre Progression\n";
-		Terminal::get() << "===============\n";
-		Terminal::get() << "Sauvegarde en cours...\n";
-		Terminal::get() << "===============\n";
-		Terminal::get() << "Veuillez patienter";
+		Terminal::get() << "Sauvegarder votre Progression\n"
+										<< "===============\n"
+										<< "Sauvegarde en cours...\n"
+										<< "===============\n"
+										<< "Veuillez patienter";
 		sleep(0.4f);
 		Player.sauvegarderProfil();
 		Terminal::get().clearScreen();
-		Terminal::get() << "Sauvegarder votre Progression\n";
-		Terminal::get() << "===============\n";
-		Terminal::get() << "Partie Sauvegardee !\n";
-		Terminal::get() << "===============\n";
-		Terminal::get() << "Appuyez sur Entree pour retourner au menu principal...\n";
+		Terminal::get() << "Sauvegarder votre Progression\n"
+										<< "===============\n"
+										<< "Partie Sauvegardee !\n"
+										<< "===============\n"
+										<< "Appuyez sur Entree pour retourner au menu principal...\n";
 		getch();
 	}
 	else
 	{
 		Terminal::get().clearScreen(); //on flushe l'ecran
-		Terminal::get() << "Sauvegarder votre Progression\n";
-		Terminal::get() << "===============\n\n";
-		Terminal::get() << "Sauvegarde annulee.\n";
-		Terminal::get() << "===============\n";
-		Terminal::get() << "Appuyez sur Entree pour retourner au menu principal...\n";
+		Terminal::get() << "Sauvegarder votre Progression\n"
+										<< "===============\n\n"
+										<< "Sauvegarde annulee.\n"
+										<< "===============\n"
+										<< "Appuyez sur Entree pour retourner au menu principal...\n";
 		getch();
 	}
 }
@@ -206,13 +206,13 @@ void menuOptions(Profil& Player)
 	{
 		//Menu Principal
 		saveAuto = Player.getSauvegardeAuto() ? "ON" : "OFF";
-		Terminal::get() << "Options " << Player.getNom() << "\n";
-		Terminal::get() << "===============\n\n";
-		Terminal::get() << "1. Sauvegarde auto [" << saveAuto << "]\n";
-		Terminal::get() << "2. Difficulte ["<< Player.getDifficulteString() <<"]\n";
-		Terminal::get() << "3. Raccourcis menus [OFF]\n";
-		Terminal::get() << "4. Changer le nom du profil\n\n";
-		Terminal::get() << "0. Retour\n";
+		Terminal::get() << "Options " << Player.getNom() << "\n"
+										<< "===============\n\n"
+										<< "1. Sauvegarde auto [" << saveAuto << "]\n"
+										<< "2. Difficulte ["<< Player.getDifficulteString() <<"]\n"
+										<< "3. Raccourcis menus [OFF]\n"
+										<< "4. Changer le nom du profil\n\n"
+										<< "0. Retour\n";
 		//Redirection de l'utilisateur selon son choix grâce a un switch.
 		switch(Menu::askChoice())
 		{

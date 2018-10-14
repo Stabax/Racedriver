@@ -21,7 +21,7 @@ CXXFLAGS	= -g3 -W -Wall -Wpedantic -Iinclude -I$(LIBDIR)
 LDFLAGS		= -L$(BINDIR) -lcurl -static-libgcc
 
 ifeq ($(OS),Windows_NT)
-	LDFLAGS += lpdcurses
+	LDFLAGS += -lpdcurses
 else
 	LDFLAGS += -lncurses
 endif

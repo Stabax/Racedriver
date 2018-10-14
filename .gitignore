@@ -18,6 +18,7 @@
 
 # Visual Studio #
 #################
+/.vscode
 *.VC.db
 *.sbr
 *.opensdf

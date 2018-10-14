@@ -100,7 +100,7 @@ void menuJeu(Profil& Player, bool& quitGame)
 					{
 						Terminal::get() << "/!\\ Attention ! /!\\\n"
 														<< "====================\n"
-														<< "La partie va etre sauvegardee\n"
+														<< "La partie va etre sauvegardee\n";
 						if(Menu::askConfirmation())
 						{
 							Player.sauvegarderProfil();
@@ -158,7 +158,7 @@ void menuJeu(Profil& Player, bool& quitGame)
 						{
 							Terminal::get() << "/!\\ Attention ! /!\\\n"
 														<< "====================\n"
-														<< "La partie va etre sauvegardee\n"
+														<< "La partie va etre sauvegardee\n";
 							if(Menu::askConfirmation())
 							{
 								Player.sauvegarderProfil();
@@ -196,7 +196,7 @@ void menuJeu(Profil& Player, bool& quitGame)
 						{
 							Terminal::get() << "/!\\ Attention ! /!\\\n"
 														<< "====================\n"
-														<< "La partie va etre sauvegardee\n"
+														<< "La partie va etre sauvegardee\n";
 							if(Menu::askConfirmation())
 							{
 								Player.sauvegarderProfil();

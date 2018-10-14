@@ -1,3 +1,0 @@
-<screen id="main_" background="bg">
-  <button text="quit" command="exit" />
-</screen>

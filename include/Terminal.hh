@@ -3,7 +3,11 @@
 
 #include <memory>
 #include "Utils.hpp"
-#include <pdcurses/curses.h>
+#ifdef _WIN32
+  #include <pdcurses/curses.h>
+#elif __linux__
+  #include <curses.h>
+#endif
 
 class Terminal
 {

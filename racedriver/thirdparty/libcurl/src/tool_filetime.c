@@ -59,15 +59,15 @@ curl_off_t getfiletime(const char *filename, FILE *error_stream)
       fprintf(error_stream,
               "Failed to get filetime: "
               "GetFileTime failed: GetLastError %u\n",
-              (unsigned int)GetLastMenu::error());
+              (unsigned int)GetLastError());
     }
     CloseHandle(hfile);
   }
-  else if(GetLastMenu::error() != ERROR_FILE_NOT_FOUND) {
+  else if(GetLastError() != ERROR_FILE_NOT_FOUND) {
     fprintf(error_stream,
             "Failed to get filetime: "
             "CreateFile failed: GetLastError %u\n",
-            (unsigned int)GetLastMenu::error());
+            (unsigned int)GetLastError());
   }
 #else
   struct_stat statbuf;
@@ -76,7 +76,7 @@ curl_off_t getfiletime(const char *filename, FILE *error_stream)
   }
   else if(errno != ENOENT) {
     fprintf(error_stream,
-            "Failed to get filetime: %s\n", strMenu::error(errno));
+            "Failed to get filetime: %s\n", strerror(errno));
   }
 #endif
   return result;
@@ -117,7 +117,7 @@ void setfiletime(curl_off_t filetime, const char *filename,
         fprintf(error_stream,
                 "Failed to set filetime %" CURL_FORMAT_CURL_OFF_T
                 " on outfile: SetFileTime failed: GetLastError %u\n",
-                filetime, (unsigned int)GetLastMenu::error());
+                filetime, (unsigned int)GetLastError());
       }
       CloseHandle(hfile);
     }
@@ -125,7 +125,7 @@ void setfiletime(curl_off_t filetime, const char *filename,
       fprintf(error_stream,
               "Failed to set filetime %" CURL_FORMAT_CURL_OFF_T
               " on outfile: CreateFile failed: GetLastError %u\n",
-              filetime, (unsigned int)GetLastMenu::error());
+              filetime, (unsigned int)GetLastError());
     }
 
 #elif defined(HAVE_UTIMES)
@@ -135,7 +135,7 @@ void setfiletime(curl_off_t filetime, const char *filename,
     if(utimes(filename, times)) {
       fprintf(error_stream,
               "Failed to set filetime %" CURL_FORMAT_CURL_OFF_T
-              " on outfile: %s\n", filetime, strMenu::error(errno));
+              " on outfile: %s\n", filetime, strerror(errno));
     }
 
 #elif defined(HAVE_UTIME)
@@ -145,7 +145,7 @@ void setfiletime(curl_off_t filetime, const char *filename,
     if(utime(filename, &times)) {
       fprintf(error_stream,
               "Failed to set filetime %" CURL_FORMAT_CURL_OFF_T
-              " on outfile: %s\n", filetime, strMenu::error(errno));
+              " on outfile: %s\n", filetime, strerror(errno));
     }
 #endif
   }

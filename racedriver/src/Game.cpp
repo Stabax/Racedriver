@@ -1,6 +1,6 @@
 #include <unistd.h>
 #include <ctime>
-#include <libcurl/include/curl.h>
+#include <libcurl/include/curl/curl.h>
 #include <sstream>
 #include <fstream>
 #include "Menu.hh"

@@ -98,28 +98,13 @@ void menuJeu(Profil& Player, bool& quitGame)
 					Profil::chargerProfil(Player.getNumero(), PlayerSaved); // On charge le profil du fichier
 					if(Player != *PlayerSaved)
 					{
-						while(quitVerify != true) // Boucle de confirmation
+						Terminal::get() << "/!\\ Attention ! /!\\\n"
+														<< "====================\n"
+														<< "La partie va etre sauvegardee\n"
+						if(Menu::askConfirmation())
 						{
-							char verification;
-							Terminal::get() << "/!\\ Attention ! /!\\\n"
-															<< "====================\n"
-															<< "Voulez vous sauvegarder votre partie ? [O/n]\n\n"
-															<< "====================\n";
-							verification = getch();
-							if(verification == 'o' || verification == 'O')
-							{
-								Player.sauvegarderProfil();
-								quitVerify = true;
-							}
-							else if(verification == 'n' || verification == 'N')
-							{
-								quitVerify = true;
-							}
-							else
-							{
-								Terminal::get().clearScreen();
-								Menu::error("Saisie invalide");
-							}
+							Player.sauvegarderProfil();
+							quitVerify = true;
 						}
 					}
 				}
@@ -171,28 +156,13 @@ void menuJeu(Profil& Player, bool& quitGame)
 						Profil::chargerProfil(Player.getNumero(), PlayerSaved); // On charge le profil du fichier
 						if(Player != *PlayerSaved)
 						{
-							while(quitVerify != true) // Boucle de confirmation
+							Terminal::get() << "/!\\ Attention ! /!\\\n"
+														<< "====================\n"
+														<< "La partie va etre sauvegardee\n"
+							if(Menu::askConfirmation())
 							{
-								char verification;
-								Terminal::get() << "/!\\ Attention ! /!\\\n"
-																<< "====================\n"
-																<< "Voulez vous sauvegarder votre partie ? [O/n]\n\n"
-																<< "====================\n";
-								verification = getch();
-								if(verification == 'o' || verification == 'O')
-								{
-									Player.sauvegarderProfil();
-									quitVerify = true;
-								}
-								else if(verification == 'n' || verification == 'N')
-								{
-									quitVerify = true;
-								}
-								else
-								{
-									Terminal::get().clearScreen();
-									Menu::error("Saisie invalide");
-								}
+								Player.sauvegarderProfil();
+								quitVerify = true;
 							}
 						}
 					}
@@ -224,28 +194,13 @@ void menuJeu(Profil& Player, bool& quitGame)
 						Profil::chargerProfil(Player.getNumero(), PlayerSaved); // On charge le profil du fichier
 						if(Player != *PlayerSaved)
 						{
-							while(quitVerify != true) // Boucle de confirmation
+							Terminal::get() << "/!\\ Attention ! /!\\\n"
+														<< "====================\n"
+														<< "La partie va etre sauvegardee\n"
+							if(Menu::askConfirmation())
 							{
-								char verification = 'x';
-								Terminal::get() << "/!\\ Attention ! /!\\\n"
-																<< "====================\n"
-																<< "Voulez vous sauvegarder votre partie ? [O/n]\n\n"
-																<< "====================\n";
-								verification = getch();
-								if(verification == 'o' || verification == 'O')
-								{
-									Player.sauvegarderProfil();
-									quitVerify = true;
-								}
-								else if(verification == 'n' || verification == 'N')
-								{
-									quitVerify = true;
-								}
-								else
-								{
-									Terminal::get().clearScreen();
-									Menu::error("Saisie invalide");
-								}
+								Player.sauvegarderProfil();
+								quitVerify = true;
 							}
 						}
 					}

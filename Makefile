@@ -18,7 +18,13 @@ RM = rm -rf
 
 CXXFLAGS	= -g3 -W -Wall -Wpedantic -Iinclude -I$(LIBDIR)
 
-LDFLAGS		= -L$(BINDIR) -lcurl -lpdcurses -static-libgcc
+LDFLAGS		= -L$(BINDIR) -lcurl -static-libgcc
+
+ifeq ($(OS),Windows_NT)
+	LDFLAGS += lpdcurses
+else
+	LDFLAGS += -lncurses
+endif
 
 NAME = $(BINDIR)/Racedriver
 

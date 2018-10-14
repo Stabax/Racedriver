@@ -22,7 +22,6 @@ public:
   void setFullscreen();
   void setCanonical(bool set);
   void setStdinTimeout(int milliseconds);
-  Point getMousePos();
   void print(const std::string &str);
   void printAt(Point point, const std::string &str);
   WINDOW *addChildWindow(Point pos, Point size);

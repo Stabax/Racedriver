@@ -10,7 +10,6 @@ Terminal::Terminal()
 	_screen = initscr(); // Start Xcurses window
 	setFullscreen();
 	setCanonical(true);
-	mouse_set(ALL_MOUSE_EVENTS); //Enables mouse
 	curs_set(2); //Block cursor
 	Terminal::instance = std::unique_ptr<Terminal>(this);
 }
@@ -50,13 +49,6 @@ void Terminal::setCanonical(bool set = true)
 void Terminal::setStdinTimeout(int milliseconds = -1)
 {
 	wtimeout(_screen, milliseconds);
-}
-
-Point Terminal::getMousePos()
-{
-	Point point;
-  wmouse_position(_screen, &point.y, &point.x);
-	return (point);
 }
 
 void Terminal::print(const std::string &str)

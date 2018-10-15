@@ -16,7 +16,7 @@ CXX = g++
 
 RM = rm -rf
 
-CXXFLAGS	= -g3 -W -Wall -Wpedantic -Iinclude -I$(LIBDIR)
+CXXFLAGS	= -g3 -W -Wall -Wpedantic -Iinclude -I$(LIBDIR) -I$(LIBDIR)/json/include/
 
 LDFLAGS		= -L$(BINDIR) -lcurl -static-libgcc
 
@@ -30,6 +30,7 @@ NAME = $(BINDIR)/Racedriver
 
 SRCS = 	$(SRCDIR)/Game.cpp							\
 				$(SRCDIR)/Menu.cpp							\
+				$(SRCDIR)/DataFile.cpp					\
 				$(SRCDIR)/algos.cpp							\
 				$(SRCDIR)/Circuit.cpp						\
 				$(SRCDIR)/course.cpp						\

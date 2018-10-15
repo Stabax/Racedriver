@@ -6,6 +6,7 @@
 *.dll
 *.res
 *.exe
+Racedriver
 *.lib
 *.so
 *.o

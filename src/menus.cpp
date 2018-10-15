@@ -148,7 +148,6 @@ void menuStats(Profil& Player)
 
 void menuSauvegarde(Profil& Player)
 {
-	char menu;
 	std::ostringstream oss;
 	oss << Player.getNumero();
 	std::string numeroSave = oss.str();

@@ -295,7 +295,7 @@ void menuSuppressionPartie()
 	}
 	else if(menu > 0 && menu <= Profil::compterSauvegardes())
 	{
-		for (size_t i = 1; i <= Profil::compterSauvegardes(); i++)
+		for (int i = 1; i <= Profil::compterSauvegardes(); i++)
 		{
 			if(menu == i)
 			{

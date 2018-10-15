@@ -439,7 +439,7 @@ void Profil::supprimerProfil(const int& numeroSave)
 	}
 	if(nbSaves > numeroSave)
 	{
-		for (size_t i = numeroSave; i < nbSaves; i++)
+		for (int i = numeroSave; i < nbSaves; i++)
 		{
 			oss.str("");
 			oss << i;      // on insere le int dans le stream oss
@@ -796,7 +796,7 @@ bool operator!=(Profil& Player, Profil& Player2)
 
 	if(Player.getUuid() == Player2.getUuid() && Player.getNumero() == Player2.getNumero() && Player.getNom() == Player2.getNom() && Player.getCredits() == Player2.getCredits() && Player.getNbBox() == Player2.getNbBox() && Player.getNbCourses() == Player2.getNbCourses() && Player.getVictoires() == Player2.getVictoires() && Player.getDefaites() == Player2.getDefaites() && Player.getAccidents() == Player2.getAccidents() && Player.getCreditsGagnes() == Player2.getCreditsGagnes() && Player.getVoituresAchetees() == Player2.getVoituresAchetees() && Player.getDifficulte() == Player2.getDifficulte() && Player.getSauvegardeAuto() == Player2.getSauvegardeAuto()) //On utilise les accesseurs pour comparer
 	{
-		for (size_t numeroBox = 0; numeroBox < Player.getNbBox(); numeroBox++)
+		for (int numeroBox = 0; numeroBox < Player.getNbBox(); numeroBox++)
 		{
 			Voiture1 = Player.getBox(numeroBox);
 			Voiture2 = Player.getBox(numeroBox);

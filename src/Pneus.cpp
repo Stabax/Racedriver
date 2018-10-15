@@ -67,7 +67,6 @@ void Pneus::listerPneus()
 	std::string chemin ="Data/composants/pneus.cdx";
 
 	std::string var;
-	int prixPneus=0;
 
 	std::ifstream flux(chemin.c_str());
 	if(flux)

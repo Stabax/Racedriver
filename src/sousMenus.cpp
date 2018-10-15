@@ -17,7 +17,7 @@ Voiture* menuChoixVoiture(Profil& Player)
 										<< "===============\n"
 										<< "Selectionnez le vehicule qui va faire la course.\n"
 										<< "===============\n\n";
-		for (size_t numeroBox = 0; numeroBox < nbBox; numeroBox++)
+		for (int numeroBox = 0; numeroBox < nbBox; numeroBox++)
 		{
 			VoitureListee = Player.getBox(numeroBox);
 			if(Player.boxVide(numeroBox))
@@ -160,7 +160,7 @@ int menuConsulterGarage(Profil& Player, const int& mode)
 {
 	std::string sMenu;
 	int menu;
-	size_t nbBox = Player.getNbBox();
+	int nbBox = Player.getNbBox();
 	Voiture* Voiture = 0;
 
 	//Menu Principal
@@ -187,7 +187,7 @@ int menuConsulterGarage(Profil& Player, const int& mode)
 		Terminal::get() << "Selectionnez un vehicule a vendre.\n";
 	}
 	Terminal::get() << "===============\n\n";
-	for (size_t numeroBox = 0; numeroBox < nbBox; numeroBox++)
+	for (int numeroBox = 0; numeroBox < nbBox; numeroBox++)
 	{
 		Voiture = Player.getBox(numeroBox);
 		if(Player.boxVide(numeroBox))
@@ -199,7 +199,7 @@ int menuConsulterGarage(Profil& Player, const int& mode)
 			Terminal::get() << (numeroBox + 1) << ". Box " << (numeroBox + 1) << " [" << Voiture->getMarque() << " " << Voiture->getModele() << "]\n";
 		}
 	}
-	for (size_t numeroBoxVerouille = nbBox; numeroBoxVerouille < 5; numeroBoxVerouille++)
+	for (int numeroBoxVerouille = nbBox; numeroBoxVerouille < 5; numeroBoxVerouille++)
 	{
 		Terminal::get() << (numeroBoxVerouille + 1) << ". Box " << (numeroBoxVerouille + 1) << " [VEROUILLE]\n";
 	}

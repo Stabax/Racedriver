@@ -280,7 +280,7 @@ void menuConsulterBox(Profil& Player, const int& numeroBox)
 									<< " |Capacite Nitro: " << Voiture->getNitroMax() << " L\n"
 									<< " |Aerodynamisme: " << Voiture->getAerodynamisme() << " %\n"
 									<< " |Nitro Actuelle: " << Voiture->getNiveauNitro() << " L\n"
-									<< " |Durabilite Pneus: "<< Voiture->getDurabilitePneus() << "%\n"
+									<< " |Durabilite Tires: "<< Voiture->getDurabiliteTires() << "%\n"
 									<< " |Etat: " << Voiture->getEtat() << "%\n\n"
 									<< "#Moteur\n"
 									<< " |Modele: " << Voiture->getNomMoteur() << "\n"
@@ -294,9 +294,9 @@ void menuConsulterBox(Profil& Player, const int& numeroBox)
 									<< " |Modele: " <<  Voiture->getNomPriseAir() << "\n"
 									<< " |Rang: "<<  Voiture->getRangPriseAir() << "\n"
 									<< " |Aerodynamisme: " <<  Voiture->getAerodynamismePriseAir() << " %\n\n"
-									<< "#Pneus\n"
-									<< " |Marque: " <<  Voiture->getMarquePneus() << "\n"
-									<< " |Rang: "<<  Voiture->getRangPneus() << "\n\n"
+									<< "#Tires\n"
+									<< " |Marque: " <<  Voiture->getMarqueTires() << "\n"
+									<< " |Rang: "<<  Voiture->getRangTires() << "\n\n"
 									<< "===============\n"
 									<< "Appuyez sur Entree pour revenir au menu precedent";
 	getch();
@@ -664,7 +664,7 @@ void menuMaintenance(Profil& Player, const int& numeroBox)
 										<< "Selectionnez un vehicule a reparer ou entretenir.\n"
 										<< "===============\n\n"
 										<< "Voiture actuelle: [BOX" << numeroBox + 1 << ": " << Voiture->getMarque() << " " << Voiture->getModele() << "]\n\n"
-										<< "1. Changer Pneus\n"
+										<< "1. Changer Tires\n"
 										<< "2. Plein Nitro\n"
 										<< "3. Reparer\n\n"
 										<< "0. Retour\n";
@@ -686,8 +686,8 @@ void menuMaintenance(Profil& Player, const int& numeroBox)
 				{
 					if(Player.payer(2000))
 					{
-						Voiture->changerPneus();
-						Menu::msg("Pneus Changes avec succes !");
+						Voiture->changerTires();
+						Menu::msg("Tires Changes avec succes !");
 					}
 				}
 				else
@@ -714,7 +714,7 @@ void menuMaintenance(Profil& Player, const int& numeroBox)
 					{
 						if(Player.payer(nitroManquante * 100 ))
 						{
-							Voiture->changerPneus();
+							Voiture->changerTires();
 							Menu::msg("Nitro au max !");
 						}
 					}

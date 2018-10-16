@@ -16,12 +16,19 @@ Game::Game()
   Game::instance = std::unique_ptr<Game>(this);
 }
 
+bool Game::load()
+{
+	_term << "Chargement en Cours...\n";
+	Tires::loadCollection();
+	return (true);
+}
+
 int Game::main()
 {
 	_term.clearScreen();
 	std::srand(std::time(0)); //INITIALISATION DE L'ALEATOIRE
 	update(); //on verifie et fait les mises à jour
-	_term << "Chargement en Cours...\n";
+	load();
 	usleep(2000);
 	_term.clearScreen();
 	menuRacedriver();//on lance le coeur du jeu

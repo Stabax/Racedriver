@@ -7,12 +7,12 @@
 #include "Moteur.hh"
 #include "Spoiler.hh"
 #include "PriseAir.hh"
-#include "Pneus.hh"
+#include "Tires.hh"
 
 class Voiture
 {
 public:
-	Voiture(const std::string& marque, const std::string& modele, const int& idMoteur, const int& idSpoiler, const int& idPriseAir, const char& rang, const int& nitroMax, const int& aerodynamismeVoiture, const int& idPneus, const int& usurePneus = 100, const int& etat = 100);
+	Voiture(const std::string& marque, const std::string& modele, const int& idMoteur, const int& idSpoiler, const int& idPriseAir, const char& rang, const int& nitroMax, const int& aerodynamismeVoiture, const int& idTires, const int& usureTires = 100, const int& etat = 100);
 	~Voiture();
 
 	static Voiture* chargerVoiture(const int& id, const char& rangCharge);
@@ -25,9 +25,9 @@ public:
 	char getRang() const;
 	float getVitesse() const;
 	float getAcceleration() const;
-	int getDurabilitePneus() const;
-	char getRangPneus() const;
-	std::string getMarquePneus() const;
+	int getDurabiliteTires() const;
+	char getRangTires() const;
+	std::string getMarqueTires() const;
 	int getAerodynamisme() const;
 	int getIdMoteur() const;
 	int getIdSpoiler() const;
@@ -38,7 +38,7 @@ public:
 	int getAerodynamismeVoiture() const;
 	int getConsommation() const;
 	int getPrix() const;
-	int getIdPneus() const;
+	int getIdTires() const;
 
 	std::string getNomMoteur() const;	//infos moteur
 	float getVitesseMoteur() const;
@@ -57,13 +57,13 @@ public:
 	void setMoteur(Moteur* newMoteur, const int& idMoteur);
 	void setSpoiler(Spoiler* newSpoiler, const int& idSpoiler);
 	void setPriseAir(PriseAir* newPriseAir, const int& idPriseAir);
-	void setPneus(const int& ajouter);
+	void setTires(const int& ajouter);
 	void setNitro(const int& ajouter);
 
 	void retirerEtat(const int& retirer);
 
 	void pleinNitro();
-	void changerPneus();
+	void changerTires();
 
 	void pleinCarburant();
 	void reparer();
@@ -88,8 +88,8 @@ protected:
 	float m_consommation;	//change en fonction du moteur
 	int m_nitroMax;	//non modifiable pour une voiture donnée
 	int m_aerodynamismeVoiture;	//non modifiable pour une voiture donnée
-	Pneus *m_pneus;
-	int m_idPneus;
+	Tires *m_pneus;
+	int m_idTires;
 	int m_etat;
 };
 

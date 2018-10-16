@@ -1,21 +1,42 @@
-//Pneus.cpp
-#include "Pneus.hh"
+//Tires.cpp
+#include "Tires.hh"
 #include "Menu.hh"
 
-Pneus::Pneus(const std::string& marque, const char& rang, const int& usure)
- : m_marque(marque), m_rang(rang), m_durabilite(usure), m_prix(vRang(m_rang)*1500)
+std::vector<Tires> Tires::collection = std::vector<Tires>();
+
+Tires::Tires(const std::string& marque, const char& rang, const int& usure)
+ : _brand(marque), _rank(rang), _durability(usure), _price(vRang(_rank) * 1500)
 {
 
 }
 
-Pneus::~Pneus()
+Tires::Tires(const json &data)
+ : _brand(data["name"].get<std::string>()), _rank(data["rank"].get<int>()), _durability(100), _price(vRang(_rank) * 1500)
 {
 
 }
 
-Pneus* Pneus::chargerPneus(const int& id, const int& usure)
+Tires::~Tires()
 {
-	Pneus* PneusCharge = 0; //Pneus a creer
+
+}
+
+bool Tires::loadCollection()
+{
+	DataFile collectionFile("./Data/composants/tires.json");
+
+	if (!collectionFile.load())
+	{
+		throw ("Fichier corrumpu");
+		return (false);
+	}
+	collectionFile.copyTo(Tires::collection);
+	return (true);
+}
+
+Tires* Tires::chargerTires(const int& id, const int& usure)
+{
+	Tires* TiresCharge = 0; //Tires a creer
 	std::string var=""; //contient les lignes du fichier
 	std::string chemin = "Data/composants/pneus.cdx";
 	int idActuel = id + 1; //indique l'id actuellement lu dans le fichier
@@ -24,7 +45,7 @@ Pneus* Pneus::chargerPneus(const int& id, const int& usure)
 
 	if(!engine)
 	{
-		Menu::error("Echec de lecture du fichier pneus.cdx");	
+		Menu::error("Echec de lecture du fichier pneus.cdx");
 	}
 	else
 	{
@@ -52,17 +73,17 @@ Pneus* Pneus::chargerPneus(const int& id, const int& usure)
 
 			char rang = var[0];
 
-			PneusCharge = new Pneus(marque, rang, usure);
+			TiresCharge = new Tires(marque, rang, usure);
 		}
 		else
 		{
 			Menu::error("Fichier corompu15.");
 		}
 	}
-	return PneusCharge;
+	return TiresCharge;
 }
 
-void Pneus::listerPneus()
+void Tires::listerTires()
 {
 	std::string chemin ="Data/composants/pneus.cdx";
 
@@ -114,28 +135,28 @@ void Pneus::listerPneus()
 	}
 }
 
-std::string Pneus::getMarque() const
+std::string Tires::getMarque() const
 {
-	return m_marque;
+	return _brand;
 }
 
-int Pneus::getDurabilite() const
+int Tires::getDurabilite() const
 {
-	return m_durabilite;
+	return _durability;
 }
 
 
-int Pneus::getPrix() const
+int Tires::getPrix() const
 {
-	return m_prix;
+	return _price;
 }
 
-char Pneus::getRang() const
+char Tires::getRang() const
 {
-	return m_rang;
+	return _rank;
 }
 
-void Pneus::setDurabilite(const int& valeur)
+void Tires::setDurabilite(int value)
 {
-	m_durabilite=valeur;
+	_durability = value;
 }

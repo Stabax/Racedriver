@@ -38,7 +38,7 @@ SRCS = 	$(SRCDIR)/Game.cpp							\
 				$(SRCDIR)/menus.cpp							\
 				$(SRCDIR)/menusPrincipaux.cpp		\
 				$(SRCDIR)/Moteur.cpp						\
-				$(SRCDIR)/Pneus.cpp							\
+				$(SRCDIR)/Tires.cpp							\
 				$(SRCDIR)/PriseAir.cpp					\
 				$(SRCDIR)/Profil.cpp						\
 				$(SRCDIR)/sousMenus.cpp					\

@@ -2,8 +2,13 @@
 #include "Voiture.hh"
 #include "Menu.hh"
 
-Voiture::Voiture(const std::string& marque, const std::string& modele, const int& idMoteur, const int& idSpoiler, const int& idPriseAir, const char& rang, const int& nitroMax, const int& aerodynamismeVoiture, const int& idPneus, const int& usurePneus, const int& etat)
- : m_moteur(Moteur::chargerMoteur(idMoteur, marque)), m_idMoteur(idMoteur), m_spoiler(Spoiler::chargerSpoiler(idSpoiler)), m_idSpoiler(idSpoiler),  m_priseAir(PriseAir::chargerPriseAir(idPriseAir)), m_idPriseAir(idPriseAir), m_niveauNitro(nitroMax), m_aerodynamisme((m_priseAir->getAerodynamisme()/3 )+(m_spoiler->getAerodynamisme()/3)+(aerodynamismeVoiture/3)+1), m_vitesse(m_moteur->getVitesse()+(m_aerodynamisme/3)), m_acceleration(((m_niveauNitro+m_moteur->getAcceleration())+(m_aerodynamisme))/10), m_marque(marque), m_modele(modele), m_rang(rang), m_typeCarburant(m_moteur->getTypeCarburant()), m_consommation(m_moteur->getConsommation()), m_nitroMax(nitroMax), m_aerodynamismeVoiture(aerodynamismeVoiture), m_pneus(Pneus::chargerPneus(idPneus, usurePneus)), m_idPneus(idPneus), m_etat(etat)
+Voiture::Voiture(const std::string& marque, const std::string& modele, const int& idMoteur, const int& idSpoiler, const int& idPriseAir, const char& rang, const int& nitroMax, const int& aerodynamismeVoiture, const int& idTires, const int& usureTires, const int& etat)
+ : m_moteur(Moteur::chargerMoteur(idMoteur, marque)), m_idMoteur(idMoteur), m_spoiler(Spoiler::chargerSpoiler(idSpoiler)), m_idSpoiler(idSpoiler),
+ 	 m_priseAir(PriseAir::chargerPriseAir(idPriseAir)), m_idPriseAir(idPriseAir), m_niveauNitro(nitroMax),
+	 m_aerodynamisme((m_priseAir->getAerodynamisme()/3 )+(m_spoiler->getAerodynamisme()/3)+(aerodynamismeVoiture/3)+1),
+	 m_vitesse(m_moteur->getVitesse()+(m_aerodynamisme/3)), m_acceleration(((m_niveauNitro+m_moteur->getAcceleration())+(m_aerodynamisme))/10),
+	 m_marque(marque), m_modele(modele), m_rang(rang), m_typeCarburant(m_moteur->getTypeCarburant()), m_consommation(m_moteur->getConsommation()),
+	 m_nitroMax(nitroMax), m_aerodynamismeVoiture(aerodynamismeVoiture), m_pneus(Tires::chargerTires(idTires, usureTires)), m_idTires(idTires), m_etat(etat)
 {
 
 }
@@ -412,7 +417,7 @@ float Voiture::getAcceleration() const
 	return m_acceleration;
 }
 
-int Voiture::getDurabilitePneus() const
+int Voiture::getDurabiliteTires() const
 {
 	return m_pneus->getDurabilite();
 }
@@ -514,17 +519,17 @@ int Voiture::getAerodynamismePriseAir() const
 	return m_priseAir->getAerodynamisme();
 }
 
-int Voiture::getIdPneus() const
+int Voiture::getIdTires() const
 {
-	return m_idPneus;
+	return m_idTires;
 }
 
-char Voiture::getRangPneus() const
+char Voiture::getRangTires() const
 {
 	return m_pneus->getRang();
 }
 
-std::string Voiture::getMarquePneus() const
+std::string Voiture::getMarqueTires() const
 {
 	return m_pneus->getMarque();
 }
@@ -550,7 +555,7 @@ void Voiture::setPriseAir(PriseAir* newPriseAir, const int& idPriseAir)
 	updateAttributs();
 }
 
-void Voiture::setPneus(const int& ajouter)
+void Voiture::setTires(const int& ajouter)
 {
 	m_pneus+=ajouter;
 	updateAttributs();
@@ -579,7 +584,7 @@ void Voiture::pleinCarburant()
 	updateAttributs();
 }
 
-void Voiture::changerPneus()
+void Voiture::changerTires()
 {
 	m_pneus->setDurabilite(100);
 }

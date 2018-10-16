@@ -21,7 +21,7 @@ Les différentes classes sont le coeur du jeu:
 	-Moteur
 	-PriseAir
 	-Spoiler
-	-Pneus
+	-Tires
 
 Tout ce qui n'est pas objet ne sert qu'à faire:
 	-des verifications (sauvegarde...)

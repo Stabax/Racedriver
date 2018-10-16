@@ -1,0 +1,22 @@
+[
+  {
+    "name": "Continental",
+    "rank": "D"
+  },
+  {
+    "name": "Bridgestone",
+    "rank": "C"
+  },
+  {
+    "name": "Michelin",
+    "rank": "B"
+  },
+  {
+    "name": "Dunlop",
+    "rank": "A"
+  },
+  {
+    "name": "Pirelli",
+    "rank": "S"
+  }
+]

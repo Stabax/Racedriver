@@ -21,9 +21,9 @@ bool preparatifsCourse(const Circuit& Map, const Profil& Player, Voiture*& Voitu
 		{
 			Menu::msg("Attention: Votre reservoir de nitro n'est pas plein.\n");
 		}
-		if(VoiturePlayer->getDurabilitePneus() < 55)
+		if(VoiturePlayer->getDurabiliteTires() < 55)
 		{
-			Menu::msg("Attention: Pneus deteriores.\n");
+			Menu::msg("Attention: Tires deteriores.\n");
 		}
 		Terminal::get() << "\nPreparatifs\n";
 		Terminal::get() << "====================\n";
@@ -331,11 +331,11 @@ void calculerScore(int score[8], Voiture* Adversaire[7], const Voiture* Player1,
 
 void calculerProbaAccident(int probaAccident[8], Voiture* Adversaire[7], const Voiture* Player1, const Circuit Map)
 {
-	probaAccident[0]=((((Map.getVirages()*Map.getMeteo())/(Player1->getDurabilitePneus()/8))+(Map.getVent()/(Player1->getAerodynamisme()*0.75)))/2) + std::rand()%5;
+	probaAccident[0]=((((Map.getVirages()*Map.getMeteo())/(Player1->getDurabiliteTires()/8))+(Map.getVent()/(Player1->getAerodynamisme()*0.75)))/2) + std::rand()%5;
 
 	for (size_t i = 1; i <=6; i++)
 	{
-		probaAccident[i]=((((Map.getVirages()*Map.getMeteo())/(Adversaire[i]->getDurabilitePneus()/8))+(Map.getVent()/(Adversaire[i]->getAerodynamisme()*0.75)))/2) + std::rand()%5;
+		probaAccident[i]=((((Map.getVirages()*Map.getMeteo())/(Adversaire[i]->getDurabiliteTires()/8))+(Map.getVent()/(Adversaire[i]->getAerodynamisme()*0.75)))/2) + std::rand()%5;
 	}
 }
 
@@ -357,7 +357,7 @@ void faireCourseLibre(Circuit Map, Voiture* Player1, Profil& Player)
 	{
 		Menu::error("Votre vehicule est trop endommage pour concourir.");
 	}
-	else if(Player1->getDurabilitePneus() < 15)
+	else if(Player1->getDurabiliteTires() < 15)
 	{
 		Menu::error("Vos pneus sont trop uses pour concourir.");
 	}
@@ -367,9 +367,9 @@ void faireCourseLibre(Circuit Map, Voiture* Player1, Profil& Player)
 		{
 			Menu::msg("Attention: Votre reservoir de nitro n'est pas plein.\n");
 		}
-		if(Player1->getDurabilitePneus() < 55)
+		if(Player1->getDurabiliteTires() < 55)
 		{
-			Menu::msg("Attention: Pneus deteriores.\n");
+			Menu::msg("Attention: Tires deteriores.\n");
 		}
 
 		Voiture* Adversaire[7];
@@ -569,7 +569,7 @@ void faireCourseChampionnat(Circuit Map, Voiture* Player1, Profil& Player)
 	{
 		Menu::error("Votre vehicule est trop endommage pour concourir.");
 	}
-	else if(Player1->getDurabilitePneus() < 15)
+	else if(Player1->getDurabiliteTires() < 15)
 	{
 		Menu::error("Vos pneus sont trop uses pour concourir.");
 	}
@@ -745,7 +745,7 @@ void faireCourseChampionnat(Circuit Map, Voiture* Player1, Profil& Player)
 			{
 				delete Adversaire[compteur];
 			}
-			Player1->setPneus(-1 * (( Map.getTaille() + Map.getVirages() ) / 10));
+			Player1->setTires(-1 * (( Map.getTaille() + Map.getVirages() ) / 10));
 			Player1->setNitro(-1 * (Map.getTaille() / 4));
 		}
 		if(Player.getSauvegardeAuto())

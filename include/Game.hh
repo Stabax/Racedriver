@@ -12,8 +12,9 @@ class Game
 {
 public:
   Game();
+
+  bool load();
   int main();
-  Terminal &getTerm();
   void printASCIILogo();
   void removeUpdatePackage();
   void update();

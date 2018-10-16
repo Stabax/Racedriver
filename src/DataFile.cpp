@@ -6,20 +6,19 @@ DataFile::DataFile(const char *path)
 
 }
 
-bool DataFile::Load()
+bool DataFile::load()
 {
   std::ifstream file(_path, std::ifstream::in);
 
   if (!file.good())
   {
-    throw ("Error opening DataFile");
     return (false);
   }
   while (file.good()) file >> _data;
   return (true);
 }
 
-bool DataFile::Save()
+bool DataFile::save()
 {
   return (true);
 }

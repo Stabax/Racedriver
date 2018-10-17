@@ -17,9 +17,14 @@ public:
   template <typename T>
   void copyTo(std::vector<T> &collection)
   {
+    try {
+    json toto = _data["collection"][0];
     for (size_t i = 0; i < _data["collection"].size(); i++)
     {
       collection.push_back(T(_data["collection"][i]));
+    }
+    } catch(...) {
+      std::cout << "toto";
     }
   }
 

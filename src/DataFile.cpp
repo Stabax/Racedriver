@@ -14,7 +14,7 @@ bool DataFile::load()
   {
     return (false);
   }
-  while (file.good()) file >> _data;
+  _data = json::parse(file);
   return (true);
 }
 

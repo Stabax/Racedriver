@@ -10,6 +10,7 @@ void menuRacedriver()
 
 	while(quit != true)
 	{
+		Terminal::get().clearScreen();
 		Game::instance->printASCIILogo();
 		Terminal::get() << "[" << GAME_VERSION << "]\n\n";
 		//Menu Principal
@@ -55,7 +56,6 @@ void menuRacedriver()
 void menuJeu(Profil& Player, bool& quitGame)
 {
 	bool quit = false;
-	bool quitVerify = false;
 	Profil* PlayerSaved = 0; //On cree un profil temporaire
 	std::ostringstream oss;
 	std::string numeroProfil;
@@ -104,7 +104,6 @@ void menuJeu(Profil& Player, bool& quitGame)
 						if(Menu::askConfirmation())
 						{
 							Player.sauvegarderProfil();
-							quitVerify = true;
 						}
 					}
 				}
@@ -162,7 +161,6 @@ void menuJeu(Profil& Player, bool& quitGame)
 							if(Menu::askConfirmation())
 							{
 								Player.sauvegarderProfil();
-								quitVerify = true;
 							}
 						}
 					}
@@ -200,7 +198,6 @@ void menuJeu(Profil& Player, bool& quitGame)
 							if(Menu::askConfirmation())
 							{
 								Player.sauvegarderProfil();
-								quitVerify = true;
 							}
 						}
 					}

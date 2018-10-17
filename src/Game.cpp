@@ -27,11 +27,16 @@ int Game::main()
 {
 	_term.clearScreen();
 	std::srand(std::time(0)); //INITIALISATION DE L'ALEATOIRE
-	update(); //on verifie et fait les mises à jour
+	if (!update()) //on verifie et fait les mises à jour
+	{
+		_term << ">Vous allez jouer avec une version potentiellement obsolete de Racedriver.\n"
+		      << ">Appuyez sur [ENTREE] pour continuer.\n";
+		getch();
+	}
+	_term.clearScreen();
 	load();
 	usleep(2000);
-	_term.clearScreen();
-	menuRacedriver();//on lance le coeur du jeu
+	menuRacedriver(); //on lance le coeur du jeu
 	return 0;
 }
 
@@ -49,7 +54,7 @@ void Game::removeUpdatePackage()
 	std::remove("Update/update.zip");
 }
 
-void Game::update()
+bool Game::update()
 {
 	CURL *curlVersion = curl_easy_init(); //On crée un flux cURL et on "instancie" le flux
 	CURLcode resVersion; //CURLcode est un type enum de Curl stockant un état d'erreur.
@@ -80,12 +85,9 @@ void Game::update()
 	//si le téléchargement s'est mal dérroulé
 	if(CURLE_OK != resVersion)
 	{
-		//echec du telechargement
+		//echec de la récupération du fichier de version
 		Menu::error("La recuperation des informations de mise a jour a echoue. Verifiez votre connexion.");
-		_term << ">Vous allez jouer avec une version potentiellement obsolete de Racedriver.\n"
-		      << ">Appuyez sur [ENTREE] pour continuer.\n";
-		getch();
-		return;
+		return (false);
 	}
 	std::ifstream latestVersion("Update/version.cdx");
 	std::string stringLatestVersion;	//derniere version disponible
@@ -96,13 +98,8 @@ void Game::update()
 	{
 		Menu::msg("Votre client est obsolete, une mise a jour est disponible !");
 		_term << "Vous allez telecharger la derniere version de Racedriver.\n";
-		if (!Menu::askConfirmation())
-		{
-			_term << ">Vous allez jouer avec une version obsolete de Racedriver.\n";
-			_term << ">Appuyez sur [ENTREE] pour continuer.\n";
-			getch();
-			return;
-		}
+		if (!Menu::askConfirmation()) return (false);
+
 		FILE *updateFile = fopen("Update/update.zip", "w");
 		CURL *curlUpdate;
 		CURLcode resUpdate;
@@ -124,10 +121,7 @@ void Game::update()
 		if(CURLE_OK != resUpdate)
 		{
 			Menu::error("Le telechargement de la mise a jour a echoue.");
-			_term <<">Vous jouerez avec une version obsolete de Racedriver.\n"
-			      <<">Appuyez sur [ENTREE] pour continuer.\n";
-			getch();
-			return;
+			return (false);
 		}
 		Menu::msg("Le client a ete mis a jour avec succes !");
 		_term << ">Vous devez redemmarer le jeu pour appliquer les modifications.\n";
@@ -137,8 +131,10 @@ void Game::update()
 		//opérateur ternaire: si OS == 0 (linux) on appelle execl pour unpack linux, sinon on appelle execl pour unpack.exe windows
 		//OS == 0 ? execl("Update/unpack", "unpack", "-qq", "-o", "Update/update.zip", NULL) : execl("Update/unpack.exe", "unpack.exe", "-qq", "-o", "Update/update.zip", NULL);
 		//le programme se termine ici grace à l'apel à execl()
+		return (true);
 	}
-	Menu::msg("Le client est a jour !");
+	Menu::msg("Aucune mise à jour disponible.");
 	_term << ">Appuyez sur [Entree] pour continuer.\n";
 	getch();
+	return (true);
 }

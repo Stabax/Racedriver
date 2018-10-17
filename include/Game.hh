@@ -17,7 +17,7 @@ public:
   int main();
   void printASCIILogo();
   void removeUpdatePackage();
-  void update();
+  bool update();
 
   static std::unique_ptr<Game> instance; //Singleton handle
 private:

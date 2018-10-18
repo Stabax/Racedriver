@@ -32,7 +32,7 @@ protected:
 	static std::vector<Tires> collection;
 
 	std::string _brand;
-	int _rank; //definit la voiture qui peut les porter
+	char _rank; //definit la voiture qui peut les porter
 	int _durability; //definit la vitesse d'usure des pneus
 	int _price;
 };

@@ -11,7 +11,7 @@ Tires::Tires(const std::string& marque, const char& rang, const int& usure)
 }
 
 Tires::Tires(const json &data)
- : _brand(data["name"].get<std::string>()), _rank(data["rank"].get<int>()), _durability(100), _price(vRang(_rank) * 1500)
+ : _brand(data["name"].get<std::string>()), _rank(data["rank"].get<std::string>()[0]), _durability(100), _price(vRang(_rank) * 1500)
 {
 
 }

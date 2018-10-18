@@ -59,16 +59,19 @@ bool Game::update()
 	CURL *curlVersion = curl_easy_init(); //On crée un flux cURL et on "instancie" le flux
 	CURLcode resVersion; //CURLcode est un type enum de Curl stockant un état d'erreur.
 
-	//création et ouverture d'un fichier en ecriture
-	FILE *versionFile = fopen("Update/version.cdx", "w");
-
-	Terminal::get() << ">Connexion au serveur distant...\n";
 	//on indique l'url cible
 	curl_easy_setopt(curlVersion, CURLOPT_URL, "/bin/version");
 
 	//on indique quelle est la fonction d'ecriture du fichier. on utilise celle de la bibliothèque standard
 	curl_easy_setopt(curlVersion, CURLOPT_WRITEFUNCTION, fwrite);
 
+	//création et ouverture d'un fichier en ecriture
+	FILE *versionFile = fopen("Update/version.cdx", "w");
+	if (!versionFile)
+	{
+		Menu::error("Impossible d'écrire dans le répertoire du jeu");
+		return (false);
+	}
 
 	//on indique le fichier de destination chez le client
 	curl_easy_setopt(curlVersion, CURLOPT_WRITEDATA, versionFile);

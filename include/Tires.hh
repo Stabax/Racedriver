@@ -29,7 +29,6 @@ public:
 	void setDurabilite(int value);
 
 protected:
-	static std::vector<Tires> collection;
 
 	std::string _brand;
 	char _rank; //definit la voiture qui peut les porter

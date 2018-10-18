@@ -45,6 +45,7 @@ SRCS = 	$(SRCDIR)/Game.cpp							\
 				$(SRCDIR)/Spoiler.cpp						\
 				$(SRCDIR)/Terminal.cpp					\
 				$(SRCDIR)/Voiture.cpp						\
+				$(SRCDIR)/Part.cpp						\
 				$(LIBDIR)/sha/sha.cpp
 
 OBJS = $(SRCS:.cpp=.o)

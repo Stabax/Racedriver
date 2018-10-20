@@ -16,10 +16,6 @@ public:
 	Spoiler(const json &data);
 	~Spoiler();
 
-	static Spoiler* chargerSpoiler(const int& id);
-	static void infoSpoiler(const int& id, int& prix);
-	static void infoSpoiler(const int& id, std::string& modele, char& rang, int& aero, int& prix);
-
 	std::string getName() const;
 	char getRank() const;
 	int getAerodynamic() const;

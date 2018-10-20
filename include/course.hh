@@ -13,8 +13,8 @@ bool antiCorruption(const std::string& chemin, const int& nbLignes);
 void chargerAdversaires(Voiture* Adversaire[7], int difficulteProfil, int difficulteCircuit);
 void chargerMessagesAccidents(std::string messageAccident[8]);
 std::string* chargerCommentaireMeteo(const int& meteo);
-void calculerScore(int score[8], const Voiture* Adversaire[7], const Voiture* Player1, const Circuit& Map);
-void calculerProbaAccident(int probaAccident[8], Voiture* Adversaire[7], const Voiture* Player1, const Circuit Map);
+void calculerScore(int score[8], const Voiture* Adversaire[7],  Voiture* Player1, const Circuit& Map);
+void calculerProbaAccident(int probaAccident[8], Voiture* Adversaire[7], Voiture* Player1, const Circuit Map);
 
 void faireCourseLibre(Circuit Map, Voiture* Player1, Profil& Player);
 void faireCourseChampionnat(Circuit Map, Voiture* Player1, Profil& Player);

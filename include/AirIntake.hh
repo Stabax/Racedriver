@@ -14,10 +14,6 @@ public:
 	AirIntake(const json &data);
 	~AirIntake();
 
-	static AirIntake* chargerAirIntake(const int& id);
-	static void infoAirIntake(const int& id, int& prix);
-	static void infoAirIntake(const int& id, std::string& modele, char& rang, int& aero, int& prix);
-
 	std::string getName() const;
 	char getRank() const;
 	int getAerodynamic() const;

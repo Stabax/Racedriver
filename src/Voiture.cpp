@@ -2,13 +2,13 @@
 #include "Voiture.hh"
 #include "Menu.hh"
 
-Voiture::Voiture(const std::string& marque, const std::string& modele, const int& idMoteur, const int& idSpoiler, const int& idAirIntake, const char& rang, const int& nitroMax, const int& aerodynamismeVoiture, const int& idTires, const int& usureTires, const int& etat)
- : m_moteur(Moteur::chargerMoteur(idMoteur, marque)), m_idMoteur(idMoteur), m_spoiler(Spoiler::chargerSpoiler(idSpoiler)), m_idSpoiler(idSpoiler),
- 	 m_priseAir(AirIntake::chargerAirIntake(idAirIntake)), m_idAirIntake(idAirIntake), m_niveauNitro(nitroMax),
-	 m_aerodynamisme((m_priseAir->getAerodynamic()/3 )+(m_spoiler->getAerodynamic()/3)+(aerodynamismeVoiture/3)+1),
+Voiture::Voiture(const std::string& marque, const std::string& modele, const int& idMoteur, const int& idSpoiler, const int& idAirIntake, const char& rang, const int& nitroMax, const int& aerodynamismeVoiture, const int& idTires, const int& etat)
+ : m_moteur(Moteur::chargerMoteur(idMoteur, marque)), m_idMoteur(idMoteur), m_spoiler(Spoiler::collection[idSpoiler]), m_idSpoiler(idSpoiler),
+ 	 m_priseAir(AirIntake::collection[idAirIntake]), m_idAirIntake(idAirIntake), m_niveauNitro(nitroMax),
+	 m_aerodynamisme((m_priseAir.getAerodynamic()/3 )+(m_spoiler.getAerodynamic()/3)+(aerodynamismeVoiture/3)+1),
 	 m_vitesse(m_moteur->getVitesse()+(m_aerodynamisme/3)), m_acceleration(((m_niveauNitro+m_moteur->getAcceleration())+(m_aerodynamisme))/10),
 	 m_marque(marque), m_modele(modele), m_rang(rang), m_typeCarburant(m_moteur->getTypeCarburant()), m_consommation(m_moteur->getConsommation()),
-	 m_nitroMax(nitroMax), m_aerodynamismeVoiture(aerodynamismeVoiture), m_pneus(Tires::chargerTires(idTires, usureTires)), m_idTires(idTires), m_etat(etat)
+	 m_nitroMax(nitroMax), m_aerodynamismeVoiture(aerodynamismeVoiture), m_pneus(Tires::collection[idTires]), m_idTires(idTires), m_etat(etat)
 {
 
 }
@@ -16,9 +16,6 @@ Voiture::Voiture(const std::string& marque, const std::string& modele, const int
 Voiture::~Voiture()
 {
 	delete m_moteur;
-	delete m_spoiler;
-	delete m_priseAir;
-	delete m_pneus;
 }
 
 Voiture* Voiture::chargerVoiture(const int& id, const char& rangCharge)
@@ -473,8 +470,8 @@ int Voiture::getPrix() const
 	int prixSpoiler=0;
 	int prixAirIntake=0;
 	Moteur::infoMoteur(m_idMoteur, m_marque, prixMoteur);
-	Spoiler::infoSpoiler(m_idSpoiler, prixSpoiler);
-	AirIntake::infoAirIntake(m_idAirIntake, prixAirIntake);
+	prixSpoiler = Spoiler::collection[m_idSpoiler].getPrice();
+	prixAirIntake = AirIntake::collection[m_idAirIntake].getPrice();
 
 	return static_cast<int>(roundf( (prixMoteur + prixSpoiler + prixAirIntake + 0 )  *0.9+ (( m_aerodynamismeVoiture + m_nitroMax ) * 100)+ (( vRang(m_rang) - 1 ) * 20000)));
 }
@@ -486,22 +483,22 @@ int Voiture::getPrixMoteur() const
 
 int Voiture::getIdTires() const
 {
-	return m_pneus->getDurability();
+	return m_pneus.getDurability();
 }
 
-const Spoiler &Voiture::getSpoiler() const
+Spoiler &Voiture::getSpoiler()
 {
-	return *m_spoiler;
+	return m_spoiler;
 }
 
-const AirIntake &Voiture::getAirIntake() const
+AirIntake &Voiture::getAirIntake()
 {
-	return *m_priseAir;
+	return m_priseAir;
 }
 
-const Tires &Voiture::getTires() const
+Tires &Voiture::getTires()
 {
-	return *m_pneus;
+	return m_pneus;
 }
 
 void Voiture::setMoteur(Moteur* newMoteur, const int& idMoteur)
@@ -511,23 +508,23 @@ void Voiture::setMoteur(Moteur* newMoteur, const int& idMoteur)
 	updateAttributs();
 }
 
-void Voiture::setSpoiler(Spoiler* newSpoiler, const int& idSpoiler)
+void Voiture::setSpoiler(Spoiler newSpoiler, const int& idSpoiler)
 {
 	m_spoiler = newSpoiler;
 	m_idSpoiler = idSpoiler;
 	updateAttributs();
 }
 
-void Voiture::setAirIntake(AirIntake* newAirIntake, const int& idAirIntake)
+void Voiture::setAirIntake(AirIntake newAirIntake, const int& idAirIntake)
 {
 	m_priseAir = newAirIntake;
 	m_idAirIntake = idAirIntake;
 	updateAttributs();
 }
 
-void Voiture::setTires(const int& ajouter)
+void Voiture::setTires(Tires tires)
 {
-	m_pneus+=ajouter;
+	m_pneus = tires;
 	updateAttributs();
 }
 
@@ -561,7 +558,7 @@ void Voiture::reparer()
 
 void Voiture::updateAttributs()
 {
-	m_aerodynamisme = static_cast<float>((m_priseAir->getAerodynamic() / 3) + (m_spoiler->getAerodynamic() / 3) + (m_aerodynamismeVoiture / 3));
+	m_aerodynamisme = static_cast<float>((m_priseAir.getAerodynamic() / 3) + (m_spoiler.getAerodynamic() / 3) + (m_aerodynamismeVoiture / 3));
 
 	m_aerodynamisme+=1;
 
@@ -574,5 +571,5 @@ void Voiture::updateAttributs()
 
 void Voiture::changerTires()
 {
-	m_pneus->setDurability(100);
+	m_pneus.setDurability(100);
 }

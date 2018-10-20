@@ -18,7 +18,6 @@ public:
 	Tires(const json &data);
 	~Tires();
 
-	static Tires* chargerTires(const int& id, const int& usure = 100);
 	static void listerTires();
 
 	std::string getName() const;

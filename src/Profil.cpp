@@ -382,7 +382,7 @@ bool Profil::chargerProfil(const int& numeroSave, Profil*& ProfilCharge)
 						ligneChargee.erase(0, tailleString + 1); // On retire les pneus charges
 						iss.clear(); //on flushe l'objet
 
-						ProfilCharge->setBox(box, marqueChargee, modeleCharge, idMoteurCharge, idSpoilerCharge, idAirIntakeChargee, rangCharge, nitroMaxChargee, aerodynamismeVoitureCharge , idTiresCharges, pneusCharges, etat);
+						ProfilCharge->setBox(box, marqueChargee, modeleCharge, idMoteurCharge, idSpoilerCharge, idAirIntakeChargee, rangCharge, nitroMaxChargee, aerodynamismeVoitureCharge , idTiresCharges, etat);
 						box++;
 						ligne++;
 					}
@@ -668,9 +668,9 @@ std::string Profil::getDifficulteString() const
 	return difficulte;
 }
 
-void Profil::setBox(const int& numeroBox, const std::string& marque, const std::string& modele, const int& idMoteur, const int& idSpoiler, const int& idAirIntake, const char& rang, const int& nitroMax, const int& aerodynamismeVoiture, const int& idTires, const int& pneus, const int& etat)
+void Profil::setBox(const int& numeroBox, const std::string& marque, const std::string& modele, const int& idMoteur, const int& idSpoiler, const int& idAirIntake, const char& rang, const int& nitroMax, const int& aerodynamismeVoiture, const int& idTires, const int& etat)
 {
-	m_box[numeroBox] = new Voiture(marque, modele, idMoteur, idSpoiler, idAirIntake, rang, nitroMax, aerodynamismeVoiture, idTires, pneus, etat);
+	m_box[numeroBox] = new Voiture(marque, modele, idMoteur, idSpoiler, idAirIntake, rang, nitroMax, aerodynamismeVoiture, idTires, etat);
 }
 
 void Profil::setBox(const int& numeroBox, Voiture* Voiture)

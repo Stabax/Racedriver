@@ -319,7 +319,7 @@ std::string* chargerCommentaireMeteo(const int& meteo)
 	return ligne;//ligne est un pointeur pour qu'il y ait une erreur de segmentation si meteo.txt est mal rempli.
 }
 
-void calculerScore(int score[8], Voiture* Adversaire[7], const Voiture* Player1, const Circuit& Map)
+void calculerScore(int score[8], Voiture* Adversaire[7], Voiture* Player1, const Circuit& Map)
 {
 	score[0]=((Player1->getVitesse()/2)+(Player1->getAcceleration()*2/Map.getVirages()))*((std::rand()%26)+75)/100;
 
@@ -329,7 +329,7 @@ void calculerScore(int score[8], Voiture* Adversaire[7], const Voiture* Player1,
 	}
 }
 
-void calculerProbaAccident(int probaAccident[8], Voiture* Adversaire[7], const Voiture* Player1, const Circuit Map)
+void calculerProbaAccident(int probaAccident[8], Voiture* Adversaire[7], Voiture* Player1, const Circuit Map)
 {
 	probaAccident[0]=((((Map.getVirages()*Map.getMeteo())/(Player1->getTires().getDurability()/8))+(Map.getVent()/(Player1->getAerodynamisme()*0.75)))/2) + std::rand()%5;
 
@@ -745,7 +745,7 @@ void faireCourseChampionnat(Circuit Map, Voiture* Player1, Profil& Player)
 			{
 				delete Adversaire[compteur];
 			}
-			Player1->setTires(-1 * (( Map.getTaille() + Map.getVirages() ) / 10));
+			Player1->getTires().setDurability(-1 * (( Map.getTaille() + Map.getVirages() ) / 10));
 			Player1->setNitro(-1 * (Map.getTaille() / 4));
 		}
 		if(Player.getSauvegardeAuto())

@@ -380,7 +380,7 @@ void menuAtelierSpoiler(Profil& Player, const int& numeroBox)
 		{
 			if(Player.payer(newSpoiler.getPrice()))
 			{
-				Voiture->setSpoiler(Spoiler::chargerSpoiler(idCharge), id);
+				Voiture->setSpoiler(Spoiler::collection[idCharge], id);
 				Menu::msg("Spoiler ameliore avec succes !");
 			}
 		}
@@ -429,7 +429,7 @@ void menuAtelierAirIntake(Profil& Player, const int& numeroBox)
 		{
 			if(Player.payer(newAirIntake.getPrice()))
 			{
-				Voiture->setAirIntake(AirIntake::chargerAirIntake(idCharge), id);
+				Voiture->setAirIntake(AirIntake::collection[idCharge], id);
 				Menu::msg("Prise d'air amelioree avec succes !");
 			}
 		}

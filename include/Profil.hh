@@ -43,7 +43,7 @@ public:
 	int getVoituresAchetees() const;
 
 	void setMoteurVoiture(const int& numeroBox, Moteur* newMoteur, const int& idMoteur);
-	void setBox(const int& numeroBox, const std::string& marque, const std::string& modele, const int& idMoteur, const int& idSpoiler, const int& idAirIntake, const char& rang, const int& nitroMax, const int& aerodynamismeVoiture, const int& idTires, const int& pneus, const int& etat);
+	void setBox(const int& numeroBox, const std::string& marque, const std::string& modele, const int& idMoteur, const int& idSpoiler, const int& idAirIntake, const char& rang, const int& nitroMax, const int& aerodynamismeVoiture, const int& idTires, const int& etat);
 	void setBox(const int& numeroBox, Voiture* Voiture);
 	void setBox(const int& numeroBox);
 	void setDifficulte(const int& newDifficulte);

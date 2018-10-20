@@ -21,55 +21,6 @@ Tires::~Tires()
 
 }
 
-Tires* Tires::chargerTires(const int& id, const int& usure)
-{
-	Tires* TiresCharge = 0; //Tires a creer
-	std::string var=""; //contient les lignes du fichier
-	std::string chemin = "Data/composants/pneus.cdx";
-	int idActuel = id + 1; //indique l'id actuellement lu dans le fichier
-
-	std::ifstream engine(chemin.c_str());
-
-	if(!engine)
-	{
-		Menu::error("Echec de lecture du fichier pneus.cdx");
-	}
-	else
-	{
-		while(idActuel!=id && std::getline(engine, var))
-		{
-			std::istringstream iss(var.substr(0,var.find_first_of(";"))); //on transforme le premier char en int pour etre compare
-			if(iss>>idActuel)
-			{
-			}
-			else
-			{
-				Menu::error("Fichier corrompu12");
-			}
-			//on utilise while(std::getline(flux, string) pour "Tant qu'il y a une ligne a lire"
-		}
-
-		if(idActuel==id)
-		{
-			int curseur;
-			var.erase(0,var.find_first_of(";")+1);
-
-		      curseur=var.find_first_of(";");
-			std::string marque=var.substr(0,curseur);
-			var.erase(0,curseur+1);
-
-			char rang = var[0];
-
-			TiresCharge = new Tires(marque, rang, usure);
-		}
-		else
-		{
-			Menu::error("Fichier corompu15.");
-		}
-	}
-	return TiresCharge;
-}
-
 void Tires::listerTires()
 {
 	std::string chemin ="Data/composants/pneus.cdx";

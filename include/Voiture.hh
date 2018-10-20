@@ -12,7 +12,7 @@
 class Voiture
 {
 public:
-	Voiture(const std::string& marque, const std::string& modele, const int& idMoteur, const int& idSpoiler, const int& idAirIntake, const char& rang, const int& nitroMax, const int& aerodynamismeVoiture, const int& idTires, const int& usureTires = 100, const int& etat = 100);
+	Voiture(const std::string& marque, const std::string& modele, const int& idMoteur, const int& idSpoiler, const int& idAirIntake, const char& rang, const int& nitroMax, const int& aerodynamismeVoiture, const int& idTires, const int& etat = 100);
 	~Voiture();
 
 	static Voiture* chargerVoiture(const int& id, const char& rangCharge);
@@ -44,16 +44,16 @@ public:
 	int getPrixMoteur() const;
 
 	void changerTires();
-	
+
 	//infos acessoires
-	const Spoiler &getSpoiler() const;
-	const AirIntake &getAirIntake() const;
-	const Tires &getTires() const;
+	Spoiler &getSpoiler();
+	AirIntake &getAirIntake();
+	Tires &getTires();
 
 	void setMoteur(Moteur* newMoteur, const int& idMoteur);
-	void setSpoiler(Spoiler* newSpoiler, const int& idSpoiler);
-	void setAirIntake(AirIntake* newAirIntake, const int& idAirIntake);
-	void setTires(const int& ajouter);
+	void setSpoiler(Spoiler newSpoiler, const int& idSpoiler);
+	void setAirIntake(AirIntake newAirIntake, const int& idAirIntake);
+	void setTires(Tires tires);
 	void setNitro(const int& ajouter);
 
 	void retirerEtat(const int& retirer);
@@ -68,9 +68,9 @@ public:
 protected:
 	Moteur *m_moteur;
 	int m_idMoteur;		//modifiable via paiement
-	Spoiler *m_spoiler;
+	Spoiler m_spoiler;
 	int m_idSpoiler;		//modifiable via paiement
-	AirIntake *m_priseAir;
+	AirIntake m_priseAir;
 	int m_idAirIntake;		//modifiable via paiement
 	int m_niveauNitro;	//se vide en fonction de la longueur du circuit. le plein est fait manuellement via paiement, juste avant une course
 	float m_aerodynamisme;			//géré par spoiler et prise d'air et aerodynamisme voiture
@@ -83,7 +83,7 @@ protected:
 	float m_consommation;	//change en fonction du moteur
 	int m_nitroMax;	//non modifiable pour une voiture donnée
 	int m_aerodynamismeVoiture;	//non modifiable pour une voiture donnée
-	Tires *m_pneus;
+	Tires m_pneus;
 	int m_idTires;
 	int m_etat;
 };

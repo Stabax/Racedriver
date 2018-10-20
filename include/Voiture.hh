@@ -6,13 +6,13 @@
 #include <cmath>
 #include "Moteur.hh"
 #include "Spoiler.hh"
-#include "PriseAir.hh"
+#include "AirIntake.hh"
 #include "Tires.hh"
 
 class Voiture
 {
 public:
-	Voiture(const std::string& marque, const std::string& modele, const int& idMoteur, const int& idSpoiler, const int& idPriseAir, const char& rang, const int& nitroMax, const int& aerodynamismeVoiture, const int& idTires, const int& usureTires = 100, const int& etat = 100);
+	Voiture(const std::string& marque, const std::string& modele, const int& idMoteur, const int& idSpoiler, const int& idAirIntake, const char& rang, const int& nitroMax, const int& aerodynamismeVoiture, const int& idTires, const int& usureTires = 100, const int& etat = 100);
 	~Voiture();
 
 	static Voiture* chargerVoiture(const int& id, const char& rangCharge);
@@ -25,13 +25,10 @@ public:
 	char getRang() const;
 	float getVitesse() const;
 	float getAcceleration() const;
-	int getDurabiliteTires() const;
-	char getRangTires() const;
-	std::string getMarqueTires() const;
 	int getAerodynamisme() const;
 	int getIdMoteur() const;
 	int getIdSpoiler() const;
-	int getIdPriseAir() const;
+	int getIdAirIntake() const;
 	int getNitroMax() const;
 	int getNiveauNitro() const;
 	int getEtat() const;
@@ -46,24 +43,22 @@ public:
 	float getPrixCarburantMoteur() const;
 	int getPrixMoteur() const;
 
-	std::string getNomSpoiler() const;	//infos spoiler
-	char getRangSpoiler() const;
-	int getAerodynamismeSpoiler() const;
-
-	std::string getNomPriseAir() const;	//info prise d'air
-	char getRangPriseAir() const;
-	int getAerodynamismePriseAir() const;
+	void changerTires();
+	
+	//infos acessoires
+	const Spoiler &getSpoiler() const;
+	const AirIntake &getAirIntake() const;
+	const Tires &getTires() const;
 
 	void setMoteur(Moteur* newMoteur, const int& idMoteur);
 	void setSpoiler(Spoiler* newSpoiler, const int& idSpoiler);
-	void setPriseAir(PriseAir* newPriseAir, const int& idPriseAir);
+	void setAirIntake(AirIntake* newAirIntake, const int& idAirIntake);
 	void setTires(const int& ajouter);
 	void setNitro(const int& ajouter);
 
 	void retirerEtat(const int& retirer);
 
 	void pleinNitro();
-	void changerTires();
 
 	void pleinCarburant();
 	void reparer();
@@ -75,8 +70,8 @@ protected:
 	int m_idMoteur;		//modifiable via paiement
 	Spoiler *m_spoiler;
 	int m_idSpoiler;		//modifiable via paiement
-	PriseAir *m_priseAir;
-	int m_idPriseAir;		//modifiable via paiement
+	AirIntake *m_priseAir;
+	int m_idAirIntake;		//modifiable via paiement
 	int m_niveauNitro;	//se vide en fonction de la longueur du circuit. le plein est fait manuellement via paiement, juste avant une course
 	float m_aerodynamisme;			//géré par spoiler et prise d'air et aerodynamisme voiture
 	float m_vitesse;				//géré par moteur et aerodynamisme

@@ -16,7 +16,7 @@ CXX = g++
 
 RM = rm -rf
 
-CXXFLAGS	= -g3 -W -Wall -Wpedantic -Iinclude -I$(LIBDIR) -I$(LIBDIR)/json/include/
+CXXFLAGS	= -ggdb -W -Wall -Wpedantic -Iinclude -I$(LIBDIR) -I$(LIBDIR)/json/include/
 
 LDFLAGS		= -L$(BINDIR) -lcurl -static-libgcc
 
@@ -39,13 +39,12 @@ SRCS = 	$(SRCDIR)/Game.cpp							\
 				$(SRCDIR)/menusPrincipaux.cpp		\
 				$(SRCDIR)/Moteur.cpp						\
 				$(SRCDIR)/Tires.cpp							\
-				$(SRCDIR)/PriseAir.cpp					\
+				$(SRCDIR)/AirIntake.cpp					\
 				$(SRCDIR)/Profil.cpp						\
 				$(SRCDIR)/sousMenus.cpp					\
 				$(SRCDIR)/Spoiler.cpp						\
 				$(SRCDIR)/Terminal.cpp					\
 				$(SRCDIR)/Voiture.cpp						\
-				$(SRCDIR)/Part.cpp						\
 				$(LIBDIR)/sha/sha.cpp
 
 OBJS = $(SRCS:.cpp=.o)

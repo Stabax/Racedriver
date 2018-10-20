@@ -9,7 +9,7 @@ using json = nlohmann::json;
 class DataFile
 {
 public:
-  DataFile(const char *path);
+  DataFile(const std::string &path);
 
   bool load();
   bool save();
@@ -24,7 +24,7 @@ public:
   }
 
 private:
-  const char *_path;
+  const std::string _path;
   json _data;
 };
 

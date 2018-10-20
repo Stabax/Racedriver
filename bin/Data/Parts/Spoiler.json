@@ -1,0 +1,38 @@
+{
+  "collection": [
+  {
+    "name": "Aileron",
+    "aerodynamic": 10,
+    "rank": "D"
+  },
+  {
+    "name": "Viper",
+    "aerodynamic": 25,
+    "rank": "C"
+  },
+  {
+    "name": "Vapor",
+    "aerodynamic": 40,
+    "rank": "B"
+  },
+  {
+    "name": "GP",
+    "aerodynamic": 55,
+    "rank": "A"
+  },
+  {
+    "name": "Nitrox",
+    "aerodynamic": 65,
+    "rank": "S"
+  },
+  {
+    "name": "Boost",
+    "aerodynamic": 80,
+    "rank": "A"
+  },
+  {
+    "name": "Racing",
+    "aerodynamic": 90,
+    "rank": "A"
+  }]
+}

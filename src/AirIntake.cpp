@@ -1,20 +1,27 @@
-//PriseAir.cpp
-#include "PriseAir.hh"
+//AirIntake.cpp
+#include "AirIntake.hh"
 #include "Menu.hh"
 
-PriseAir::PriseAir(const std::string& modele, const char& rang, const int& aerodynamisme)
- : m_nom(modele), m_rang(rang), m_aerodynamisme(aerodynamisme)
+std::vector<AirIntake> AirIntake::collection = std::vector<AirIntake>();
+
+AirIntake::AirIntake(const std::string& modele, const char& rang, const int& aerodynamisme)
+ : Part(), _name(modele), _rank(rang), _aerodynamic(aerodynamisme)
 {
 }
 
-PriseAir::~PriseAir()
+AirIntake::AirIntake(const json &data)
+ : Part(), _name(data["name"].get<std::string>()), _rank(data["rank"].get<std::string>()[0]), _aerodynamic(data["aerodynamic"].get<int>()), _price(vRang(_rank) * 1500)
+{
+}
+
+AirIntake::~AirIntake()
 {
 
 }
 
-PriseAir* PriseAir::chargerPriseAir(const int& id)
+AirIntake* AirIntake::chargerAirIntake(const int& id)
 {
-	PriseAir* PriseAirCharge = 0; //PriseAir a creer
+	AirIntake* AirIntakeCharge = 0; //AirIntake a creer
 	std::string var=""; //contient les lignes du fichier
 	std::string chemin = "Data/composants/priseair.cdx";
 	int idActuel = id + 1; //indique l'id actuellement lu dans le fichier
@@ -67,17 +74,17 @@ PriseAir* PriseAir::chargerPriseAir(const int& id)
 				Menu::error("Fichier corompu14.");
 			}
 
-			PriseAirCharge = new PriseAir(modele, rang, aerodynamisme);
+			AirIntakeCharge = new AirIntake(modele, rang, aerodynamisme);
 		}
 		else
 		{
 			Menu::error("Fichier corompu15.");
 		}
 	}
-	return PriseAirCharge;
+	return AirIntakeCharge;
 }
 
-void PriseAir::infoPriseAir(const int& id, int& prix)
+void AirIntake::infoAirIntake(const int& id, int& prix)
 {
 	std::string var = ""; //contient les lignes du fichier
 	std::string chemin ="Data/composants/priseair.cdx";
@@ -123,7 +130,7 @@ void PriseAir::infoPriseAir(const int& id, int& prix)
 	}
 }
 
-void PriseAir::infoPriseAir(const int& id, std::string& modele, char& rang, int& aero, int& prix)
+void AirIntake::infoAirIntake(const int& id, std::string& modele, char& rang, int& aero, int& prix)
 {
 	std::string var = ""; //contient les lignes du fichier
 	std::string chemin ="Data/composants/priseair.cdx";
@@ -184,17 +191,22 @@ void PriseAir::infoPriseAir(const int& id, std::string& modele, char& rang, int&
 	}
 }
 
-std::string PriseAir::getNom() const
+std::string AirIntake::getName() const
 {
-	return m_nom;
+	return (_name);
 }
 
-char PriseAir::getRang() const
+char AirIntake::getRank() const
 {
-	return m_rang;
+	return (_rank);
 }
 
-int PriseAir::getAerodynamisme() const
+int AirIntake::getAerodynamic() const
 {
-	return m_aerodynamisme;
+	return (_aerodynamic);
+}
+
+int AirIntake::getPrice() const
+{
+	return _price;
 }

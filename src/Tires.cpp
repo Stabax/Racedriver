@@ -5,13 +5,13 @@
 std::vector<Tires> Tires::collection = std::vector<Tires>();
 
 Tires::Tires(const std::string& marque, const char& rang, const int& usure)
- : _brand(marque), _rank(rang), _durability(usure), _price(vRang(_rank) * 1500)
+ : Part(), _name(marque), _rank(rang), _durability(usure), _price(vRang(_rank) * 1500)
 {
 
 }
 
 Tires::Tires(const json &data)
- : _brand(data["name"].get<std::string>()), _rank(data["rank"].get<std::string>()[0]), _durability(100), _price(vRang(_rank) * 1500)
+ : Part(), _name(data["name"].get<std::string>()), _rank(data["rank"].get<std::string>()[0]), _durability(100), _price(vRang(_rank) * 1500)
 {
 
 }
@@ -19,19 +19,6 @@ Tires::Tires(const json &data)
 Tires::~Tires()
 {
 
-}
-
-bool Tires::loadCollection()
-{
-	DataFile collectionFile("./Data/composants/tires.json");
-
-	if (!collectionFile.load())
-	{
-		throw ("Fichier corrumpu");
-		return (false);
-	}
-	collectionFile.copyTo(Tires::collection);
-	return (true);
 }
 
 Tires* Tires::chargerTires(const int& id, const int& usure)
@@ -135,28 +122,28 @@ void Tires::listerTires()
 	}
 }
 
-std::string Tires::getMarque() const
+std::string Tires::getName() const
 {
-	return _brand;
+	return _name;
 }
 
-int Tires::getDurabilite() const
+int Tires::getDurability() const
 {
 	return _durability;
 }
 
 
-int Tires::getPrix() const
+int Tires::getPrice() const
 {
 	return _price;
 }
 
-char Tires::getRang() const
+char Tires::getRank() const
 {
 	return _rank;
 }
 
-void Tires::setDurabilite(int value)
+void Tires::setDurability(int value)
 {
 	_durability = value;
 }

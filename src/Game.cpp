@@ -19,7 +19,19 @@ Game::Game()
 bool Game::load()
 {
 	_term << "Chargement en Cours...\n";
-	Tires::loadCollection();
+	try
+	{
+		Part::loadCollection(Tires::collection);
+		Part::loadCollection(AirIntake::collection);
+		Part::loadCollection(Spoiler::collection);
+	}
+	catch (const std::runtime_error &e)
+	{
+		Menu::error(e.what());
+		_term << ">Appuyez sur [ENTREE] pour continuer.\n";
+		getch();
+		return (false);
+	}
 	return (true);
 }
 
@@ -34,7 +46,7 @@ int Game::main()
 		getch();
 	}
 	_term.clearScreen();
-	load();
+	if (!load()) return -1;
 	usleep(2000);
 	menuRacedriver(); //on lance le coeur du jeu
 	return 0;

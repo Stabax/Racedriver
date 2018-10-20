@@ -19,7 +19,7 @@ Les différentes classes sont le coeur du jeu:
 	-Profil
 	-Voiture
 	-Moteur
-	-PriseAir
+	-AirIntake
 	-Spoiler
 	-Tires
 

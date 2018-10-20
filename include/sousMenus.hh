@@ -17,7 +17,7 @@ int menuConsulterGarage(Profil& Player, const int& mode = 0);
 void menuConsulterBox(Profil& Player, const int& numeroBox);
 void menuAtelier(Profil& Player, const int& numeroBox);
 void menuAtelierSpoiler(Profil& Player, const int& numeroBox);
-void menuAtelierPriseAir(Profil& Player, const int& numeroBox);
+void menuAtelierAirIntake(Profil& Player, const int& numeroBox);
 void menuAtelierMoteur(Profil& Player, const int& numeroBox);
 void menuMaintenance(Profil& Player, const int& numeroBox);
 void menuAcheterBox(Profil& Player);

@@ -11,7 +11,7 @@ new Voiture (Profile.cpp 497)V
 
 new Spoiler (Voiture.cpp 11)V
 
-new PriseAir (Voiture.cpp 12)V
+new AirIntake (Voiture.cpp 12)V
 
 new Voiture (Voiture.cpp 157)V
 
@@ -27,4 +27,4 @@ delete Moteur (Voiture.cpp 32)V
 
 delete Spoiler (Voiture.cpp 33)V
 
-delete PriseAir (Voiture.cpp 34)V
+delete AirIntake (Voiture.cpp 34)V

@@ -1,6 +1,6 @@
 #include "DataFile.hh"
 
-DataFile::DataFile(const char *path)
+DataFile::DataFile(const std::string &path)
  : _path(path)
 {
 
@@ -8,12 +8,10 @@ DataFile::DataFile(const char *path)
 
 bool DataFile::load()
 {
-  std::ifstream file(_path, std::ifstream::in);
+  std::ifstream file;
 
-  if (!file.good())
-  {
-    return (false);
-  }
+  file.open(_path, std::ifstream::in);
+  if (!file.good()) return (false);
   _data = json::parse(file);
   return (true);
 }

@@ -267,6 +267,9 @@ int menuConsulterGarage(Profil& Player, const int& mode)
 void menuConsulterBox(Profil& Player, const int& numeroBox)
 {
 	Voiture* Voiture = Player.getBox(numeroBox);
+	const AirIntake &airIntake = Voiture->getAirIntake();
+	const Spoiler &spoiler = Voiture->getSpoiler();
+	const Tires &tires = Voiture->getTires();
 	//Menu Principal
 	Terminal::get() << "Vehicule gare dans le Box " << (numeroBox + 1) << "\n"
 									<< "===============\n\n"
@@ -280,23 +283,23 @@ void menuConsulterBox(Profil& Player, const int& numeroBox)
 									<< " |Capacite Nitro: " << Voiture->getNitroMax() << " L\n"
 									<< " |Aerodynamisme: " << Voiture->getAerodynamisme() << " %\n"
 									<< " |Nitro Actuelle: " << Voiture->getNiveauNitro() << " L\n"
-									<< " |Durabilite Tires: "<< Voiture->getDurabiliteTires() << "%\n"
+									<< " |Durabilite Tires: "<< Voiture->getTires().getDurability() << "%\n"
 									<< " |Etat: " << Voiture->getEtat() << "%\n\n"
 									<< "#Moteur\n"
 									<< " |Modele: " << Voiture->getNomMoteur() << "\n"
 									<< " |Vitesse: "<< Voiture->getVitesseMoteur() << " Km/h\n"
 									<< " |Acceleration: " << Voiture->getAccelerationMoteur() << " m/s²\n\n"
 									<< "#Spoiler\n"
-									<< " |Modele: " << Voiture->getNomSpoiler() << "\n"
-									<< " |Rang: "<<  Voiture->getRangSpoiler() << "\n"
-									<< " |Aerodynamisme: " <<  Voiture->getAerodynamismeSpoiler() << " %\n\n"
+									<< " |Modele: " << spoiler.getName() << "\n"
+									<< " |Rang: "<<  spoiler.getRank() << "\n"
+									<< " |Aerodynamisme: " <<  spoiler.getAerodynamic() << " %\n\n"
 									<< "#Prises d'air\n"
-									<< " |Modele: " <<  Voiture->getNomPriseAir() << "\n"
-									<< " |Rang: "<<  Voiture->getRangPriseAir() << "\n"
-									<< " |Aerodynamisme: " <<  Voiture->getAerodynamismePriseAir() << " %\n\n"
+									<< " |Modele: " << airIntake.getName() << "\n"
+									<< " |Rang: "<<  airIntake.getRank() << "\n"
+									<< " |Aerodynamisme: " <<  airIntake.getAerodynamic() << " %\n\n"
 									<< "#Tires\n"
-									<< " |Marque: " <<  Voiture->getMarqueTires() << "\n"
-									<< " |Rang: "<<  Voiture->getRangTires() << "\n\n"
+									<< " |Modele: " << tires.getName() << "\n"
+									<< " |Rang: "<<  tires.getRank() << "\n"
 									<< "===============\n"
 									<< "Appuyez sur Entree pour revenir au menu precedent";
 	getch();
@@ -333,7 +336,7 @@ void menuAtelier(Profil& Player, const int& numeroBox)
 				break;
 			case 2:
 				Terminal::get().clearScreen(); //On flushe l'ancien ecran
-				menuAtelierPriseAir(Player, numeroBox);
+				menuAtelierAirIntake(Player, numeroBox);
 				break;
 			case 3:
 				Terminal::get().clearScreen(); //On flushe l'ancien ecran
@@ -350,127 +353,98 @@ void menuAtelier(Profil& Player, const int& numeroBox)
 void menuAtelierSpoiler(Profil& Player, const int& numeroBox)
 {
 	Voiture* Voiture = Player.getBox(numeroBox);
-	char verif = 'x';
 	int id = Voiture->getIdSpoiler();
 	int idCharge = id + 1;
-	std::string modeleCharge;
-	int prixCharge;
-	int aerodynamismeCharge;
-	char rangCharge;
 
-	Spoiler::infoSpoiler(idCharge, modeleCharge, rangCharge, aerodynamismeCharge, prixCharge);
-	Terminal::get().clearScreen(); //On flushe l'ancien ecran	
+	Spoiler &newSpoiler = Spoiler::collection[idCharge];
+	const Spoiler &currentSpoiler = Spoiler::collection[idCharge];
+	Terminal::get().clearScreen(); //On flushe l'ancien ecran
 	Terminal::get() << "/!\\ Attention ! /!\\\n"
 									<< "====================\n"
 									<< "Credits: " << Player.getCredits() << "c\n"
 									<< "====================\n"
 									<< "Vous allez ameliorer le spoiler de votre vehicule,\n"
-									<< "Prix: " << prixCharge << "c\n\n"
+									<< "Prix: " << newSpoiler.getPrice() << "c\n\n"
 									<< "#Nouveau Spoiler\n"
-									<< " |Modele: " << modeleCharge << "\n"
-									<< " |Rang: " << rangCharge << "\n"
-									<< " |Aerodynamisme: " << aerodynamismeCharge << "%\n\n"
+									<< " |Modele: " << newSpoiler.getName() << "\n"
+									<< " |Rang: " << newSpoiler.getRank() << "\n"
+									<< " |Aerodynamisme: " << newSpoiler.getAerodynamic() << "%\n\n"
 									<< "#Spoiler Actuel\n"
-									<< " |Modele: " << Voiture->getNomSpoiler() << "\n"
-									<< " |Rang: " << Voiture->getRangSpoiler() << "\n"
-									<< " |Aerodynamisme: " << Voiture->getAerodynamismeSpoiler() << "%\n\n"
-									<< "Souhaitez-vous vraiment continuer ? [O/n]\n"
-									<< "====================\n";
-	verif = getch();
-	if(verif == 'o' || verif == 'O')
+									<< " |Modele: " << currentSpoiler.getName() << "\n"
+									<< " |Rang: " << currentSpoiler.getRank() << "\n"
+									<< " |Aerodynamisme: " << currentSpoiler.getAerodynamic() << "%\n\n";
+	if(Menu::askConfirmation())
 	{
 		Terminal::get().clearScreen();
-		if(Profil::compatible(Player, numeroBox, rangCharge) == true)
+		if(Profil::compatible(Player, numeroBox, newSpoiler.getRank()) == true)
 		{
-			if(Player.payer(prixCharge))
+			if(Player.payer(newSpoiler.getPrice()))
 			{
 				Voiture->setSpoiler(Spoiler::chargerSpoiler(idCharge), id);
-				Menu::msg("Spoiler amelioree avec succes !");
+				Menu::msg("Spoiler ameliore avec succes !");
 			}
 		}
 		else
 		{
 			Menu::error("Cette pièce n'est pas compatible avec votre vehicule");
 		}
-		verif = 'n'; // on quitte la verification
-	}
-	else if(verif == 'n' || verif == 'N')
-	{
-			Terminal::get().clearScreen(); // la variable de verification prend la valeur n donc on sort de la verification, mais quit vaut faux
-			verif = 'n'; // on quitte la verification
+		if(Player.getSauvegardeAuto())
+		{
+			Player.sauvegarderProfil();
+		}
 	}
 	else
 	{
-			Menu::error("Saisie invalide");
-	}
-	if(Player.getSauvegardeAuto())
-	{
-		Player.sauvegarderProfil();
+		Terminal::get().clearScreen(); // la variable de verification prend la valeur n donc on sort de la verification, mais quit vaut faux
 	}
 }
 
-void menuAtelierPriseAir(Profil& Player, const int& numeroBox)
+void menuAtelierAirIntake(Profil& Player, const int& numeroBox)
 {
 	Voiture* Voiture = Player.getBox(numeroBox);
-	char verif = 'x';
-
 	int id = Voiture->getIdSpoiler();
-
 	int idCharge = id + 1;
-	std::string modeleCharge;
-	int prixCharge;
-	int aerodynamismeCharge;
-	char rangCharge;
 
-	PriseAir::infoPriseAir(idCharge, modeleCharge, rangCharge, aerodynamismeCharge, prixCharge);
-	Terminal::get().clearScreen(); //On flushe l'ancien ecran	
+	const AirIntake &newAirIntake = AirIntake::collection[idCharge];
+	const AirIntake &currentAirIntake = Voiture->getAirIntake();
+	Terminal::get().clearScreen(); //On flushe l'ancien ecran
 	Terminal::get() << "/!\\ Attention ! /!\\\n"
 									<< "====================\n"
 									<< "Credits: " << Player.getCredits() << "c\n"
 									<< "====================\n"
 									<< "Vous allez ameliorer les prises d'air de votre vehicule,\n"
-									<< "Prix: " << prixCharge << "c\n\n"
+									<< "Prix: " << newAirIntake.getPrice() << "c\n\n"
 									<< "#Nouveau Spoiler\n"
-									<< " |Modele: " << modeleCharge << "\n"
-									<< " |Rang: " << rangCharge << "\n"
-									<< " |Aerodynamisme: " << aerodynamismeCharge << "%\n\n"
+									<< " |Modele: " << newAirIntake.getName() << "\n"
+									<< " |Rang: " << newAirIntake.getRank() << "\n"
+									<< " |Aerodynamisme: " << newAirIntake.getAerodynamic() << "%\n\n"
 									<< "#Spoiler Actuel\n"
-									<< " |Modele: " << Voiture->getNomPriseAir() << "\n"
-									<< " |Rang: " << Voiture->getRangPriseAir() << "\n"
-									<< " |Aerodynamisme: " << Voiture->getAerodynamismePriseAir() << "%\n\n"
-									<< "Souhaitez-vous vraiment continuer ? [O/n]\n"
-									<< "====================\n";
-	verif = getch();
-	if(verif == 'o' || verif == 'O')
+									<< " |Modele: " << currentAirIntake.getName() << "\n"
+									<< " |Rang: " << currentAirIntake.getRank() << "\n"
+									<< " |Aerodynamisme: " << currentAirIntake.getAerodynamic() << "%\n\n";
+	if(Menu::askConfirmation())
 	{
-			Terminal::get().clearScreen();
-			if(Profil::compatible(Player, numeroBox, rangCharge) == true)
+		Terminal::get().clearScreen();
+		if(Profil::compatible(Player, numeroBox, newAirIntake.getRank()) == true)
+		{
+			if(Player.payer(newAirIntake.getPrice()))
 			{
-				if(Player.payer(prixCharge))
-				{
-					Voiture->setPriseAir(PriseAir::chargerPriseAir(idCharge), id);
-					Menu::msg("Prise d'air amelioree avec succes !");
-				}
+				Voiture->setAirIntake(AirIntake::chargerAirIntake(idCharge), id);
+				Menu::msg("Prise d'air amelioree avec succes !");
 			}
-			else
-			{
-				Menu::error("Cette pièce n'est pas compatible avec votre vehicule");
-			}
-			verif = 'n'; // on quitte la verification
-
-	}
-	else if(verif == 'n' || verif == 'N')
-	{
-			Terminal::get().clearScreen(); // la variable de verification prend la valeur n donc on sort de la verification, mais quit vaut faux
-			verif = 'n'; // on quitte la verification
+		}
+		else
+		{
+			Menu::error("Cette pièce n'est pas compatible avec votre vehicule");
+		}
+		if(Player.getSauvegardeAuto())
+		{
+			Player.sauvegarderProfil();
+		}
 	}
 	else
 	{
-			Menu::error("Saisie invalide");
-	}
-	if(Player.getSauvegardeAuto())
-	{
-		Player.sauvegarderProfil();
+			Terminal::get().clearScreen(); // la variable de verification prend la valeur n donc on sort de la verification, mais quit vaut faux
 	}
 }
 

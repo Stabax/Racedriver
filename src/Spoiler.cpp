@@ -2,8 +2,15 @@
 #include "Spoiler.hh"
 #include "Menu.hh"
 
+std::vector<Spoiler> Spoiler::collection = std::vector<Spoiler>();
+
 Spoiler::Spoiler(const std::string& modele, const char& rang, const int& aerodynamisme)
- : m_nom(modele), m_rang(rang), m_aerodynamisme(aerodynamisme)
+ : _name(modele), _rank(rang), _aerodynamic(aerodynamisme), _price(vRang(_rank) * 1500)
+{
+}
+
+Spoiler::Spoiler(const json &data)
+ : _name(data["name"].get<std::string>()), _rank(data["rank"].get<std::string>()[0]), _aerodynamic(data["aerodynamic"].get<int>())
 {
 }
 
@@ -184,17 +191,22 @@ void Spoiler::infoSpoiler(const int& id, std::string& modele, char& rang, int& a
 	}
 }
 
-std::string Spoiler::getNom() const
+std::string Spoiler::getName() const
 {
-	return m_nom;
+	return _name;
 }
 
-char Spoiler::getRang() const
+char Spoiler::getRank() const
 {
-	return m_rang;
+	return _rank;
 }
 
-int Spoiler::getAerodynamisme() const
+int Spoiler::getAerodynamic() const
 {
-	return m_aerodynamisme;
+	return _aerodynamic;
+}
+
+int Spoiler::getPrice() const
+{
+	return _price;
 }

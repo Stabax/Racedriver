@@ -182,7 +182,7 @@ bool Profil::chargerProfil(const int& numeroSave, Profil*& ProfilCharge)
 			std::string modeleCharge;
 			int idMoteurCharge;
 			int idSpoilerCharge;
-			int idPriseAirChargee;
+			int idAirIntakeChargee;
 			char rangCharge;
 			int nitroMaxChargee;
 			int aerodynamismeVoitureCharge;
@@ -345,7 +345,7 @@ bool Profil::chargerProfil(const int& numeroSave, Profil*& ProfilCharge)
 
 						tailleString = ligneChargee.find_first_of(";");
 						iss.str(ligneChargee.substr(0, tailleString));
-						iss >> idPriseAirChargee; // on convertit la string recuperee plus haut en entier
+						iss >> idAirIntakeChargee; // on convertit la string recuperee plus haut en entier
 						ligneChargee.erase(0, tailleString + 1); // On retire les pneus charges
 						iss.clear(); //on flushe l'objet
 
@@ -382,7 +382,7 @@ bool Profil::chargerProfil(const int& numeroSave, Profil*& ProfilCharge)
 						ligneChargee.erase(0, tailleString + 1); // On retire les pneus charges
 						iss.clear(); //on flushe l'objet
 
-						ProfilCharge->setBox(box, marqueChargee, modeleCharge, idMoteurCharge, idSpoilerCharge, idPriseAirChargee, rangCharge, nitroMaxChargee, aerodynamismeVoitureCharge , idTiresCharges, pneusCharges, etat);
+						ProfilCharge->setBox(box, marqueChargee, modeleCharge, idMoteurCharge, idSpoilerCharge, idAirIntakeChargee, rangCharge, nitroMaxChargee, aerodynamismeVoitureCharge , idTiresCharges, pneusCharges, etat);
 						box++;
 						ligne++;
 					}
@@ -506,7 +506,7 @@ void Profil::sauvegarderProfil()
 				}
 				else
 				{
-			save << m_box[i]->getMarque() << ";" << m_box[i]->getModele() << ";" << m_box[i]->getIdMoteur() << ";" << m_box[i]->getIdSpoiler() << ";" << m_box[i]->getIdPriseAir() << ";" << m_box[i]->getRang() << ";" << m_box[i]->getNitroMax() << ";" << m_box[i]->getAerodynamismeVoiture() << ";" << m_box[i]->getIdTires() <<";"<< m_box[i]->getDurabiliteTires() <<";"<< m_box[i]->getEtat() << "\n";
+			save << m_box[i]->getMarque() << ";" << m_box[i]->getModele() << ";" << m_box[i]->getIdMoteur() << ";" << m_box[i]->getIdSpoiler() << ";" << m_box[i]->getIdAirIntake() << ";" << m_box[i]->getRang() << ";" << m_box[i]->getNitroMax() << ";" << m_box[i]->getAerodynamismeVoiture() << ";" << m_box[i]->getIdTires() <<";"<< m_box[i]->getTires().getDurability() <<";"<< m_box[i]->getEtat() << "\n";
 				}
 			}
 		}
@@ -668,9 +668,9 @@ std::string Profil::getDifficulteString() const
 	return difficulte;
 }
 
-void Profil::setBox(const int& numeroBox, const std::string& marque, const std::string& modele, const int& idMoteur, const int& idSpoiler, const int& idPriseAir, const char& rang, const int& nitroMax, const int& aerodynamismeVoiture, const int& idTires, const int& pneus, const int& etat)
+void Profil::setBox(const int& numeroBox, const std::string& marque, const std::string& modele, const int& idMoteur, const int& idSpoiler, const int& idAirIntake, const char& rang, const int& nitroMax, const int& aerodynamismeVoiture, const int& idTires, const int& pneus, const int& etat)
 {
-	m_box[numeroBox] = new Voiture(marque, modele, idMoteur, idSpoiler, idPriseAir, rang, nitroMax, aerodynamismeVoiture, idTires, pneus, etat);
+	m_box[numeroBox] = new Voiture(marque, modele, idMoteur, idSpoiler, idAirIntake, rang, nitroMax, aerodynamismeVoiture, idTires, pneus, etat);
 }
 
 void Profil::setBox(const int& numeroBox, Voiture* Voiture)
@@ -802,7 +802,7 @@ bool operator!=(Profil& Player, Profil& Player2)
 			Voiture2 = Player.getBox(numeroBox);
 			if(Voiture1 != 0)
 			{
-				if(Voiture1->getMarque() == Voiture2->getMarque() && Voiture1->getModele() == Voiture2->getModele() && Voiture1->getRang() == Voiture2->getRang() && (Voiture1->getAcceleration() - Voiture2->getAcceleration()) < FLT_EPSILON && (Voiture1->getVitesse() - Voiture2->getVitesse()) < FLT_EPSILON && (Voiture1->getAerodynamisme() - Voiture2->getAerodynamisme()) < FLT_EPSILON && Voiture1->getDurabiliteTires() == Voiture2->getDurabiliteTires() && (Voiture1->getAccelerationMoteur() - Voiture2->getAccelerationMoteur()) < FLT_EPSILON && (Voiture1->getVitesseMoteur() - Voiture2->getVitesseMoteur()) < FLT_EPSILON && Voiture1->getNomMoteur() == Voiture2->getNomMoteur())
+				if(Voiture1->getMarque() == Voiture2->getMarque() && Voiture1->getModele() == Voiture2->getModele() && Voiture1->getRang() == Voiture2->getRang() && (Voiture1->getAcceleration() - Voiture2->getAcceleration()) < FLT_EPSILON && (Voiture1->getVitesse() - Voiture2->getVitesse()) < FLT_EPSILON && (Voiture1->getAerodynamisme() - Voiture2->getAerodynamisme()) < FLT_EPSILON && Voiture1->getTires().getDurability() == Voiture2->getTires().getDurability() && (Voiture1->getAccelerationMoteur() - Voiture2->getAccelerationMoteur()) < FLT_EPSILON && (Voiture1->getVitesseMoteur() - Voiture2->getVitesseMoteur()) < FLT_EPSILON && Voiture1->getNomMoteur() == Voiture2->getNomMoteur())
 				{
 					boxModifie[numeroBox] = false; //Attributs et voiture identiques dans la partie et le fichier.
 				}

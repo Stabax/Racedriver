@@ -1,0 +1,58 @@
+{
+  "collection": [
+  {
+    "name": "Zephyr",
+    "aerodynamic": 6,
+    "rank": "D"
+  },
+  {
+    "name": "Lightning",
+    "aerodynamic": 12,
+    "rank": "C"
+  },
+  {
+    "name": "Titan",
+    "aerodynamic": 19,
+    "rank": "B"
+  },
+  {
+    "name": "Pro Silent",
+    "aerodynamic": 27,
+    "rank": "A"
+  },
+  {
+    "name": "Cyclone",
+    "aerodynamic": 36,
+    "rank": "S"
+  },
+  {
+    "name": "Razor",
+    "aerodynamic": 42,
+    "rank": "A"
+  },
+  {
+    "name": "Arctic Blaster",
+    "aerodynamic": 50,
+    "rank": "A"
+  },
+  {
+    "name": "Tempest",
+    "aerodynamic": 57,
+    "rank": "A"
+  },
+  {
+    "name": "Matrix",
+    "aerodynamic": 66,
+    "rank": "A"
+  },
+  {
+    "name": "Aerocool",
+    "aerodynamic": 78,
+    "rank": "A"
+  },
+  {
+    "name": "Ultimate",
+    "aerodynamic": 95,
+    "rank": "A"
+  }]
+}

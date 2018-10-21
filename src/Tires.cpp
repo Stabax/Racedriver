@@ -23,53 +23,19 @@ Tires::~Tires()
 
 void Tires::listerTires()
 {
-	std::string chemin ="Data/composants/pneus.cdx";
-
-	std::string var;
-
-	std::ifstream flux(chemin.c_str());
-	if(flux)
+	Terminal::get() <<"   |Marque     |rang  |Prix  |\n\n";
+	for (size_t i = 0; i < collection.size(); i++)
 	{
-		int curseur;
-		Terminal::get() <<"   |Marque     |rang  |Prix  |\n\n";
-		while(std::getline(flux, var))
+		std::string espace="      "; //6 espaces
+		std::string espace2;
+		if(collection[i].getName().size() < 12)
 		{
-
-			curseur=var.find_first_of(";");
-			std::string id=var.substr(0,curseur);
-			var.erase(0,curseur+1);
-
-			curseur=var.find_first_of(";");
-			std::string marque=var.substr(0,curseur);
-			var.erase(0,curseur+1);
-
-			char rang = var[0];
-
-
-			std::string espace2;
-			std::string espace4="      "; //6 espaces
-			std::string espace5;
-
-
-			if(marque.size()<12)
+			for (size_t i = 0; i < 12 - collection[i].getName().size(); i++)
 			{
-				for (size_t i=0; i<12-marque.size(); i++)
-				{
-					espace2+=" ";
-				}
+				espace2+=" ";
 			}
-
-			if(id.size()<3)
-			{
-				for (size_t i=0; i<3-id.size(); i++)
-				{
-					espace5+=" ";
-				}
-			}
-
-
-			Terminal::get() << id << "." << espace5 << marque << espace2 << rang << espace4 << "PRIX" << "c\n";
 		}
+		Terminal::get() << i << "." << " " << collection[i].getName() << espace2 << collection[i].getRank() << espace << "PRIX" << "c\n";
 	}
 }
 

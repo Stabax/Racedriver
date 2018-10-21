@@ -1,0 +1,71 @@
+{
+  "collection":
+  {
+    "renault": [
+    {
+      "name": "GT100",
+      "acceleration": 60,
+      "speed": 10,
+      "rank": "D",
+      "energy": "Diesel"
+    },
+    {
+      "name": "GT120",
+      "acceleration": 65,
+      "speed": 10,
+      "rank": "D",
+      "energy": "Diesel"
+    },
+    {
+      "name": "GT140",
+      "acceleration": 70,
+      "speed": 13,
+      "rank": "D",
+      "energy": "Diesel"
+    }],
+    "toyota": [
+    {
+      "name": "WIP",
+      "acceleration": 62,
+      "speed": 11,
+      "rank": "D",
+      "energy": "Diesel"
+    },
+    {
+      "name": "WIP U",
+      "acceleration": 64,
+      "speed": 13,
+      "rank": "D",
+      "energy": "Diesel"
+    },
+    {
+      "name": "WIP 16S",
+      "acceleration": 70,
+      "speed": 15,
+      "rank": "D",
+      "energy": "Diesel"
+    }],
+    "nissan": [
+    {
+      "name": "1.4 TDI",
+      "acceleration": 62,
+      "speed": 10,
+      "rank": "D",
+      "energy": "Diesel"
+    },
+    {
+      "name": "1.8 TDI",
+      "acceleration": 70,
+      "speed": 10,
+      "rank": "D",
+      "energy": "Diesel"
+    },
+    {
+      "name": "2.0 TSI",
+      "acceleration": 75,
+      "speed": 11,
+      "rank": "D",
+      "energy": "Diesel"
+    }]
+  }
+}

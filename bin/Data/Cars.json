@@ -1,0 +1,32 @@
+{
+  "collection":
+  {
+    "Renault": [
+    {
+      "name": "4L",
+      "engine": 0,
+      "airIntake": 0,
+      "spoiler": 0,
+      "tires": 0,
+      "rank": "D"
+    }],
+    "Toyota": [
+    {
+      "name": "Corona",
+      "engine": 4,
+      "airIntake": 2,
+      "spoiler": 0,
+      "tires": 0,
+      "rank": "D"
+    }],
+    "Nissan": [
+    {
+      "name": "Bluebird",
+      "engine": 6,
+      "airIntake": 4,
+      "spoiler": 2,
+      "tires": 0,
+      "rank": "D"
+    }]
+  }
+}

@@ -73,9 +73,6 @@ protected:
 	AirIntake m_priseAir;
 	int m_idAirIntake;		//modifiable via paiement
 	int m_niveauNitro;	//se vide en fonction de la longueur du circuit. le plein est fait manuellement via paiement, juste avant une course
-	float m_aerodynamisme;			//géré par spoiler et prise d'air et aerodynamisme voiture
-	float m_vitesse;				//géré par moteur et aerodynamisme
-	float m_acceleration;			//géré par moteur, aerodynamisme et niveau nitro
 	std::string m_marque;
 	std::string m_modele;
 	char m_rang;

@@ -10,20 +10,15 @@
 class AirIntake : public Part
 {
 public:
-	AirIntake(const std::string& modele, const char& rang, const int& aerodynamisme);
 	AirIntake(const json &data);
 	~AirIntake();
 
-	std::string getName() const;
-	char getRank() const;
 	int getAerodynamic() const;
 	int getPrice() const;
 
-	static std::vector<AirIntake> collection;
+	static std::map<std::string, AirIntake> collection;
 
 protected:
-	std::string _name;
-	char _rank;
 	int _aerodynamic;
 	int _price;
 };

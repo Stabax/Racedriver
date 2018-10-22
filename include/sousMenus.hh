@@ -8,7 +8,7 @@
 #include "course.hh"
 #include"Game.hh"
 
-Voiture* menuChoixVoiture(Profil& Player);
+Car* menuChoixCar(Profil& Player);
 
 void menuCourseLibre(Profil& Player); //Menu de Course libre (lobby sp)
 void menuCourseChampionnat(Profil& Player);
@@ -18,13 +18,13 @@ void menuConsulterBox(Profil& Player, const int& numeroBox);
 void menuAtelier(Profil& Player, const int& numeroBox);
 void menuAtelierSpoiler(Profil& Player, const int& numeroBox);
 void menuAtelierAirIntake(Profil& Player, const int& numeroBox);
-void menuAtelierMoteur(Profil& Player, const int& numeroBox);
+void menuAtelierEngine(Profil& Player, const int& numeroBox);
 void menuMaintenance(Profil& Player, const int& numeroBox);
 void menuAcheterBox(Profil& Player);
 
-void menuAchatVoiture(const char& rang, Profil& Player);
+void menuAchatCar(const char& rang, Profil& Player);
 void menuConcessionaireAchat(Profil& Player);
-void menuVenteVoiture(Profil& Player, const int& numeroBox);
+void menuVenteCar(Profil& Player, const int& numeroBox);
 
 void menuDifficulte(Profil& Player);
 void menuChangementNomProfil(Profil& Player);

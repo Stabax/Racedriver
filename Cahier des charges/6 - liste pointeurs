@@ -1,19 +1,19 @@
 
 new Circuit (Circuit.cpp 125)V
 
-new Moteur (Moteur.cpp 102)V
+new Engine (Engine.cpp 102)V
 
 new Profil (Profile.cpp 195)V
 
 new Profil (Profile.cpp 348)V
 
-new Voiture (Profile.cpp 497)V
+new Car (Profile.cpp 497)V
 
-new Spoiler (Voiture.cpp 11)V
+new Spoiler (Car.cpp 11)V
 
-new AirIntake (Voiture.cpp 12)V
+new AirIntake (Car.cpp 12)V
 
-new Voiture (Voiture.cpp 157)V
+new Car (Car.cpp 157)V
 
 
 
@@ -21,10 +21,10 @@ delete Profil (main.cpp 68)V
 
 delete Circuit (menus.cpp 479)V
 
-delete Voiture (Profil.cpp 32-36)V
+delete Car (Profil.cpp 32-36)V
 
-delete Moteur (Voiture.cpp 32)V
+delete Engine (Car.cpp 32)V
 
-delete Spoiler (Voiture.cpp 33)V
+delete Spoiler (Car.cpp 33)V
 
-delete AirIntake (Voiture.cpp 34)V
+delete AirIntake (Car.cpp 34)V

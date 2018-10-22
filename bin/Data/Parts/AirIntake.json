@@ -2,56 +2,67 @@
   "collection": [
   {
     "name": "Zephyr",
+    "manufacturer": "RaceDriver",
     "aerodynamic": 6,
     "rank": "D"
   },
   {
     "name": "Lightning",
+    "manufacturer": "RaceDriver",
     "aerodynamic": 12,
     "rank": "C"
   },
   {
     "name": "Titan",
+    "manufacturer": "RaceDriver",
     "aerodynamic": 19,
     "rank": "B"
   },
   {
     "name": "Pro Silent",
+    "manufacturer": "RaceDriver",
     "aerodynamic": 27,
     "rank": "A"
   },
   {
     "name": "Cyclone",
+    "manufacturer": "RaceDriver",
     "aerodynamic": 36,
     "rank": "S"
   },
   {
     "name": "Razor",
+    "manufacturer": "RaceDriver",
     "aerodynamic": 42,
     "rank": "A"
   },
   {
     "name": "Arctic Blaster",
+    "manufacturer": "RaceDriver",
     "aerodynamic": 50,
     "rank": "A"
   },
   {
     "name": "Tempest",
+    "manufacturer": "RaceDriver",
     "aerodynamic": 57,
     "rank": "A"
   },
   {
     "name": "Matrix",
+    "manufacturer": "RaceDriver",
     "aerodynamic": 66,
     "rank": "A"
   },
   {
     "name": "Aerocool",
+    "manufacturer": "RaceDriver",
     "aerodynamic": 78,
     "rank": "A"
   },
   {
     "name": "Ultimate",
+    "manufacturer": "RaceDriver",
     "aerodynamic": 95,
     "rank": "A"
   }]

@@ -14,24 +14,19 @@
 class Tires : public Part
 {
 public:
-	Tires(const std::string& marque, const char& rang, const int& usure);
 	Tires(const json &data);
 	~Tires();
 
 	static void listerTires();
 
-	std::string getName() const;
 	int getDurability() const;
-	char getRank() const;
 	int getPrice() const;
 
 	void setDurability(int value);
 
-	static std::vector<Tires> collection;
-protected:
+	static std::map<std::string, Tires> collection;
 
-	std::string _name;
-	char _rank; //definit la voiture qui peut les porter
+protected:
 	int _durability; //definit la vitesse d'usure des pneus
 	int _price;
 };

@@ -27,13 +27,13 @@ bool Profil::compatible(Profil& Player, const int& numeroBox, const char& rangNe
 {
 	bool compatible = false;
 	int rangPiece = 0;
-	int rangVoitureBox = 0;
-	Voiture *VoitureBox = Player.getBox(numeroBox);
+	int rangCarBox = 0;
+	Car *CarBox = Player.getBox(numeroBox);
 
-	rangVoitureBox = vRang(VoitureBox->getRang());
+	rangCarBox = vRang(CarBox->rank);
 	rangPiece = vRang(rangNewPiece);
 
-	if(rangVoitureBox >= rangPiece)
+	if(rangCarBox >= rangPiece)
 	{
 		compatible = true;
 	}
@@ -103,6 +103,7 @@ int Profil::compterSauvegardes()
 
 bool Profil::chargerProfil(const int& numeroSave, Profil*& ProfilCharge)
 {
+	/*
 	bool statut = false; // true si la lecture de fichier est une reussite, false si elle echoue.
 	int ligne = 1;
 	int box = 0;
@@ -180,12 +181,12 @@ bool Profil::chargerProfil(const int& numeroSave, Profil*& ProfilCharge)
 			//Chargement voitures/box
 			std::string marqueChargee;
 			std::string modeleCharge;
-			int idMoteurCharge;
+			int idEngineCharge;
 			int idSpoilerCharge;
 			int idAirIntakeChargee;
 			char rangCharge;
 			int nitroMaxChargee;
-			int aerodynamismeVoitureCharge;
+			int aerodynamismeCarCharge;
 			int idTiresCharges;
 			int pneusCharges;
 			int etat;
@@ -320,7 +321,7 @@ bool Profil::chargerProfil(const int& numeroSave, Profil*& ProfilCharge)
 				}
 				else if(ligne >= 7 && ligne <= 11)
 				{
-					 //ligne 6 a 10 - Voiture Box 0 a 4
+					 //ligne 6 a 10 - Car Box 0 a 4
 					if(ligneChargee[0] != 0)
 					{
 						tailleString = ligneChargee.find_first_of(";"); //find first of recherche la position du premier point virgule
@@ -333,7 +334,7 @@ bool Profil::chargerProfil(const int& numeroSave, Profil*& ProfilCharge)
 
 						tailleString = ligneChargee.find_first_of(";");
 						iss.str(ligneChargee.substr(0, tailleString));
-						iss >> idMoteurCharge; // on convertit la string recuperee plus haut en entier
+						iss >> idEngineCharge; // on convertit la string recuperee plus haut en entier
 						ligneChargee.erase(0, tailleString + 1); // On retire les pneus charges
 						iss.clear(); //on flushe l'objet
 
@@ -360,7 +361,7 @@ bool Profil::chargerProfil(const int& numeroSave, Profil*& ProfilCharge)
 
 						tailleString = ligneChargee.find_first_of(";");
 						iss.str(ligneChargee.substr(0, tailleString));
-						iss >> aerodynamismeVoitureCharge; // on convertit la string recuperee plus haut en entier
+						iss >> aerodynamismeCarCharge; // on convertit la string recuperee plus haut en entier
 						ligneChargee.erase(0, tailleString + 1); // On retire les pneus charges
 						iss.clear(); //on flushe l'objet
 
@@ -382,7 +383,7 @@ bool Profil::chargerProfil(const int& numeroSave, Profil*& ProfilCharge)
 						ligneChargee.erase(0, tailleString + 1); // On retire les pneus charges
 						iss.clear(); //on flushe l'objet
 
-						ProfilCharge->setBox(box, marqueChargee, modeleCharge, idMoteurCharge, idSpoilerCharge, idAirIntakeChargee, rangCharge, nitroMaxChargee, aerodynamismeVoitureCharge , idTiresCharges, etat);
+						ProfilCharge->setBox(box, marqueChargee, modeleCharge, idEngineCharge, idSpoilerCharge, idAirIntakeChargee, rangCharge, nitroMaxChargee, aerodynamismeCarCharge , idTiresCharges, etat);
 						box++;
 						ligne++;
 					}
@@ -506,7 +507,7 @@ void Profil::sauvegarderProfil()
 				}
 				else
 				{
-			save << m_box[i]->getMarque() << ";" << m_box[i]->getModele() << ";" << m_box[i]->getIdMoteur() << ";" << m_box[i]->getIdSpoiler() << ";" << m_box[i]->getIdAirIntake() << ";" << m_box[i]->getRang() << ";" << m_box[i]->getNitroMax() << ";" << m_box[i]->getAerodynamismeVoiture() << ";" << m_box[i]->getIdTires() <<";"<< m_box[i]->getTires().getDurability() <<";"<< m_box[i]->getEtat() << "\n";
+					//save << m_box[i]->manufacturer << ";" << m_box[i]->name << ";" << m_box[i]->getIdEngine() << ";" << m_box[i]->getIdSpoiler() << ";" << m_box[i]->getIdAirIntake() << ";" << m_box[i]->rank << ";" << m_box[i]->getNitroMax() << ";" << m_box[i]->getAerodynamismeCar() << ";" << m_box[i]->getIdTires() <<";"<< m_box[i]->getTires().getDurability() <<";"<< m_box[i]->getEtat() << "\n";
 				}
 			}
 		}
@@ -528,7 +529,7 @@ void Profil::sauvegarderProfil()
 	else
 	{
 		lock << getHashFromFile(nomFichier); //On inscrit le lock dans le fichier
-	}
+	}*/
 }
 
 void Profil::creerProfil(std::string& nom, Profil*& ProfilCree)
@@ -579,7 +580,7 @@ int Profil::getNbBox() const
 	return m_nbBox;
 }
 
-Voiture* Profil::getBox(const int& numeroBox) const
+Car* Profil::getBox(const int& numeroBox) const
 {
 	return m_box[numeroBox];
 }
@@ -623,7 +624,7 @@ int Profil::getCreditsGagnes() const
 	return m_creditsGagnes;
 }
 
-int Profil::getVoituresAchetees() const
+int Profil::getCarsAchetees() const
 {
 	return m_voituresAchetees;
 }
@@ -668,24 +669,19 @@ std::string Profil::getDifficulteString() const
 	return difficulte;
 }
 
-void Profil::setBox(const int& numeroBox, const std::string& marque, const std::string& modele, const int& idMoteur, const int& idSpoiler, const int& idAirIntake, const char& rang, const int& nitroMax, const int& aerodynamismeVoiture, const int& idTires, const int& etat)
+void Profil::setBox(const int& numeroBox, Car &car)
 {
-	m_box[numeroBox] = new Voiture(marque, modele, idMoteur, idSpoiler, idAirIntake, rang, nitroMax, aerodynamismeVoiture, idTires, etat);
+	m_box[numeroBox] = new Car(car);
 }
 
-void Profil::setBox(const int& numeroBox, Voiture* Voiture)
-{
-	m_box[numeroBox] = Voiture;
-}
-
-void Profil::setBox(const int& numeroBox)
+void Profil::setBox( int numeroBox)
 {
 	m_box[numeroBox] = 0;
 }
 
-void  Profil::setMoteurVoiture(const int& numeroBox, Moteur* newMoteur, const int& idMoteur)
+void  Profil::setEngineCar(const int& numeroBox, Engine* newEngine, const int& idEngine)
 {
-	m_box[numeroBox]->setMoteur(newMoteur, idMoteur);
+	m_box[numeroBox]->setEngine(*newEngine);
 }
 
 void Profil::setDifficulte(const int& newDifficulte)
@@ -705,7 +701,7 @@ void Profil::ajouterCreditsGagnes(const int& somme)
 	m_creditsGagnes += somme;
 }
 
-void Profil::ajouterVoitureAchetee()
+void Profil::ajouterCarAchetee()
 {
 	m_voituresAchetees++;
 }
@@ -785,56 +781,4 @@ bool Profil::payer(const int& prix)
 		paye = true;
 	}
 	return paye;
-}
-
-bool operator!=(Profil& Player, Profil& Player2)
-{
-	bool modifie = false;
-	bool boxModifie[5] = { false };
-	Voiture* Voiture1 = 0;
-	Voiture* Voiture2 = 0;
-
-	if(Player.getUuid() == Player2.getUuid() && Player.getNumero() == Player2.getNumero() && Player.getNom() == Player2.getNom() && Player.getCredits() == Player2.getCredits() && Player.getNbBox() == Player2.getNbBox() && Player.getNbCourses() == Player2.getNbCourses() && Player.getVictoires() == Player2.getVictoires() && Player.getDefaites() == Player2.getDefaites() && Player.getAccidents() == Player2.getAccidents() && Player.getCreditsGagnes() == Player2.getCreditsGagnes() && Player.getVoituresAchetees() == Player2.getVoituresAchetees() && Player.getDifficulte() == Player2.getDifficulte() && Player.getSauvegardeAuto() == Player2.getSauvegardeAuto()) //On utilise les accesseurs pour comparer
-	{
-		for (int numeroBox = 0; numeroBox < Player.getNbBox(); numeroBox++)
-		{
-			Voiture1 = Player.getBox(numeroBox);
-			Voiture2 = Player.getBox(numeroBox);
-			if(Voiture1 != 0)
-			{
-				if(Voiture1->getMarque() == Voiture2->getMarque() && Voiture1->getModele() == Voiture2->getModele() && Voiture1->getRang() == Voiture2->getRang() && (Voiture1->getAcceleration() - Voiture2->getAcceleration()) < FLT_EPSILON && (Voiture1->getVitesse() - Voiture2->getVitesse()) < FLT_EPSILON && (Voiture1->getAerodynamisme() - Voiture2->getAerodynamisme()) < FLT_EPSILON && Voiture1->getTires().getDurability() == Voiture2->getTires().getDurability() && (Voiture1->getAccelerationMoteur() - Voiture2->getAccelerationMoteur()) < FLT_EPSILON && (Voiture1->getVitesseMoteur() - Voiture2->getVitesseMoteur()) < FLT_EPSILON && Voiture1->getNomMoteur() == Voiture2->getNomMoteur())
-				{
-					boxModifie[numeroBox] = false; //Attributs et voiture identiques dans la partie et le fichier.
-				}
-				else
-				{
-					boxModifie[numeroBox] = true;
-				}
-			}
-			else
-			{
-				if(Player.getBox(numeroBox) == Player.getBox(numeroBox))
-				{
-					boxModifie[numeroBox] = false;
-				}
-				else
-				{
-					boxModifie[numeroBox] = true;
-				}
-			}
-		}
-		if(boxModifie[0] == true || boxModifie[1] == true || boxModifie[2] == true || boxModifie[3] == true || boxModifie[4] == true) //Si l'un des boxs est modifié
-		{
-			modifie = true;
-		}
-		else
-		{
-			modifie = false;
-		}
-	}
-	else
-	{
-		modifie = true;
-	}
-	return modifie;
 }

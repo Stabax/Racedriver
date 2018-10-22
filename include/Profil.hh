@@ -8,7 +8,7 @@
 #include <string>
 #include <cfloat>
 #include "sha/sha.h"
-#include "Voiture.hh"
+#include "Car.hh"
 
 class Profil
 {
@@ -29,7 +29,7 @@ public:
 	std::string getNom() const;
 	int getCredits() const;
 	int getNbBox() const;
-	Voiture* getBox(const int& numeroBox) const;
+	Car* getBox(const int& numeroBox) const;
 	int getDifficulte() const;
 	std::string getDifficulteString() const;
 	bool getSauvegardeAuto() const;
@@ -40,16 +40,15 @@ public:
 	int getAccidents() const;
 	float getVDRatio() const;
 	int getCreditsGagnes() const;
-	int getVoituresAchetees() const;
+	int getCarsAchetees() const;
 
-	void setMoteurVoiture(const int& numeroBox, Moteur* newMoteur, const int& idMoteur);
-	void setBox(const int& numeroBox, const std::string& marque, const std::string& modele, const int& idMoteur, const int& idSpoiler, const int& idAirIntake, const char& rang, const int& nitroMax, const int& aerodynamismeVoiture, const int& idTires, const int& etat);
-	void setBox(const int& numeroBox, Voiture* Voiture);
-	void setBox(const int& numeroBox);
+	void setEngineCar(const int& numeroBox, Engine* newEngine, const int& idEngine);
+	void setBox(const int& numeroBox, Car &car);
+	void setBox(int numeroBox);
 	void setDifficulte(const int& newDifficulte);
 	void setSauvegardeAuto(const bool& valeur);
 
-	void ajouterVoitureAchetee();
+	void ajouterCarAchetee();
 	void ajouterCreditsGagnes(const int& somme);
 	void ajouterCredits(const int& somme);
 	void ajouterCourse();
@@ -73,7 +72,7 @@ protected:
 
 	int m_difficulte;
 	int m_nbBox;  //gestion vehicules
-	Voiture* m_box[5];
+	Car* m_box[5];
 
 	//Stats
 	int m_nbCourses;

@@ -1,28 +1,27 @@
-//Voiture.cpp
-#include "Voiture.hh"
+//Car.cpp
+#include "Car.hh"
 #include "Menu.hh"
 
-Voiture::Voiture(const std::string& marque, const std::string& modele, const int& idMoteur, const int& idSpoiler, const int& idAirIntake, const char& rang, const int& nitroMax, const int& aerodynamismeVoiture, const int& idTires, const int& etat)
- : m_moteur(Moteur::chargerMoteur(idMoteur, marque)), m_idMoteur(idMoteur), m_spoiler(Spoiler::collection[idSpoiler]), m_idSpoiler(idSpoiler),
- 	 m_priseAir(AirIntake::collection[idAirIntake]), m_idAirIntake(idAirIntake), m_niveauNitro(nitroMax), m_marque(marque), m_modele(modele), m_rang(rang),
-	 m_typeCarburant(m_moteur->getTypeCarburant()), m_consommation(m_moteur->getConsommation()), m_nitroMax(nitroMax), m_aerodynamismeVoiture(aerodynamismeVoiture),
-	 m_pneus(Tires::collection[idTires]), m_idTires(idTires), m_etat(etat)
+std::map<std::string, Car> Car::collection = std::map<std::string, Car>();
+
+Car::Car(const json &data)
+ : Part(data), _engine(Engine::collection[idEngine]), _spoiler(Spoiler::collection[idSpoiler]), _airIntake(AirIntake::collection[idAirIntake]),
+   _tires(Tires::collection[idTires]), _nitro(nitroMax), manufacturer(marque), _model(modele), rank(rang), _nitroMax(nitroMax), _durability(etat)
 {
 
 }
 
-Voiture::~Voiture()
+Car::~Car()
 {
-	delete m_moteur;
 }
 
-Voiture* Voiture::chargerVoiture(const int& id, const char& rangCharge)
+Car* Car::chargerCar(const int& id, const char& rangCharge)
 {
-	Voiture* VoitureCharge = 0; //moteur a creer
+	Car* CarCharge = 0; //moteur a creer
 	std::string var=""; //contient les lignes du fichier
 	std::string sRang;
 	sRang = rangCharge;
-	std::string chemin = "Data/Voitures/"+sRang+".cdx";
+	std::string chemin = "Data/Cars/"+sRang+".cdx";
 	std::ifstream engine(chemin.c_str());
 	std::istringstream iss;
 
@@ -61,7 +60,7 @@ Voiture* Voiture::chargerVoiture(const int& id, const char& rangCharge)
 			var.erase(0,curseur+1);
 
 			curseur=var.find_first_of(";");
-			std::string sIdMoteur=var.substr(0,curseur);
+			std::string sIdEngine=var.substr(0,curseur);
 			var.erase(0,curseur+1);
 
 			curseur=var.find_first_of(";");
@@ -78,14 +77,14 @@ Voiture* Voiture::chargerVoiture(const int& id, const char& rangCharge)
 
 			std::string sAerodynamisme=var;
 
-			int idMoteur;
+			int idEngine;
 			int idSpoiler;
 			int nitroMax;
 			int idAirIntake;
 			int aerodynamisme;
 
-			iss.str(sIdMoteur);
-			if (iss>>idMoteur)
+			iss.str(sIdEngine);
+			if (iss>>idEngine)
 			{
 			}
 			else
@@ -129,21 +128,21 @@ Voiture* Voiture::chargerVoiture(const int& id, const char& rangCharge)
 				Menu::error("Fichier corrompu4.");
 			}
 			iss.clear();
-			VoitureCharge = new Voiture(marque, modele, idMoteur, idSpoiler, idAirIntake, rangCharge, nitroMax, aerodynamisme, 1);
+			CarCharge = new Car(marque, modele, idEngine, idSpoiler, idAirIntake, rangCharge, nitroMax, aerodynamisme, 1);
 		}
 		else
 		{
 			Menu::error("Fichier corrompu.");
 		}
 	}
-	return VoitureCharge;
+	return CarCharge;
 }
 
-void Voiture::listerVoitures(const char& rang)
+void Car::listerCars(const char& rang)
 {
-	std::string chemin ="Data/Voitures/" + std::string(&rang) + ".cdx";
+	std::string chemin ="Data/Cars/" + std::string(&rang) + ".cdx";
 	std::string var;
-	int prixMoteur=0;
+	int prixEngine=0;
 
 	std::ifstream flux(chemin.c_str());
 	if(flux)
@@ -162,7 +161,7 @@ void Voiture::listerVoitures(const char& rang)
 			std::string modele=var.substr(0,curseur);
 			var.erase(0,curseur+1);
 			curseur=var.find_first_of(";");
-			std::string sIdMoteur=var.substr(0,curseur);
+			std::string sIdEngine=var.substr(0,curseur);
 			var.erase(0,curseur+1);
 			curseur=var.find_first_of(";");
 			var.erase(0,curseur+1);
@@ -216,7 +215,7 @@ void Voiture::listerVoitures(const char& rang)
 			}
 			int nitroMax;
 			int aerodynamisme;
-			int idMoteur;
+			int idEngine;
 			std::istringstream iss(sNitroMax);
 			if (iss>>nitroMax)
 			{
@@ -235,29 +234,29 @@ void Voiture::listerVoitures(const char& rang)
 				Menu::error("Fichier corrompu10.");
 			}
 			iss.clear();
-			iss.str(sIdMoteur);
-			if (iss>>idMoteur)
+			iss.str(sIdEngine);
+			if (iss>>idEngine)
 			{
 			}
 			else
 			{
 				Menu::error("Fichier corrompu11.");
 			}
-			Moteur::infoMoteur(idMoteur, marque, prixMoteur);
-			int prix = roundf( (prixMoteur + 0 + 0 + 0 )  *0.85+ (( aerodynamisme + nitroMax ) * 100)+ (( vRang(rang) - 1 ) * 20000));
+			Engine::infoEngine(idEngine, marque, prixEngine);
+			int prix = roundf( (prixEngine + 0 + 0 + 0 )  *0.85+ (( aerodynamisme + nitroMax ) * 100)+ (( vRang(rang) - 1 ) * 20000));
 			Terminal::get() << id << "." << espace5 << marque << espace1 << modele << espace2 << ssNitroMax << espace3 << ssAerodynamisme << espace4 << prix << "c\n";
 		}
 	}
 }
 
-int Voiture::compterVoitures(const char& rang)
+int Car::compterCars(const char& rang)
 {
 	std::string sRang;
 	sRang=rang;
-	std::string chemin ="Data/Voitures/"+sRang+".cdx";
+	std::string chemin ="Data/Cars/"+sRang+".cdx";
 	std::ifstream engine(chemin.c_str());
 	int id; //indique l'id actuellement lu dans le fichier
-	int nbVoiture=0;
+	int nbCar=0;
 	std::string var;
 
 	if(engine)
@@ -268,7 +267,7 @@ int Voiture::compterVoitures(const char& rang)
 			std::istringstream iss(var.substr(0,var.find_first_of(";"))); //on transforme le premier char en int pour etre compare
 			if(iss>>id)
 			{
-				nbVoiture++;
+				nbCar++;
 			}
 			else
 			{
@@ -281,16 +280,16 @@ int Voiture::compterVoitures(const char& rang)
 	{
 		Menu::error("Fichier corrompu7");
 	}
-	return nbVoiture;
+	return nbCar;
 }
 
-void Voiture::infoVoiture(const int& id, const char& rang, std::string& marque, std::string& modele, int& idMoteur, int& nitroMax, int& aerodynamisme, int& prix)
+void Car::infoCar(const int& id, const char& rang, std::string& marque, std::string& modele, int& idEngine, int& nitroMax, int& aerodynamisme, int& prix)
 {
 	std::string var; //contient les lignes du fichier
 	std::string sRang;
 	sRang=rang;
-	std::string nomMoteur;
-	std::string chemin ="Data/Voitures/"+sRang+".cdx";
+	std::string nomEngine;
+	std::string chemin ="Data/Cars/"+sRang+".cdx";
 	std::ifstream engine(chemin.c_str());
 
 	if(!engine)
@@ -322,7 +321,7 @@ void Voiture::infoVoiture(const int& id, const char& rang, std::string& marque, 
 			modele=var.substr(0,curseur);
 			var.erase(0,curseur+1);
 			curseur=var.find_first_of(";");
-			std::string sIdMoteur=var.substr(0,curseur);
+			std::string sIdEngine=var.substr(0,curseur);
 			var.erase(0,curseur+1);
 			curseur=var.find_first_of(";");
 			std::string sIdSpoiler=var.substr(0,curseur);
@@ -352,18 +351,18 @@ void Voiture::infoVoiture(const int& id, const char& rang, std::string& marque, 
 				Menu::error("Fichier corrompu10.");
 			}
 			iss.clear();
-			iss.str(sIdMoteur);
-			if (iss>>idMoteur)
+			iss.str(sIdEngine);
+			if (iss>>idEngine)
 			{
 			}
 			else
 			{
 				Menu::error("Fichier corrompu11.");
 			}
-			Moteur::infoMoteur(idMoteur, marque, nomMoteur);
-			int prixMoteur=0;
-			Moteur::infoMoteur(idMoteur, marque, prixMoteur);
-			prix=roundf( (prixMoteur + 0 + 0 + 0 )  *0.85+ (( aerodynamisme + nitroMax ) * 100)+ (( vRang(rang) - 1 ) * 20000));
+			Engine::infoEngine(idEngine, marque, nomEngine);
+			int prixEngine=0;
+			Engine::infoEngine(idEngine, marque, prixEngine);
+			prix=roundf( (prixEngine + 0 + 0 + 0 )  *0.85+ (( aerodynamisme + nitroMax ) * 100)+ (( vRang(rang) - 1 ) * 20000));
 		}
 		else
 		{
@@ -372,196 +371,125 @@ void Voiture::infoVoiture(const int& id, const char& rang, std::string& marque, 
 	}
 }
 
-std::string Voiture::getMarque() const
+float Car::getVitesse() const
 {
-	return m_marque;
+	return (_engine->getVitesse() + ( getAerodynamisme() / 3 ));
 }
 
-std::string Voiture::getModele() const
+float Car::getAcceleration() const
 {
-	return m_modele;
+	return (static_cast<float>((( _nitro + _engine->getAcceleration() ) + (getAerodynamisme())/10)));
 }
 
-std::string Voiture::getNomMoteur() const
+int Car::getAerodynamisme() const
 {
-	return m_moteur->getModele();
+	return static_cast<float>((m_priseAir.getAerodynamic() / 3) + (m_spoiler.getAerodynamic() / 3) + (m_aerodynamismeCar / 3));;
 }
 
-float Voiture::getVitesseMoteur() const
+int Car::getNitroMax() const
 {
- 	return m_moteur->getVitesse();
+	return _nitroMax;
 }
 
-float Voiture::getAccelerationMoteur() const
+int Car::getNiveauNitro() const
 {
- 	return m_moteur->getAcceleration();
+	return _nitro;
 }
 
-char Voiture::getRang() const
-{
-	return m_rang;
-}
-
-float Voiture::getVitesse() const
-{
-	return (m_moteur->getVitesse() + ( getAerodynamisme() / 3 ));
-}
-
-float Voiture::getAcceleration() const
-{
-	return (static_cast<float>((( m_niveauNitro + m_moteur->getAcceleration() ) + (getAerodynamisme())/10)));
-}
-
-int Voiture::getAerodynamisme() const
-{
-	return static_cast<float>((m_priseAir.getAerodynamic() / 3) + (m_spoiler.getAerodynamic() / 3) + (m_aerodynamismeVoiture / 3));;
-}
-
-int Voiture::getIdMoteur() const
-{
-	return m_idMoteur;
-}
-
-int Voiture::getIdSpoiler() const
-{
-	return m_idSpoiler;
-}
-
-int Voiture::getIdAirIntake() const
-{
-	return m_idAirIntake;
-}
-
-int Voiture::getNitroMax() const
-{
-	return m_nitroMax;
-}
-
-int Voiture::getNiveauNitro() const
-{
-	return m_niveauNitro;
-}
-
-int Voiture::getEtat() const
+int Car::getEtat() const
 {
 	return m_etat;
 }
 
-int Voiture::getAerodynamismeVoiture() const
+int Car::getPrix() const
 {
-	return m_aerodynamismeVoiture;
-}
-
-int Voiture::getConsommation() const
-{
-	return m_moteur->getConsommation();
-}
-
-float Voiture::getPrixCarburantMoteur() const
-{
-	return m_moteur->getPrixCarburant();
-}
-
-int Voiture::getPrix() const
-{
-	int prixMoteur=0;
+	int prixEngine=0;
 	int prixSpoiler=0;
 	int prixAirIntake=0;
-	Moteur::infoMoteur(m_idMoteur, m_marque, prixMoteur);
-	prixSpoiler = Spoiler::collection[m_idSpoiler].getPrice();
-	prixAirIntake = AirIntake::collection[m_idAirIntake].getPrice();
+	Engine::infoEngine(m_idEngine, m_marque, prixEngine);
+	prixSpoiler = Spoiler::collection[_spoiler].getPrice();
+	prixAirIntake = AirIntake::collection[_airIntake].getPrice();
 
-	return static_cast<int>(roundf( (prixMoteur + prixSpoiler + prixAirIntake + 0 )  *0.9+ (( m_aerodynamismeVoiture + m_nitroMax ) * 100)+ (( vRang(m_rang) - 1 ) * 20000)));
+	return static_cast<int>(roundf( (prixEngine + prixSpoiler + prixAirIntake + 0 )  *0.9+ (( m_aerodynamismeCar + m_nitroMax ) * 100)+ (( vRang(m_rang) - 1 ) * 20000)));
 }
 
-int Voiture::getPrixMoteur() const
+Engine &Car::getEngine()
 {
-	return m_moteur->getPrix();
+	return _engine;
 }
 
-int Voiture::getIdTires() const
+Spoiler &Car::getSpoiler()
 {
-	return m_pneus.getDurability();
+	return _spoiler;
 }
 
-Spoiler &Voiture::getSpoiler()
+AirIntake &Car::getAirIntake()
 {
-	return m_spoiler;
+	return _airIntake;
 }
 
-AirIntake &Voiture::getAirIntake()
+Tires &Car::getTires()
 {
-	return m_priseAir;
+	return _tires;
 }
 
-Tires &Voiture::getTires()
+void Car::setEngine(Engine newEngine)
 {
-	return m_pneus;
-}
-
-void Voiture::setMoteur(Moteur* newMoteur, const int& idMoteur)
-{
-	m_moteur = newMoteur;
-	m_idMoteur= idMoteur;
+	_engine = newEngine;
 	updateAttributs();
 }
 
-void Voiture::setSpoiler(Spoiler newSpoiler, const int& idSpoiler)
+void Car::setSpoiler(Spoiler newSpoiler)
 {
-	m_spoiler = newSpoiler;
-	m_idSpoiler = idSpoiler;
+	_spoiler = newSpoiler;
 	updateAttributs();
 }
 
-void Voiture::setAirIntake(AirIntake newAirIntake, const int& idAirIntake)
+void Car::setAirIntake(AirIntake newAirIntake)
 {
-	m_priseAir = newAirIntake;
-	m_idAirIntake = idAirIntake;
+	_airIntake = newAirIntake;
 	updateAttributs();
 }
 
-void Voiture::setTires(Tires tires)
+void Car::setTires(Tires tires)
 {
-	m_pneus = tires;
+	_tires = tires;
 	updateAttributs();
 }
 
-void Voiture::setNitro(const int& ajouter)
+void Car::setNitro(const int& ajouter)
 {
-	m_niveauNitro+=ajouter;
+	_nitro += ajouter;
 	updateAttributs();
 }
 
-void Voiture::retirerEtat(const int& retirer)
+void Car::retirerEtat(const int& retirer)
 {
-	m_etat -=retirer;
+	_durability -= retirer;
 }
 
-void Voiture::pleinNitro()
+void Car::pleinNitro()
 {
-	m_niveauNitro = m_nitroMax;
+	_nitro = _nitroMax;
 	updateAttributs();
 }
 
-void Voiture::pleinCarburant()
+void Car::pleinCarburant()
 {
-	m_niveauNitro = m_nitroMax;
 	updateAttributs();
 }
 
-void Voiture::reparer()
+void Car::reparer()
 {
-	m_etat=100;
+	_durability = 100;
 }
 
-void Voiture::updateAttributs()
+void Car::updateAttributs()
 {
-	m_niveauNitro = m_nitroMax;
-	m_typeCarburant = m_moteur->getTypeCarburant();
-	m_consommation = m_moteur->getConsommation();
+	_nitro = _nitroMax;
 }
 
-void Voiture::changerTires()
+void Car::changerTires()
 {
-	m_pneus.setDurability(100);
+	_tires.setDurability(100);
 }

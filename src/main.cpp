@@ -17,8 +17,8 @@ Toutes les classes sont instanciées depuis des fichiers .cdx et le fichier mods
 Les différentes classes sont le coeur du jeu:
 	-Circuit
 	-Profil
-	-Voiture
-	-Moteur
+	-Car
+	-Engine
 	-AirIntake
 	-Spoiler
 	-Tires
@@ -52,7 +52,7 @@ namespace GLOBAL
 	bool donne100000Credits = false;
 	bool toutGratuit = false;
 	bool vainqueur = false;
-	bool MeilleureVoiture = false;
+	bool MeilleureCar = false;
 	bool debloqueMap = false;
 	bool debloqueAchievement = false;
 }

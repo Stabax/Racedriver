@@ -2,9 +2,10 @@
 #define DATAFILE_HH_
 
 #include <fstream>
-#include <vector>
+#include <map>
 #include <nlohmann/json.hpp>
 using json = nlohmann::json;
+
 
 class DataFile
 {
@@ -14,14 +15,7 @@ public:
   bool load();
   bool save();
 
-  template <typename T>
-  void copyTo(std::vector<T> &collection)
-  {
-    for (size_t i = 0; i < _data["collection"].size(); i++)
-    {
-      collection.push_back(T(_data["collection"][i]));
-    }
-  }
+  const json &getData();
 
 private:
   const std::string _path;

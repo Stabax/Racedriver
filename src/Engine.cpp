@@ -1,104 +1,26 @@
-//Moteur.cpp
-#include "Moteur.hh"
+//Engine.cpp
+#include "Engine.hh"
 #include "Menu.hh"
 
-Moteur::Moteur(const std::string& marque, const std::string& modele, const char& rang, const int& vitesse, const int& acceleration, const std::string& carburant)
- : m_marque(marque), m_modele(modele), m_prix(((getVitesse()+getAcceleration())*25)+(vRang(m_rang)*500)), m_rang(rang), m_vitesse(vitesse), m_acceleration(acceleration), m_typeCarburant(carburant), m_consommation(vitesse+acceleration), m_prixCarburant(Moteur::returnPrixCarburant(carburant))
+std::map<std::string, Engine> Engine::collection = std::map<std::string, Engine>();
+
+Engine::Engine(const json& data)
+ : Part(data), _price(((getVitesse()+getAcceleration())*25)+(vRang(rank)*500)), _speed(data["speed"].get<float>()),
+  _acceleration(data["acceleration"].get<float>()), _energy(Diesel), _consommation(getVitesse()+getAcceleration())
 {
 
 }
 
-Moteur::~Moteur()
+Engine::~Engine()
 {
 
 }
 
-Moteur* Moteur::chargerMoteur(const int& id, const std::string& marqueChargee)
-{
-	Moteur* MoteurCharge = 0; //moteur a creer
-	std::string var=""; //contient les lignes du fichier
-	std::string chemin = "Data/Moteurs/"+marqueChargee+".cdx";
-	int idActuel = id + 1; //indique l'id actuellement lu dans le fichier
-
-	std::ifstream engine(chemin.c_str());
-
-	if(!engine)
-	{
-		Menu::error("Echec de lecture du fichier "+marqueChargee+".cdx");
-	}
-	else
-	{
-		while(idActuel!=id && std::getline(engine, var))
-		{
-			std::istringstream iss(var.substr(0,var.find_first_of(";"))); //on transforme le premier char en int pour etre compare
-			if(iss>>idActuel)
-			{
-			}
-			else
-			{
-				Menu::error("Fichier corrompu12");
-			}
-			//on utilise while(std::getline(flux, string) pour "Tant qu'il y a une ligne a lire"
-		}
-
-		if(idActuel==id)
-		{
-			int curseur;
-			var.erase(0,var.find_first_of(";")+1);
-
-			curseur=var.find_first_of(";");
-			std::string modele=var.substr(0,curseur);
-			var.erase(0,curseur+1);
-
-			curseur=var.find_first_of(";");
-			char rang=var[0];
-			var.erase(0,curseur+1);
-
-			curseur=var.find_first_of(";");
-			std::string sVitesse=var.substr(0,curseur);
-			var.erase(0,curseur+1);
-
-			curseur=var.find_first_of(";");
-			std::string sAcceleration=var.substr(0,curseur);
-			var.erase(0,curseur+1);
-
-			std::string carburant=var;
-
-			int vitesse;
-			int acceleration;
-			std::istringstream iss(sVitesse);
-			if (iss>>vitesse)
-			{
-			}
-			else
-			{
-				Menu::error("Fichier corompu13.");
-			}
-			iss.clear();
-			iss.str(sAcceleration);
-			if (iss>>acceleration)
-			{
-			}
-			else
-			{
-				Menu::error("Fichier corompu14.");
-			}
-
-			MoteurCharge = new Moteur(marqueChargee, modele, rang, vitesse, acceleration, carburant);
-		}
-		else
-		{
-			Menu::error("Fichier corompu15.");
-		}
-	}
-	return MoteurCharge;
-}
-
-void Moteur::listerMoteurs(const std::string& marque)
+void Engine::listerEngines(const std::string& marque)
 {
 	Terminal::get() <<"Liste des moteurs "<< marque <<" :\n\n";
 
-	std::string chemin ="Data/Moteurs/"+marque+".cdx";
+	std::string chemin ="Data/Engines/"+marque+".cdx";
 
 	std::string var;
 
@@ -213,10 +135,10 @@ void Moteur::listerMoteurs(const std::string& marque)
 	}
 }
 
-void Moteur::infoMoteur(const int& id, const std::string& marque, std::string& modele)
+void Engine::infoEngine(const int& id, const std::string& marque, std::string& modele)
 {
 	std::string var; //contient les lignes du fichier
-	std::string chemin ="Data/Moteurs/"+marque+".cdx";
+	std::string chemin ="Data/Engines/"+marque+".cdx";
 	std::ifstream engine(chemin.c_str());
 
 	if(!engine)
@@ -255,10 +177,10 @@ void Moteur::infoMoteur(const int& id, const std::string& marque, std::string& m
 	}
 }
 
-void Moteur::infoMoteur(const int& id, const std::string& marque, int& prix)
+void Engine::infoEngine(const int& id, const std::string& marque, int& prix)
 {
 	std::string var = ""; //contient les lignes du fichier
-	std::string chemin ="Data/Moteurs/"+marque+".cdx";
+	std::string chemin ="Data/Engines/"+marque+".cdx";
 	std::ifstream engine(chemin.c_str());
 	std::istringstream iss;
 	int idActuel = 0; //indique l'id actuellement lu dans le fichier
@@ -335,10 +257,10 @@ void Moteur::infoMoteur(const int& id, const std::string& marque, int& prix)
 	}
 }
 
-void Moteur::infoMoteur(const int& id, const std::string& marque, std::string& modele, int& vitesse, int& acceleration)
+void Engine::infoEngine(const int& id, const std::string& marque, std::string& modele, int& vitesse, int& acceleration)
 {
 	std::string var; //contient les lignes du fichier
-	std::string chemin ="Data/Moteurs/"+marque+".cdx";
+	std::string chemin ="Data/Engines/"+marque+".cdx";
 	std::ifstream engine(chemin.c_str());
 	int idActuel = 0; //indique l'id actuellement lu dans le fichier
 	int curseur = 0;
@@ -410,10 +332,10 @@ void Moteur::infoMoteur(const int& id, const std::string& marque, std::string& m
 	}
 }
 
-void Moteur::infoMoteur(const int& id, const std::string& marque, std::string& modele, int& vitesse, int& acceleration, char& rang, int& prix)
+void Engine::infoEngine(const int& id, const std::string& marque, std::string& modele, int& vitesse, int& acceleration, char& rang, int& prix)
 {
 	std::string var; //contient les lignes du fichier
-	std::string chemin ="Data/Moteurs/"+marque+".cdx";
+	std::string chemin ="Data/Engines/"+marque+".cdx";
 	std::ifstream engine(chemin.c_str());
 	int curseur;
 
@@ -485,13 +407,13 @@ void Moteur::infoMoteur(const int& id, const std::string& marque, std::string& m
 	}
 }
 
-int Moteur::compterMoteurs(const std::string& marque)
+int Engine::compterEngines(const std::string& marque)
 {
 
-	std::string chemin ="Data/Moteurs/"+marque+".cdx";
+	std::string chemin ="Data/Engines/"+marque+".cdx";
 	std::ifstream engine(chemin.c_str());
 	int id; //indique l'id actuellement lu dans le fichier
-	int nbMoteur=0;
+	int nbEngine=0;
 	std::string var;
 
 	if(engine)
@@ -502,7 +424,7 @@ int Moteur::compterMoteurs(const std::string& marque)
 			std::istringstream iss(var.substr(0,var.find_first_of(";"))); //on transforme le premier char en int pour etre compare
 			if(iss>>id)
 			{
-				nbMoteur++;
+				nbEngine++;
 			}
 			else
 			{
@@ -515,10 +437,10 @@ int Moteur::compterMoteurs(const std::string& marque)
 	{
 		Menu::error("Fichier corrompu23");
 	}
-	return nbMoteur;
+	return nbEngine;
 }
 
-float Moteur::returnPrixCarburant(const std::string& carburant)
+float Engine::returnPrixCarburant(const std::string& carburant)
 {
 	if(carburant=="Diesel")
 	{
@@ -538,55 +460,31 @@ float Moteur::returnPrixCarburant(const std::string& carburant)
 	}
 }
 
-std::string Moteur::getModele() const
+float Engine::getVitesse() const
 {
-	return m_modele;
+	return _speed;
 }
 
 
-std::string Moteur::getMarque() const
+float Engine::getAcceleration() const
 {
-	return m_marque;
+	return _acceleration;
 }
 
 
-char Moteur::getRang() const
+Energy Engine::getTypeCarburant() const
 {
-	return m_rang;
+	return _energy;
 }
 
 
-float Moteur::getVitesse() const
+float Engine::getConsommation() const
 {
-	return m_vitesse;
+	return _consommation;
 }
 
 
-float Moteur::getAcceleration() const
+int Engine::getPrix() const
 {
-	return m_acceleration;
-}
-
-
-std::string Moteur::getTypeCarburant() const
-{
-	return m_typeCarburant;
-}
-
-
-float Moteur::getConsommation() const
-{
-	return m_consommation;
-}
-
-
-int Moteur::getPrix() const
-{
-	return m_prix;
-}
-
-
-float Moteur::getPrixCarburant() const
-{
-	return m_prixCarburant;
+	return _price;
 }

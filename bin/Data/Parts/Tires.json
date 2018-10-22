@@ -1,23 +1,28 @@
 {
   "collection": [
   {
-    "name": "Continental",
+    "name": "180/45 R10",
+    "manufacturer": "Continental",
     "rank": "D"
   },
   {
-    "name": "Bridgestone",
+    "name": "200/45 R11",
+    "manufacturer": "Bridgestone",
     "rank": "C"
   },
   {
-    "name": "Michelin",
+    "name": "220/45 R13",
+    "manufacturer": "Michelin",
     "rank": "B"
   },
   {
-    "name": "Dunlop",
+    "name": "240/55 R15",
+    "manufacturer": "Dunlop",
     "rank": "A"
   },
   {
-    "name": "Pirelli",
+    "name": "280/55 R75",
+    "manufacturer": "Pirelli",
     "rank": "S"
   }]
 }

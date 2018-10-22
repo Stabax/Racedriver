@@ -3,12 +3,12 @@
 #include "Menu.hh"
 #include "course.hh"
 
-bool preparatifsCourse(const Circuit& Map, const Profil& Player, Voiture*& VoiturePlayer, int const& prix)
+bool preparatifsCourse(const Circuit& Map, const Profil& Player, Car*& CarPlayer, int const& prix)
 {
 	int prixCourse;
 	bool paye = false;
 
-	prixCourse = (VoiturePlayer->getConsommation() * 0.01f * Map.getTaille() * VoiturePlayer->getPrixCarburantMoteur());
+	prixCourse = (CarPlayer->getConsommation() * 0.01f * Map.getTaille() * 5 /*prix carburant remplace par 5 */);
 	prixCourse += prix;
 	if(Player.getCredits() < prixCourse)
 	{
@@ -17,11 +17,11 @@ bool preparatifsCourse(const Circuit& Map, const Profil& Player, Voiture*& Voitu
 	else
 	{
 		Terminal::get().clearScreen(); //On flushe l'ancien ecran
-		if(VoiturePlayer->getNiveauNitro() < VoiturePlayer->getNitroMax())
+		if(CarPlayer->getNiveauNitro() < CarPlayer->getNitroMax())
 		{
 			Menu::msg("Attention: Votre reservoir de nitro n'est pas plein.\n");
 		}
-		if(VoiturePlayer->getTires().getDurability() < 55)
+		if(CarPlayer->getTires().getDurability() < 55)
 		{
 			Menu::msg("Attention: Tires deteriores.\n");
 		}
@@ -112,7 +112,7 @@ bool antiCorruption(const std::string& chemin, const int& nbLignes)
 	}
 }
 
-void chargerAdversaires(Voiture* Adversaire[7], int difficulteProfil, int difficulteCircuit)
+void chargerAdversaires(Car* Adversaire[7], int difficulteProfil, int difficulteCircuit)
 {
 	int randomDifficulte;	//difficulté calculée en fonction de la difficulté du joueur
 	int difficulteTotale;	//difficulté pour calculer l'id et le rang de la voiture
@@ -145,11 +145,11 @@ void chargerAdversaires(Voiture* Adversaire[7], int difficulteProfil, int diffic
 
 		difficulteTotale = randomDifficulte + difficulteCircuit;
 
-		std::ifstream D("Data/Voitures/D.cdx");
-		std::ifstream C("Data/Voitures/C.cdx");
-		std::ifstream B("Data/Voitures/B.cdx");
-		std::ifstream A("Data/Voitures/A.cdx");
-		std::ifstream S("Data/Voitures/S.cdx");
+		std::ifstream D("Data/Cars/D.cdx");
+		std::ifstream C("Data/Cars/C.cdx");
+		std::ifstream B("Data/Cars/B.cdx");
+		std::ifstream A("Data/Cars/A.cdx");
+		std::ifstream S("Data/Cars/S.cdx");
 
 		if(difficulteTotale == 0)	//la difficulté peut valoir 0, et il ne faut pas car aucune voiture n'as 0 comme id
 		{
@@ -212,7 +212,7 @@ void chargerAdversaires(Voiture* Adversaire[7], int difficulteProfil, int diffic
 			}
 		}
 
-		Adversaire[joueur] = Voiture::chargerVoiture(id, compteurRang);	//on instancie la voiture
+		Adversaire[joueur] = Car::chargerCar(id, compteurRang);	//on instancie la voiture
 		compteur = 0;	//on remet a 0 pour le joueur suivant
 		id=0;		//on remet a 0 pour le joueur suivant
 	}
@@ -319,7 +319,7 @@ std::string* chargerCommentaireMeteo(const int& meteo)
 	return ligne;//ligne est un pointeur pour qu'il y ait une erreur de segmentation si meteo.txt est mal rempli.
 }
 
-void calculerScore(int score[8], Voiture* Adversaire[7], Voiture* Player1, const Circuit& Map)
+void calculerScore(int score[8], Car* Adversaire[7], Car* Player1, const Circuit& Map)
 {
 	score[0]=((Player1->getVitesse()/2)+(Player1->getAcceleration()*2/Map.getVirages()))*((std::rand()%26)+75)/100;
 
@@ -329,7 +329,7 @@ void calculerScore(int score[8], Voiture* Adversaire[7], Voiture* Player1, const
 	}
 }
 
-void calculerProbaAccident(int probaAccident[8], Voiture* Adversaire[7], Voiture* Player1, const Circuit Map)
+void calculerProbaAccident(int probaAccident[8], Car* Adversaire[7], Car* Player1, const Circuit Map)
 {
 	probaAccident[0]=((((Map.getVirages()*Map.getMeteo())/(Player1->getTires().getDurability()/8))+(Map.getVent()/(Player1->getAerodynamisme()*0.75)))/2) + std::rand()%5;
 
@@ -339,7 +339,7 @@ void calculerProbaAccident(int probaAccident[8], Voiture* Adversaire[7], Voiture
 	}
 }
 
-void faireCourseLibre(Circuit Map, Voiture* Player1, Profil& Player)
+void faireCourseLibre(Circuit Map, Car* Player1, Profil& Player)
 {
 	if(Player1 == 0)
 	{
@@ -372,7 +372,7 @@ void faireCourseLibre(Circuit Map, Voiture* Player1, Profil& Player)
 			Menu::msg("Attention: Tires deteriores.\n");
 		}
 
-		Voiture* Adversaire[7];
+		Car* Adversaire[7];
 		chargerAdversaires(Adversaire, Player.getDifficulte(), Map.getDifficulte());
 
 		std::string *commentaireMeteo = chargerCommentaireMeteo(Map.getMeteo());
@@ -402,11 +402,11 @@ void faireCourseLibre(Circuit Map, Voiture* Player1, Profil& Player)
 		{
 			if(numero == 0)
 			{
-				Terminal::get() << Player.getNom() << " - " << Player1->getMarque() << " " << Player1->getModele() << "\n";
+				Terminal::get() << Player.getNom() << " - " << Player1->manufacturer << " " << Player1->name << "\n";
 			}
 			else
 			{
-				Terminal::get() << nomJoueur[numero - 1] << " - " << Adversaire[numero - 1]->getMarque() << " " << Adversaire[numero - 1]->getModele() << "\n";
+				Terminal::get() << nomJoueur[numero - 1] << " - " << Adversaire[numero - 1]->manufacturer << " " << Adversaire[numero - 1]->name << "\n";
 			}
 		}
 		delete commentaireMeteo;
@@ -551,7 +551,7 @@ void faireCourseLibre(Circuit Map, Voiture* Player1, Profil& Player)
 	}
 }
 
-void faireCourseChampionnat(Circuit Map, Voiture* Player1, Profil& Player)
+void faireCourseChampionnat(Circuit Map, Car* Player1, Profil& Player)
 {
 	if(Player1 == 0)
 	{
@@ -578,8 +578,8 @@ void faireCourseChampionnat(Circuit Map, Voiture* Player1, Profil& Player)
 		if(preparatifsCourse(Map, Player, Player1))
 		//REVOIR CE CALCUL
 		{
-			Player.payer(Player1->getConsommation() * 0.01f * Map.getTaille() * Player1->getPrixCarburantMoteur());
-			Voiture* Adversaire[7];
+			Player.payer(Player1->getConsommation() * 0.01f * Map.getTaille() * 5 /*prix carburant remplace par 5 */);
+			Car* Adversaire[7];
 			chargerAdversaires(Adversaire, Player.getDifficulte(), Map.getDifficulte());
 
 			std::string *commentaireMeteo = chargerCommentaireMeteo(Map.getMeteo());
@@ -605,11 +605,11 @@ void faireCourseChampionnat(Circuit Map, Voiture* Player1, Profil& Player)
 			{
 				if(numero == 0)
 				{
-					Terminal::get() << Player.getNom() << " - " << Player1->getMarque() << " " << Player1->getModele() << "\n";
+					Terminal::get() << Player.getNom() << " - " << Player1->manufacturer << " " << Player1->name << "\n";
 				}
 				else
 				{
-					Terminal::get() << nomJoueur[numero - 1] << " - " << Adversaire[numero - 1]->getMarque() << " " << Adversaire[numero - 1]->getModele() << "\n";
+					Terminal::get() << nomJoueur[numero - 1] << " - " << Adversaire[numero - 1]->manufacturer << " " << Adversaire[numero - 1]->name << "\n";
 				}
 			}
 			delete commentaireMeteo;

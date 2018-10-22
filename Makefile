@@ -37,14 +37,14 @@ SRCS = 	$(SRCDIR)/Game.cpp							\
 				$(SRCDIR)/main.cpp							\
 				$(SRCDIR)/menus.cpp							\
 				$(SRCDIR)/menusPrincipaux.cpp		\
-				$(SRCDIR)/Moteur.cpp						\
+				$(SRCDIR)/Engine.cpp						\
 				$(SRCDIR)/Tires.cpp							\
 				$(SRCDIR)/AirIntake.cpp					\
 				$(SRCDIR)/Profil.cpp						\
 				$(SRCDIR)/sousMenus.cpp					\
 				$(SRCDIR)/Spoiler.cpp						\
 				$(SRCDIR)/Terminal.cpp					\
-				$(SRCDIR)/Voiture.cpp						\
+				$(SRCDIR)/Car.cpp								\
 				$(LIBDIR)/sha/sha.cpp
 
 OBJS = $(SRCS:.cpp=.o)

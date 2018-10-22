@@ -20,3 +20,8 @@ bool DataFile::save()
 {
   return (true);
 }
+
+const json &DataFile::getData()
+{
+  return (_data);
+}

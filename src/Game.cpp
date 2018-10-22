@@ -21,6 +21,7 @@ bool Game::load()
 	_term << "Chargement en Cours...\n";
 	try
 	{
+		Part::loadCollection(Engine::collection);
 		Part::loadCollection(Tires::collection);
 		Part::loadCollection(AirIntake::collection);
 		Part::loadCollection(Spoiler::collection);

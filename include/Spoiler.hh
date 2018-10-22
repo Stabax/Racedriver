@@ -12,20 +12,15 @@
 class Spoiler : public Part
 {
 public:
-	Spoiler(const std::string& modele, const char& rang, const int& aerodynamisme);
 	Spoiler(const json &data);
 	~Spoiler();
 
-	std::string getName() const;
-	char getRank() const;
 	int getAerodynamic() const;
 	int getPrice() const;
 
-	static std::vector<Spoiler> collection;
+	static std::map<std::string, Spoiler> collection;
 
 protected:
-	std::string _name;
-	char _rank;
 	int _aerodynamic;
 	int _price;
 };

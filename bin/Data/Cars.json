@@ -1,32 +1,30 @@
 {
-  "collection":
+  "collection": [
   {
-    "Renault": [
-    {
-      "name": "4L",
-      "engine": 0,
-      "airIntake": 0,
-      "spoiler": 0,
-      "tires": 0,
-      "rank": "D"
-    }],
-    "Toyota": [
-    {
-      "name": "Corona",
-      "engine": 4,
-      "airIntake": 2,
-      "spoiler": 0,
-      "tires": 0,
-      "rank": "D"
-    }],
-    "Nissan": [
-    {
-      "name": "Bluebird",
-      "engine": 6,
-      "airIntake": 4,
-      "spoiler": 2,
-      "tires": 0,
-      "rank": "D"
-    }]
-  }
+    "name": "4L",
+    "manufacturer": "Renault",
+    "engine": "Renault.GT100",
+    "airIntake": "",
+    "spoiler": "",
+    "tires": "Continental.180/45 R10",
+    "rank": "D"
+  },
+  {
+    "name": "Corona",
+    "manufacturer": "Toyota",
+    "engine": "Toyota.WIP 16S",
+    "airIntake": "RaceDriver.Lightning",
+    "spoiler": "RaceDriver.Vapor",
+    "tires": "Continental.180/45 R10",
+    "rank": "D"
+  },
+  {
+    "name": "Bluebird",
+    "manufacturer": "Nissan",
+    "engine": "Nissan.1.8 TDI",
+    "airIntake": "RaceDriver.Tempest",
+    "spoiler": "RaceDriver.Nitrox",
+    "tires": "Continental.180/45 R10",
+    "rank": "D"
+  }]
 }

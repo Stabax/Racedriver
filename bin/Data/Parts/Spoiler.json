@@ -2,36 +2,43 @@
   "collection": [
   {
     "name": "Aileron",
+    "manufacturer": "RaceDriver",
     "aerodynamic": 10,
     "rank": "D"
   },
   {
     "name": "Viper",
+    "manufacturer": "RaceDriver",
     "aerodynamic": 25,
     "rank": "C"
   },
   {
     "name": "Vapor",
+    "manufacturer": "RaceDriver",
     "aerodynamic": 40,
     "rank": "B"
   },
   {
     "name": "GP",
+    "manufacturer": "RaceDriver",
     "aerodynamic": 55,
     "rank": "A"
   },
   {
     "name": "Nitrox",
+    "manufacturer": "RaceDriver",
     "aerodynamic": 65,
     "rank": "S"
   },
   {
     "name": "Boost",
+    "manufacturer": "RaceDriver",
     "aerodynamic": 80,
     "rank": "A"
   },
   {
     "name": "Racing",
+    "manufacturer": "RaceDriver",
     "aerodynamic": 90,
     "rank": "A"
   }]

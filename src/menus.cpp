@@ -139,7 +139,7 @@ void menuStats(Profil& Player)
 									<< "#Stats Carriere:\n"
 									<< " |Credits remportes: " << Player.getCreditsGagnes() << "c\n"
 									<< " |\n"
-									<< " |Voitures achetees: " << Player.getVoituresAchetees() << "\n\n"
+									<< " |Cars achetees: " << Player.getCarsAchetees() << "\n\n"
 									<< "===============\n"
 									<< "Appuyez sur [Entree] pour retourner au menu principal...\n";
 	getch();

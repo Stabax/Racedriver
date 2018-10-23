@@ -406,7 +406,7 @@ bool Profil::chargerProfil(const int& numeroSave, Profil*& ProfilCharge)
 			Menu::error("Fichier de sauvegarde corrompu.");
 		}
 	}
-	return statut;
+	return statut;*/
 }
 
 void Profil::supprimerProfil(const int& numeroSave)
@@ -479,6 +479,7 @@ void Profil::supprimerProfil(const int& numeroSave)
 
 void Profil::sauvegarderProfil()
 {
+	/*
 	std::string sNumeroSave;
 	std::string nomFichier;
 	std::string nomLock;
@@ -507,7 +508,7 @@ void Profil::sauvegarderProfil()
 				}
 				else
 				{
-					//save << m_box[i]->manufacturer << ";" << m_box[i]->name << ";" << m_box[i]->getIdEngine() << ";" << m_box[i]->getIdSpoiler() << ";" << m_box[i]->getIdAirIntake() << ";" << m_box[i]->rank << ";" << m_box[i]->getNitroMax() << ";" << m_box[i]->getAerodynamismeCar() << ";" << m_box[i]->getIdTires() <<";"<< m_box[i]->getTires().getDurability() <<";"<< m_box[i]->getEtat() << "\n";
+					//save << m_box[i]->manufacturer << ";" << m_box[i]->name << ";" << m_box[i]->getIdEngine() << ";" << m_box[i]->getIdSpoiler() << ";" << m_box[i]->getIdAirIntake() << ";" << m_box[i]->rank << ";" << m_box[i]->getNitroMax() << ";" << m_box[i]->getAerodynamismeCar() << ";" << m_box[i]->getIdTires() <<";"<< m_box[i]->getTires()->getDurability() <<";"<< m_box[i]->getEtat() << "\n";
 				}
 			}
 		}

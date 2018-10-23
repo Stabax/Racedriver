@@ -92,9 +92,9 @@ public:
     return (getId() != part.getId());
   }
 
-  const std::string manufacturer;
-  const std::string name;
-  const Rank rank;
+  std::string manufacturer;
+  std::string name;
+  Rank rank;
 };
 
 #endif /* !PART_HPP_ */

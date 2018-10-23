@@ -33,15 +33,15 @@ public:
 	void changerTires();
 
 	//infos acessoires
-	Engine &getEngine();
-	Spoiler &getSpoiler();
-	AirIntake &getAirIntake();
-	Tires &getTires();
+	std::shared_ptr<Engine> getEngine();
+	std::shared_ptr<Spoiler> getSpoiler();
+	std::shared_ptr<AirIntake> getAirIntake();
+	std::shared_ptr<Tires> getTires();
 
-	void setEngine(Engine newEngine);
-	void setSpoiler(Spoiler newSpoiler);
-	void setAirIntake(AirIntake newAirIntake);
-	void setTires(Tires tires);
+	void setEngine(const Engine &newEngine);
+	void setSpoiler(const Spoiler &newSpoiler);
+	void setAirIntake(const AirIntake &newAirIntake);
+	void setTires(const Tires &tires);
 	void setNitro(const int& ajouter);
 
 	void retirerEtat(const int& retirer);
@@ -56,10 +56,10 @@ public:
 	static std::map<std::string, Car> collection;
 
 protected:
-	Engine _engine;
-	Spoiler _spoiler;
-	AirIntake _airIntake;
-	Tires _tires;
+	std::shared_ptr<Engine> _engine;
+	std::shared_ptr<Spoiler> _spoiler;
+	std::shared_ptr<AirIntake> _airIntake;
+	std::shared_ptr<Tires> _tires;
 	int _nitro;	//se vide en fonction de la longueur du circuit. le plein est fait manuellement via paiement, juste avant une course
 	int _nitroMax;	//non modifiable pour une voiture donnée
 	int _durability;

@@ -5,8 +5,9 @@
 std::map<std::string, Car> Car::collection = std::map<std::string, Car>();
 
 Car::Car(const json &data)
- : Part(data), _engine(Engine::collection.at("Eses")), _spoiler(Spoiler::collection.at("Eses")), _airIntake(AirIntake::collection.at("Eses")),
-   _tires(Tires::collection.at("Eses")), _nitroMax(100), _nitro(_nitroMax), _durability(100)
+ : Part(data), _engine(std::make_shared<Engine>(Engine::collection.at("Eses"))), _spoiler(std::make_shared<Spoiler>(Spoiler::collection.at("Eses"))),
+  _airIntake(std::make_shared<AirIntake>(AirIntake::collection.at("Eses"))), _tires(std::make_shared<Tires>(Tires::collection.at("Eses"))), _nitroMax(100),
+  _nitro(_nitroMax), _durability(100)
 {
 
 }
@@ -250,17 +251,17 @@ void Car::infoCar(const int& id, const char& rang, std::string& marque, std::str
 
 float Car::getVitesse() const
 {
-	return (_engine.getVitesse() + ( getAerodynamisme() / 3 ));
+	return (_engine->getVitesse() + ( getAerodynamisme() / 3 ));
 }
 
 float Car::getAcceleration() const
 {
-	return (static_cast<float>((( _nitro + _engine.getAcceleration() ) + (getAerodynamisme())/10)));
+	return (static_cast<float>((( _nitro + _engine->getAcceleration() ) + (getAerodynamisme())/10)));
 }
 
 int Car::getAerodynamisme() const
 {
-	return static_cast<float>((_airIntake.getAerodynamic() / 3) + (_spoiler.getAerodynamic() / 3) );
+	return static_cast<float>((_airIntake->getAerodynamic() / 3) + (_spoiler->getAerodynamic() / 3) );
 }
 
 int Car::getNitroMax() const
@@ -283,53 +284,53 @@ int Car::getPrix() const
 	int prixEngine=0;
 	int prixSpoiler=0;
 	int prixAirIntake=0;
-	prixSpoiler = Spoiler::collection.at(_spoiler.getId()).getPrice();
-	prixAirIntake = AirIntake::collection.at(_spoiler.getId()).getPrice();
+	prixSpoiler = Spoiler::collection.at(_spoiler->getId()).getPrice();
+	prixAirIntake = AirIntake::collection.at(_spoiler->getId()).getPrice();
 
 	return static_cast<int>(roundf( (prixEngine + prixSpoiler + prixAirIntake + 0 )  *0.9+ (( _nitroMax ) * 100)+ (( vRang(rank) - 1 ) * 20000)));
 }
 
-Engine &Car::getEngine()
+std::shared_ptr<Engine> Car::getEngine()
 {
 	return _engine;
 }
 
-Spoiler &Car::getSpoiler()
+std::shared_ptr<Spoiler> Car::getSpoiler()
 {
 	return _spoiler;
 }
 
-AirIntake &Car::getAirIntake()
+std::shared_ptr<AirIntake> Car::getAirIntake()
 {
 	return _airIntake;
 }
 
-Tires &Car::getTires()
+std::shared_ptr<Tires> Car::getTires()
 {
 	return _tires;
 }
 
-void Car::setEngine(Engine newEngine)
+void Car::setEngine(const Engine &newEngine)
 {
-	_engine = newEngine;
+	_engine = std::make_shared<Engine>(newEngine);
 	updateAttributs();
 }
 
-void Car::setSpoiler(Spoiler newSpoiler)
+void Car::setSpoiler(const Spoiler &newSpoiler)
 {
-	_spoiler = newSpoiler;
+	_spoiler = std::make_shared<Spoiler>(newSpoiler);
 	updateAttributs();
 }
 
-void Car::setAirIntake(AirIntake newAirIntake)
+void Car::setAirIntake(const AirIntake &newAirIntake)
 {
-	_airIntake = newAirIntake;
+	_airIntake = std::make_shared<AirIntake>(newAirIntake);
 	updateAttributs();
 }
 
-void Car::setTires(Tires tires)
+void Car::setTires(const Tires &tires)
 {
-	_tires = tires;
+	_tires = std::make_shared<Tires>(tires);
 	updateAttributs();
 }
 
@@ -367,5 +368,5 @@ void Car::updateAttributs()
 
 void Car::changerTires()
 {
-	_tires.setDurability(100);
+	_tires->setDurability(100);
 }

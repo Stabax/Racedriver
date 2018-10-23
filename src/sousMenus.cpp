@@ -267,9 +267,9 @@ int menuConsulterGarage(Profil& Player, const int& mode)
 void menuConsulterBox(Profil& Player, const int& numeroBox)
 {
 	Car* Car = Player.getBox(numeroBox);
-	const AirIntake &airIntake = Car->getAirIntake();
-	const Spoiler &spoiler = Car->getSpoiler();
-	const Tires &tires = Car->getTires();
+	std::shared_ptr<AirIntake> airIntake = Car->getAirIntake();
+	std::shared_ptr<Spoiler> spoiler = Car->getSpoiler();
+	std::shared_ptr<Tires> tires = Car->getTires();
 	//Menu Principal
 	Terminal::get() << "Vehicule gare dans le Box " << (numeroBox + 1) << "\n"
 									<< "===============\n\n"
@@ -283,23 +283,23 @@ void menuConsulterBox(Profil& Player, const int& numeroBox)
 									<< " |Capacite Nitro: " << Car->getNitroMax() << " L\n"
 									<< " |Aerodynamisme: " << Car->getAerodynamisme() << " %\n"
 									<< " |Nitro Actuelle: " << Car->getNiveauNitro() << " L\n"
-									<< " |Durabilite Tires: "<< Car->getTires().getDurability() << "%\n"
+									<< " |Durabilite Tires: "<< Car->getTires()->getDurability() << "%\n"
 									<< " |Etat: " << Car->getEtat() << "%\n\n"
 									<< "#Engine\n"
-									<< " |Modele: " << Car->getEngine().name << "\n"
-									<< " |Vitesse: "<< Car->getEngine().getVitesse() << " Km/h\n"
-									<< " |Acceleration: " << Car->getEngine().getAcceleration() << " m/s²\n\n"
+									<< " |Modele: " << Car->getEngine()->name << "\n"
+									<< " |Vitesse: "<< Car->getEngine()->getVitesse() << " Km/h\n"
+									<< " |Acceleration: " << Car->getEngine()->getAcceleration() << " m/s²\n\n"
 									<< "#Spoiler\n"
-									<< " |Modele: " << spoiler.name << "\n"
-									<< " |Rang: "<<  spoiler.rank << "\n"
-									<< " |Aerodynamisme: " <<  spoiler.getAerodynamic() << " %\n\n"
+									<< " |Modele: " << spoiler->name << "\n"
+									<< " |Rang: "<<  spoiler->rank << "\n"
+									<< " |Aerodynamisme: " <<  spoiler->getAerodynamic() << " %\n\n"
 									<< "#Prises d'air\n"
-									<< " |Modele: " << airIntake.name << "\n"
-									<< " |Rang: "<<  airIntake.rank << "\n"
-									<< " |Aerodynamisme: " <<  airIntake.getAerodynamic() << " %\n\n"
+									<< " |Modele: " << airIntake->name << "\n"
+									<< " |Rang: "<<  airIntake->rank << "\n"
+									<< " |Aerodynamisme: " <<  airIntake->getAerodynamic() << " %\n\n"
 									<< "#Tires\n"
-									<< " |Modele: " << tires.name << "\n"
-									<< " |Rang: "<<  tires.rank << "\n"
+									<< " |Modele: " << tires->name << "\n"
+									<< " |Rang: "<<  tires->rank << "\n"
 									<< "===============\n"
 									<< "Appuyez sur Entree pour revenir au menu precedent";
 	getch();
@@ -487,14 +487,14 @@ void menuAtelierEngine(Profil& Player, const int& numeroBox)
 										<< "Credits: " << Player.getCredits() << "C \n"
 										<< "===============\n\n"
 										<< "#Stats Engine\n"
-										<< " |Modele: " << newNomEngine << " (Actuel: " << Car->getEngine().name << ")\n"
-										<< " |Vitesse: " << newVitesseEngine << "      (Actuelle: " << Car->getEngine().getVitesse() << " [";
+										<< " |Modele: " << newNomEngine << " (Actuel: " << Car->getEngine()->name << ")\n"
+										<< " |Vitesse: " << newVitesseEngine << "      (Actuelle: " << Car->getEngine()->getVitesse() << " [";
 		if(diffVitesseEngine >= 0)
 		{
 			Terminal::get() << '+';
 		}
 		Terminal::get() << diffVitesseEngine << "])\n"
-										<< " |Acceleration: " << newAccelerationEngine << " (Actuelle: " << Car->getEngine().getAcceleration() << " [";
+										<< " |Acceleration: " << newAccelerationEngine << " (Actuelle: " << Car->getEngine()->getAcceleration() << " [";
 		if(diffAccelerationEngine >= 0)
 		{
 			Terminal::get() << '+';
@@ -531,8 +531,8 @@ void menuAtelierEngine(Profil& Player, const int& numeroBox)
 			{
 				if(e2tour == 0 || tmenu != menu)
 				{
-					diffVitesseEngine = newVitesseEngine - Car->getEngine().getVitesse();
-					diffAccelerationEngine = newAccelerationEngine - Car->getEngine().getAcceleration();
+					diffVitesseEngine = newVitesseEngine - Car->getEngine()->getVitesse();
+					diffAccelerationEngine = newAccelerationEngine - Car->getEngine()->getAcceleration();
 					e2tour = 1;
 					tmenu = menu;
 				}
@@ -564,9 +564,9 @@ void menuAtelierEngine(Profil& Player, const int& numeroBox)
 															<< "Credits: " << Player.getCredits() << "C \n"
 															<< "====================\n\n"
 															<< "#Engine Actuel\n"
-															<< " |Modele: " << Car->getEngine().name << "\n"
-															<< " |Vitesse: "<< Car->getEngine().getVitesse() << " Km/h\n"
-															<< " |Acceleration: " << Car->getEngine().getAcceleration() << " m/s²\n\n"
+															<< " |Modele: " << Car->getEngine()->name << "\n"
+															<< " |Vitesse: "<< Car->getEngine()->getVitesse() << " Km/h\n"
+															<< " |Acceleration: " << Car->getEngine()->getAcceleration() << " m/s²\n\n"
 															<< "Souhaitez-vous vraiment l'acheter ? [O/n]\n"
 															<< "====================\n";
 							verifAchat = getch();
@@ -598,7 +598,7 @@ void menuAtelierEngine(Profil& Player, const int& numeroBox)
 								paye = Player.payer(newPrixEngine);
 								if(paye == true)
 								{
-									Player.ajouterCredits(Car->getEngine().getPrix() * 0.6f);
+									Player.ajouterCredits(Car->getEngine()->getPrix() * 0.6f);
 									Player.setEngineCar(numeroBox, &Engine::collection[0], menu);
 									Menu::msg("La piece a ete achetee et installee avec succes !");
 								}

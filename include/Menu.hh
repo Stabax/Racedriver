@@ -2,11 +2,15 @@
 #define MENU_HH_
 
 #include <string>
+#include <map>
 
 class Menu
 {
 public:
   Menu();
+
+  template <typename T>
+  void catalog(const std::map<std::string, T> &collection);
 
   static void msg(std::string str);
   static void error(std::string str);

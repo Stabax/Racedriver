@@ -5,8 +5,8 @@
 std::map<std::string, Car> Car::collection = std::map<std::string, Car>();
 
 Car::Car(const json &data)
- : Part(data), _engine(Engine::collection[idEngine]), _spoiler(Spoiler::collection[idSpoiler]), _airIntake(AirIntake::collection[idAirIntake]),
-   _tires(Tires::collection[idTires]), _nitro(nitroMax), manufacturer(marque), _model(modele), rank(rang), _nitroMax(nitroMax), _durability(etat)
+ : Part(data), _engine(Engine::collection["Eses"]), _spoiler(Spoiler::collection["Eses"]), _airIntake(AirIntake::collection["Eses"]),
+   _tires(Tires::collection["Eses"]), _nitroMax(100), _nitro(_nitroMax), _durability(100)
 {
 
 }

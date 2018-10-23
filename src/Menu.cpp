@@ -8,6 +8,12 @@ Menu::Menu()
   
 }
 
+template <typename T>
+void Menu::catalog(const std::map<std::string, T> &collection)
+{
+	//implement part catalog display
+}
+
 void Menu::error(std::string str)
 {
 	Menu::msg("ERREUR: "+str);

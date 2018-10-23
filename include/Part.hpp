@@ -48,7 +48,7 @@ public:
 
   virtual ~Part() { }
 
-  const std::string getId()
+  const std::string getId() const
   {
     return (manufacturer+ID_SEPARATOR+name);
   }
@@ -83,8 +83,13 @@ public:
     for (size_t i = 0; i < data["collection"].size(); i++)
     {
       T obj(data["collection"][i]);
-      collection.emplace(dynamic_cast<Part>(obj).getId(), obj);
+      collection.emplace(dynamic_cast<Part&>(obj).getId(), obj);
     }
+  }
+
+  bool operator==(const Part &part)
+  {
+    return (getId() != part.getId());
   }
 
   const std::string manufacturer;

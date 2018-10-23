@@ -352,12 +352,11 @@ void menuAtelier(Profil& Player, const int& numeroBox)
 
 void menuAtelierSpoiler(Profil& Player, const int& numeroBox)
 {
+	Menu::error("Non implemente");
+	/* No more upgrades...
 	Car* Car = Player.getBox(numeroBox);
-	int id = Car->getSpoiler();
-	int idCharge = id + 1;
 
 	Spoiler &newSpoiler = Spoiler::collection[idCharge];
-	const Spoiler &currentSpoiler = Spoiler::collection[idCharge];
 	Terminal::get().clearScreen(); //On flushe l'ancien ecran
 	Terminal::get() << "/!\\ Attention ! /!\\\n"
 									<< "====================\n"
@@ -370,9 +369,9 @@ void menuAtelierSpoiler(Profil& Player, const int& numeroBox)
 									<< " |Rang: " << newSpoiler.rank << "\n"
 									<< " |Aerodynamisme: " << newSpoiler.getAerodynamic() << "%\n\n"
 									<< "#Spoiler Actuel\n"
-									<< " |Modele: " << currentSpoiler.name << "\n"
-									<< " |Rang: " << currentSpoiler.rank << "\n"
-									<< " |Aerodynamisme: " << currentSpoiler.getAerodynamic() << "%\n\n";
+									<< " |Modele: " << Car->getSpoiler().name << "\n"
+									<< " |Rang: " << Car->getSpoiler().rank << "\n"
+									<< " |Aerodynamisme: " << Car->getSpoiler().getAerodynamic() << "%\n\n";
 	if(Menu::askConfirmation())
 	{
 		Terminal::get().clearScreen();
@@ -396,11 +395,13 @@ void menuAtelierSpoiler(Profil& Player, const int& numeroBox)
 	else
 	{
 		Terminal::get().clearScreen(); // la variable de verification prend la valeur n donc on sort de la verification, mais quit vaut faux
-	}
+	}*/
 }
 
 void menuAtelierAirIntake(Profil& Player, const int& numeroBox)
 {
+	Menu::error("Non implemente");
+	/* No more upgrades...
 	Car* Car = Player.getBox(numeroBox);
 	int id = Car->getIdSpoiler();
 	int idCharge = id + 1;
@@ -445,12 +446,13 @@ void menuAtelierAirIntake(Profil& Player, const int& numeroBox)
 	else
 	{
 			Terminal::get().clearScreen(); // la variable de verification prend la valeur n donc on sort de la verification, mais quit vaut faux
-	}
+	}*/
 }
 
 void menuAtelierEngine(Profil& Player, const int& numeroBox)
 {
-	Terminal::get().clearScreen();
+	Menu::error("Non implemente");
+	/* No more silly menus...
 
 	Car* Car = Player.getBox(numeroBox);
 
@@ -471,6 +473,7 @@ void menuAtelierEngine(Profil& Player, const int& numeroBox)
 	int diffVitesseEngine = 0;
 	int diffAccelerationEngine = 0;
 
+	Terminal::get().clearScreen();
 	while(quit != true)
 	{
 		verifAchat = 'x';
@@ -512,7 +515,7 @@ void menuAtelierEngine(Profil& Player, const int& numeroBox)
 			Terminal::get().clearScreen();
 			Engine::infoEngine(menu, Car->manufacturer, newNomEngine, newVitesseEngine, newAccelerationEngine, newRangEngine, newPrixEngine);
 
-			if(menu == Car->getIdEngine())
+			if(menu == Car->getEngine())
 			{
 				Terminal::get().clearScreen();
 				Menu::msg("Votre vehicule est deja equipe de cette piece. ("+newNomEngine+")");
@@ -596,7 +599,7 @@ void menuAtelierEngine(Profil& Player, const int& numeroBox)
 								if(paye == true)
 								{
 									Player.ajouterCredits(Car->getEngine().getPrix() * 0.6f);
-									Player.setEngineCar(numeroBox, Engine::chargerEngine(tmenu, Car->manufacturer), menu);
+									Player.setEngineCar(numeroBox, &Engine::collection[0], menu);
 									Menu::msg("La piece a ete achetee et installee avec succes !");
 								}
 							}
@@ -619,7 +622,7 @@ void menuAtelierEngine(Profil& Player, const int& numeroBox)
 	if(Player.getSauvegardeAuto())
 	{
 		Player.sauvegarderProfil();
-	}
+	}*/
 }
 
 void menuMaintenance(Profil& Player, const int& numeroBox)
@@ -855,7 +858,7 @@ void menuAchatCar(const char& rang, Profil& Player)
 						numeroBox -= 1;
 						if(Player.payer(prixCar))
 						{
-							Player.setBox(numeroBox, Car::chargerCar(menu, rang));
+							Player.setBox(numeroBox, Car::collection.at("Eses")); //TMP
 							Player.ajouterCarAchetee();
 							Menu::msg("Vehicule achete avec succes !");
 						}

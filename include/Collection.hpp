@@ -7,20 +7,16 @@ template <typename T>
 class Collection
 {
 public:
-
-  T &operator[](std::string name) {
-    for (size_t i = 0; i < size(); i++)
-    {
-      if (_collection[i].name == name) return (i);
-    }
+  T &operator[](const std::string &key) {
+    return (_collection[key]);
   }
 
-  T &operator[](int i) {
-    return (_collection[i]);
+  T &operator[](int id) {
+    return (*_collection.begin() + id);
   }
 
 private:
-  std::vector<T> _collection;
+  std::map<std::string, T> _collection;
 }
 
 #endif /* !COLLECTION_HPP_ */

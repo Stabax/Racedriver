@@ -40,8 +40,9 @@ SRCS = 	$(SRCDIR)/Game.cpp							\
 				$(SRCDIR)/Engine.cpp						\
 				$(SRCDIR)/Tires.cpp							\
 				$(SRCDIR)/AirIntake.cpp					\
-				$(SRCDIR)/Profil.cpp						\
+				$(SRCDIR)/Profile.cpp						\
 				$(SRCDIR)/sousMenus.cpp					\
+				$(SRCDIR)/Garage.cpp						\
 				$(SRCDIR)/Spoiler.cpp						\
 				$(SRCDIR)/Terminal.cpp					\
 				$(SRCDIR)/Car.cpp								\

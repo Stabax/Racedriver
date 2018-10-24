@@ -6,7 +6,7 @@
 void menuRacedriver()
 {
 	bool quit = false;
-	Profil* Player = 0;	//On instancie un joueur non charge
+	Profile* Player = 0;	//On instancie un joueur non charge
 
 	while(quit != true)
 	{
@@ -18,7 +18,7 @@ void menuRacedriver()
 										<< "===============\n\n"
 										<< "1. Continuer partie\n"
 										<< "2. Nouvelle partie\n"
-										<< "3. Supprimer profils\n\n"
+										<< "3. Supprimer Profiles\n\n"
 										<< "4. A Propos\n"
 										<< "0. Quitter\n";
 		//Redirection de l'utilisateur selon son choix grâce a un switch.
@@ -53,12 +53,12 @@ void menuRacedriver()
 	delete Player;
 }
 
-void menuJeu(Profil& Player, bool& quitGame)
+void menuJeu(Profile& Player, bool& quitGame)
 {
 	bool quit = false;
-	Profil* PlayerSaved = 0; //On cree un profil temporaire
+	Profile* PlayerSaved = 0; //On cree un Profile temporaire
 	std::ostringstream oss;
-	std::string numeroProfil;
+	std::string numeroProfile;
 
 	Terminal::get().clearScreen();
 	while(quit != true)
@@ -69,42 +69,27 @@ void menuJeu(Profil& Player, bool& quitGame)
 										<< "2. Garage\n"
 										<< "3. Concessionaire\n"
 										<< "4. Stats\n\n";
-		if(!Player.getSauvegardeAuto())
-		{
-			Terminal::get() << "5. Sauvegarder\n"
-											<< "6. Options\n"
-											<< "7. Menu Principal\n\n"
-											<< "0. Quitter\n";
-		}
-		else
-		{
-			Terminal::get() << "5. Options\n"
-											<< "6. Menu Principal\n\n"
-											<< "0. Quitter\n";
-		}
+		Terminal::get() << "5. Sauvegarder\n"
+										<< "6. Options\n"
+										<< "7. Menu Principal\n\n"
+										<< "0. Quitter\n";
 		//Redirection de l'utilisateur selon son choix grâce a un switch.
 		switch(Menu::askChoice())
 		{
 			case 0:
 			{
-				oss.str("");
 				Terminal::get().clearScreen(); //On flushe l'ancien ecran
-				oss << Player.getNumero();      // on insere le int dans le stream oss
-				numeroProfil = oss.str(); // range le int dans la variable numeroSave
-				std::ifstream fichier("Saves/Profil"+numeroProfil+".save");
+				std::ifstream fichier("Saves/Profile.save");
 
 				if(fichier)
 				{
-					Profil::chargerProfil(Player.getNumero(), PlayerSaved); // On charge le profil du fichier
-					if(Player != *PlayerSaved)
+					//Profile::chargerProfile(Player.getNumero(), PlayerSaved); // On charge le Profile du fichier
+					Terminal::get() << "/!\\ Attention ! /!\\\n"
+													<< "====================\n"
+													<< "La partie va etre sauvegardee\n";
+					if(Menu::askConfirmation())
 					{
-						Terminal::get() << "/!\\ Attention ! /!\\\n"
-														<< "====================\n"
-														<< "La partie va etre sauvegardee\n";
-						if(Menu::askConfirmation())
-						{
-							Player.sauvegarderProfil();
-						}
+						Player.sauvegarderProfile();
 					}
 				}
 				quit = true;
@@ -129,81 +114,46 @@ void menuJeu(Profil& Player, bool& quitGame)
 				break;
 			case 5:
 				Terminal::get().clearScreen(); //On flushe l'ancien ecran
-				if(Player.getSauvegardeAuto())
-				{
-					menuOptions(Player);
-				}
-				else
-				{
-					menuSauvegarde(Player);
-				}
+				menuOptions(Player);
 				Terminal::get().clearScreen();
 				break;
 			case 6:
 			{
 				Terminal::get().clearScreen(); //On flushe l'ancien ecran
-				if(Player.getSauvegardeAuto())
-				{
-					oss.str("");
-					Terminal::get().clearScreen(); //On flushe l'ancien ecran
-					oss << Player.getNumero();      // on insere le int dans le stream oss
-					numeroProfil = oss.str(); // range le int dans la variable numeroSave
-					std::ifstream fichier("Saves/Profil"+numeroProfil+".save");
+				std::ifstream fichier("Saves/Profile.save");
 
-					if(fichier)
-					{
-						Profil::chargerProfil(Player.getNumero(), PlayerSaved); // On charge le profil du fichier
-						if(Player != *PlayerSaved)
-						{
-							Terminal::get() << "/!\\ Attention ! /!\\\n"
-														<< "====================\n"
-														<< "La partie va etre sauvegardee\n";
-							if(Menu::askConfirmation())
-							{
-								Player.sauvegarderProfil();
-							}
-						}
-					}
-					quit = true;
-				}
-				else
+				if(fichier)
 				{
-					menuOptions(Player);
+					//Profile::chargerProfile(Player.getNumero(), PlayerSaved); // On charge le Profile du fichier
+					Terminal::get() << "/!\\ Attention ! /!\\\n"
+												<< "====================\n"
+												<< "La partie va etre sauvegardee\n";
+					if(Menu::askConfirmation())
+					{
+						Player.sauvegarderProfile();
+					}
 				}
+				quit = true;
 				Terminal::get().clearScreen();
 				break;
 			}
 			case 7:
 			{
-				if(Player.getSauvegardeAuto())
-				{
-					Menu::error("Saisie invalide");
-				}
-				else
-				{
-					oss.str("");
-					Terminal::get().clearScreen(); //On flushe l'ancien ecran
-					oss << Player.getNumero();      // on insere le int dans le stream oss
-					numeroProfil = oss.str(); // range le int dans la variable numeroSave
-					std::ifstream fichier("Saves/Profil"+numeroProfil+".save");
+				Terminal::get().clearScreen(); //On flushe l'ancien ecran
+				std::ifstream fichier("Saves/Profile.save");
 
-					if(fichier)
+				if(fichier)
+				{
+					//Profile::chargerProfile(Player.getNumero(), PlayerSaved); // On charge le Profile du fichier
+					Terminal::get() << "/!\\ Attention ! /!\\\n"
+												<< "====================\n"
+												<< "La partie va etre sauvegardee\n";
+					if(Menu::askConfirmation())
 					{
-						Profil::chargerProfil(Player.getNumero(), PlayerSaved); // On charge le profil du fichier
-						if(Player != *PlayerSaved)
-						{
-							Terminal::get() << "/!\\ Attention ! /!\\\n"
-														<< "====================\n"
-														<< "La partie va etre sauvegardee\n";
-							if(Menu::askConfirmation())
-							{
-								Player.sauvegarderProfil();
-							}
-						}
+						Player.sauvegarderProfile();
 					}
-					quit = true;
 				}
-				Terminal::get().clearScreen();
+				quit = true;
 			}
 			break;
 			default:
@@ -214,18 +164,18 @@ void menuJeu(Profil& Player, bool& quitGame)
 	}
 }
 
-void menuChargementPartie(Profil*& Player, bool& quit)
+void menuChargementPartie(Profile*& Player, bool& quit)
 {
 	std::string sMenu;
 	int menu;
 	bool etat; //stocke le resultat du chargement
 	std::string nom;
-	//Menu Chargement profil
-	Terminal::get() << "Charger un Profil: \n"
+	//Menu Chargement Profile
+	Terminal::get() << "Charger un Profile: \n"
 									<< "===============\n"
-									<< "Selectionnez un profil a charger.\n"
+									<< "Selectionnez un Profile a charger.\n"
 									<< "===============\n\n";
-	Profil::listerSauvegardes();
+	Profile::listerSauvegardes();
 	Terminal::get() << "0. Annuler\n";
 	menu = Menu::askChoice();
 	//Redirection de l'utilisateur selon son choix grâce a un switch.
@@ -233,9 +183,9 @@ void menuChargementPartie(Profil*& Player, bool& quit)
 	{
 			Terminal::get().clearScreen(); //On flushe l'ancien ecran
 	}
-	else if(menu > 0 && menu <= Profil::compterSauvegardes())
+	else if(menu > 0 && menu <= Profile::compterSauvegardes())
 	{
-				etat = Profil::chargerProfil(menu, Player);
+				etat = Profile::chargerProfile(menu, Player);
 				if(etat == true)
 				{
 					menuJeu(*Player, quit);//Redirection de l'utilisateur dans le menu de jeu
@@ -244,27 +194,27 @@ void menuChargementPartie(Profil*& Player, bool& quit)
 	else //equivalent de default
 	{
 		Terminal::get().clearScreen(); //On flushe l'ancien ecran
-		Menu::error("Ce profil n'existe pas");
+		Menu::error("Ce Profile n'existe pas");
 	}
 }
 
-void menuCreationPartie(Profil*& Player, bool& quit)
+void menuCreationPartie(Profile*& Player, bool& quit)
 {
 	//Var
 	std::string nom;
 
-	//Menu Creation de profil
-	Terminal::get() << "Creation de votre Profil\n"
+	//Menu Creation de Profile
+	Terminal::get() << "Creation de votre Profile\n"
 									<< "===============\n\n"
-									<< "Saisissez le nom du Profil.\n\n"
+									<< "Saisissez le nom du Profile.\n\n"
 									<< "0. Annuler\n"
 									<< "===============\n"
 									<< "Nom: ";
 	nom = getString(); // l'utilisateur entre son nom
 	if(nom[0] != 0)
 	{
-		Profil::creerProfil(nom, Player);
-		Player->sauvegarderProfil();
+		Profile::creerProfile(nom, Player);
+		Player->sauvegarderProfile();
 		menuJeu(*Player, quit);
 	}
 }
@@ -277,12 +227,12 @@ void menuSuppressionPartie()
 	std::string nom;
 
 	//Debut
-	//Menu Chargement profil
-	Terminal::get() << "Supprimer un Profil: \n"
+	//Menu Chargement Profile
+	Terminal::get() << "Supprimer un Profile: \n"
 									<< "===============\n"
-									<< "Selectionnez un profil a supprimer.\n"
+									<< "Selectionnez un Profile a supprimer.\n"
 									<< "===============\n\n";
-	Profil::listerSauvegardes();
+	Profile::listerSauvegardes();
 	Terminal::get() << "0. Annuler\n";
 	menu = Menu::askChoice(); // l'utilisateur entre le menu qu'il souhaite ouvrir
 	//Redirection de l'utilisateur selon son choix grâce a un switch.
@@ -290,9 +240,9 @@ void menuSuppressionPartie()
 	{
 			Terminal::get().clearScreen(); //On flushe l'ancien ecran
 	}
-	else if(menu > 0 && menu <= Profil::compterSauvegardes())
+	else if(menu > 0 && menu <= Profile::compterSauvegardes())
 	{
-		for (int i = 1; i <= Profil::compterSauvegardes(); i++)
+		for (int i = 1; i <= Profile::compterSauvegardes(); i++)
 		{
 			if(menu == i)
 			{
@@ -302,19 +252,19 @@ void menuSuppressionPartie()
 					Terminal::get() << "/!\\ Attention ! /!\\\n"
 													<< "====================\n"
 													<< "La partie sera perdue !\n"
-													<< "Souhaitez-vous vraiment supprimer Profil" << i << " ? [O/n]\n"
+													<< "Souhaitez-vous vraiment supprimer Profile" << i << " ? [O/n]\n"
 													<< "====================\n";
 					quitVerify = getch(); // l'utilisateur confirme
 					switch(quitVerify)
 					{
 						case 'o':
 							Terminal::get().clearScreen();
-							Profil::supprimerProfil(i);
+							Profile::supprimerProfile(i);
 							quitVerify = 'n'; // on quitte la verification
 							break;
 						case 'O':
 							Terminal::get().clearScreen();
-							Profil::supprimerProfil(i);
+							Profile::supprimerProfile(i);
 							quitVerify = 'n'; // on quitte la verification
 							break;
 						case 'n':
@@ -336,7 +286,7 @@ void menuSuppressionPartie()
 	else //equivalent de default
 	{
 		Terminal::get().clearScreen(); //On flushe l'ancien ecran
-		Menu::error("Ce profil n'existe pas");
+		Menu::error("Ce Profile n'existe pas");
 	}
 }
 

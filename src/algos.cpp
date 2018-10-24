@@ -28,6 +28,25 @@ int vRang(char rang)
 	return vRang;
 }
 
+Rank charToRank(char c)
+{
+  switch (c)
+  {
+    case 'D':
+      return (D);
+    case 'C':
+      return (C);
+    case 'B':
+      return (B);
+    case 'A':
+      return (A);
+    case 'S':
+      return (S);
+    default:
+      throw std::runtime_error("No such rank");
+  }
+}
+
 char vRangInverse(int valeur)
 {
 	switch(valeur)

@@ -3,14 +3,14 @@
 #include "Menu.hh"
 #include "course.hh"
 
-bool preparatifsCourse(const Circuit& Map, const Profil& Player, Car*& CarPlayer, int const& prix)
+bool preparatifsCourse(const Circuit& Map, const Profile& Player, Car*& CarPlayer, int const& prix)
 {
 	int prixCourse;
 	bool paye = false;
 
-	prixCourse = (CarPlayer->getConsommation() * 0.01f * Map.getTaille() * 5 /*prix carburant remplace par 5 */);
+	prixCourse = (5 * 0.01f * Map.getTaille() * 5 /*prix carburant remplace par 5 */);
 	prixCourse += prix;
-	if(Player.getCredits() < prixCourse)
+	if(Player.credits < prixCourse)
 	{
 		Menu::error("Vous ne disposez pas d'assez de crédits pour payer les preparatifs.");
 	}
@@ -27,7 +27,7 @@ bool preparatifsCourse(const Circuit& Map, const Profil& Player, Car*& CarPlayer
 		}
 		Terminal::get() << "\nPreparatifs\n";
 		Terminal::get() << "====================\n";
-		Terminal::get() << "Credits: " << Player.getCredits() << "c\n";
+		Terminal::get() << "Credits: " << Player.credits << "c\n";
 		Terminal::get() << "====================\n";
 		Terminal::get() << "Le montant total des preparatifs du circuit: " << Map.getNom() << "\n";
 		Terminal::get() << "S'elevent a " << prixCourse << "c\n\n";
@@ -112,7 +112,7 @@ bool antiCorruption(const std::string& chemin, const int& nbLignes)
 	}
 }
 
-void chargerAdversaires(Car* Adversaire[7], int difficulteProfil, int difficulteCircuit)
+void chargerAdversaires(Car* Adversaire[7], int difficulteProfile, int difficulteCircuit)
 {
 	int randomDifficulte;	//difficulté calculée en fonction de la difficulté du joueur
 	int difficulteTotale;	//difficulté pour calculer l'id et le rang de la voiture
@@ -121,17 +121,17 @@ void chargerAdversaires(Car* Adversaire[7], int difficulteProfil, int difficulte
 	int id = compteur;
 	std::string temp;					//permet de stocker une ligne pour compter les lignes
 
-	difficulteProfil *= (difficulteCircuit / 10);
+	difficulteProfile *= (difficulteCircuit / 10);
 
 	for (size_t joueur = 0; joueur <= 6; ++joueur)
 	{
 		if(std::rand() % 2 == 0)	// 1/2 chances d'augmenter ou diminuer la difficulté du joueur
 		{
-			randomDifficulte = difficulteProfil - std::rand() % (difficulteProfil +1);
+			randomDifficulte = difficulteProfile - std::rand() % (difficulteProfile +1);
 		}
 		else
 		{
-			randomDifficulte = difficulteProfil + std::rand() % (difficulteProfil +1);
+			randomDifficulte = difficulteProfile + std::rand() % (difficulteProfile +1);
 		}
 
 		if(std::rand() % 2 == 0)	// 1/2 chances d'augmenter ou diminuer la difficulté du circuit
@@ -339,7 +339,7 @@ void calculerProbaAccident(int probaAccident[8], Car* Adversaire[7], Car* Player
 	}
 }
 
-void faireCourseLibre(Circuit Map, Car* Player1, Profil& Player)
+void faireCourseLibre(Circuit Map, Car* Player1, Profile& Player)
 {
 	if(Player1 == 0)
 	{
@@ -373,7 +373,7 @@ void faireCourseLibre(Circuit Map, Car* Player1, Profil& Player)
 		}
 
 		Car* Adversaire[7];
-		chargerAdversaires(Adversaire, Player.getDifficulte(), Map.getDifficulte());
+		chargerAdversaires(Adversaire, Player.difficulty, Map.getDifficulte());
 
 		std::string *commentaireMeteo = chargerCommentaireMeteo(Map.getMeteo());
 
@@ -402,7 +402,7 @@ void faireCourseLibre(Circuit Map, Car* Player1, Profil& Player)
 		{
 			if(numero == 0)
 			{
-				Terminal::get() << Player.getNom() << " - " << Player1->manufacturer << " " << Player1->name << "\n";
+				Terminal::get() << Player.name << " - " << Player1->manufacturer << " " << Player1->name << "\n";
 			}
 			else
 			{
@@ -443,14 +443,14 @@ void faireCourseLibre(Circuit Map, Car* Player1, Profil& Player)
 				score[njoueur]=0;
 				if(njoueur == 0)
 				{
-					Player.ajouterAccident();
+					Player.careerStats.accidents++;
 				}
 			}
 			if(score[njoueur] == 0)
 			{
 				if(njoueur == 0)
 				{
-					Terminal::get() << "Le joueur " << Player.getNom() << " " << messageAccident[njoueur - 1] <<"\n";
+					Terminal::get() << "Le joueur " << Player.name << " " << messageAccident[njoueur - 1] <<"\n";
 				}
 				else
 				{
@@ -516,7 +516,7 @@ void faireCourseLibre(Circuit Map, Car* Player1, Profil& Player)
 			}
 			if(joueur == 0 && exclu[0] == false) //Si le joueur est le Joueur1 on affiche son nom
 			{
-				Terminal::get() << Player.getNom() << " - " << score[placeClassement] << " Points.\n";
+				Terminal::get() << Player.name << " - " << score[placeClassement] << " Points.\n";
 				exclu[0] = true;
 			}
 			else //Sinon on met des nom d'IA
@@ -527,16 +527,16 @@ void faireCourseLibre(Circuit Map, Car* Player1, Profil& Player)
 			}
 			if(joueur == 0 && placeClassement < 3) //Si le joueur finit sur le podium
 			{
-				Player.ajouterVictoire();
+				Player.careerStats.victories++;
 			}
 			else if (joueur == 0 && placeClassement > 3 ) //sinon si il finit ailleurs
 			{
-				Player.ajouterDefaite();
+				Player.careerStats.losses++;
 			}
 			placeExclue[placeClassement]=true;
 			sleep(0.5f);
 		}
-		Player.ajouterCourse();
+		Player.careerStats.races++;
 		Terminal::get() <<"\n\nPressez [ENTREE] pour continuer.\n";
 		getch();
 		Terminal::get().clearScreen();
@@ -545,13 +545,10 @@ void faireCourseLibre(Circuit Map, Car* Player1, Profil& Player)
 			delete Adversaire[compteur];
 		}
 	}
-	if(Player.getSauvegardeAuto())
-	{
-		Player.sauvegarderProfil();
-	}
+	Player.sauvegarderProfile();
 }
 
-void faireCourseChampionnat(Circuit Map, Car* Player1, Profil& Player)
+void faireCourseChampionnat(Circuit Map, Car* Player1, Profile& Player)
 {
 	if(Player1 == 0)
 	{
@@ -578,9 +575,9 @@ void faireCourseChampionnat(Circuit Map, Car* Player1, Profil& Player)
 		if(preparatifsCourse(Map, Player, Player1))
 		//REVOIR CE CALCUL
 		{
-			Player.payer(Player1->getConsommation() * 0.01f * Map.getTaille() * 5 /*prix carburant remplace par 5 */);
+			Player.payer(5 * 0.01f * Map.getTaille() * 5 /*prix carburant et conso remplace par 5 */);
 			Car* Adversaire[7];
-			chargerAdversaires(Adversaire, Player.getDifficulte(), Map.getDifficulte());
+			chargerAdversaires(Adversaire, Player.difficulty, Map.getDifficulte());
 
 			std::string *commentaireMeteo = chargerCommentaireMeteo(Map.getMeteo());
 
@@ -605,7 +602,7 @@ void faireCourseChampionnat(Circuit Map, Car* Player1, Profil& Player)
 			{
 				if(numero == 0)
 				{
-					Terminal::get() << Player.getNom() << " - " << Player1->manufacturer << " " << Player1->name << "\n";
+					Terminal::get() << Player.name << " - " << Player1->manufacturer << " " << Player1->name << "\n";
 				}
 				else
 				{
@@ -643,7 +640,7 @@ void faireCourseChampionnat(Circuit Map, Car* Player1, Profil& Player)
 					score[njoueur]=0;
 					if(njoueur == 0)
 					{
-						Player.ajouterAccident();
+						Player.careerStats.accidents++;
 						Player1->retirerEtat(16); //cette valeur changera selon le parchoque
 					}
 				}
@@ -651,7 +648,7 @@ void faireCourseChampionnat(Circuit Map, Car* Player1, Profil& Player)
 				{
 					if(njoueur == 0)
 					{
-						Terminal::get() << "Le joueur " << Player.getNom() << " " << messageAccident[njoueur - 1] <<"\n";
+						Terminal::get() << "Le joueur " << Player.name << " " << messageAccident[njoueur - 1] <<"\n";
 					}
 					else
 					{
@@ -716,7 +713,7 @@ void faireCourseChampionnat(Circuit Map, Car* Player1, Profil& Player)
 				}
 				if(joueur == 0 && exclu[0] == false) //Si le joueur est le Joueur1 on affiche son nom
 				{
-					Terminal::get() << Player.getNom() << " - " << score[placeClassement] << " Points.\n";
+					Terminal::get() << Player.name << " - " << score[placeClassement] << " Points.\n";
 					exclu[0] = true;
 				}
 				else //Sinon on met des nom d'IA
@@ -726,18 +723,18 @@ void faireCourseChampionnat(Circuit Map, Car* Player1, Profil& Player)
 				}
 				if(joueur == 0 && placeClassement < 3) //Si le joueur finit sur le podium
 				{
-					Player.ajouterVictoire();
-					Player.ajouterCredits(600 / (placeClassement + 1));
-					Player.ajouterCreditsGagnes(600 / (placeClassement + 1));
+					Player.careerStats.victories++;
+					Player.credits += (600 / (placeClassement + 1));
+					Player.careerStats.creditsEarned += (600 / (placeClassement + 1));
 				}
 				else if (joueur == 0 && placeClassement > 3 ) //sinon si il finit ailleurs
 				{
-					Player.ajouterDefaite();
+					Player.careerStats.losses++;
 				}
 				placeExclue[placeClassement]=true;
 				sleep(0.5f);
 			}
-			Player.ajouterCourse();
+			Player.careerStats.races++;
 			Terminal::get() <<"\n\nPressez [ENTREE] pour continuer.\n";
 			getch();
 			Terminal::get().clearScreen();
@@ -748,9 +745,6 @@ void faireCourseChampionnat(Circuit Map, Car* Player1, Profil& Player)
 			Player1->getTires()->setDurability(-1 * (( Map.getTaille() + Map.getVirages() ) / 10));
 			Player1->setNitro(-1 * (Map.getTaille() / 4));
 		}
-		if(Player.getSauvegardeAuto())
-		{
-			Player.sauvegarderProfil();
-		}
+		Player.sauvegarderProfile();
 	}
 }

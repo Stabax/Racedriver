@@ -3,40 +3,16 @@
 
 #include <vector>
 #include "DataFile.hh"
+#include "algos.hh"
 
 #define ID_SEPARATOR '.'
 
 //Forward declaring parts
+class Car;
+class Engine;
 class Tires;
 class AirIntake;
 class Spoiler;
-
-enum Rank {
-  D,
-  C,
-  B,
-  A,
-  S
-};
-
-Rank charToRank(char c)
-{
-  switch (c)
-  {
-    case 'D':
-      return (D);
-    case 'C':
-      return (C);
-    case 'B':
-      return (B);
-    case 'A':
-      return (A);
-    case 'S':
-      return (S);
-    default:
-      throw std::runtime_error("No such rank");
-  }
-}
 
 class Part
 {
@@ -57,6 +33,8 @@ public:
   static const std::string getCollectionPath()
   {
     std::string path = "./Data/Parts/";
+    if (std::is_same<T, Car>::value) path += "Cars";
+    if (std::is_same<T, Engine>::value) path += "Engines";
     if (std::is_same<T, Tires>::value) path += "Tires";
     else if (std::is_same<T, AirIntake>::value) path += "AirIntake";
     else if (std::is_same<T, Spoiler>::value) path += "Spoiler";

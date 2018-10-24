@@ -13,7 +13,7 @@
 
 	-créer les menus ---> tout menus prévus doivent être affichables, avec message d'erreur si non implémentés //
 	-pouvoir acheter une voiture //
-	-sauvegarder/charger un profil //
+	-sauvegarder/charger un Profile //
 	-pouvoir utiliser 4 moteurs différents de rang D renault //
 
 
@@ -26,7 +26,7 @@
 	création de la voiture par défaut (renault 4L)	==> invisible à l'utilisateur
 	
 --- Alpha 0.0.3 ---
-	sauvegarde/chargement des profils
+	sauvegarde/chargement des Profiles
 	chargement des circuits ==> invisible à l'utilisateur actuellement
 	
 --- Alpha 0.1.1 ---
@@ -34,10 +34,10 @@
 	
 --- Alpha 0.1.2 ---
 	listage des moteurs
-	la voiture est liée au profil	==> invisible à l'utilisateur
+	la voiture est liée au Profile	==> invisible à l'utilisateur
 	visualisation de la voiture et du moteur possedés
 	menus revisités
-	suppression des profils
+	suppression des Profiles
 	
 --- Alpha 0.2.1 ---
 	achat de moteurs
@@ -47,7 +47,7 @@
 	listage des voitures
 	achat de box
 	courses libres entierement fonctionnelles
-	renommer les profils
+	renommer les Profiles
 	
 --- Alpha 0.3.1 ---
 	achat de voiture

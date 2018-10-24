@@ -3,11 +3,11 @@ new Circuit (Circuit.cpp 125)V
 
 new Engine (Engine.cpp 102)V
 
-new Profil (Profile.cpp 195)V
+new Profile (Profilee.cpp 195)V
 
-new Profil (Profile.cpp 348)V
+new Profile (Profilee.cpp 348)V
 
-new Car (Profile.cpp 497)V
+new Car (Profilee.cpp 497)V
 
 new Spoiler (Car.cpp 11)V
 
@@ -17,11 +17,11 @@ new Car (Car.cpp 157)V
 
 
 
-delete Profil (main.cpp 68)V
+delete Profile (main.cpp 68)V
 
 delete Circuit (menus.cpp 479)V
 
-delete Car (Profil.cpp 32-36)V
+delete Car (Profile.cpp 32-36)V
 
 delete Engine (Car.cpp 32)V
 

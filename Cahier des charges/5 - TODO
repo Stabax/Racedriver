@@ -56,7 +56,7 @@ ajouter des priorités aux messages d'accidents, dans le txt
 	1 :afficher apres les premiers
 	2 :pas de priorité
 	
-régulierement revoir operator != du profil
+régulierement revoir operator != du Profile
 //exemple, actuellement on ne compare pas les stat course libre
 
 

@@ -1,39 +1,39 @@
-//Profils.cpp
-#include "Profil.hh"
+//Profiles.cpp
+#include "Profile.hh"
 #include "Menu.hh"
 
-Profil::Profil(const std::string& uuid, const int& numero, const std::string& nom) : m_uuid(uuid), m_numero(numero), m_nom(nom), m_credits(2000), m_difficulte(3), m_nbBox(1), m_box({0}), m_nbCourses(0), m_victoires(0), m_defaites(0), m_accidents(0), m_creditsGagnes(0), m_voituresAchetees(0), m_nbCoursesCL(0), m_victoiresCL(0), m_defaitesCL(0), m_accidentsCL(0), m_creditsGagnesCL(0), m_sauvegardeAuto(false)
+Profile::Profile(const json &data)
+ : name(data["name"].get<std::string>()), difficulty(data["difficulty"].get<int>()), credits(data["credits"].get<int>()), garage(data["garage"])
 {
 
 }
 
-Profil::Profil(const std::string& uuid, const int& numero, const std::string& nom, const int& credits, const bool& sauvegardeAuto, const int& difficulte, const int& nbBox, const int& nbCourses, const int& victoires, const int& defaites, const int& accidents, const int& creditsGagnes, const int& nbCoursesCL, const int& victoiresCL, const int& defaitesCL, const int& accidentsCL, const int& creditsGagnesCL, const int& voituresAchetees) : m_uuid(uuid), m_numero(numero), m_nom(nom), m_credits(credits), m_difficulte(difficulte), m_nbBox(nbBox), m_box({0}), m_nbCourses(nbCourses), m_victoires(victoires), m_defaites(defaites), m_accidents(accidents), m_creditsGagnes(creditsGagnes), m_voituresAchetees(voituresAchetees), m_nbCoursesCL(nbCoursesCL), m_victoiresCL(victoiresCL), m_defaitesCL(defaitesCL), m_accidentsCL(accidentsCL), m_creditsGagnesCL(creditsGagnesCL), m_sauvegardeAuto(sauvegardeAuto)
+Profile::~Profile()
 {
-
 }
 
-Profil::~Profil()
+Profile Profile::load(const std::string &path)
 {
-	for (size_t i = 0; i < 5; i++)
+	DataFile save(path);
+
+	if (!save.load())
 	{
-		if(m_box[i] != 0 )
-		{
-			delete m_box[i];
-		}
+		throw std::runtime_error("Cannot load collection file:"+path);
 	}
+	return (Profile(save.getData()));
 }
 
-bool Profil::compatible(Profil& Player, const int& numeroBox, const char& rangNewPiece)
+bool Profile::compatible(Profile& Player, const int& numeroBox, const char& rangNewPiece)
 {
 	bool compatible = false;
 	int rangPiece = 0;
 	int rangCarBox = 0;
-	Car *CarBox = Player.getBox(numeroBox);
+	//Car *CarBox = Player.getBox(numeroBox);
 
-	rangCarBox = vRang(CarBox->rank);
+	//rangCarBox = vRang(CarBox->rank);
 	rangPiece = vRang(rangNewPiece);
 
-	if(rangCarBox >= rangPiece)
+	if(rangCarBox <= rangPiece)
 	{
 		compatible = true;
 	}
@@ -44,11 +44,11 @@ bool Profil::compatible(Profil& Player, const int& numeroBox, const char& rangNe
 	return compatible;
 }
 
-void Profil::listerSauvegardes()
+void Profile::listerSauvegardes()
 {
 	int i = 1;
 	std::string numeroSave;    // string which will contain the result
-	std::string nomProfil;
+	std::string nomProfile;
 	std::ostringstream oss;   // stream utilise pour la conversion
 	bool ouvert = true;
 	do
@@ -56,15 +56,15 @@ void Profil::listerSauvegardes()
 		oss.str(""); //On vide le contenu de oss
 		oss << i;      // on insere le int dans le stream oss
 		numeroSave = oss.str(); // range le int dans la variable numeroSave
-		std::ifstream fichier( "Saves/Profil" + numeroSave + ".save" );
+		std::ifstream fichier( "Saves/Profile" + numeroSave + ".save" );
 
 		if(fichier)
 		{
 			for (size_t ligne = 1; ligne <= 2; ligne++) //le nom est stocké sur la deuxieme ligne
 			{
-				getline(fichier, nomProfil);
+				getline(fichier, nomProfile);
 			}
-			Terminal::get() << i << ". Profil " << i << ": " << nomProfil << "\n";
+			Terminal::get() << i << ". Profile " << i << ": " << nomProfile << "\n";
 			i++; // on incremente
 		}
 		else
@@ -72,10 +72,10 @@ void Profil::listerSauvegardes()
 			ouvert = false;
 		}
 	}while(ouvert);
-	Terminal::get() << "\n"; // on separe le bloc de profils du choix annuler
+	Terminal::get() << "\n"; // on separe le bloc de Profiles du choix annuler
 }
 
-int Profil::compterSauvegardes()
+int Profile::compterSauvegardes()
 {
 	int i = 1;
 	std::string numeroSave;          // string which will contain the result
@@ -87,7 +87,7 @@ int Profil::compterSauvegardes()
 		oss.str(""); //On vide le contenu de oss
 		oss << i;      // on insere le int dans le stream oss
 		numeroSave = oss.str(); // range le int dans la variable numeroSave
- 		std::ifstream fichier("Saves/Profil" + numeroSave + ".save");
+ 		std::ifstream fichier("Saves/Profile" + numeroSave + ".save");
 
 		if(fichier)
 		{
@@ -101,7 +101,7 @@ int Profil::compterSauvegardes()
 	return i - 1; //Un tour de test supplementaire est fait, d'ou le -1
 }
 
-bool Profil::chargerProfil(const int& numeroSave, Profil*& ProfilCharge)
+bool Profile::chargerProfile(const int& numeroSave, Profile*& ProfileCharge)
 {
 	/*
 	bool statut = false; // true si la lecture de fichier est une reussite, false si elle echoue.
@@ -109,7 +109,7 @@ bool Profil::chargerProfil(const int& numeroSave, Profil*& ProfilCharge)
 	int box = 0;
 	std::string ligneChargee; //Variable de lecture de ligne
 
-	std::string numeroProfil;
+	std::string numeroProfile;
 	std::string saveContent = ""; //variable qui contient la totalité d'un fichier de sauvegarde
 
 	std::string stringSaveLock; //string de hash
@@ -118,10 +118,10 @@ bool Profil::chargerProfil(const int& numeroSave, Profil*& ProfilCharge)
 	std::ostringstream oss;   // stream utilise pour la conversion
 
 	oss << numeroSave;      // on insere le int dans le stream oss
-	numeroProfil = oss.str(); // range le int dans la variable numeroSave
+	numeroProfile = oss.str(); // range le int dans la variable numeroSave
 
-	std::string cheminFichier = "Saves/Profil" + numeroProfil + ".save";
-	std::string cheminLock = "Saves/Profil" + numeroProfil + ".lock";
+	std::string cheminFichier = "Saves/Profile" + numeroProfile + ".save";
+	std::string cheminLock = "Saves/Profile" + numeroProfile + ".lock";
 
 	std::ifstream save(cheminFichier.c_str());
 
@@ -316,7 +316,7 @@ bool Profil::chargerProfil(const int& numeroSave, Profil*& ProfilCharge)
 					iss.clear();
 					ligneChargee.erase(0, tailleString + 1);
 
-					ProfilCharge = new Profil(uuidCharge, numeroSave, nomCharge, creditsCharges, difficulteChargee, nbBoxCharges, coursesChargees, victoiresChargees, defaitesChargees, accidentsCharges, creditsGagnesCharges, voituresAcheteesChargees, coursesChargeesCL, victoiresChargeesCL, defaitesChargeesCL, accidentsChargesCL, creditsGagnesChargesCL, sauvegardeAuto); // ON construit l'objet charge
+					ProfileCharge = new Profile(uuidCharge, numeroSave, nomCharge, creditsCharges, difficulteChargee, nbBoxCharges, coursesChargees, victoiresChargees, defaitesChargees, accidentsCharges, creditsGagnesCharges, voituresAcheteesChargees, coursesChargeesCL, victoiresChargeesCL, defaitesChargeesCL, accidentsChargesCL, creditsGagnesChargesCL, sauvegardeAuto); // ON construit l'objet charge
 					ligne++;
 				}
 				else if(ligne >= 7 && ligne <= 11)
@@ -383,7 +383,7 @@ bool Profil::chargerProfil(const int& numeroSave, Profil*& ProfilCharge)
 						ligneChargee.erase(0, tailleString + 1); // On retire les pneus charges
 						iss.clear(); //on flushe l'objet
 
-						ProfilCharge->setBox(box, marqueChargee, modeleCharge, idEngineCharge, idSpoilerCharge, idAirIntakeChargee, rangCharge, nitroMaxChargee, aerodynamismeCarCharge , idTiresCharges, etat);
+						ProfileCharge->setBox(box, marqueChargee, modeleCharge, idEngineCharge, idSpoilerCharge, idAirIntakeChargee, rangCharge, nitroMaxChargee, aerodynamismeCarCharge , idTiresCharges, etat);
 						box++;
 						ligne++;
 					}
@@ -409,12 +409,12 @@ bool Profil::chargerProfil(const int& numeroSave, Profil*& ProfilCharge)
 	return statut;*/
 }
 
-void Profil::supprimerProfil(const int& numeroSave)
+void Profile::supprimerProfile(const int& numeroSave)
 {
 	bool test;
 	bool fail = false;
-	std::string numeroProfil;
-	std::string numeroNewProfil;
+	std::string numeroProfile;
+	std::string numeroNewProfile;
 	std::ostringstream oss;   // stream utilise pour la conversion
 	std::string cheminFichier;
 	std::string newCheminFichier;
@@ -423,19 +423,19 @@ void Profil::supprimerProfil(const int& numeroSave)
 	int nbSaves = compterSauvegardes();
 
 	oss << numeroSave;      // on insere le int dans le stream oss
-	numeroProfil = oss.str(); // range le int dans la variable numeroSave
-	cheminFichier = "Saves/Profil" + numeroProfil + ".save";
-	cheminLock = "Saves/Profil" + numeroProfil + ".lock";
+	numeroProfile = oss.str(); // range le int dans la variable numeroSave
+	cheminFichier = "Saves/Profile" + numeroProfile + ".save";
+	cheminLock = "Saves/Profile" + numeroProfile + ".lock";
 	if(remove(cheminFichier.c_str()))
 	{
 		Terminal::get().clearScreen();
-		Menu::error("Impossible de supprimer le profil");
+		Menu::error("Impossible de supprimer le Profile");
 		fail = true;
 	}
 	if(remove(cheminLock.c_str()))
 	{
 		Terminal::get().clearScreen();
-		Menu::error("Impossible de supprimer le verrou du profil");
+		Menu::error("Impossible de supprimer le verrou du Profile");
 		fail = true;
 	}
 	if(nbSaves > numeroSave)
@@ -444,28 +444,28 @@ void Profil::supprimerProfil(const int& numeroSave)
 		{
 			oss.str("");
 			oss << i;      // on insere le int dans le stream oss
-			numeroNewProfil = oss.str(); // range le int dans la variable numeroProfil
-			newCheminFichier = "Saves/Profil" + numeroNewProfil + ".save";
-			newCheminLock = "Saves/Profil" + numeroNewProfil + ".lock";
+			numeroNewProfile = oss.str(); // range le int dans la variable numeroProfile
+			newCheminFichier = "Saves/Profile" + numeroNewProfile + ".save";
+			newCheminLock = "Saves/Profile" + numeroNewProfile + ".lock";
 
 			oss.str("");
 			oss << i + 1;
-			numeroNewProfil = oss.str();
-			cheminFichier = "Saves/Profil" + numeroNewProfil + ".save";
-			cheminLock = "Saves/Profil" + numeroNewProfil + ".lock";
+			numeroNewProfile = oss.str();
+			cheminFichier = "Saves/Profile" + numeroNewProfile + ".save";
+			cheminLock = "Saves/Profile" + numeroNewProfile + ".lock";
 
 			test = rename(cheminFichier.c_str(), newCheminFichier.c_str()); //On decale toutes les saves d'un cran
 			if(test == 1)
 			{
 				Terminal::get().clearScreen();
-				Menu::error("Impossible de renommer les profils suivants.");
+				Menu::error("Impossible de renommer les Profiles suivants.");
 				fail = true;
 			}
 			test = rename(cheminLock.c_str(), newCheminLock.c_str()); //On decale tous les locks d'un cran
 			if(test == 1)
 			{
 				Terminal::get().clearScreen();
-				Menu::error("Impossible de renommer les verrous des profils suivants.");
+				Menu::error("Impossible de renommer les verrous des Profiles suivants.");
 				fail = true;
 			}
 		}
@@ -473,11 +473,11 @@ void Profil::supprimerProfil(const int& numeroSave)
 	if(fail == false)
 	{
 		Terminal::get().clearScreen();
-		Menu::msg("Profil"+numeroProfil+" supprime avec succes !");
+		Menu::msg("Profile"+numeroProfile+" supprime avec succes !");
 	}
 }
 
-void Profil::sauvegarderProfil()
+void Profile::sauvegarderProfile()
 {
 	/*
 	std::string sNumeroSave;
@@ -488,13 +488,13 @@ void Profil::sauvegarderProfil()
 	oss << m_numero;      // on insere le int dans le stream oss
 	sNumeroSave = oss.str(); // range le int dans la variable numeroSave
 	oss << ""; //equivalent de iss.clear()
-	nomFichier = "Saves/Profil" + sNumeroSave + ".save";
+	nomFichier = "Saves/Profile" + sNumeroSave + ".save";
 	if(1) //on crée un bloc supplémentaire
 	{
 		std::ofstream save(nomFichier.c_str());
 		if(save)	//si la lecture reussit
 		{
-			save << m_uuid << "\n"; //l'identifiant du profil
+			save << m_uuid << "\n"; //l'identifiant du Profile
 			save << m_nom << "\n"; // le nom
 			save << m_credits << "\n"; // les credits
 			save << m_sauvegardeAuto << ";"<< m_difficulte << ";" << m_nbBox << "\n"; //Difficulté / Nombre de box deverouillés
@@ -514,11 +514,11 @@ void Profil::sauvegarderProfil()
 		}
 		else
 		{
-			Menu::error("Impossible d'ecraser le fichier de profil");
+			Menu::error("Impossible d'ecraser le fichier de Profile");
 		}
 	}
 	//Une fois la sauvegarde faite on crée le Lock
-	nomLock = "Saves/Profil" + sNumeroSave + ".lock";
+	nomLock = "Saves/Profile" + sNumeroSave + ".lock";
 	std::ofstream lock(nomLock.c_str()); //flux d'écriture dans le lock
 	std::string ligneChargee;
 	std::string saveContent;
@@ -533,8 +533,9 @@ void Profil::sauvegarderProfil()
 	}*/
 }
 
-void Profil::creerProfil(std::string& nom, Profil*& ProfilCree)
+void Profile::creerProfile(std::string& nom, Profile*& ProfileCree)
 {
+	/*
 	int numeroSave = compterSauvegardes() + 1;
 	std::string sNumeroSave;
 	std::string nomFichier;
@@ -543,242 +544,32 @@ void Profil::creerProfil(std::string& nom, Profil*& ProfilCree)
 	oss << numeroSave;      // on insere le int dans le stream oss
 	sNumeroSave = oss.str(); // range le int dans la variable numeroSave
 
-	nomFichier = "Saves/Profil" + sNumeroSave + ".save";
+	nomFichier = "Saves/Profile" + sNumeroSave + ".save";
 
-	std::string uuid = generateUuid(); //On génére un identifiant unique au profil.
-	ProfilCree = new Profil(uuid, numeroSave, nom); //On construit le profil cree (la partie boost est la conversion en string de l'uuid)
+	std::string uuid = generateUuid(); //On génére un identifiant unique au Profile.
+	ProfileCree = new Profile(uuid, numeroSave, nom); //On construit le Profile cree (la partie boost est la conversion en string de l'uuid)
+	*/
 	Terminal::get().clearScreen();
-	Terminal::get() << "Creation de votre Profil\n";
+	Terminal::get() << "Creation de votre Profile\n";
 	Terminal::get() << "===============\n\n";
-	Terminal::get() << "Profil" << numeroSave << " cree avec succes !\n";
+	Terminal::get() << "Profile cree avec succes !\n";
 	Terminal::get() << "===============\n";
 	Terminal::get() << "Appuyez sur Entree pour continuer...\n";
 	getch();
 }
 
-std::string Profil::getUuid() const
-{
-	return m_uuid;
-}
 
-int Profil::getNumero() const
-{
-	return m_numero;
-}
-
-std::string Profil::getNom() const
-{
-	return m_nom;
-}
-
-int Profil::getCredits() const
-{
-	return m_credits;
-}
-
-int Profil::getNbBox() const
-{
-	return m_nbBox;
-}
-
-Car* Profil::getBox(const int& numeroBox) const
-{
-	return m_box[numeroBox];
-}
-
-int Profil::getNbCourses() const
-{
-	return m_nbCourses;
-}
-
-int Profil::getVictoires() const
-{
-	return m_victoires;
-}
-
-int Profil::getDefaites() const
-{
-	return m_defaites;
-}
-
-int Profil::getAccidents() const
-{
-	return m_accidents;
-}
-
-float Profil::getVDRatio() const
-{
-	float ratio;
-	if( m_defaites != 0)
-	{
-		ratio = static_cast<int>(m_victoires / m_defaites);
-	}
-	else
-	{
-		ratio = m_victoires;
-	}
-	return ratio;
-}
-
-int Profil::getCreditsGagnes() const
-{
-	return m_creditsGagnes;
-}
-
-int Profil::getCarsAchetees() const
-{
-	return m_voituresAchetees;
-}
-
-
-int Profil::getDifficulte() const
-{
-	return m_difficulte;
-}
-
-
-bool Profil::getSauvegardeAuto() const
-{
-	return m_sauvegardeAuto;
-}
-
-std::string Profil::getDifficulteString() const
-{
-	std::string difficulte;
-
-	if(m_difficulte==1)
-	{
-		difficulte = "DEBUTANT";
-	}
-	else if(m_difficulte==2)
-	{
-		difficulte = "FACILE";
-	}
-	else if(m_difficulte==3)
-	{
-		difficulte = "NORMAL";
-	}
-	else if(m_difficulte==4)
-	{
-		difficulte = "DIFFICILE";
-	}
-	else
-	{
-		difficulte = "EXPERT";
-	}
-
-	return difficulte;
-}
-
-void Profil::setBox(const int& numeroBox, Car &car)
-{
-	m_box[numeroBox] = new Car(car);
-}
-
-void Profil::setBox( int numeroBox)
-{
-	m_box[numeroBox] = 0;
-}
-
-void  Profil::setEngineCar(const int& numeroBox, Engine* newEngine, const int& idEngine)
-{
-	m_box[numeroBox]->setEngine(*newEngine);
-}
-
-void Profil::setDifficulte(const int& newDifficulte)
-{
-	m_difficulte = newDifficulte;
-}
-
-
-void Profil::setSauvegardeAuto(const bool& valeur)
-{
-	m_sauvegardeAuto = valeur;
-}
-
-
-void Profil::ajouterCreditsGagnes(const int& somme)
-{
-	m_creditsGagnes += somme;
-}
-
-void Profil::ajouterCarAchetee()
-{
-	m_voituresAchetees++;
-}
-
-void Profil::ajouterCredits(const int& somme)
-{
-	m_credits += somme;
-}
-
-void Profil::ajouterCourse()
-{
-	m_nbCourses++;
-}
-
-void Profil::ajouterVictoire()
-{
-	m_victoires++;
-}
-
-void Profil::ajouterDefaite()
-{
-	m_defaites++;
-}
-
-void Profil::ajouterAccident()
-{
-	m_accidents++;
-}
-
-bool Profil::boxVide(int numeroBox)
-{
-	bool vide;
-	if(m_box[numeroBox] == 0)
-	{
-		vide = true;
-	}
-	else
-	{
-		vide = false;
-	}
-	return vide;
-}
-
-void Profil::acheterBox()
+bool Profile::payer(const int& prix)
 {
 	bool paye;
-	std::string sNbBox;
-	std::ostringstream oss;   // stream utilise pour la conversion
-
-	paye = payer(m_nbBox * 20000);
-	if(paye == true)
-	{
-		m_nbBox += 1;
-
-		oss << m_nbBox;      // on insere le int dans le stream oss
-		sNbBox = oss.str(); // range le int dans la variable numeroSave
-		Menu::msg("Box "+sNbBox+" achete avec succes !");
-	}
-}
-
-void Profil::changerNom(const std::string& newNom)
-{
-	m_nom = newNom;
-}
-
-bool Profil::payer(const int& prix)
-{
-	bool paye;
-	if(prix > m_credits)
+	if(prix > credits)
 	{
 		Menu::error("Vous ne disposez pas d'assez de Credits !");
 		paye = false;
 	}
 	else
 	{
-		m_credits -= prix;
+		credits -= prix;
 		paye = true;
 	}
 	return paye;

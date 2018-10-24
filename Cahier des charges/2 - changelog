@@ -59,7 +59,7 @@
 =====
 
 12/10/13 - Alpha 0.1.1
-	-ajout du profil
+	-ajout du Profile
 	
 	-amélioration des courses (météo)
 	
@@ -67,34 +67,34 @@
 =====
 
 14/10/13
-	-amélioration du profil	(ajout de plein de méthodes et d'attributs)
+	-amélioration du Profile	(ajout de plein de méthodes et d'attributs)
 =====
 
 15/10/13
 	-ajout du menu stats
 
-	-amélioration du systeme de sauvegarde (ajout du profil et de la voiture)
+	-amélioration du systeme de sauvegarde (ajout du Profile et de la voiture)
 	
-	-linkage du profil, des courses et des sauvegardes
+	-linkage du Profile, des courses et des sauvegardes
 =====	
 
 17/10/13
 	-ajout du menu de consultation dans le garage	
 	
-	-amélioration du profil (ajout de plein de méthodes)
+	-amélioration du Profile (ajout de plein de méthodes)
 =====
 
 18/10/13
 	-ajout du sous-menu "détaillé" dans la consultation du garage
-	-ajout de la suppression des profils
+	-ajout de la suppression des Profiles
 
-	-amélioration du profil
-	-amélioration du systeme de chargement de partie (chargement de la voiture et du profil)
+	-amélioration du Profile
+	-amélioration du systeme de chargement de partie (chargement de la voiture et du Profile)
 	-amélioration des moteurs
 	-amélioration des menus (réagencement et nouveaux menus)
 
-	-debugage du profil (erreurs de pointeur vers les voitures)
-	-débugage du listage des profils (erreur de lecture du fichier .save)
+	-debugage du Profile (erreurs de pointeur vers les voitures)
+	-débugage du listage des Profiles (erreur de lecture du fichier .save)
 =====
 
 19/10/13 - Alpha 0.1.2
@@ -188,9 +188,9 @@
 =====
 
 30/10/13
-	-ajout de la protection de duplication d'un profil (pour le futur multijoueur)
-	-ajout de la generation de UUID à la creation d'un profil via lboost_system
-	-ajout du "check" si il y a eu modification du profil lors du retour au menu principal
+	-ajout de la protection de duplication d'un Profile (pour le futur multijoueur)
+	-ajout de la generation de UUID à la creation d'un Profile via lboost_system
+	-ajout du "check" si il y a eu modification du Profile lors du retour au menu principal
 =====
 
 31/10/13
@@ -240,9 +240,9 @@
 	-amélioration des spoiler (ajout de méthodes)
 	-amélioration des prises d'air (ajout de méthodes)
 	-amélioration du lanceur (verifie si la connexion a internet est présente)
-	-amélioration de la suppression des profils (.lock supprimé)
+	-amélioration de la suppression des Profiles (.lock supprimé)
 	
-	-débugage de la suppression des profils (le décalage des noms était anarchique)
+	-débugage de la suppression des Profiles (le décalage des noms était anarchique)
 =====
 
 09/11/13
@@ -250,7 +250,7 @@
 	-ajout de l'affichage du nom des adversaires en course.
 	-ajout du fichier moddable pilotes.txt contenant les noms d'adversaires.
 
-	-amélioration de l'optimisation globale du code (Accesseurs de voiture dans le profil supprimés)
+	-amélioration de l'optimisation globale du code (Accesseurs de voiture dans le Profile supprimés)
 	-amélioration des courses libres (algo de randomisation des noms d'adversaires)
 =====
 
@@ -263,8 +263,8 @@
 	-ajout de l'option difficulté
 	-ajout des preparatifs de course (carriere et championnat seulement)
 	
-	-amélioration du profil: sauvegarde/chargement de la difficulté
-	-amélioration du profil: sauvegarde/chargement des pneus d'un vehicule
+	-amélioration du Profile: sauvegarde/chargement de la difficulté
+	-amélioration du Profile: sauvegarde/chargement des pneus d'un vehicule
 	-amélioration du menu de course: Affichage d'alertes si Nitro < 50% ou Durabilité Pneus < 2/3
 	-amélioration des circuits: ajout de la difficulté
 
@@ -346,7 +346,7 @@
 	-amélioration: lors d'une réparation, on vérifie qu'elle est nécéssaire.
 	
 	-débugage: le prix des voitures n'était pas le même que celui affiché
-	-débugage: le message qui confirme la suppression d'un profile est systématique
+	-débugage: le message qui confirme la suppression d'un Profilee est systématique
 	
 	
 	

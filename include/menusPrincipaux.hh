@@ -5,10 +5,10 @@
 #include "menus.hh"
 
 void menuRacedriver();
-void menuJeu(Profil& Player, bool& quitter);
+void menuJeu(Profile& Player, bool& quitter);
 
-void menuChargementPartie(Profil*& Player, bool& quit);
-void menuCreationPartie(Profil*& Player, bool& quit);
+void menuChargementPartie(Profile*& Player, bool& quit);
+void menuCreationPartie(Profile*& Player, bool& quit);
 void menuSuppressionPartie();
 
 void menuApropos(); //Menu promotionnel

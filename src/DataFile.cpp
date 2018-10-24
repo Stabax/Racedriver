@@ -13,6 +13,7 @@ bool DataFile::load()
   file.open(_path, std::ifstream::in);
   if (!file.good()) return (false);
   _data = json::parse(file);
+  file.close();
   return (true);
 }
 

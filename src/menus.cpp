@@ -3,7 +3,7 @@
 #include "Menu.hh"
 #include "menus.hh"
 
-void menuCourse(Profil& Player)
+void menuCourse(Profile& Player)
 {
 	bool quit = false;
 	while(quit != true)
@@ -48,7 +48,7 @@ void menuCourse(Profil& Player)
 	}
 }
 
-void menuGarage(Profil& Player)
+void menuGarage(Profile& Player)
 {
 	bool quit = false;
 	while(quit != true)
@@ -56,7 +56,7 @@ void menuGarage(Profil& Player)
 		//Menu Principal
 		Terminal::get() << "Menu Garage\n"
 										<< "===============\n"
-										<< "Credits: " << Player.getCredits() << "c\n"
+										<< "Credits: " << Player.credits << "c\n"
 										<< "===============\n\n"
 										<< "1. Consulter Garage\n"
 										<< "2. Visiter Atelier\n"
@@ -94,7 +94,7 @@ void menuGarage(Profil& Player)
 	}
 }
 
-void menuConcessionaire(Profil& Player)
+void menuConcessionaire(Profile& Player)
 {
 	//Menu Principal
 	Terminal::get() << "Concessionnaire\n"
@@ -123,49 +123,44 @@ void menuConcessionaire(Profil& Player)
 	}
 }
 
-void menuStats(Profil& Player)
+void menuStats(Profile& Player)
 {
-	Terminal::get() << "Stats du Profil: " << Player.getNom() << "\n"
+	Terminal::get() << "Stats du Profile: " << Player.name << "\n"
 									<< "===============\n"
-									<< "[UUID: " << Player.getUuid() << "]\n\n"
 									<< "#Stats Course:\n"
-									<< " |Courses effectuees: " << Player.getNbCourses() << "\n"
+									<< " |Courses effectuees: " << Player.careerStats.races << "\n"
 									<< " |\n"
-									<< " |Victoires: " << Player.getVictoires() << "\n"
-									<< " |Defaites: " << Player.getDefaites() << "\n"
-									<< " |[V/D Ratio: " << Player.getVDRatio() << "]\n"
+									<< " |Victoires: " << Player.careerStats.victories << "\n"
+									<< " |Defaites: " << Player.careerStats.losses << "\n"
+									<< " |[V/D Ratio: " << "N/A" << "]\n"
 									<< " |\n"
-									<< " |Accidents: " << Player.getAccidents() << "\n\n"
+									<< " |Accidents: " << Player.careerStats.accidents << "\n\n"
 									<< "#Stats Carriere:\n"
-									<< " |Credits remportes: " << Player.getCreditsGagnes() << "c\n"
+									<< " |Credits remportes: " << Player.careerStats.creditsEarned << "c\n"
 									<< " |\n"
-									<< " |Cars achetees: " << Player.getCarsAchetees() << "\n\n"
+									<< " |Cars achetees: " << Player.careerStats.carBought << "\n\n"
 									<< "===============\n"
 									<< "Appuyez sur [Entree] pour retourner au menu principal...\n";
 	getch();
 	Terminal::get().clearScreen();
 }
 
-void menuSauvegarde(Profil& Player)
+void menuSauvegarde(Profile& Player)
 {
-	std::ostringstream oss;
-	oss << Player.getNumero();
-	std::string numeroSave = oss.str();
-
-	std::string cheminFichier = "Saves/Profil"+numeroSave+".save";
+	std::string cheminFichier = "Saves/Profile.save";
 
 	std::ifstream save(cheminFichier.c_str());
 
-	//Menu de sauvegarde de profil
+	//Menu de sauvegarde de Profile
 	Terminal::get() << "Sauvegarder votre Progression\n"
 									<< "===============\n";
 	if(save)
 	{
-		Terminal::get() << "Vous allez ecraser votre derniere sauvegarde (Profil" << Player.getNumero() << ": \"" << Player.getNom() << "\")\n\n";
+		Terminal::get() << "Vous allez ecraser votre derniere sauvegarde (Profile \"" << Player.name << "\")\n\n";
 	}
 	else
 	{
-		Terminal::get() << "Votre profil va etre sauvegarde sur le disque (Profil" << Player.getNumero() << ": \"" << Player.getNom() << "\")\n\n";
+		Terminal::get() << "Votre Profile va etre sauvegarde sur le disque (Profile \"" << Player.name << "\")\n\n";
 	}
 	if(Menu::askConfirmation())
 	{
@@ -176,7 +171,7 @@ void menuSauvegarde(Profil& Player)
 										<< "===============\n"
 										<< "Veuillez patienter";
 		sleep(0.4f);
-		Player.sauvegarderProfil();
+		Player.sauvegarderProfile();
 		Terminal::get().clearScreen();
 		Terminal::get() << "Sauvegarder votre Progression\n"
 										<< "===============\n"
@@ -197,20 +192,20 @@ void menuSauvegarde(Profil& Player)
 	}
 }
 
-void menuOptions(Profil& Player)
+void menuOptions(Profile& Player)
 {
 	bool quit = false;
 	std::string saveAuto;
 	while(quit != true)
 	{
 		//Menu Principal
-		saveAuto = Player.getSauvegardeAuto() ? "ON" : "OFF";
-		Terminal::get() << "Options " << Player.getNom() << "\n"
+		saveAuto = "ON";
+		Terminal::get() << "Options " << Player.name << "\n"
 										<< "===============\n\n"
 										<< "1. Sauvegarde auto [" << saveAuto << "]\n"
-										<< "2. Difficulte ["<< Player.getDifficulteString() <<"]\n"
+										<< "2. Difficulte ["<< Player.difficulty <<"]\n"
 										<< "3. Raccourcis menus [OFF]\n"
-										<< "4. Changer le nom du profil\n\n"
+										<< "4. Changer le nom du Profile\n\n"
 										<< "0. Retour\n";
 		//Redirection de l'utilisateur selon son choix grâce a un switch.
 		switch(Menu::askChoice())
@@ -222,14 +217,6 @@ void menuOptions(Profil& Player)
 
 			case 1:
 				Terminal::get().clearScreen(); //On flushe l'ancien ecran
-				if(Player.getSauvegardeAuto())
-				{
-					Player.setSauvegardeAuto(false);
-				}
-				else
-				{
-					Player.setSauvegardeAuto(true);
-				}
 				break;
 			case 2:
 				Terminal::get().clearScreen(); //On flushe l'ancien ecran
@@ -241,7 +228,7 @@ void menuOptions(Profil& Player)
 				break;
 			case 4:
 				Terminal::get().clearScreen(); //On flushe l'ancien ecran
-				menuChangementNomProfil(Player);
+				menuChangementNomProfile(Player);
 				break;
 
 			default:
@@ -250,8 +237,5 @@ void menuOptions(Profil& Player)
 				break;
 		}
 	}
-	if(Player.getSauvegardeAuto())
-	{
-		Player.sauvegarderProfil();
-	}
+	Player.sauvegarderProfile();
 }

@@ -14,7 +14,6 @@ void menuCourseLibre(); //Menu de Course libre (lobby sp)
 void menuCourseChampionnat();
 
 int menuConsulterGarage(const int& mode = 0);
-void menuConsulterBox(const int& numeroBox);
 void menuAtelier(const int& numeroBox);
 void menuAtelierSpoiler(const int& numeroBox);
 void menuAtelierAirIntake(const int& numeroBox);

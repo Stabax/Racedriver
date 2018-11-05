@@ -159,6 +159,7 @@ void menuCourseChampionnat()
 
 int menuConsulterGarage(const int& mode)
 {
+	Profile::active->garage.displayBoxList();
 	/*
 	std::string sMenu;
 	int menu;
@@ -264,47 +265,6 @@ int menuConsulterGarage(const int& mode)
 		Menu::error("Saisie invalide");
 	}
 	return menu; //On renvoie l'emplacement choisi*/
-}
-
-void menuConsulterBox(const int& numeroBox)
-{
-	Car* Car; // = Profile::active->getBox(numeroBox);
-	std::shared_ptr<AirIntake> airIntake = Car->getAirIntake();
-	std::shared_ptr<Spoiler> spoiler = Car->getSpoiler();
-	std::shared_ptr<Tires> tires = Car->getTires();
-	//Menu Principal
-	Terminal::get() << "Vehicule gare dans le Box " << (numeroBox + 1) << "\n"
-									<< "===============\n\n"
-									<< "#Vehicule\n"
-									<< " |Modele: " << Car->name << "\n"
-									<< " |Marque: " << Car->manufacturer << "\n"
-									<< " |Rang: " << Car->rank << "\n"
-									<< " |\n"
-									<< " |Vitesse Totale: "<< Car->getVitesse() << " Km/h\n"
-									<< " |Acceleration Totale: " << Car->getAcceleration() << " m/s²\n"
-									<< " |Capacite Nitro: " << Car->getNitroMax() << " L\n"
-									<< " |Aerodynamisme: " << Car->getAerodynamisme() << " %\n"
-									<< " |Nitro Actuelle: " << Car->getNiveauNitro() << " L\n"
-									<< " |Durabilite Tires: "<< Car->getTires()->getDurability() << "%\n"
-									<< " |Etat: " << Car->getEtat() << "%\n\n"
-									<< "#Engine\n"
-									<< " |Modele: " << Car->getEngine()->name << "\n"
-									<< " |Vitesse: "<< Car->getEngine()->getVitesse() << " Km/h\n"
-									<< " |Acceleration: " << Car->getEngine()->getAcceleration() << " m/s²\n\n"
-									<< "#Spoiler\n"
-									<< " |Modele: " << spoiler->name << "\n"
-									<< " |Rang: "<<  spoiler->rank << "\n"
-									<< " |Aerodynamisme: " <<  spoiler->getAerodynamic() << " %\n\n"
-									<< "#Prises d'air\n"
-									<< " |Modele: " << airIntake->name << "\n"
-									<< " |Rang: "<<  airIntake->rank << "\n"
-									<< " |Aerodynamisme: " <<  airIntake->getAerodynamic() << " %\n\n"
-									<< "#Tires\n"
-									<< " |Modele: " << tires->name << "\n"
-									<< " |Rang: "<<  tires->rank << "\n"
-									<< "===============\n"
-									<< "Appuyez sur Entree pour revenir au menu precedent";
-	getch();
 }
 
 void menuAtelier(const int& numeroBox)

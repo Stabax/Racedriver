@@ -10,6 +10,11 @@ public:
   Garage();
   Garage(const json &data);
 
+  size_t getBoxCount();
+
+  void displayBoxList();
+  void displayBoxDetail(int index);
+
 private:
   std::vector<std::shared_ptr<Car>> _boxs;
 };

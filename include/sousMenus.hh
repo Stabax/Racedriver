@@ -8,25 +8,25 @@
 #include "course.hh"
 #include"Game.hh"
 
-Car* menuChoixCar(Profile& Player);
+Car* menuChoixCar();
 
-void menuCourseLibre(Profile& Player); //Menu de Course libre (lobby sp)
-void menuCourseChampionnat(Profile& Player);
+void menuCourseLibre(); //Menu de Course libre (lobby sp)
+void menuCourseChampionnat();
 
-int menuConsulterGarage(Profile& Player, const int& mode = 0);
-void menuConsulterBox(Profile& Player, const int& numeroBox);
-void menuAtelier(Profile& Player, const int& numeroBox);
-void menuAtelierSpoiler(Profile& Player, const int& numeroBox);
-void menuAtelierAirIntake(Profile& Player, const int& numeroBox);
-void menuAtelierEngine(Profile& Player, const int& numeroBox);
-void menuMaintenance(Profile& Player, const int& numeroBox);
-void menuAcheterBox(Profile& Player);
+int menuConsulterGarage(const int& mode = 0);
+void menuConsulterBox(const int& numeroBox);
+void menuAtelier(const int& numeroBox);
+void menuAtelierSpoiler(const int& numeroBox);
+void menuAtelierAirIntake(const int& numeroBox);
+void menuAtelierEngine(const int& numeroBox);
+void menuMaintenance(const int& numeroBox);
+void menuAcheterBox();
 
-void menuAchatCar(const char& rang, Profile& Player);
-void menuConcessionaireAchat(Profile& Player);
-void menuVenteCar(Profile& Player, const int& numeroBox);
+void menuAchatCar();
+void menuConcessionaireAchat();
+void menuVenteCar(const int& numeroBox);
 
-void menuDifficulte(Profile& Player);
-void menuChangementNomProfile(Profile& Player);
+void menuDifficulte();
+void menuChangementNomProfile();
 
 #endif /* !SOUSMENUS_HH_ */

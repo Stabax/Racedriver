@@ -7,12 +7,12 @@
 #include "sousMenus.hh"
 #include"Game.hh"
 
-void menuCourse(Profile& Player); //Menu de selection du type de course
-void menuGarage(Profile& Player); //Menu de gestion des vehicules
-void menuConcessionaire(Profile& Player); // Achat/vente de vehicules
-void menuStats(Profile& Player);
-void menuSauvegarde(Profile& Player);
-void menuOptions(Profile& Player);
+void menuCourse(); //Menu de selection du type de course
+void menuGarage(); //Menu de gestion des vehicules
+void menuConcessionaire(); // Achat/vente de vehicules
+void menuStats();
+void menuSauvegarde();
+void menuOptions();
 
 
 #endif

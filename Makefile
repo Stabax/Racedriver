@@ -18,7 +18,8 @@ RM = rm -rf
 
 CXXFLAGS	= -ggdb -W -Wall -Wpedantic -Iinclude -I$(LIBDIR) -I$(LIBDIR)/json/include/
 
-LDFLAGS		= -L$(BINDIR) -lcurl -static-libgcc
+LDFLAGS		= -L$(BINDIR) -lcurl
+# -static-libgcc
 
 ifeq ($(OS),Windows_NT)
 	LDFLAGS += -lpdcurses
@@ -31,7 +32,7 @@ NAME = $(BINDIR)/Racedriver
 SRCS = 	$(SRCDIR)/Game.cpp							\
 				$(SRCDIR)/Menu.cpp							\
 				$(SRCDIR)/DataFile.cpp					\
-				$(SRCDIR)/algos.cpp							\
+				$(SRCDIR)/Utils.cpp							\
 				$(SRCDIR)/Circuit.cpp						\
 				$(SRCDIR)/course.cpp						\
 				$(SRCDIR)/main.cpp							\

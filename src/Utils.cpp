@@ -1,5 +1,5 @@
-//algos.cpp
-#include"algos.hh"
+#include "Utils.hh"
+#include <iostream>
 
 int vRang(char rang)
 {
@@ -71,9 +71,4 @@ char vRangInverse(int valeur)
 			return 'D';
 			break;
 	}
-}
-
-std::string generateUuid()
-{
-	return (std::to_string(rand() % 100000000));
 }

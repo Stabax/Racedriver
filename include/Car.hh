@@ -16,7 +16,7 @@ public:
 	Car(const json &data);
 	~Car();
 
-	static void listerCars(const char& rang);
+	static void listerCars();
 	static void infoCar(const int& id, const char& rang, std::string& marque, std::string& modele, int& idEngine, int& nitroMax, int& aerodynamisme, int& prix);
 	static int compterCars(const char& rang);
 

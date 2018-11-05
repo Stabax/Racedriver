@@ -1,5 +1,9 @@
 #include "Garage.hh"
 
+Garage::Garage()
+{
+}
+
 Garage::Garage(const json &data)
 {
   for (size_t i = 0; i < data.size(); i++)

@@ -25,6 +25,7 @@ bool Game::load()
 		Part::loadCollection(Tires::collection);
 		Part::loadCollection(AirIntake::collection);
 		Part::loadCollection(Spoiler::collection);
+		Part::loadCollection(Car::collection);
 	}
 	catch (const std::runtime_error &e)
 	{

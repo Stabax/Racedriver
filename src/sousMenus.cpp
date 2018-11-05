@@ -2,14 +2,14 @@
 #include "Menu.hh"
 #include "sousMenus.hh"
 
-Car* menuChoixCar(Profile& Player)
+Car* menuChoixCar()
 {
 	/*
 	std::string sMenu;
 	Car* CarSelectionnee = 0;
 	Car* CarListee = 0;
 	int menu;
-	int nbBox = 1;//Player.getNbBox();
+	int nbBox = 1;//Profile::active->getNbBox();
 	bool quit = false;
 	while(quit != true)
 	{
@@ -20,8 +20,8 @@ Car* menuChoixCar(Profile& Player)
 										<< "===============\n\n";
 		for (int numeroBox = 0; numeroBox < nbBox; numeroBox++)
 		{
-			CarListee = Player.getBox(numeroBox);
-			if(Player.boxVide(numeroBox))
+			CarListee = Profile::active->getBox(numeroBox);
+			if(Profile::active->boxVide(numeroBox))
 			{
 				Terminal::get() << (numeroBox + 1) << ". Box " << (numeroBox + 1) << " [VIDE]\n";
 			}
@@ -44,7 +44,7 @@ Car* menuChoixCar(Profile& Player)
 		}
 		else if(menu > 0 && menu <= nbBox)
 		{
-			if(Player.boxVide(menu - 1))
+			if(Profile::active->boxVide(menu - 1))
 			{
 				Terminal::get().clearScreen();
 				Menu::error("Le box est vide.");
@@ -52,7 +52,7 @@ Car* menuChoixCar(Profile& Player)
 			else
 			{
 				Terminal::get().clearScreen(); //On flushe l'ancien ecran
-				CarSelectionnee = Player.getBox(menu - 1);
+				CarSelectionnee = Profile::active->getBox(menu - 1);
 				quit = true; //INSTRUCTION DE SORTIE
 			}
 		}
@@ -70,7 +70,7 @@ Car* menuChoixCar(Profile& Player)
 	return CarSelectionnee;*/
 }
 
-void menuCourseLibre(Profile& Player)
+void menuCourseLibre()
 {/*
 	std::string sMenu;
 	int menu;
@@ -114,7 +114,7 @@ void menuCourseLibre(Profile& Player)
 	}*/
 }
 
-void menuCourseChampionnat(Profile& Player)
+void menuCourseChampionnat()
 {/*
 	std::string sMenu;
 	int menu;
@@ -157,12 +157,12 @@ void menuCourseChampionnat(Profile& Player)
 	}*/
 }
 
-int menuConsulterGarage(Profile& Player, const int& mode)
+int menuConsulterGarage(const int& mode)
 {
 	/*
 	std::string sMenu;
 	int menu;
-	int nbBox = 1;// Player.getNbBox();
+	int nbBox = 1;// Profile::active->getNbBox();
 	Car* Car = 0;
 
 	//Menu Principal
@@ -191,8 +191,8 @@ int menuConsulterGarage(Profile& Player, const int& mode)
 	Terminal::get() << "===============\n\n";
 	for (int numeroBox = 0; numeroBox < nbBox; numeroBox++)
 	{
-		Car = Player.getBox(numeroBox);
-		if(Player.boxVide(numeroBox))
+		Car = Profile::active->getBox(numeroBox);
+		if(Profile::active->boxVide(numeroBox))
 		{
 			Terminal::get() << (numeroBox + 1) << ". Box " << (numeroBox + 1) << " [VIDE]\n";
 		}
@@ -214,7 +214,7 @@ int menuConsulterGarage(Profile& Player, const int& mode)
 	}
 	else if(menu > 0 && menu <= nbBox)
 	{
-		if(Player.boxVide(menu - 1))
+		if(Profile::active->boxVide(menu - 1))
 		{
 			if(mode == 2)
 			{
@@ -266,9 +266,9 @@ int menuConsulterGarage(Profile& Player, const int& mode)
 	return menu; //On renvoie l'emplacement choisi*/
 }
 
-void menuConsulterBox(Profile& Player, const int& numeroBox)
+void menuConsulterBox(const int& numeroBox)
 {
-	Car* Car; // = Player.getBox(numeroBox);
+	Car* Car; // = Profile::active->getBox(numeroBox);
 	std::shared_ptr<AirIntake> airIntake = Car->getAirIntake();
 	std::shared_ptr<Spoiler> spoiler = Car->getSpoiler();
 	std::shared_ptr<Tires> tires = Car->getTires();
@@ -307,11 +307,11 @@ void menuConsulterBox(Profile& Player, const int& numeroBox)
 	getch();
 }
 
-void menuAtelier(Profile& Player, const int& numeroBox)
+void menuAtelier(const int& numeroBox)
 {/*
 	Terminal::get().clearScreen();
 	bool quit = false;
-	Car* Car = Player.getBox(numeroBox);
+	Car* Car = Profile::active->getBox(numeroBox);
 
 	while(quit != true)
 	{
@@ -352,17 +352,17 @@ void menuAtelier(Profile& Player, const int& numeroBox)
 	}*/
 }
 
-void menuAtelierSpoiler(Profile& Player, const int& numeroBox)
+void menuAtelierSpoiler(const int& numeroBox)
 {
 	Menu::error("Non implemente");
 	/* No more upgrades...
-	Car* Car = Player.getBox(numeroBox);
+	Car* Car = Profile::active->getBox(numeroBox);
 
 	Spoiler &newSpoiler = Spoiler::collection[idCharge];
 	Terminal::get().clearScreen(); //On flushe l'ancien ecran
 	Terminal::get() << "/!\\ Attention ! /!\\\n"
 									<< "====================\n"
-									<< "Credits: " << Player.credits << "c\n"
+									<< "Credits: " << Profile::active->credits << "c\n"
 									<< "====================\n"
 									<< "Vous allez ameliorer le spoiler de votre vehicule,\n"
 									<< "Prix: " << newSpoiler.getPrice() << "c\n\n"
@@ -379,7 +379,7 @@ void menuAtelierSpoiler(Profile& Player, const int& numeroBox)
 		Terminal::get().clearScreen();
 		if(Profile::compatible(Player, numeroBox, newSpoiler.rank) == true)
 		{
-			if(Player.payer(newSpoiler.getPrice()))
+			if(Profile::active->payer(newSpoiler.getPrice()))
 			{
 				Car->setSpoiler(Spoiler::collection[idCharge], id);
 				Menu::msg("Spoiler ameliore avec succes !");
@@ -389,9 +389,9 @@ void menuAtelierSpoiler(Profile& Player, const int& numeroBox)
 		{
 			Menu::error("Cette pièce n'est pas compatible avec votre vehicule");
 		}
-		if(Player.getSauvegardeAuto())
+		if(Profile::active->getSauvegardeAuto())
 		{
-			Player.sauvegarderProfile();
+			Profile::active->sauvegarderProfile();
 		}
 	}
 	else
@@ -400,11 +400,11 @@ void menuAtelierSpoiler(Profile& Player, const int& numeroBox)
 	}*/
 }
 
-void menuAtelierAirIntake(Profile& Player, const int& numeroBox)
+void menuAtelierAirIntake(const int& numeroBox)
 {
 	Menu::error("Non implemente");
 	/* No more upgrades...
-	Car* Car = Player.getBox(numeroBox);
+	Car* Car = Profile::active->getBox(numeroBox);
 	int id = Car->getIdSpoiler();
 	int idCharge = id + 1;
 
@@ -413,7 +413,7 @@ void menuAtelierAirIntake(Profile& Player, const int& numeroBox)
 	Terminal::get().clearScreen(); //On flushe l'ancien ecran
 	Terminal::get() << "/!\\ Attention ! /!\\\n"
 									<< "====================\n"
-									<< "Credits: " << Player.credits << "c\n"
+									<< "Credits: " << Profile::active->credits << "c\n"
 									<< "====================\n"
 									<< "Vous allez ameliorer les prises d'air de votre vehicule,\n"
 									<< "Prix: " << newAirIntake.getPrice() << "c\n\n"
@@ -430,7 +430,7 @@ void menuAtelierAirIntake(Profile& Player, const int& numeroBox)
 		Terminal::get().clearScreen();
 		if(Profile::compatible(Player, numeroBox, newAirIntake.rank) == true)
 		{
-			if(Player.payer(newAirIntake.getPrice()))
+			if(Profile::active->payer(newAirIntake.getPrice()))
 			{
 				Car->setAirIntake(AirIntake::collection[idCharge], id);
 				Menu::msg("Prise d'air amelioree avec succes !");
@@ -440,9 +440,9 @@ void menuAtelierAirIntake(Profile& Player, const int& numeroBox)
 		{
 			Menu::error("Cette pièce n'est pas compatible avec votre vehicule");
 		}
-		if(Player.getSauvegardeAuto())
+		if(Profile::active->getSauvegardeAuto())
 		{
-			Player.sauvegarderProfile();
+			Profile::active->sauvegarderProfile();
 		}
 	}
 	else
@@ -451,12 +451,12 @@ void menuAtelierAirIntake(Profile& Player, const int& numeroBox)
 	}*/
 }
 
-void menuAtelierEngine(Profile& Player, const int& numeroBox)
+void menuAtelierEngine(const int& numeroBox)
 {
 	Menu::error("Non implemente");
 	/* No more silly menus...
 
-	Car* Car = Player.getBox(numeroBox);
+	Car* Car = Profile::active->getBox(numeroBox);
 
 	char verifAchat;
 	std::string sMenu;
@@ -486,7 +486,7 @@ void menuAtelierEngine(Profile& Player, const int& numeroBox)
 										<< "Entrez le a nouveau pour acheter le moteur.\n"
 										<< "Remarque: Pour tout achat, l'ancien moteur est automatiquement vendu. (60% du prix d'origine)\n"
 										<< "===============\n"
-										<< "Credits: " << Player.credits << "C \n"
+										<< "Credits: " << Profile::active->credits << "C \n"
 										<< "===============\n\n"
 										<< "#Stats Engine\n"
 										<< " |Modele: " << newNomEngine << " (Actuel: " << Car->getEngine()->name << ")\n"
@@ -563,7 +563,7 @@ void menuAtelierEngine(Profile& Player, const int& numeroBox)
 							Terminal::get() << diffAccelerationEngine << ")\n"
 															<< " |Prix: " << newPrixEngine << "c\n\n"
 															<< "====================\n"
-															<< "Credits: " << Player.credits << "C \n"
+															<< "Credits: " << Profile::active->credits << "C \n"
 															<< "====================\n\n"
 															<< "#Engine Actuel\n"
 															<< " |Modele: " << Car->getEngine()->name << "\n"
@@ -597,11 +597,11 @@ void menuAtelierEngine(Profile& Player, const int& numeroBox)
 							if(achat == true)
 							{
 								Terminal::get().clearScreen();
-								paye = Player.payer(newPrixEngine);
+								paye = Profile::active->payer(newPrixEngine);
 								if(paye == true)
 								{
-									Player.ajouterCredits(Car->getEngine()->getPrix() * 0.6f);
-									Player.setEngineCar(numeroBox, &Engine::collection[0], menu);
+									Profile::active->ajouterCredits(Car->getEngine()->getPrix() * 0.6f);
+									Profile::active->setEngineCar(numeroBox, &Engine::collection[0], menu);
 									Menu::msg("La piece a ete achetee et installee avec succes !");
 								}
 							}
@@ -621,19 +621,19 @@ void menuAtelierEngine(Profile& Player, const int& numeroBox)
 				Menu::error("Saisie invalide");
 		}
 	}
-	if(Player.getSauvegardeAuto())
+	if(Profile::active->getSauvegardeAuto())
 	{
-		Player.sauvegarderProfile();
+		Profile::active->sauvegarderProfile();
 	}*/
 }
 
-void menuMaintenance(Profile& Player, const int& numeroBox)
+void menuMaintenance(const int& numeroBox)
 {
 	Terminal::get().clearScreen();
 	bool quit = 0;
 	char verifAchat;
 	int nitroManquante;
-	Car* Car; // = Player.getBox(numeroBox);
+	Car* Car; // = Profile::active->getBox(numeroBox);
 	int aPayer=0;
 	//Menu Principal
 	while(quit != 1)
@@ -658,12 +658,12 @@ void menuMaintenance(Profile& Player, const int& numeroBox)
 				Terminal::get().clearScreen(); //On flushe l'ancien ecran
 				Terminal::get() << "/!\\ Attention ! /!\\\n"
 												<< "====================\n"
-												<< "Credits: " << Player.credits << "c\n"
+												<< "Credits: " << Profile::active->credits << "c\n"
 												<< "====================\n"
 												<< "Changer les pneus de ce vehicule vous coutera 2000c\n";
 				if(Menu::askConfirmation())
 				{
-					if(Player.payer(2000))
+					if(Profile::active->payer(2000))
 					{
 						Car->changerTires();
 						Menu::msg("Tires Changes avec succes !");
@@ -685,13 +685,13 @@ void menuMaintenance(Profile& Player, const int& numeroBox)
 					nitroManquante = Car->getNitroMax() - Car->getNiveauNitro();
 					Terminal::get() << "/!\\ Attention ! /!\\\n"
 													<< "====================\n"
-													<< "Credits: " << Player.credits << "c\n"
+													<< "Credits: " << Profile::active->credits << "c\n"
 													<< "====================\n"
 													<< "Remplir la Nitro de ce vehicule (Restant: " << Car->getNiveauNitro() << "L/" << Car->getNitroMax() << "L)\n"
 													<< "Pour remplir les " << nitroManquante << "L manquants, cela vous coutera " << nitroManquante * 100 << "c\n";
 					if (Menu::askConfirmation())
 					{
-						if(Player.payer(nitroManquante * 100 ))
+						if(Profile::active->payer(nitroManquante * 100 ))
 						{
 							Car->changerTires();
 							Menu::msg("Nitro au max !");
@@ -714,7 +714,7 @@ void menuMaintenance(Profile& Player, const int& numeroBox)
 					Terminal::get().clearScreen(); //On flushe l'ancien ecran
 					Terminal::get() << "/!\\ Attention ! /!\\\n"
 													<< "====================\n"
-													<< "Credits: " << Player.credits << "c\n"
+													<< "Credits: " << Profile::active->credits << "c\n"
 													<< "====================\n"
 													<< "Reparer ce vehicule\n"
 													<< "vous coutera "<<aPayer<<"c\n"
@@ -724,7 +724,7 @@ void menuMaintenance(Profile& Player, const int& numeroBox)
 					Terminal::get().clearScreen();
 					if(verifAchat == 'o' || verifAchat == 'O')
 					{
-						if(Player.payer(aPayer))
+						if(Profile::active->payer(aPayer))
 						{
 							Car->reparer();
 							Menu::msg("voiture reparee avec succes !");
@@ -742,26 +742,26 @@ void menuMaintenance(Profile& Player, const int& numeroBox)
 				break;
 		}
 	}
-	Player.sauvegarderProfile();
+	Profile::active->sauvegarderProfile();
 }
 
-void menuAcheterBox(Profile& Player)
+void menuAcheterBox()
 {
 	Terminal::get().clearScreen(); //On flushe l'ancien ecran
 	Terminal::get() << "/!\\ Attention ! /!\\\n"
 									<< "====================\n"
-									<< "Credits: " << Player.credits << "c\n"
+									<< "Credits: " << Profile::active->credits << "c\n"
 									<< "====================\n"
 									<< "Vous allez acheter un " << 1 + 1 << "eme Box,\n"
 									<< "Prix: " << 1 * 20000 << "c\n\n";
 	if(Menu::askConfirmation())
 	{
-		//Player.acheterBox();
+		//Profile::active->acheterBox();
 	}
-	Player.sauvegarderProfile();
+	Profile::active->sauvegarderProfile();
 }
 
-void menuAchatCar(const char& rang, Profile& Player)
+void menuAchatCar()
 {
 	std::string sMenu;
 	int menu;
@@ -783,16 +783,16 @@ void menuAchatCar(const char& rang, Profile& Player)
 	while(quit != true)
 	{
 		//Menu Principal
-		Terminal::get() << "Concessionnaire - [Rang " << rang << "]\n"
+		Terminal::get() << "Concessionnaire\n"
 										<< "===============\n"
 										<< "Entrez le numero d'un vehicule une fois pour le selectionner.\n"
 										<< "Entrez le a nouveau pour acheter le vehicule.\n"
 										<< "===============\n\n";
-		Car::listerCars(rang);
-		Terminal::get() << "\n" //On separe le blo
+		Car::listerCars();
+		Terminal::get() << "\n" //On separe le bloc
 										<< "0. Retour\n"
 										<< "===============\n"
-										<< "Credits: " << Player.credits << "c\n"
+										<< "Credits: " << Profile::active->credits << "c\n"
 										<< "===============\n\n"
 										<< "#Car Selectionnee\n"
 										<< " |Marque: " << marqueCar << "\n"
@@ -810,13 +810,11 @@ void menuAchatCar(const char& rang, Profile& Player)
 				Terminal::get().clearScreen(); //On flushe l'ancien ecran
 				quit = true; //INSTRUCTION DE SORTIE
 		}
-		else if(menu > 0  && menu <= Car::compterCars(rang))
+		else if(menu > 0  && menu <= Car::collection.size())
 		{
 			if(e2tour == 0 || tmenu != menu)
 			{
 				Terminal::get().clearScreen(); //On flushe l'ancien ecran	
-				Car::infoCar(menu, rang, marqueCar, modeleCar, idEngineCar, nitroMaxCar, aerodynamismeCar, prixCar);
-				Engine::infoEngine(idEngineCar, marqueCar, nomEngineCar, vitesseEngineCar, accelerationEngineCar);
 				e2tour = 1;
 				tmenu = menu;
 			}
@@ -825,7 +823,7 @@ void menuAchatCar(const char& rang, Profile& Player)
 				Terminal::get().clearScreen(); //On flushe l'ancien ecran
 				Terminal::get() << "/!\\ Attention ! /!\\\n"
 												<< "====================\n"
-												<< "Credits: " << Player.credits << "c\n"
+												<< "Credits: " << Profile::active->credits << "c\n"
 												<< "====================\n"
 												<< "Vous allez acheter le vehicule:\n"
 												<< marqueCar << " " << modeleCar << "\n"
@@ -843,7 +841,7 @@ void menuAchatCar(const char& rang, Profile& Player)
 				if(achat == true)
 				{
 					Terminal::get().clearScreen();
-					numeroBox = menuConsulterGarage(Player, 2); //on demande a l'utilisateur ou stocker la voiture
+					numeroBox = menuConsulterGarage(2); //on demande a l'utilisateur ou stocker la voiture
 					Terminal::get().clearScreen();
 					if(numeroBox == 0)
 					{
@@ -852,10 +850,10 @@ void menuAchatCar(const char& rang, Profile& Player)
 					else
 					{
 						numeroBox -= 1;
-						if(Player.payer(prixCar))
+						if(Profile::active->payer(prixCar))
 						{
-							//Player.setBox(numeroBox, Car::collection.at("Eses")); //TMP
-							Player.careerStats.carBought++;
+							//Profile::active->setBox(numeroBox, Car::collection.at("Eses")); //TMP
+							Profile::active->careerStats.carBought++;
 							Menu::msg("Vehicule achete avec succes !");
 						}
 					}
@@ -868,63 +866,13 @@ void menuAchatCar(const char& rang, Profile& Player)
 				Menu::error("Saisie invalide");
 		}
 	}
-	Player.sauvegarderProfile();
+	Profile::active->sauvegarderProfile();
 }
 
-void menuConcessionaireAchat(Profile& Player)
-{
-	//Menu Principal
-	Terminal::get() << "Concessionnaire\n"
-									<< "===============\n"
-									<< "Selectionnez le rang du vehicule a acheter.\n"
-									<< "===============\n\n"
-									<< "1. Rang [D]\n"
-									<< "2. Rang [C]\n"
-									<< "3. Rang [B]\n"
-									<< "4. Rang [A]\n"
-									<< "5. Rang [S]\n\n"
-									<< "0. Retour\n";
-	//Redirection de l'utilisateur selon son choix grâce a un switch.
-	switch(Menu::askChoice())
-	{
-		case 0:
-			Terminal::get().clearScreen(); //On flushe l'ancien ecran
-			break;
-		case 1:
-			Terminal::get().clearScreen(); //On flushe l'ancien ecran
-			menuAchatCar('D', Player);
-			break;
-		case 2:
-			Terminal::get().clearScreen(); //On flushe l'ancien ecran
-			menuAchatCar('C', Player);
-			//menuAchatCar('C', Player);
-			break;
-		case 3:
-			Terminal::get().clearScreen(); //On flushe l'ancien ecran
-			menuAchatCar('B', Player);
-			//menuAchatCar('B', Player);
-			break;
-		case 4:
-			Terminal::get().clearScreen(); //On flushe l'ancien ecran
-			menuAchatCar('A', Player);
-			//menuAchatCar('A', Player);
-			break;
-		case 5:
-			Terminal::get().clearScreen(); //On flushe l'ancien ecran
-			menuAchatCar('S', Player);
-			//menuAchatCar('S', Player);
-			break;
-		default:
-			Terminal::get().clearScreen(); //On flushe l'ancien ecran
-			Menu::error("Saisie invalide");
-			break;
-	}
-}
-
-void menuVenteCar(Profile& Player, const int& numeroBox)
+void menuVenteCar(const int& numeroBox)
 {
 	char verif;
-	Car* Car; // = Player.getBox(numeroBox);
+	Car* Car; // = Profile::active->getBox(numeroBox);
 	Terminal::get() << Car->getPrix();
 	int prixVente = Car->getPrix() * 0.70f;
 	std::string sPrixVente;
@@ -936,7 +884,7 @@ void menuVenteCar(Profile& Player, const int& numeroBox)
 	Terminal::get().clearScreen(); //On flushe l'ancien ecran	
 	Terminal::get() << "/!\\ Attention ! /!\\\n"
 									<< "====================\n"
-									<< "Credits: " << Player.credits << "c\n"
+									<< "Credits: " << Profile::active->credits << "c\n"
 									<< "====================\n\n"
 									<< "Vous allez vendre le vehicule :" << Car->manufacturer << " " << Car->name << "[Box" << numeroBox << "]\n"
 									<< "Prix de vente : " << prixVente << "c\n\n"
@@ -946,8 +894,8 @@ void menuVenteCar(Profile& Player, const int& numeroBox)
 	if(verif == 'o' || verif == 'O')
 	{
 			Terminal::get().clearScreen();
-			Player.credits += Car->getPrix() * 0.5;
-			//Player.setBox(numeroBox);
+			Profile::active->credits += Car->getPrix() * 0.5;
+			//Profile::active->setBox(numeroBox);
 			Menu::msg(Car->name+" vendue avec succes pour "+sPrixVente+"c");
 	}
 	else if(verif == 'n' || verif == 'N')
@@ -961,10 +909,10 @@ void menuVenteCar(Profile& Player, const int& numeroBox)
 			Terminal::get().clearScreen();
 			Menu::error("Saisie invalide");
 	}
-	Player.sauvegarderProfile();
+	Profile::active->sauvegarderProfile();
 }
 
-void menuDifficulte(Profile& Player)
+void menuDifficulte()
 {
 	std::string menu;	//un string car le le passe en iss
 	int difficulte;
@@ -987,37 +935,37 @@ void menuDifficulte(Profile& Player)
 			break;
 		case 1:
 			Terminal::get().clearScreen(); //On flushe l'ancien ecran
-			Player.difficulty = 1;
+			Profile::active->difficulty = 1;
 			break;
 		case 2:
 			Terminal::get().clearScreen(); //On flushe l'ancien ecran
-			Player.difficulty = 2;
-			//menuAchatCar('C', Player);
+			Profile::active->difficulty = 2;
+			//menuAchatCar('C');
 			break;
 		case 3:
 			Terminal::get().clearScreen(); //On flushe l'ancien ecran
-			Player.difficulty = 3;
-			//menuAchatCar('B', Player);
+			Profile::active->difficulty = 3;
+			//menuAchatCar('B');
 			break;
 		case 4:
 			Terminal::get().clearScreen(); //On flushe l'ancien ecran
-			Player.difficulty = 4;
-			//menuAchatCar('A', Player);
+			Profile::active->difficulty = 4;
+			//menuAchatCar('A');
 			break;
 		case 5:
 			Terminal::get().clearScreen(); //On flushe l'ancien ecran
-			Player.difficulty = 5;
-			//menuAchatCar('S', Player);
+			Profile::active->difficulty = 5;
+			//menuAchatCar('S');
 			break;
 		default:
 			Terminal::get().clearScreen(); //On flushe l'ancien ecran
 			Menu::error("Saisie invalide");
 			break;
 	}
-	Player.sauvegarderProfile();
+	Profile::active->sauvegarderProfile();
 }
 
-void menuChangementNomProfile(Profile& Player)
+void menuChangementNomProfile()
 {
 	std::string nom;
 
@@ -1034,5 +982,5 @@ void menuChangementNomProfile(Profile& Player)
 	{
 		Menu::msg("Le nom de votre Profile est maintenant : \""+nom+"\"");
 	}
-	Player.sauvegarderProfile();
+	Profile::active->sauvegarderProfile();
 }

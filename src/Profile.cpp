@@ -2,6 +2,15 @@
 #include "Profile.hh"
 #include "Menu.hh"
 
+std::shared_ptr<Profile> Profile::active = nullptr;
+
+Profile::Profile(const std::string &name)
+ : name(name), difficulty(0), credits(10000), garage()
+{
+
+}
+
+
 Profile::Profile(const json &data)
  : name(data["name"].get<std::string>()), difficulty(data["difficulty"].get<int>()), credits(data["credits"].get<int>()), garage(data["garage"])
 {
@@ -12,7 +21,12 @@ Profile::~Profile()
 {
 }
 
-Profile Profile::load(const std::string &path)
+void Profile::create(const std::string &name)
+{
+	Profile::active = std::make_shared<Profile>(name);
+}
+
+void Profile::load(const std::string &path)
 {
 	DataFile save(path);
 
@@ -20,7 +34,7 @@ Profile Profile::load(const std::string &path)
 	{
 		throw std::runtime_error("Cannot load collection file:"+path);
 	}
-	return (Profile(save.getData()));
+	Profile::active = std::make_shared<Profile>(save.getData());
 }
 
 bool Profile::compatible(Profile& Player, const int& numeroBox, const char& rangNewPiece)
@@ -532,32 +546,6 @@ void Profile::sauvegarderProfile()
 		lock << getHashFromFile(nomFichier); //On inscrit le lock dans le fichier
 	}*/
 }
-
-void Profile::creerProfile(std::string& nom, Profile*& ProfileCree)
-{
-	/*
-	int numeroSave = compterSauvegardes() + 1;
-	std::string sNumeroSave;
-	std::string nomFichier;
-	std::ostringstream oss;
-
-	oss << numeroSave;      // on insere le int dans le stream oss
-	sNumeroSave = oss.str(); // range le int dans la variable numeroSave
-
-	nomFichier = "Saves/Profile" + sNumeroSave + ".save";
-
-	std::string uuid = generateUuid(); //On génére un identifiant unique au Profile.
-	ProfileCree = new Profile(uuid, numeroSave, nom); //On construit le Profile cree (la partie boost est la conversion en string de l'uuid)
-	*/
-	Terminal::get().clearScreen();
-	Terminal::get() << "Creation de votre Profile\n";
-	Terminal::get() << "===============\n\n";
-	Terminal::get() << "Profile cree avec succes !\n";
-	Terminal::get() << "===============\n";
-	Terminal::get() << "Appuyez sur Entree pour continuer...\n";
-	getch();
-}
-
 
 bool Profile::payer(const int& prix)
 {

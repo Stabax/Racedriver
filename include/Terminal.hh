@@ -2,7 +2,7 @@
 #define TERMINAL_HH_
 
 #include <memory>
-#include "Utils.hpp"
+#include "Utils.hh"
 #ifdef _WIN32
   #include <pdcurses/curses.h>
 #elif __linux__

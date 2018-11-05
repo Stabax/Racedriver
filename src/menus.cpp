@@ -3,7 +3,7 @@
 #include "Menu.hh"
 #include "menus.hh"
 
-void menuCourse(Profile& Player)
+void menuCourse()
 {
 	bool quit = false;
 	while(quit != true)
@@ -32,12 +32,12 @@ void menuCourse(Profile& Player)
 
 			case 2:
 				Terminal::get().clearScreen(); //On flushe l'ancien ecran
-				menuCourseChampionnat(Player);
+				menuCourseChampionnat();
 				break;
 
 			case 3:
 				Terminal::get().clearScreen(); //On flushe l'ancien ecran
-				menuCourseLibre(Player);
+				menuCourseLibre();
 				break;
 
 			default:
@@ -48,7 +48,7 @@ void menuCourse(Profile& Player)
 	}
 }
 
-void menuGarage(Profile& Player)
+void menuGarage()
 {
 	bool quit = false;
 	while(quit != true)
@@ -56,7 +56,7 @@ void menuGarage(Profile& Player)
 		//Menu Principal
 		Terminal::get() << "Menu Garage\n"
 										<< "===============\n"
-										<< "Credits: " << Player.credits << "c\n"
+										<< "Credits: " << Profile::active->credits << "c\n"
 										<< "===============\n\n"
 										<< "1. Consulter Garage\n"
 										<< "2. Visiter Atelier\n"
@@ -72,19 +72,19 @@ void menuGarage(Profile& Player)
 				break;
 			case 1:
 				Terminal::get().clearScreen(); //On flushe l'ancien ecran
-				menuConsulterGarage(Player, 0);
+				menuConsulterGarage(0);
 				break;
 			case 2:
 				Terminal::get().clearScreen(); //On flushe l'ancien ecran
-				menuConsulterGarage(Player, 1);
+				menuConsulterGarage(1);
 				break;
 			case 3:
 				Terminal::get().clearScreen(); //On flushe l'ancien ecran
-				menuConsulterGarage(Player, 3);
+				menuConsulterGarage(3);
 				break;
 			case 4:
 				Terminal::get().clearScreen(); //On flushe l'ancien ecran
-				menuAcheterBox(Player);
+				menuAcheterBox();
 				break;
 			default:
 				Terminal::get().clearScreen(); //On flushe l'ancien ecran
@@ -94,7 +94,7 @@ void menuGarage(Profile& Player)
 	}
 }
 
-void menuConcessionaire(Profile& Player)
+void menuConcessionaire()
 {
 	//Menu Principal
 	Terminal::get() << "Concessionnaire\n"
@@ -110,11 +110,11 @@ void menuConcessionaire(Profile& Player)
 			break;
 		case 1:
 			Terminal::get().clearScreen(); //On flushe l'ancien ecran
-			menuConcessionaireAchat(Player);
+			menuAchatCar();
 			break;
 		case 2:
 			Terminal::get().clearScreen(); //On flushe l'ancien ecran
-			menuConsulterGarage(Player, 4);
+			menuConsulterGarage(4);
 			break;
 		default:
 			Terminal::get().clearScreen(); //On flushe l'ancien ecran
@@ -123,29 +123,29 @@ void menuConcessionaire(Profile& Player)
 	}
 }
 
-void menuStats(Profile& Player)
+void menuStats()
 {
-	Terminal::get() << "Stats du Profile: " << Player.name << "\n"
+	Terminal::get() << "Stats du Profile: " << Profile::active->name << "\n"
 									<< "===============\n"
 									<< "#Stats Course:\n"
-									<< " |Courses effectuees: " << Player.careerStats.races << "\n"
+									<< " |Courses effectuees: " << Profile::active->careerStats.races << "\n"
 									<< " |\n"
-									<< " |Victoires: " << Player.careerStats.victories << "\n"
-									<< " |Defaites: " << Player.careerStats.losses << "\n"
+									<< " |Victoires: " << Profile::active->careerStats.victories << "\n"
+									<< " |Defaites: " << Profile::active->careerStats.losses << "\n"
 									<< " |[V/D Ratio: " << "N/A" << "]\n"
 									<< " |\n"
-									<< " |Accidents: " << Player.careerStats.accidents << "\n\n"
+									<< " |Accidents: " << Profile::active->careerStats.accidents << "\n\n"
 									<< "#Stats Carriere:\n"
-									<< " |Credits remportes: " << Player.careerStats.creditsEarned << "c\n"
+									<< " |Credits remportes: " << Profile::active->careerStats.creditsEarned << "c\n"
 									<< " |\n"
-									<< " |Cars achetees: " << Player.careerStats.carBought << "\n\n"
+									<< " |Cars achetees: " << Profile::active->careerStats.carBought << "\n\n"
 									<< "===============\n"
 									<< "Appuyez sur [Entree] pour retourner au menu principal...\n";
 	getch();
 	Terminal::get().clearScreen();
 }
 
-void menuSauvegarde(Profile& Player)
+void menuSauvegarde()
 {
 	std::string cheminFichier = "Saves/Profile.save";
 
@@ -156,11 +156,11 @@ void menuSauvegarde(Profile& Player)
 									<< "===============\n";
 	if(save)
 	{
-		Terminal::get() << "Vous allez ecraser votre derniere sauvegarde (Profile \"" << Player.name << "\")\n\n";
+		Terminal::get() << "Vous allez ecraser votre derniere sauvegarde (Profile \"" << Profile::active->name << "\")\n\n";
 	}
 	else
 	{
-		Terminal::get() << "Votre Profile va etre sauvegarde sur le disque (Profile \"" << Player.name << "\")\n\n";
+		Terminal::get() << "Votre Profile va etre sauvegarde sur le disque (Profile \"" << Profile::active->name << "\")\n\n";
 	}
 	if(Menu::askConfirmation())
 	{
@@ -171,7 +171,7 @@ void menuSauvegarde(Profile& Player)
 										<< "===============\n"
 										<< "Veuillez patienter";
 		sleep(0.4f);
-		Player.sauvegarderProfile();
+		Profile::active->sauvegarderProfile();
 		Terminal::get().clearScreen();
 		Terminal::get() << "Sauvegarder votre Progression\n"
 										<< "===============\n"
@@ -192,7 +192,7 @@ void menuSauvegarde(Profile& Player)
 	}
 }
 
-void menuOptions(Profile& Player)
+void menuOptions()
 {
 	bool quit = false;
 	std::string saveAuto;
@@ -200,10 +200,10 @@ void menuOptions(Profile& Player)
 	{
 		//Menu Principal
 		saveAuto = "ON";
-		Terminal::get() << "Options " << Player.name << "\n"
+		Terminal::get() << "Options " << Profile::active->name << "\n"
 										<< "===============\n\n"
 										<< "1. Sauvegarde auto [" << saveAuto << "]\n"
-										<< "2. Difficulte ["<< Player.difficulty <<"]\n"
+										<< "2. Difficulte ["<< Profile::active->difficulty <<"]\n"
 										<< "3. Raccourcis menus [OFF]\n"
 										<< "4. Changer le nom du Profile\n\n"
 										<< "0. Retour\n";
@@ -220,7 +220,7 @@ void menuOptions(Profile& Player)
 				break;
 			case 2:
 				Terminal::get().clearScreen(); //On flushe l'ancien ecran
-				menuDifficulte(Player);
+				menuDifficulte();
 				break;
 			case 3:
 				Terminal::get().clearScreen(); //On flushe l'ancien ecran
@@ -228,7 +228,7 @@ void menuOptions(Profile& Player)
 				break;
 			case 4:
 				Terminal::get().clearScreen(); //On flushe l'ancien ecran
-				menuChangementNomProfile(Player);
+				menuChangementNomProfile();
 				break;
 
 			default:
@@ -237,5 +237,5 @@ void menuOptions(Profile& Player)
 				break;
 		}
 	}
-	Player.sauvegarderProfile();
+	Profile::active->sauvegarderProfile();
 }

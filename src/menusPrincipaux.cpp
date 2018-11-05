@@ -6,7 +6,6 @@
 void menuRacedriver()
 {
 	bool quit = false;
-	Profile* Player = 0;	//On instancie un joueur non charge
 
 	while(quit != true)
 	{
@@ -30,11 +29,11 @@ void menuRacedriver()
 				break;
 			case 1:
 				Terminal::get().clearScreen(); //On flushe l'ancien ecran
-				menuChargementPartie(Player, quit);
+				menuChargementPartie(quit);
 				break;
 			case 2:
 				Terminal::get().clearScreen(); //On flushe l'ancien ecran
-				menuCreationPartie(Player, quit);
+				menuCreationPartie(quit);
 				break;
 			case 3:
 				Terminal::get().clearScreen(); //On flushe l'ancien ecran
@@ -50,13 +49,11 @@ void menuRacedriver()
 				break;
 		}
 	}
-	delete Player;
 }
 
-void menuJeu(Profile& Player, bool& quitGame)
+void menuJeu(bool& quitGame)
 {
 	bool quit = false;
-	Profile* PlayerSaved = 0; //On cree un Profile temporaire
 	std::ostringstream oss;
 	std::string numeroProfile;
 
@@ -89,7 +86,7 @@ void menuJeu(Profile& Player, bool& quitGame)
 													<< "La partie va etre sauvegardee\n";
 					if(Menu::askConfirmation())
 					{
-						Player.sauvegarderProfile();
+						Profile::active->sauvegarderProfile();
 					}
 				}
 				quit = true;
@@ -98,23 +95,23 @@ void menuJeu(Profile& Player, bool& quitGame)
 			break;
 			case 1:
 				Terminal::get().clearScreen(); //On flushe l'ancien ecran
-				menuCourse(Player);
+				menuCourse();
 				break;
 			case 2:
 				Terminal::get().clearScreen(); //On flushe l'ancien ecran
-				menuGarage(Player);
+				menuGarage();
 				break;
 			case 3:
 				Terminal::get().clearScreen(); //On flushe l'ancien ecran
-				menuConcessionaire(Player);
+				menuConcessionaire();
 				break;
 			case 4:
 				Terminal::get().clearScreen(); //On flushe l'ancien ecran
-				menuStats(Player);
+				menuStats();
 				break;
 			case 5:
 				Terminal::get().clearScreen(); //On flushe l'ancien ecran
-				menuOptions(Player);
+				menuOptions();
 				Terminal::get().clearScreen();
 				break;
 			case 6:
@@ -130,7 +127,7 @@ void menuJeu(Profile& Player, bool& quitGame)
 												<< "La partie va etre sauvegardee\n";
 					if(Menu::askConfirmation())
 					{
-						Player.sauvegarderProfile();
+						Profile::active->sauvegarderProfile();
 					}
 				}
 				quit = true;
@@ -150,7 +147,7 @@ void menuJeu(Profile& Player, bool& quitGame)
 												<< "La partie va etre sauvegardee\n";
 					if(Menu::askConfirmation())
 					{
-						Player.sauvegarderProfile();
+						Profile::active->sauvegarderProfile();
 					}
 				}
 				quit = true;
@@ -164,11 +161,10 @@ void menuJeu(Profile& Player, bool& quitGame)
 	}
 }
 
-void menuChargementPartie(Profile*& Player, bool& quit)
+void menuChargementPartie(bool& quit)
 {
 	std::string sMenu;
 	int menu;
-	bool etat; //stocke le resultat du chargement
 	std::string nom;
 	//Menu Chargement Profile
 	Terminal::get() << "Charger un Profile: \n"
@@ -185,11 +181,13 @@ void menuChargementPartie(Profile*& Player, bool& quit)
 	}
 	else if(menu > 0 && menu <= Profile::compterSauvegardes())
 	{
-				etat = Profile::chargerProfile(menu, Player);
-				if(etat == true)
-				{
-					menuJeu(*Player, quit);//Redirection de l'utilisateur dans le menu de jeu
-				}
+		try {
+			Profile::load("eses");
+		} catch (const std::exception &e)
+		{
+			Menu::error(e.what());
+		}
+		menuJeu(quit);//Redirection de l'utilisateur dans le menu de jeu
 	}
 	else //equivalent de default
 	{
@@ -198,7 +196,7 @@ void menuChargementPartie(Profile*& Player, bool& quit)
 	}
 }
 
-void menuCreationPartie(Profile*& Player, bool& quit)
+void menuCreationPartie(bool& quit)
 {
 	//Var
 	std::string nom;
@@ -213,9 +211,9 @@ void menuCreationPartie(Profile*& Player, bool& quit)
 	nom = getString(); // l'utilisateur entre son nom
 	if(nom[0] != 0)
 	{
-		Profile::creerProfile(nom, Player);
-		Player->sauvegarderProfile();
-		menuJeu(*Player, quit);
+		Profile::create(nom);
+		Profile::active->sauvegarderProfile();
+		menuJeu(quit);
 	}
 }
 

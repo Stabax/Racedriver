@@ -3,7 +3,8 @@
 
 #include <vector>
 #include "DataFile.hh"
-#include "algos.hh"
+#include "Utils.hh"
+#include "Menu.hh"
 
 #define ID_SEPARATOR '.'
 
@@ -18,7 +19,7 @@ class Part
 {
 public:
   Part(const json &data)
-  : manufacturer(data["manufacturer"].get<std::string>()), name(data["name"].get<std::string>()), rank(charToRank(data["name"].get<std::string>()[0]))
+  : manufacturer(data["manufacturer"].get<std::string>()), name(data["name"].get<std::string>()), rank(charToRank(data["rank"].get<std::string>()[0]))
   {
   }
 
@@ -32,12 +33,17 @@ public:
   template <typename T>
   static const std::string getCollectionPath()
   {
+    if (std::is_same<T, Car>::value)
+    {
+      return ("./Data/Cars.json");
+    }
+    //Parts
     std::string path = "./Data/Parts/";
-    if (std::is_same<T, Car>::value) path += "Cars";
+
     if (std::is_same<T, Engine>::value) path += "Engines";
-    if (std::is_same<T, Tires>::value) path += "Tires";
-    else if (std::is_same<T, AirIntake>::value) path += "AirIntake";
-    else if (std::is_same<T, Spoiler>::value) path += "Spoiler";
+    else if (std::is_same<T, Tires>::value) path += "Tires";
+    else if (std::is_same<T, AirIntake>::value) path += "AirIntakes";
+    else if (std::is_same<T, Spoiler>::value) path += "Spoilers";
     else throw std::runtime_error("Unknown part type");
     return (path+".json");
   }
@@ -60,8 +66,12 @@ public:
     const json &data = collectionFile.getData();
     for (size_t i = 0; i < data["collection"].size(); i++)
     {
-      T obj(data["collection"][i]);
-      collection.emplace(dynamic_cast<Part&>(obj).getId(), obj);
+      try {
+        T obj(data["collection"][i]);
+        collection.emplace(dynamic_cast<Part&>(obj).getId(), obj);
+      } catch (std::exception &e) {
+        Menu::error("Corrupted data");
+      }
     }
   }
 

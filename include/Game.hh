@@ -20,6 +20,7 @@ public:
   bool update();
 
   static std::unique_ptr<Game> instance; //Singleton handle
+
 private:
   Terminal _term;
 };

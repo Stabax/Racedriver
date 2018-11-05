@@ -1,8 +1,5 @@
-
-//Profile.h
-
-#ifndef Profile_h // _h car erreur de compil sinon
-#define Profile_h // idem
+#ifndef PROFILE_HH_ // _h car erreur de compil sinon
+#define PROFILE_HH_ // idem
 
 #include <iostream>
 #include <string>
@@ -22,26 +19,29 @@ struct Stats {
 class Profile
 {
 public:
+	Profile(const std::string &name);
 	Profile(const json &data);
 	~Profile();
 
-	static Profile load(const std::string &path);
+	static void create(const std::string &name);
+	static void load(const std::string &path);
+
 	static void listerSauvegardes();
 	static int compterSauvegardes();
 	static void supprimerProfile(const int& numeroSave);
 	static bool chargerProfile(const int& numeroSave, Profile*& ProfileCharge);
-	static void creerProfile(std::string& nom, Profile*& ProfileCree);
 	static bool compatible(Profile& Player, const int& numeroBox, const char& rangNewPiece);
 
 	bool payer(const int& prix);
 	void sauvegarderProfile();
 
+	static std::shared_ptr<Profile> active;
+
 	std::string name;
 	int difficulty;
 	int credits;
-	
-	Garage garage;
 
+	Garage garage;
 
 	//Stats
 	Stats careerStats;
@@ -52,4 +52,4 @@ public:
 
 bool operator!=(Profile& Player, Profile& PlayerSaved);
 
-#endif
+#endif /* !PROFILE_HH_ */

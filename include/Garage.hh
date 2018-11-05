@@ -7,6 +7,7 @@
 class Garage
 {
 public:
+  Garage();
   Garage(const json &data);
 
 private:

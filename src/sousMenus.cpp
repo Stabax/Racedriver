@@ -2,14 +2,9 @@
 #include "Menu.hh"
 #include "sousMenus.hh"
 
-Car* menuChoixCar()
+Car &menuChoixCar()
 {
-	/*
-	std::string sMenu;
-	Car* CarSelectionnee = 0;
-	Car* CarListee = 0;
 	int menu;
-	int nbBox = 1;//Profile::active->getNbBox();
 	bool quit = false;
 	while(quit != true)
 	{
@@ -18,22 +13,7 @@ Car* menuChoixCar()
 										<< "===============\n"
 										<< "Selectionnez le vehicule qui va faire la course.\n"
 										<< "===============\n\n";
-		for (int numeroBox = 0; numeroBox < nbBox; numeroBox++)
-		{
-			CarListee = Profile::active->getBox(numeroBox);
-			if(Profile::active->boxVide(numeroBox))
-			{
-				Terminal::get() << (numeroBox + 1) << ". Box " << (numeroBox + 1) << " [VIDE]\n";
-			}
-			else
-			{
-				Terminal::get() << (numeroBox + 1) << ". Box " << (numeroBox + 1) << " [" << CarListee->manufacturer << " " << CarListee->name << "]\n";
-			}
-		}
-		for (size_t j = nbBox; j < 5; j++)
-		{
-			Terminal::get() << (j + 1) << ". Box " << (j + 1) << " [VEROUILLE]\n";
-		}
+		Profile::active->garage.displayBoxList();
 		Terminal::get() << "\n" //On separe le bloc
 										<< "0. Retour\n";
 		menu = Menu::askChoice();
@@ -42,32 +22,13 @@ Car* menuChoixCar()
 			Terminal::get().clearScreen(); //On flushe l'ancien ecran
 			quit = true; //INSTRUCTION DE SORTIE
 		}
-		else if(menu > 0 && menu <= nbBox)
-		{
-			if(Profile::active->boxVide(menu - 1))
-			{
-				Terminal::get().clearScreen();
-				Menu::error("Le box est vide.");
-			}
-			else
-			{
-				Terminal::get().clearScreen(); //On flushe l'ancien ecran
-				CarSelectionnee = Profile::active->getBox(menu - 1);
-				quit = true; //INSTRUCTION DE SORTIE
-			}
-		}
-		else if(menu > nbBox && menu <= 5)
-		{
-			Terminal::get().clearScreen();
-			Menu::error("Ce box est verrouille.");
-		}
-		else
+		else if(menu > Profile::active->garage.getBoxCount())
 		{
 			Terminal::get().clearScreen(); //On flushe l'ancien ecran
 			Menu::error("Saisie invalide");
 		}
 	}
-	return CarSelectionnee;*/
+	return (Profile::active->garage.getBox(menu - 1));
 }
 
 void menuCourseLibre()
@@ -159,12 +120,7 @@ void menuCourseChampionnat()
 
 int menuConsulterGarage(const int& mode)
 {
-	Profile::active->garage.displayBoxList();
-	/*
-	std::string sMenu;
 	int menu;
-	int nbBox = 1;// Profile::active->getNbBox();
-	Car* Car = 0;
 
 	//Menu Principal
 	Terminal::get() << "Liste des Boxs\n"
@@ -190,22 +146,7 @@ int menuConsulterGarage(const int& mode)
 		Terminal::get() << "Selectionnez un vehicule a vendre.\n";
 	}
 	Terminal::get() << "===============\n\n";
-	for (int numeroBox = 0; numeroBox < nbBox; numeroBox++)
-	{
-		Car = Profile::active->getBox(numeroBox);
-		if(Profile::active->boxVide(numeroBox))
-		{
-			Terminal::get() << (numeroBox + 1) << ". Box " << (numeroBox + 1) << " [VIDE]\n";
-		}
-		else
-		{
-			Terminal::get() << (numeroBox + 1) << ". Box " << (numeroBox + 1) << " [" << Car->manufacturer << " " << Car->name << "]\n";
-		}
-	}
-	for (int numeroBoxVerouille = nbBox; numeroBoxVerouille < 5; numeroBoxVerouille++)
-	{
-		Terminal::get() << (numeroBoxVerouille + 1) << ". Box " << (numeroBoxVerouille + 1) << " [VEROUILLE]\n";
-	}
+	Profile::active->garage.displayBoxList();
 	Terminal::get() << "\n" //On separe le bloc
 									<< "0. Retour\n";
 	menu = Menu::askChoice();
@@ -213,30 +154,18 @@ int menuConsulterGarage(const int& mode)
 	{
 		Terminal::get().clearScreen(); //On flushe l'ancien ecran et quitte
 	}
-	else if(menu > 0 && menu <= nbBox)
+	else if(menu > 0 && menu <= Profile::active->garage.getBoxCount())
 	{
-		if(Profile::active->boxVide(menu - 1))
-		{
-			if(mode == 2)
-			{
-				Terminal::get().clearScreen(); //On flushe l'ancien ecran et quitte
-			}
-			else
-			{
-				Terminal::get().clearScreen();
-				Menu::error("Le box est vide.");
-			}
-		}
-		else if(mode == 0)
+		if(mode == 0)
 		{
 			Terminal::get().clearScreen(); //On flushe l'ancien ecran
-			menuConsulterBox(Player, menu - 1);
+			Profile::active->garage.displayBoxDetail(menu - 1);
 			Terminal::get().clearScreen();
 		}
 		else if(mode == 1)
 		{
 			Terminal::get().clearScreen();
-			menuAtelier(Player, menu - 1);
+			menuAtelier(menu - 1);
 		}
 		else if(mode == 2)
 		{
@@ -246,18 +175,13 @@ int menuConsulterGarage(const int& mode)
 		else if(mode == 3)
 		{
 			Terminal::get().clearScreen();
-			menuMaintenance(Player, menu - 1);
+			menuMaintenance(menu - 1);
 		}
 		else if(mode == 4)
 		{
 			Terminal::get().clearScreen();
-			menuVenteCar(Player, menu - 1);
+			menuVenteCar(menu - 1);
 		}
-	}
-	else if(menu > nbBox && menu <= 5)
-	{
-		Terminal::get().clearScreen();
-		Menu::error("Ce box est verrouille.");
 	}
 	else
 	{
@@ -351,7 +275,7 @@ void menuAtelierSpoiler(const int& numeroBox)
 		}
 		if(Profile::active->getSauvegardeAuto())
 		{
-			Profile::active->sauvegarderProfile();
+			Profile::active->save();
 		}
 	}
 	else
@@ -402,7 +326,7 @@ void menuAtelierAirIntake(const int& numeroBox)
 		}
 		if(Profile::active->getSauvegardeAuto())
 		{
-			Profile::active->sauvegarderProfile();
+			Profile::active->save();
 		}
 	}
 	else
@@ -583,7 +507,7 @@ void menuAtelierEngine(const int& numeroBox)
 	}
 	if(Profile::active->getSauvegardeAuto())
 	{
-		Profile::active->sauvegarderProfile();
+		Profile::active->save();
 	}*/
 }
 
@@ -702,7 +626,7 @@ void menuMaintenance(const int& numeroBox)
 				break;
 		}
 	}
-	Profile::active->sauvegarderProfile();
+	Profile::active->save();
 }
 
 void menuAcheterBox()
@@ -718,7 +642,7 @@ void menuAcheterBox()
 	{
 		//Profile::active->acheterBox();
 	}
-	Profile::active->sauvegarderProfile();
+	Profile::active->save();
 }
 
 void menuAchatCar()
@@ -826,7 +750,7 @@ void menuAchatCar()
 				Menu::error("Saisie invalide");
 		}
 	}
-	Profile::active->sauvegarderProfile();
+	Profile::active->save();
 }
 
 void menuVenteCar(const int& numeroBox)
@@ -869,7 +793,7 @@ void menuVenteCar(const int& numeroBox)
 			Terminal::get().clearScreen();
 			Menu::error("Saisie invalide");
 	}
-	Profile::active->sauvegarderProfile();
+	Profile::active->save();
 }
 
 void menuDifficulte()
@@ -922,7 +846,7 @@ void menuDifficulte()
 			Menu::error("Saisie invalide");
 			break;
 	}
-	Profile::active->sauvegarderProfile();
+	Profile::active->save();
 }
 
 void menuChangementNomProfile()
@@ -942,5 +866,5 @@ void menuChangementNomProfile()
 	{
 		Menu::msg("Le nom de votre Profile est maintenant : \""+nom+"\"");
 	}
-	Profile::active->sauvegarderProfile();
+	Profile::active->save();
 }

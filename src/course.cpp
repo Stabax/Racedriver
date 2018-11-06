@@ -545,7 +545,7 @@ void faireCourseLibre(Circuit Map, Car* Player1, Profile& Player)
 			delete Adversaire[compteur];
 		}
 	}
-	Player.sauvegarderProfile();
+	Profile::active->save();
 }
 
 void faireCourseChampionnat(Circuit Map, Car* Player1, Profile& Player)
@@ -745,6 +745,6 @@ void faireCourseChampionnat(Circuit Map, Car* Player1, Profile& Player)
 			Player1->getTires()->setDurability(-1 * (( Map.getTaille() + Map.getVirages() ) / 10));
 			Player1->setNitro(-1 * (Map.getTaille() / 4));
 		}
-		Player.sauvegarderProfile();
+		Profile::active->save();
 	}
 }

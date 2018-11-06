@@ -171,7 +171,7 @@ void menuSauvegarde()
 										<< "===============\n"
 										<< "Veuillez patienter";
 		sleep(0.4f);
-		Profile::active->sauvegarderProfile();
+		Profile::active->save();
 		Terminal::get().clearScreen();
 		Terminal::get() << "Sauvegarder votre Progression\n"
 										<< "===============\n"
@@ -237,5 +237,5 @@ void menuOptions()
 				break;
 		}
 	}
-	Profile::active->sauvegarderProfile();
+	Profile::active->save();
 }

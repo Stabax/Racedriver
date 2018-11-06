@@ -12,6 +12,11 @@ Garage::Garage(const json &data)
   }
 }
 
+Car &Garage::getBox(int index)
+{
+  return (*_boxs[index]);
+}
+
 size_t Garage::getBoxCount()
 {
   return (_boxs.size());

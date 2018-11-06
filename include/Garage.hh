@@ -10,6 +10,7 @@ public:
   Garage();
   Garage(const json &data);
 
+  Car &getBox(int index);
   size_t getBoxCount();
 
   void displayBoxList();

@@ -24,16 +24,15 @@ public:
 	~Profile();
 
 	static void create(const std::string &name);
-	static void load(const std::string &path);
+	static void load(const std::string &name);
+	void save();
 
 	static void listerSauvegardes();
 	static int compterSauvegardes();
 	static void supprimerProfile(const int& numeroSave);
-	static bool chargerProfile(const int& numeroSave, Profile*& ProfileCharge);
 	static bool compatible(Profile& Player, const int& numeroBox, const char& rangNewPiece);
 
 	bool payer(const int& prix);
-	void sauvegarderProfile();
 
 	static std::shared_ptr<Profile> active;
 

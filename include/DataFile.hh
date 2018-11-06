@@ -14,7 +14,9 @@ public:
 
   bool load();
   bool save();
+  bool save(const json &data);
 
+  void setData(const json &data);
   const json &getData();
 
 private:

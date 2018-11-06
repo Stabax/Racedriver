@@ -19,7 +19,23 @@ bool DataFile::load()
 
 bool DataFile::save()
 {
+  return (save(_data));
+}
+
+bool DataFile::save(const json &data)
+{
+  std::ofstream file;
+
+  file.open(_path, std::ofstream::out | std::ofstream::trunc);
+  if (!file.good()) return (false);
+  file << data.dump();
+  file.close();
   return (true);
+}
+
+void DataFile::setData(const json &data)
+{
+  _data = data;
 }
 
 const json &DataFile::getData()

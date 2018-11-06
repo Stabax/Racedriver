@@ -86,7 +86,7 @@ void menuJeu(bool& quitGame)
 													<< "La partie va etre sauvegardee\n";
 					if(Menu::askConfirmation())
 					{
-						Profile::active->sauvegarderProfile();
+						Profile::active->save();
 					}
 				}
 				quit = true;
@@ -127,7 +127,7 @@ void menuJeu(bool& quitGame)
 												<< "La partie va etre sauvegardee\n";
 					if(Menu::askConfirmation())
 					{
-						Profile::active->sauvegarderProfile();
+						Profile::active->save();
 					}
 				}
 				quit = true;
@@ -147,7 +147,7 @@ void menuJeu(bool& quitGame)
 												<< "La partie va etre sauvegardee\n";
 					if(Menu::askConfirmation())
 					{
-						Profile::active->sauvegarderProfile();
+						Profile::active->save();
 					}
 				}
 				quit = true;
@@ -212,7 +212,7 @@ void menuCreationPartie(bool& quit)
 	if(nom[0] != 0)
 	{
 		Profile::create(nom);
-		Profile::active->sauvegarderProfile();
+		Profile::active->save();
 		menuJeu(quit);
 	}
 }

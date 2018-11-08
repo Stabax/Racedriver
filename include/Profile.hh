@@ -44,9 +44,6 @@ public:
 
 	//Stats
 	Stats careerStats;
-	Stats freeStats; //Course Libre
-
-	bool m_sauvegardeAuto;
 };
 
 bool operator!=(Profile& Player, Profile& PlayerSaved);

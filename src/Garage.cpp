@@ -12,12 +12,12 @@ Garage::Garage(const json &data)
   }
 }
 
-Car &Garage::getBox(int index)
+Car &Garage::getBox(int index) const
 {
   return (*_boxs[index]);
 }
 
-size_t Garage::getBoxCount()
+size_t Garage::getBoxCount() const
 {
   return (_boxs.size());
 }
@@ -66,4 +66,15 @@ void Garage::displayBoxDetail(int index)
 									<< "===============\n"
 									<< "Appuyez sur Entree pour revenir au menu precedent";
 	getch();
+}
+
+void to_json(json& j, const Garage& garage)
+{
+	j = {"garage", {}};
+	for (size_t i = 0; i < garage.getBoxCount(); i++)
+	{
+		j["garage"][i] = {
+			{"name", garage.getBox(i).name}
+		};
+	}
 }

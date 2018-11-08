@@ -58,8 +58,8 @@ protected:
 	std::shared_ptr<Spoiler> _spoiler;
 	std::shared_ptr<AirIntake> _airIntake;
 	std::shared_ptr<Tires> _tires;
-	int _nitro;	//se vide en fonction de la longueur du circuit. le plein est fait manuellement via paiement, juste avant une course
 	int _nitroMax;	//non modifiable pour une voiture donnée
+	int _nitro;	//se vide en fonction de la longueur du circuit. le plein est fait manuellement via paiement, juste avant une course
 	int _durability;
 };
 

@@ -40,10 +40,11 @@ void Profile::load(const std::string &name)
 void Profile::save()
 {
 	DataFile save("./Saves/"+name+".json");
+	json data;
 
 	if (!save.save())
 	{
-		throw std::runtime_error("Cannot save Profile: "+name);
+		Menu::error("Cannot save Profile: "+name);
 	}
 }
 
@@ -207,4 +208,22 @@ bool Profile::payer(const int& prix)
 		paye = true;
 	}
 	return paye;
+}
+
+void to_json(json& j, const Profile& profile) {
+	json garage = profile.garage;
+	json j2 = {
+		{"name", profile.name},
+		{"difficulty", profile.difficulty},
+		{"credits", profile.credits},
+		{"careerStats", {
+			{"races", profile.careerStats.races},
+			{"victories", profile.careerStats.victories},
+			{"losses", profile.careerStats.losses},
+			{"accidents", profile.careerStats.accidents},
+			{"creditsEarned", profile.careerStats.creditsEarned},
+			{"carBought", profile.careerStats.carBought}
+		}},
+		{"garage", garage}
+	};
 }

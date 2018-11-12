@@ -63,7 +63,7 @@ void menuCourseLibre()
 		}
 		else
 		{
-			faireCourseLibre(*CircuitCourant, CarPlayer, Player);
+			faireCourseLibre(*CircuitCourant, CarPlayer);
 		}
 		delete CircuitCourant;
 		CircuitCourant = 0;
@@ -106,7 +106,7 @@ void menuCourseChampionnat()
 		}
 		else
 		{
-			faireCourseChampionnat(*CircuitCourant, CarPlayer, Player);
+			faireCourseChampionnat(*CircuitCourant, CarPlayer);
 		}
 		delete CircuitCourant;
 		CircuitCourant = 0;

@@ -12,6 +12,28 @@ Garage::Garage(const json &data)
   }
 }
 
+Car &Garage::selectCar() const
+{
+	int choice;
+
+	Terminal::get() << "Liste des Boxs\n"
+									<< "===============\n"
+									<< "Selectionnez le vehicule qui va faire la course.\n"
+									<< "===============\n\n";
+	Profile::active->garage.displayBoxList();
+	Terminal::get() << "\n" //On separe le bloc
+									<< "0. Retour\n";
+	if(choice = Menu::askChoice())
+	{
+		return (Profile::active->garage.getBox(menu - 1));
+	}
+	else
+	{
+		Menu::error("Saisie invalide");
+		throw std::runtime_error("Bad index");
+	}
+}
+
 Car &Garage::getBox(int index) const
 {
   return (*_boxs[index]);

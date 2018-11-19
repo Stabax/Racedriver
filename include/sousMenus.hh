@@ -8,8 +8,6 @@
 #include "course.hh"
 #include"Game.hh"
 
-Car &menuChoixCar();
-
 void menuCourseLibre(); //Menu de Course libre (lobby sp)
 void menuCourseChampionnat();
 

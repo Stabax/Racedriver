@@ -2,40 +2,12 @@
 #include "Menu.hh"
 #include "sousMenus.hh"
 
-Car &menuChoixCar()
-{
-	int menu;
-	bool quit = false;
-	while(quit != true)
-	{
-		//Menu Principal
-		Terminal::get() << "Liste des Boxs\n"
-										<< "===============\n"
-										<< "Selectionnez le vehicule qui va faire la course.\n"
-										<< "===============\n\n";
-		Profile::active->garage.displayBoxList();
-		Terminal::get() << "\n" //On separe le bloc
-										<< "0. Retour\n";
-		menu = Menu::askChoice();
-		if(menu == 0)
-		{
-			Terminal::get().clearScreen(); //On flushe l'ancien ecran
-			quit = true; //INSTRUCTION DE SORTIE
-		}
-		else if(menu > Profile::active->garage.getBoxCount())
-		{
-			Terminal::get().clearScreen(); //On flushe l'ancien ecran
-			Menu::error("Saisie invalide");
-		}
-	}
-	return (Profile::active->garage.getBox(menu - 1));
-}
 
 void menuCourseLibre()
 {/*
 	std::string sMenu;
 	int menu;
-	Car* CarPlayer = 0;
+	Car &CarPlayer = 0;
 	int nombreCircuits;
 	//Menu Principal
 	Terminal::get() << "Course Libre\n"
@@ -56,15 +28,8 @@ void menuCourseLibre()
 		Circuit::chargerCircuit(menu, CircuitCourant);
 		Terminal::get().clearScreen(); //On flushe l'ancien ecran
 
-		CarPlayer = menuChoixCar(Player);
-		if(CarPlayer == 0)
-		{
-			Menu::error("Aucune voiture selectionnee.");
-		}
-		else
-		{
-			faireCourseLibre(*CircuitCourant, CarPlayer);
-		}
+		CarPlayer = Profile::active->garage->selectCar();
+		faireCourseLibre(*CircuitCourant, CarPlayer);
 		delete CircuitCourant;
 		CircuitCourant = 0;
 	}
@@ -79,7 +44,7 @@ void menuCourseChampionnat()
 {/*
 	std::string sMenu;
 	int menu;
-	Car* CarPlayer = 0;
+	Car &CarPlayer = 0;
 	int nombreCircuits;
 	//Menu Principal
 	Terminal::get() << "Course Libre\n"
@@ -99,7 +64,7 @@ void menuCourseChampionnat()
 		Circuit* CircuitCourant = 0;
 		Circuit::chargerCircuit(menu, CircuitCourant);
 		Terminal::get().clearScreen(); //On flushe l'ancien ecran
-		CarPlayer = menuChoixCar(Player);
+		CarPlayer = Profile::active->garage->selectCar();
 		if(CarPlayer == 0)
 		{
 			Menu::error("Aucune voiture selectionnee.");

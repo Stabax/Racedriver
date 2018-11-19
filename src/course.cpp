@@ -52,7 +52,7 @@ std::string randNomAdversaire()
 	int nbAdversaires = 0;
 	size_t ligneALire;
 
-	if(1) //On separe les deux flux par un bloc
+	//On separe les deux flux par un bloc
 	{
 		std::ifstream pilotestxt("Data/console/pilotes.txt");
 

@@ -65,8 +65,8 @@ void menuJeu(bool& quitGame)
 										<< "1. Course\n\n"
 										<< "2. Garage\n"
 										<< "3. Concessionaire\n"
-										<< "4. Stats\n\n";
-		Terminal::get() << "5. Sauvegarder\n"
+										<< "4. Stats\n\n"
+										<< "5. Sauvegarder\n"
 										<< "6. Options\n"
 										<< "7. Menu Principal\n\n"
 										<< "0. Quitter\n";
@@ -74,85 +74,45 @@ void menuJeu(bool& quitGame)
 		switch(Menu::askChoice())
 		{
 			case 0:
-			{
 				Terminal::get().clearScreen(); //On flushe l'ancien ecran
-				std::ifstream fichier("Saves/Profile.save");
-
-				if(fichier)
+				//Profile::chargerProfile(Player.getNumero(), PlayerSaved); // On charge le Profile du fichier
+				Terminal::get() << "/!\\ Attention ! /!\\\n"
+												<< "====================\n"
+												<< "La partie va etre sauvegardee\n";
+				if(Menu::askConfirmation())
 				{
-					//Profile::chargerProfile(Player.getNumero(), PlayerSaved); // On charge le Profile du fichier
-					Terminal::get() << "/!\\ Attention ! /!\\\n"
-													<< "====================\n"
-													<< "La partie va etre sauvegardee\n";
-					if(Menu::askConfirmation())
-					{
-						Profile::active->save();
-					}
+					Profile::active->save();
 				}
-				quit = true;
 				quitGame = true;
-			}
 			break;
 			case 1:
-				Terminal::get().clearScreen(); //On flushe l'ancien ecran
 				menuCourse();
 				break;
 			case 2:
-				Terminal::get().clearScreen(); //On flushe l'ancien ecran
 				menuGarage();
 				break;
 			case 3:
-				Terminal::get().clearScreen(); //On flushe l'ancien ecran
 				menuConcessionaire();
 				break;
 			case 4:
-				Terminal::get().clearScreen(); //On flushe l'ancien ecran
 				menuStats();
 				break;
 			case 5:
 				Terminal::get().clearScreen(); //On flushe l'ancien ecran
-				menuOptions();
-				Terminal::get().clearScreen();
+				//Profile::chargerProfile(Player.getNumero(), PlayerSaved); // On charge le Profile du fichier
+				Terminal::get() << "/!\\ Attention ! /!\\\n"
+											<< "====================\n"
+											<< "La partie va etre sauvegardee\n";
+				if(Menu::askConfirmation())
+				{
+					Profile::active->save();
+				}
 				break;
 			case 6:
-			{
-				Terminal::get().clearScreen(); //On flushe l'ancien ecran
-				std::ifstream fichier("Saves/Profile.save");
-
-				if(fichier)
-				{
-					//Profile::chargerProfile(Player.getNumero(), PlayerSaved); // On charge le Profile du fichier
-					Terminal::get() << "/!\\ Attention ! /!\\\n"
-												<< "====================\n"
-												<< "La partie va etre sauvegardee\n";
-					if(Menu::askConfirmation())
-					{
-						Profile::active->save();
-					}
-				}
-				quit = true;
-				Terminal::get().clearScreen();
+				menuOptions();
 				break;
-			}
 			case 7:
-			{
-				Terminal::get().clearScreen(); //On flushe l'ancien ecran
-				std::ifstream fichier("Saves/Profile.save");
-
-				if(fichier)
-				{
-					//Profile::chargerProfile(Player.getNumero(), PlayerSaved); // On charge le Profile du fichier
-					Terminal::get() << "/!\\ Attention ! /!\\\n"
-												<< "====================\n"
-												<< "La partie va etre sauvegardee\n";
-					if(Menu::askConfirmation())
-					{
-						Profile::active->save();
-					}
-				}
-				quit = true;
-			}
-			break;
+				break;
 			default:
 				Terminal::get().clearScreen(); //On flushe l'ancien ecran
 				Menu::error("Saisie invalide");

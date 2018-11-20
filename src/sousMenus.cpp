@@ -482,7 +482,7 @@ void menuMaintenance(const int& numeroBox)
 	bool quit = 0;
 	char verifAchat;
 	int nitroManquante;
-	Car* Car; // = Profile::active->getBox(numeroBox);
+	Car &Car = Profile::active->garage.getBox(numeroBox);
 	int aPayer=0;
 	//Menu Principal
 	while(quit != 1)
@@ -491,7 +491,7 @@ void menuMaintenance(const int& numeroBox)
 										<< "===============\n"
 										<< "Selectionnez un vehicule a reparer ou entretenir.\n"
 										<< "===============\n\n"
-										<< "Car actuelle: [BOX" << numeroBox + 1 << ": " << Car->manufacturer << " " << Car->name << "]\n\n"
+										<< "Car actuelle: [BOX" << numeroBox + 1 << ": " << Car.manufacturer << " " << Car.name << "]\n\n"
 										<< "1. Changer Tires\n"
 										<< "2. Plein Nitro\n"
 										<< "3. Reparer\n\n"
@@ -514,7 +514,7 @@ void menuMaintenance(const int& numeroBox)
 				{
 					if(Profile::active->payer(2000))
 					{
-						Car->changerTires();
+						Car.changerTires();
 						Menu::msg("Tires Changes avec succes !");
 					}
 				}
@@ -525,24 +525,24 @@ void menuMaintenance(const int& numeroBox)
 				break;
 			case 2:
 				Terminal::get().clearScreen(); //On flushe l'ancien ecran
-				if(Car->getNitroMax() == 0)
+				if(Car.getNitroMax() == 0)
 				{
 					Menu::error("Votre vehicule n'est pas equipe d'un reservoir de Nitro.");
 				}
 				else
 				{
-					nitroManquante = Car->getNitroMax() - Car->getNiveauNitro();
+					nitroManquante = Car.getNitroMax() - Car.getNiveauNitro();
 					Terminal::get() << "/!\\ Attention ! /!\\\n"
 													<< "====================\n"
 													<< "Credits: " << Profile::active->credits << "c\n"
 													<< "====================\n"
-													<< "Remplir la Nitro de ce vehicule (Restant: " << Car->getNiveauNitro() << "L/" << Car->getNitroMax() << "L)\n"
+													<< "Remplir la Nitro de ce vehicule (Restant: " << Car.getNiveauNitro() << "L/" << Car.getNitroMax() << "L)\n"
 													<< "Pour remplir les " << nitroManquante << "L manquants, cela vous coutera " << nitroManquante * 100 << "c\n";
 					if (Menu::askConfirmation())
 					{
 						if(Profile::active->payer(nitroManquante * 100 ))
 						{
-							Car->changerTires();
+							Car.changerTires();
 							Menu::msg("Nitro au max !");
 						}
 					}
@@ -553,13 +553,13 @@ void menuMaintenance(const int& numeroBox)
 				}
 				break;
 			case 3:
-				if(Car->getEtat()==100)
+				if(Car.getEtat()==100)
 				{
 					Menu::msg("Votre voiture est en parfait etat.");
 				}
 				else
 				{
-					aPayer = (Car->getPrix() * (100 - Car->getEtat())) /100 ;
+					aPayer = (Car.getPrix() * (100 - Car.getEtat())) /100 ;
 					Terminal::get().clearScreen(); //On flushe l'ancien ecran
 					Terminal::get() << "/!\\ Attention ! /!\\\n"
 													<< "====================\n"
@@ -575,7 +575,7 @@ void menuMaintenance(const int& numeroBox)
 					{
 						if(Profile::active->payer(aPayer))
 						{
-							Car->reparer();
+							Car.reparer();
 							Menu::msg("voiture reparee avec succes !");
 						}
 					}

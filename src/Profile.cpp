@@ -40,9 +40,9 @@ void Profile::load(const std::string &name)
 void Profile::save()
 {
 	DataFile save("./Saves/"+name+".json");
-	json data;
+	json data = *this;
 
-	if (!save.save())
+	if (!save.save(data))
 	{
 		Menu::error("Cannot save Profile: "+name);
 	}
@@ -212,7 +212,7 @@ bool Profile::payer(const int& prix)
 
 void to_json(json& j, const Profile& profile) {
 	json garage = profile.garage;
-	json j2 = {
+	j = {
 		{"name", profile.name},
 		{"difficulty", profile.difficulty},
 		{"credits", profile.credits},

@@ -1,4 +1,5 @@
 #include "Garage.hh"
+#include "Profile.hh"
 
 Garage::Garage()
 {
@@ -25,7 +26,7 @@ Car &Garage::selectCar() const
 									<< "0. Retour\n";
 	if(choice = Menu::askChoice())
 	{
-		return (Profile::active->garage.getBox(menu - 1));
+		return (Profile::active->garage.getBox(choice - 1));
 	}
 	else
 	{

@@ -6,6 +6,8 @@
 #include <cfloat>
 #include "sha/sha.h"
 #include "Garage.hh"
+#include <nlohmann/json.hpp>
+using json = nlohmann::json;
 
 struct Stats {
 	int races;
@@ -47,5 +49,7 @@ public:
 };
 
 bool operator!=(Profile& Player, Profile& PlayerSaved);
+
+void to_json(json& j, const Profile& garage);
 
 #endif /* !PROFILE_HH_ */

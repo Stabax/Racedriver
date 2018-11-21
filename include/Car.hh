@@ -31,10 +31,10 @@ public:
 	void changerTires();
 
 	//infos acessoires
-	std::shared_ptr<Engine> getEngine();
-	std::shared_ptr<Spoiler> getSpoiler();
-	std::shared_ptr<AirIntake> getAirIntake();
-	std::shared_ptr<Tires> getTires();
+	std::shared_ptr<Engine> getEngine() const;
+	std::shared_ptr<Spoiler> getSpoiler() const;
+	std::shared_ptr<AirIntake> getAirIntake() const;
+	std::shared_ptr<Tires> getTires() const;
 
 	void setEngine(const Engine &newEngine);
 	void setSpoiler(const Spoiler &newSpoiler);
@@ -62,5 +62,7 @@ protected:
 	int _nitro;	//se vide en fonction de la longueur du circuit. le plein est fait manuellement via paiement, juste avant une course
 	int _durability;
 };
+
+void to_json(json& j, const Car& car);
 
 #endif /* !CAR_HH_ */

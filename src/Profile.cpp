@@ -39,7 +39,7 @@ void Profile::load(const std::string &name)
 
 void Profile::save()
 {
-	DataFile save("./Saves/"+name+".json");
+	DataFile save("./Data/Saves/"+name+".json");
 	json data = *this;
 
 	if (!save.save(data))

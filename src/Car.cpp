@@ -70,24 +70,24 @@ int Car::getPrix() const
 	return static_cast<int>(roundf( (prixEngine + prixSpoiler + prixAirIntake + 0 )  *0.9+ (( _nitroMax ) * 100)+ (( vRang(rank) - 1 ) * 20000)));
 }
 
-std::shared_ptr<Engine> Car::getEngine()
+std::shared_ptr<Engine> Car::getEngine() const
 {
-	return _engine;
+	return (_engine);
 }
 
-std::shared_ptr<Spoiler> Car::getSpoiler()
+std::shared_ptr<Spoiler> Car::getSpoiler() const
 {
-	return _spoiler;
+	return (_spoiler);
 }
 
-std::shared_ptr<AirIntake> Car::getAirIntake()
+std::shared_ptr<AirIntake> Car::getAirIntake() const
 {
-	return _airIntake;
+	return (_airIntake);
 }
 
-std::shared_ptr<Tires> Car::getTires()
+std::shared_ptr<Tires> Car::getTires() const
 {
-	return _tires;
+	return (_tires);
 }
 
 void Car::setEngine(const Engine &newEngine)
@@ -149,4 +149,14 @@ void Car::updateAttributs()
 void Car::changerTires()
 {
 	_tires->setDurability(100);
+}
+
+void to_json(json& j, const Car& car) {
+	j = {
+		{"name", car.getId()},
+		{"engine", car.getEngine()->getId()},
+    {"airIntake", car.getAirIntake()->getId()},
+    {"spoiler", car.getSpoiler()->getId()},
+    {"tires", car.getTires()->getId()}
+	};
 }

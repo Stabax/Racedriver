@@ -24,7 +24,7 @@ Car &Garage::selectCar() const
 	Profile::active->garage.displayBoxList();
 	Terminal::get() << "\n" //On separe le bloc
 									<< "0. Retour\n";
-	if(choice = Menu::askChoice())
+	if ((choice = Menu::askChoice()) > 0)
 	{
 		return (Profile::active->garage.getBox(choice - 1));
 	}
@@ -93,11 +93,9 @@ void Garage::displayBoxDetail(int index)
 
 void to_json(json& j, const Garage& garage)
 {
-	j = {"garage", {}};
+	j = json::array();
 	for (size_t i = 0; i < garage.getBoxCount(); i++)
 	{
-		j["garage"][i] = {
-			{"name", garage.getBox(i).name}
-		};
+		j.push_back(garage.getBox(i));
 	}
 }

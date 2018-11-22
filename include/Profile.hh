@@ -16,6 +16,16 @@ struct Stats {
 	int accidents;
 	int creditsEarned;
 	int carBought;
+
+	Stats(int r = 0, int v = 0, int l = 0, int a = 0, int cr = 0, int c = 0)
+	{
+		races = r;
+		victories = v;
+		losses = l;
+		accidents = a;
+		creditsEarned = cr;
+		carBought = c;
+	}
 };
 
 class Profile

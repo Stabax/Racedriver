@@ -18,6 +18,7 @@ public:
 
 	static void listerCars();
 
+	void displayInfo() const;
 	float getVitesse() const;
 	float getAcceleration() const;
 	int getAerodynamisme() const;
@@ -51,7 +52,7 @@ public:
 
 	void updateAttributs();
 
-	static std::map<std::string, Car> collection;
+	static Collection<Car> collection;
 
 protected:
 	std::shared_ptr<Engine> _engine;

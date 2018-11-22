@@ -2,11 +2,11 @@
 #include "Car.hh"
 #include "Menu.hh"
 
-std::map<std::string, Car> Car::collection = std::map<std::string, Car>();
+Collection<Car> Car::collection = Collection<Car>();
 
 Car::Car(const json &data)
- : Part(data), _engine(std::make_shared<Engine>(Engine::collection.at(data["engine"]))), _spoiler(std::make_shared<Spoiler>(Spoiler::collection.at(data["spoiler"]))),
-  _airIntake(std::make_shared<AirIntake>(AirIntake::collection.at(data["airIntake"]))), _tires(std::make_shared<Tires>(Tires::collection.at(data["tires"]))), _nitroMax(100),
+ : Part(data), _engine(std::make_shared<Engine>(Engine::collection[data["engine"].get<std::string>()])), _spoiler(std::make_shared<Spoiler>(Spoiler::collection[data["spoiler"].get<std::string>()])),
+  _airIntake(std::make_shared<AirIntake>(AirIntake::collection[data["airIntake"].get<std::string>()])), _tires(std::make_shared<Tires>(Tires::collection[data["tires"].get<std::string>()])), _nitroMax(100),
   _nitro(_nitroMax), _durability(100)
 {
 
@@ -16,17 +16,31 @@ Car::~Car()
 {
 }
 
+void Car::displayInfo() const
+{
+	Terminal::get() << " |Marque: " << manufacturer << "\n"
+									<< " |Modele: " << name << "\n"
+									<< " #Engine" << "\n"
+									<< "  |Marque: " << manufacturer << "\n"
+									<< "  |Modele: " << name << "\n"
+									<< "  |Vitese: " << "Km/h\n"
+									<< "  |Acceleration: " << "m/s²\n"
+									<< " |Capa. Nitro: " << "L\n"
+									<< " |Aerodynamisme: " << "%\n"
+									<< " |Prix: " << "c\n\n";
+}
+
 void Car::listerCars()
 {
 	int i = 0;
 
-	Terminal::get() <<"   |Marque   |Modele     |Capacite nitro  |Aerodynamisme  |Prix  |\n\n";
-  for (auto it = Car::collection.begin(); it != Car::collection.end(); ++it)
+	Terminal::get() << "   |Marque   |Modele     |Capacite nitro  |Aerodynamisme  |Prix  |\n\n";
+  /*for (auto it = Car::collection.begin(); it != Car::collection.end(); ++it)
 	{
 		Terminal::get() << i << "." << it->second.manufacturer << " " << it->second.name << " " << it->second.getNitroMax()
 										<< " " << it->second.getAerodynamisme() << " " << it->second.getPrix() << "c\n";
 		++i;
-	}
+	}*/
 }
 
 float Car::getVitesse() const

@@ -11,6 +11,7 @@
 #include "algos.hh"
 #include "Game.hh"
 #include "Part.hpp"
+#include "Collection.hpp"
 
 enum Energy {
 	Diesel,
@@ -38,7 +39,7 @@ public:
 	int getPrix() const;
 	float getPrixCarburant() const;
 
-	static std::map<std::string, Engine> collection;
+	static Collection<Engine> collection;
 
 protected:
 	int _price;

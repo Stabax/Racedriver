@@ -610,6 +610,25 @@ void menuAcheterBox()
 	Profile::active->save();
 }
 
+void menuBuyCar()
+{
+	int choice = 1;
+
+	while (choice != 0)
+	{
+		Terminal::get().clearScreen();
+		Terminal::get() << "Concessionnaire\n"
+											<< "===============\n"
+											<< "Selectionnez un vehicule a acheter.\n"
+											<< "===============\n\n";
+		Car::listerCars();
+		Terminal::get() << "\n" //On separe le bloc
+										<< "0. Retour\n"
+										<< "===============\n";
+		choice = Menu::askChoice();
+	}
+}
+
 void menuAchatCar()
 {
 	std::string sMenu;
@@ -623,7 +642,7 @@ void menuAchatCar()
 	std::string modeleCar = "N/A";
 	int nitroMaxCar = 0;
 	int aerodynamismeCar = 0;
-	int idEngineCar =0;
+	int idEngineCar = 0;
 	std::string nomEngineCar = "N/A";
 	int vitesseEngineCar = 0;
 	int accelerationEngineCar = 0;
@@ -701,7 +720,7 @@ void menuAchatCar()
 						numeroBox -= 1;
 						if(Profile::active->payer(prixCar))
 						{
-							//Profile::active->setBox(numeroBox, Car::collection.at("Eses")); //TMP
+							//Profile::active->setBox(numeroBox, Car::collection["Eses")); //TMP
 							Profile::active->careerStats.carBought++;
 							Menu::msg("Vehicule achete avec succes !");
 						}

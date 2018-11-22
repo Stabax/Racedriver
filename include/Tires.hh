@@ -6,10 +6,11 @@
 #include <string>
 #include <sstream>
 #include "Part.hpp"
+#include "Collection.hpp"
 #include "DataFile.hh"
 
-#include"algos.hh"
-#include"Game.hh"
+#include "algos.hh"
+#include "Game.hh"
 
 class Tires : public Part
 {
@@ -24,7 +25,7 @@ public:
 
 	void setDurability(int value);
 
-	static std::map<std::string, Tires> collection;
+	static Collection<Tires> collection;
 
 protected:
 	int _durability; //definit la vitesse d'usure des pneus

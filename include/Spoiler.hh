@@ -7,6 +7,7 @@
 #include <string>
 #include <sstream>
 #include "Part.hpp"
+#include "Collection.hpp"
 #include "algos.hh"
 
 class Spoiler : public Part
@@ -18,7 +19,7 @@ public:
 	int getAerodynamic() const;
 	int getPrice() const;
 
-	static std::map<std::string, Spoiler> collection;
+	static Collection<Spoiler> collection;
 
 protected:
 	int _aerodynamic;

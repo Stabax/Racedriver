@@ -21,11 +21,11 @@ bool Game::load()
 	_term << "Chargement en Cours...\n";
 	try
 	{
-		Part::loadCollection(Engine::collection);
-		Part::loadCollection(Tires::collection);
-		Part::loadCollection(AirIntake::collection);
-		Part::loadCollection(Spoiler::collection);
-		Part::loadCollection(Car::collection);
+		Collection<Engine>::load(Engine::collection);
+		Collection<Tires>::load(Tires::collection);
+		Collection<AirIntake>::load(AirIntake::collection);
+		Collection<Spoiler>::load(Spoiler::collection);
+		Collection<Car>::load(Car::collection);
 	}
 	catch (const std::runtime_error &e)
 	{

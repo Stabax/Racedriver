@@ -110,7 +110,7 @@ void menuConcessionaire()
 			break;
 		case 1:
 			Terminal::get().clearScreen(); //On flushe l'ancien ecran
-			menuAchatCar();
+			menuBuyCar();
 			break;
 		case 2:
 			Terminal::get().clearScreen(); //On flushe l'ancien ecran

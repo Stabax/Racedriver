@@ -2,7 +2,7 @@
 #include "Engine.hh"
 #include "Menu.hh"
 
-std::map<std::string, Engine> Engine::collection = std::map<std::string, Engine>();
+Collection<Engine> Engine::collection = Collection<Engine>();
 
 Engine::Engine(const json& data)
  : Part(data), _price(((getVitesse()+getAcceleration())*25)+(vRang(rank)*500)), _speed(data["speed"].get<float>()),

@@ -2,7 +2,7 @@
 #include "Spoiler.hh"
 #include "Menu.hh"
 
-std::map<std::string, Spoiler> Spoiler::collection = std::map<std::string, Spoiler>();
+Collection<Spoiler> Spoiler::collection = Collection<Spoiler>();
 
 Spoiler::Spoiler(const json &data)
  : Part(data), _aerodynamic(data["aerodynamic"].get<int>())

@@ -6,6 +6,7 @@
 #include <sstream>
 #include "algos.hh"
 #include "Part.hpp"
+#include "Collection.hpp"
 
 class AirIntake : public Part
 {
@@ -16,7 +17,7 @@ public:
 	int getAerodynamic() const;
 	int getPrice() const;
 
-	static std::map<std::string, AirIntake> collection;
+	static Collection<AirIntake> collection;
 
 protected:
 	int _aerodynamic;

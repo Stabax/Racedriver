@@ -2,7 +2,7 @@
 #include "AirIntake.hh"
 #include "Menu.hh"
 
-std::map<std::string, AirIntake> AirIntake::collection = std::map<std::string, AirIntake>();
+Collection<AirIntake> AirIntake::collection = Collection<AirIntake>();
 
 AirIntake::AirIntake(const json &data)
  : Part(data), _aerodynamic(data["aerodynamic"].get<int>()), _price(vRang(rank) * 1500)

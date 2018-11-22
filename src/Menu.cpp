@@ -1,17 +1,12 @@
 #include "Menu.hh"
 #include "Game.hh"
+#include "Collection.hpp"
 #include <fstream>
 #include "sha/sha.h"
 
 Menu::Menu()
 {
   
-}
-
-template <typename T>
-void Menu::catalog(const std::map<std::string, T> &collection)
-{
-	//implement part catalog display
 }
 
 void Menu::error(std::string str)

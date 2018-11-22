@@ -2,7 +2,7 @@
 #include "Tires.hh"
 #include "Menu.hh"
 
-std::map<std::string, Tires> Tires::collection = std::map<std::string, Tires>();
+Collection<Tires> Tires::collection = Collection<Tires>();
 
 Tires::Tires(const json &data)
  : Part(data), _durability(100), _price(vRang(rank) * 1500)
@@ -19,7 +19,7 @@ void Tires::listerTires()
 {
 	int index = 1;
 	Terminal::get() <<"   |Marque     |rang  |Prix  |\n\n";
-	for (auto it = collection.begin(); it != collection.end(); it++)
+	/*for (auto it = collection.begin(); it != collection.end(); it++)
 	{
 		const Tires &tire = it->second;
 		std::string espace="      "; //6 espaces
@@ -33,7 +33,7 @@ void Tires::listerTires()
 		}
 		Terminal::get() << index << "." << " " << tire.name << espace2 << tire.rank << espace << "PRIX" << "c\n";
 		++index;
-	}
+	}*/
 }
 
 int Tires::getDurability() const

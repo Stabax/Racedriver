@@ -11,14 +11,17 @@ public:
   Garage(const json &data);
 
   Car &selectCar() const;
-  Car &getBox(int index) const;
+  Car &getBox(size_t index) const;
   size_t getBoxCount() const;
+
+  bool addCar(Car car);
 
   void displayBoxList();
   void displayBoxDetail(int index);
 
 private:
   std::vector<std::shared_ptr<Car>> _boxs;
+  size_t _boxCount;
 };
 
 void to_json(json& j, const Garage& garage);

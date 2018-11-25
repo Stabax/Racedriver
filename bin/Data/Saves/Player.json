@@ -10,5 +10,8 @@
     "creditsEarned": 0,
     "carBought": 0
   },
-  "garage": []
+  "garage": {
+   "boxcount": 0,
+   "cars": []
+  }
 }

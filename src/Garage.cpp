@@ -2,14 +2,16 @@
 #include "Profile.hh"
 
 Garage::Garage()
+ : _boxCount(1)
 {
 }
 
 Garage::Garage(const json &data)
 {
-  for (size_t i = 0; i < data.size(); i++)
+	_boxCount = data["boxcount"];
+  for (size_t i = 0; i < data["cars"].size(); i++)
   {
-    _boxs.push_back(std::make_shared<Car>(data[i]));
+    _boxs.push_back(std::make_shared<Car>(data["cars"][i]));
   }
 }
 
@@ -35,14 +37,26 @@ Car &Garage::selectCar() const
 	}
 }
 
-Car &Garage::getBox(int index) const
+Car &Garage::getBox(size_t index) const
 {
+	if (index >= _boxs.size()) throw (std::runtime_error("Out of bounds"));
   return (*_boxs[index]);
 }
 
 size_t Garage::getBoxCount() const
 {
-  return (_boxs.size());
+  return (_boxCount);
+}
+
+bool Garage::addCar(Car car)
+{
+	if (_boxs.size() >= _boxCount)
+	{
+		Menu::error("Plus de place disponible dans le garage");
+		return (false);
+	}
+	_boxs.push_back(std::make_shared<Car>(car));
+	return (true);
 }
 
 
@@ -93,9 +107,17 @@ void Garage::displayBoxDetail(int index)
 
 void to_json(json& j, const Garage& garage)
 {
-	j = json::array();
+	j = {
+		{"boxcount", garage.getBoxCount()},
+		{"cars", json::array()}
+	};
 	for (size_t i = 0; i < garage.getBoxCount(); i++)
 	{
-		j.push_back(garage.getBox(i));
+		try {
+			Car &car = garage.getBox(i);
+			j["cars"].push_back(car);
+		} catch (...) {
+			//Nothing to do
+		}
 	}
 }

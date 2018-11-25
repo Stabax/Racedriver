@@ -32,15 +32,12 @@ void Car::displayInfo() const
 
 void Car::listerCars()
 {
-	int i = 0;
-
 	Terminal::get() << "   |Marque   |Modele     |Capacite nitro  |Aerodynamisme  |Prix  |\n\n";
-  /*for (auto it = Car::collection.begin(); it != Car::collection.end(); ++it)
+  for (size_t i = 0; i < Car::collection.size(); i++)
 	{
-		Terminal::get() << i << "." << it->second.manufacturer << " " << it->second.name << " " << it->second.getNitroMax()
-										<< " " << it->second.getAerodynamisme() << " " << it->second.getPrix() << "c\n";
-		++i;
-	}*/
+		Terminal::get() << i << "." << Car::collection[i].manufacturer << " " << Car::collection[i].name << " " << Car::collection[i].getNitroMax()
+										<< " " << Car::collection[i].getAerodynamisme() << " " << Car::collection[i].getPrix() << "c\n";
+	}
 }
 
 float Car::getVitesse() const

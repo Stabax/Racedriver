@@ -35,7 +35,7 @@ public:
     throw std::runtime_error("Uknown part");
   }
 
-  T &operator[](int index) const {
+  T &operator[](int index) {
     return (_collection[index]);
   }
 

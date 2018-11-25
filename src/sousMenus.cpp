@@ -626,6 +626,7 @@ void menuBuyCar()
 										<< "0. Retour\n"
 										<< "===============\n";
 		choice = Menu::askChoice();
+		Profile::active->garage.addCar(Car::collection[choice]);
 	}
 }
 

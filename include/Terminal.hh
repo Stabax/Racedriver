@@ -4,6 +4,7 @@
 #include <memory>
 #include "Utils.hh"
 #ifdef _WIN32
+  #undef MOUSE_MOVED
   #include <pdcurses/curses.h>
 #elif __linux__
   #include <curses.h>

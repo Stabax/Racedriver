@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Menu Id="Test">
+  <Text Id="T"/>
+  <Sep/>
+  <Input Type="Choice"><!-- Type directive allows Choice or Confirm -->
+    <Item Type="Goto" Target="TestMenu2"/>
+  </Input>
+</Menu>
+<Menu Id="TestMenu2">
+  <Text Id="TTTT"/>
+  <Sep/>
+  <Input Type="Confirm"><!-- Type directive allows Choice or Confirm -->
+    <Item Type="Goto" Target="TestMenu2"/>
+  </Input>
+</Menu>

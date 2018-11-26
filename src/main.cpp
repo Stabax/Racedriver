@@ -57,8 +57,17 @@ namespace GLOBAL
 	bool debloqueAchievement = false;
 }
 
+void handleArgs(int argc, char **argv)
+{
+	//Handle
+	(void)argc;
+	(void)argv;
+}
+
 int main(int argc, char **argv)
 {
+	handleArgs(argc, argv);
+
 	Game racedriver;
 	return (racedriver.main());
 }

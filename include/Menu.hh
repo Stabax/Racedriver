@@ -3,6 +3,7 @@
 
 #include <string>
 #include <map>
+#include <pugixml.hpp>
 
 class Menu
 {
@@ -11,12 +12,22 @@ public:
 
   static void msg(std::string str);
   static void error(std::string str);
-  
+
   static bool askConfirmation();
   static int askChoice();
 
 private:
+  std::map<std::string, MenuModule> _modules;
+};
 
+class MenuModule
+{
+public:
+  MenuModule();
+  AddMethod(std::string name, void *instance);
+
+private:
+  std::map<std::string, void *> _methods;
 };
 
 std::string getHashFromFile(std::string path);

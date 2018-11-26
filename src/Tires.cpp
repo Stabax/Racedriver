@@ -17,23 +17,20 @@ Tires::~Tires()
 
 void Tires::listerTires()
 {
-	int index = 1;
 	Terminal::get() <<"   |Marque     |rang  |Prix  |\n\n";
-	/*for (auto it = collection.begin(); it != collection.end(); it++)
+	for (size_t i = 0; i < collection.size(); i++)
 	{
-		const Tires &tire = it->second;
-		std::string espace="      "; //6 espaces
+		std::string espace = "      "; //6 espaces
 		std::string espace2;
-		if(tire.name.size() < 12)
+		if(collection[i].name.size() < 12)
 		{
-			for (size_t i = 0; i < 12 - tire.name.size(); i++)
+			for (size_t i = 0; i < 12 - collection[i].name.size(); i++)
 			{
-				espace2+=" ";
+				espace2 += " ";
 			}
 		}
-		Terminal::get() << index << "." << " " << tire.name << espace2 << tire.rank << espace << "PRIX" << "c\n";
-		++index;
-	}*/
+		Terminal::get() << i << "." << " " << collection[i].name << espace2 << collection[i].rank << espace << "PRIX" << "c\n";
+	}
 }
 
 int Tires::getDurability() const

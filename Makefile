@@ -16,7 +16,7 @@ CXX = g++
 
 RM = rm -rf
 
-CXXFLAGS	= -ggdb -W -Wall -Wpedantic -Iinclude -I$(LIBDIR) -I$(LIBDIR)/json/include/
+CXXFLAGS	= -ggdb -W -Wall -Wpedantic -Iinclude -I$(LIBDIR) -I$(LIBDIR)/json/include/ -I$(LIBDIR)/pugixml/src/
 
 LDFLAGS		= -L$(BINDIR) -lcurl
 # -static-libgcc
@@ -29,24 +29,25 @@ endif
 
 NAME = $(BINDIR)/Racedriver
 
-SRCS = 	$(SRCDIR)/Game.cpp							\
-				$(SRCDIR)/Menu.cpp							\
-				$(SRCDIR)/DataFile.cpp					\
-				$(SRCDIR)/Utils.cpp							\
-				$(SRCDIR)/Circuit.cpp						\
-				$(SRCDIR)/course.cpp						\
-				$(SRCDIR)/main.cpp							\
-				$(SRCDIR)/menus.cpp							\
-				$(SRCDIR)/menusPrincipaux.cpp		\
-				$(SRCDIR)/Engine.cpp						\
-				$(SRCDIR)/Tires.cpp							\
-				$(SRCDIR)/AirIntake.cpp					\
-				$(SRCDIR)/Profile.cpp						\
-				$(SRCDIR)/sousMenus.cpp					\
-				$(SRCDIR)/Garage.cpp						\
-				$(SRCDIR)/Spoiler.cpp						\
-				$(SRCDIR)/Terminal.cpp					\
-				$(SRCDIR)/Car.cpp								\
+SRCS = 	$(SRCDIR)/Game.cpp									\
+				$(SRCDIR)/Menu.cpp									\
+				$(SRCDIR)/DataFile.cpp							\
+				$(SRCDIR)/Utils.cpp									\
+				$(SRCDIR)/Circuit.cpp								\
+				$(SRCDIR)/course.cpp								\
+				$(SRCDIR)/main.cpp									\
+				$(SRCDIR)/menus.cpp									\
+				$(SRCDIR)/menusPrincipaux.cpp				\
+				$(SRCDIR)/Engine.cpp								\
+				$(SRCDIR)/Tires.cpp									\
+				$(SRCDIR)/AirIntake.cpp							\
+				$(SRCDIR)/Profile.cpp								\
+				$(SRCDIR)/sousMenus.cpp							\
+				$(SRCDIR)/Garage.cpp								\
+				$(SRCDIR)/Spoiler.cpp								\
+				$(SRCDIR)/Terminal.cpp							\
+				$(SRCDIR)/Car.cpp										\
+				$(LIBDIR)/pugixml/src/pugixml.cpp		\
 				$(LIBDIR)/sha/sha.cpp
 
 OBJS = $(SRCS:.cpp=.o)

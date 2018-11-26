@@ -59,6 +59,18 @@ bool Garage::addCar(Car car)
 	return (true);
 }
 
+void Garage::sellCar(size_t index)
+{
+	if (_boxs.size() >= _boxCount)
+	{
+		throw (std::runtime_error("Le box est vide"));
+	}
+	Car &car = Profile::active->garage.getBox(index);
+	int sellPrice = car.getPrix() * 0.70f;
+	Profile::active->credits += sellPrice;
+	Menu::msg(car.name+" vendue avec succes pour "+std::to_string(sellPrice)+"c");
+	_boxs.erase(_boxs.begin() + index);
+}
 
 void Garage::displayBoxList()
 {

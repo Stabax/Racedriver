@@ -741,21 +741,15 @@ void menuAchatCar()
 void menuVenteCar(const int& numeroBox)
 {
 	char verif;
-	Car* Car; // = Profile::active->getBox(numeroBox);
-	Terminal::get() << Car->getPrix();
-	int prixVente = Car->getPrix() * 0.70f;
-	std::string sPrixVente;
-	std::ostringstream oss;
-
-	oss << prixVente;      // on insere le int dans le stream oss
-	sPrixVente = oss.str(); // range le int dans la variable string
+	Car &car = Profile::active->garage.getBox(numeroBox);
+	int prixVente = car.getPrix() * 0.70f;
 
 	Terminal::get().clearScreen(); //On flushe l'ancien ecran	
 	Terminal::get() << "/!\\ Attention ! /!\\\n"
 									<< "====================\n"
 									<< "Credits: " << Profile::active->credits << "c\n"
 									<< "====================\n\n"
-									<< "Vous allez vendre le vehicule :" << Car->manufacturer << " " << Car->name << "[Box" << numeroBox << "]\n"
+									<< "Vous allez vendre le vehicule :" << car.manufacturer << " " << car.name << "[Box" << numeroBox << "]\n"
 									<< "Prix de vente : " << prixVente << "c\n\n"
 									<< "Souhaitez-vous vraiment continuer ? [O/n]\n"
 									<< "====================\n";
@@ -763,9 +757,7 @@ void menuVenteCar(const int& numeroBox)
 	if(verif == 'o' || verif == 'O')
 	{
 			Terminal::get().clearScreen();
-			Profile::active->credits += Car->getPrix() * 0.5;
-			//Profile::active->setBox(numeroBox);
-			Menu::msg(Car->name+" vendue avec succes pour "+sPrixVente+"c");
+			Profile::active->garage.sellCar(numeroBox);
 	}
 	else if(verif == 'n' || verif == 'N')
 	{
@@ -784,8 +776,7 @@ void menuVenteCar(const int& numeroBox)
 void menuDifficulte()
 {
 	std::string menu;	//un string car le le passe en iss
-	int difficulte;
-	
+
 	Terminal::get() <<"Augmenter la difficulte augmente les gains\n"
 									<<"====================\n"
 									<<"Choisissez une difficulte\n"
@@ -809,22 +800,18 @@ void menuDifficulte()
 		case 2:
 			Terminal::get().clearScreen(); //On flushe l'ancien ecran
 			Profile::active->difficulty = 2;
-			//menuAchatCar('C');
 			break;
 		case 3:
 			Terminal::get().clearScreen(); //On flushe l'ancien ecran
 			Profile::active->difficulty = 3;
-			//menuAchatCar('B');
 			break;
 		case 4:
 			Terminal::get().clearScreen(); //On flushe l'ancien ecran
 			Profile::active->difficulty = 4;
-			//menuAchatCar('A');
 			break;
 		case 5:
 			Terminal::get().clearScreen(); //On flushe l'ancien ecran
 			Profile::active->difficulty = 5;
-			//menuAchatCar('S');
 			break;
 		default:
 			Terminal::get().clearScreen(); //On flushe l'ancien ecran

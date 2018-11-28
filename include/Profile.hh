@@ -28,12 +28,14 @@ struct Stats {
 	}
 };
 
-class Profile
+class Profile : public MenuModule
 {
 public:
 	Profile(const std::string &name);
 	Profile(const json &data);
 	~Profile();
+
+	void registerMethods();
 
 	static void create(const std::string &name);
 	static void load(const std::string &name);

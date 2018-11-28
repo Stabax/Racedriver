@@ -3,7 +3,19 @@
 
 #include <string>
 #include <map>
+#include <memory>
+#include <functional>
 #include <pugixml.hpp>
+
+#define INVOKE_SEPARATOR  "::"
+
+struct MenuModule
+{
+  MenuModule(const std::string &id);
+  virtual void registerMethods() = 0;
+
+  std::map<std::string, std::function<void()>> methods;
+};
 
 class Menu
 {
@@ -16,18 +28,9 @@ public:
   static bool askConfirmation();
   static int askChoice();
 
-private:
-  std::map<std::string, MenuModule> _modules;
-};
+  static bool invokeMethod(const std::string &methodId);
 
-class MenuModule
-{
-public:
-  MenuModule();
-  AddMethod(std::string name, void *instance);
-
-private:
-  std::map<std::string, void *> _methods;
+  static std::map<std::string, std::shared_ptr<MenuModule>> modules;
 };
 
 std::string getHashFromFile(std::string path);

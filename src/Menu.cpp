@@ -6,9 +6,9 @@
 
 std::map<std::string, std::shared_ptr<MenuModule>> Menu::modules = std::map<std::string, std::shared_ptr<MenuModule>>();
 
-Menu::Menu()
+Menu::Menu(const std::string &path)
 {
-  
+  MenuFile menu(path);
 }
 
 bool Menu::invokeMethod(const std::string &methodPath)

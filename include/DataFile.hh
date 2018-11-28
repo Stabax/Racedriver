@@ -5,6 +5,8 @@
 #include <map>
 #include <nlohmann/json.hpp>
 using json = nlohmann::json;
+#include <pugixml.hpp>
+using xml_node = pugi::xml_node;
 
 
 class DataFile
@@ -22,6 +24,23 @@ public:
 private:
   const std::string _path;
   json _data;
+};
+
+class MenuFile
+{
+public:
+  MenuFile(const std::string &path);
+
+  bool load();
+  bool save();
+  bool save(const xml_node &data);
+
+  void setData(const xml_node &data);
+  const xml_node &getData();
+
+private:
+  const std::string _path;
+  xml_node _data;
 };
 
 #endif /* !DATAFILE_HH_ */

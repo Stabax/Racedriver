@@ -5,7 +5,6 @@
 #include <map>
 #include <memory>
 #include <functional>
-#include <pugixml.hpp>
 
 #define INVOKE_SEPARATOR  "::"
 
@@ -20,7 +19,7 @@ struct MenuModule
 class Menu
 {
 public:
-  Menu();
+  Menu(const std::string &path);
 
   static void msg(std::string str);
   static void error(std::string str);

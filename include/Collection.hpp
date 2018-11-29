@@ -13,8 +13,23 @@ class Tires;
 class AirIntake;
 class Spoiler;
 
+/*!
+ * @brief Dummy Collection declaration to allow SFINAE specification
+ */
+template <typename T, typename enable = void>
+class Collection;
+
+/*!
+ * @brief SFINAE helper to prevent specialization of Collection to a class that is not based on Part.
+ */
+template<typename T>
+using EnableIfPolicy = typename std::enable_if<std::is_base_of<Part, T>::value>::type;
+
+/*!
+ * @brief "Container" for any class with a based on Part.
+ */
 template <typename T>
-class Collection
+class Collection<T, EnableIfPolicy<T>>
 {
 public:
   void push(T obj)

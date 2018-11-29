@@ -8,7 +8,9 @@ using json = nlohmann::json;
 #include <pugixml.hpp>
 using xml_node = pugi::xml_node;
 
-
+/*!
+ * @brief JSON File I/O serialization class
+ */
 class DataFile
 {
 public:
@@ -26,6 +28,9 @@ private:
   json _data;
 };
 
+/*!
+ * @brief XML File I/O serialization class
+ */
 class MenuFile
 {
 public:

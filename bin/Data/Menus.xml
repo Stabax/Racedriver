@@ -3,13 +3,13 @@
   <Text Id="T"/>
   <Sep/>
   <Input Type="Choice"><!-- Type directive allows Choice or Confirm -->
-    <Item Type="Goto" Target="TestMenu2"/>
+    <Item Action="Goto" Target="TestMenu2"/>
   </Input>
 </Menu>
 <Menu Id="TestMenu2">
   <Text Id="TTTT"/>
   <Sep/>
   <Input Type="Confirm"><!-- Type directive allows Choice or Confirm -->
-    <Item Type="Goto" Target="TestMenu2"/>
+    <Item Action="Call" Target="TestMenu2"/>
   </Input>
 </Menu>

@@ -9,6 +9,9 @@
 #include <nlohmann/json.hpp>
 using json = nlohmann::json;
 
+/*!
+ * @brief Struct storing player stats
+ */
 struct Stats {
 	int races;
 	int victories;
@@ -28,6 +31,9 @@ struct Stats {
 	}
 };
 
+/*!
+ * @brief Player profile. Used to store the GameSave.
+ */
 class Profile : public MenuModule
 {
 public:

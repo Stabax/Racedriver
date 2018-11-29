@@ -8,6 +8,9 @@
 
 #define ID_SEPARATOR '.'
 
+/*!
+ * @brief Base class inherited by any part
+ */
 class Part
 {
 public:

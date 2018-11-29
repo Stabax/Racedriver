@@ -11,6 +11,7 @@ Menu::Menu(const std::string &path)
   MenuFile menu(path);
 }
 
+
 bool Menu::invokeMethod(const std::string &methodPath)
 {
 	size_t sep = methodPath.find(INVOKE_SEPARATOR);

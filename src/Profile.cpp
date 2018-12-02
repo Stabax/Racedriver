@@ -1,4 +1,5 @@
 //Profiles.cpp
+#include <dirent.h>
 #include "Profile.hh"
 #include "Menu.hh"
 
@@ -7,7 +8,7 @@ std::shared_ptr<Profile> Profile::active = nullptr;
 Profile::Profile(const std::string &name)
  : name(name), difficulty(0), credits(10000), MenuModule("Profile"), garage()
 {
-
+	garage.addCar(Car::collection[0]);
 }
 
 
@@ -33,11 +34,11 @@ void Profile::create(const std::string &name)
 
 void Profile::load(const std::string &name)
 {
-	DataFile save("./Saves/"+name+".json");
+	DataFile save("./Data/Saves/"+name+".json");
 
 	if (!save.load())
 	{
-		throw std::runtime_error("Cannot load collection file:"+name);
+		throw std::runtime_error("Cannot load profile:"+name);
 	}
 	Profile::active = std::make_shared<Profile>(save.getData());
 }
@@ -74,65 +75,45 @@ bool Profile::compatible(Profile& Player, const int& numeroBox, const char& rang
 	return compatible;
 }
 
-void Profile::listerSauvegardes()
+std::vector<std::string> Profile::getSaves(std::string dir)
 {
-	int i = 1;
-	std::string numeroSave;    // string which will contain the result
-	std::string nomProfile;
-	std::ostringstream oss;   // stream utilise pour la conversion
-	bool ouvert = true;
-	do
-	{
-		oss.str(""); //On vide le contenu de oss
-		oss << i;      // on insere le int dans le stream oss
-		numeroSave = oss.str(); // range le int dans la variable numeroSave
-		std::ifstream fichier( "Saves/Profile" + numeroSave + ".save" );
+	std::vector<std::string> saves;
+	DIR *dp;
+	struct dirent *dirp;
 
-		if(fichier)
+	if ((dp = opendir(dir.c_str())) == NULL)
+	{
+			throw (std::runtime_error("Error opening " + dir));
+	}
+	while ((dirp = readdir(dp)) != NULL)
+	{
+		std::string file = std::string(dirp->d_name);
+		size_t extpos = file.find(".json");
+		if (extpos != std::string::npos)
 		{
-			for (size_t ligne = 1; ligne <= 2; ligne++) //le nom est stocké sur la deuxieme ligne
-			{
-				getline(fichier, nomProfile);
-			}
-			Terminal::get() << i << ". Profile " << i << ": " << nomProfile << "\n";
-			i++; // on incremente
+			saves.push_back(file.substr(0, extpos));
 		}
-		else
-		{
-			ouvert = false;
-		}
-	}while(ouvert);
-	Terminal::get() << "\n"; // on separe le bloc de Profiles du choix annuler
+	}
+	closedir(dp);
+	return (saves);
 }
 
-int Profile::compterSauvegardes()
+
+void Profile::displaySavesList()
 {
-	int i = 1;
-	std::string numeroSave;          // string which will contain the result
-	std::ostringstream oss;   // stream utilise pour la conversion
-	bool ouvert = true;
+	std::string path = "./Data/Saves/";
+	std::vector<std::string> saves = getSaves(path);
+	saves.insert(saves.begin(), ""); //Dummy to keep index true
 
-	do
+	for (size_t i = 1; i < saves.size(); i++)
 	{
-		oss.str(""); //On vide le contenu de oss
-		oss << i;      // on insere le int dans le stream oss
-		numeroSave = oss.str(); // range le int dans la variable numeroSave
- 		std::ifstream fichier("Saves/Profile" + numeroSave + ".save");
-
-		if(fichier)
-		{
-			i++; // on incremente
-		}
-		else
-		{
-			ouvert = false;
-		}
-	}while(ouvert);
-	return i - 1; //Un tour de test supplementaire est fait, d'ou le -1
+		Terminal::get() << i << ". " << saves[i] << "\n";
+	}
 }
 
 void Profile::supprimerProfile(const int& numeroSave)
 {
+	/*
 	bool test;
 	bool fail = false;
 	std::string numeroProfile;
@@ -196,7 +177,7 @@ void Profile::supprimerProfile(const int& numeroSave)
 	{
 		Terminal::get().clearScreen();
 		Menu::msg("Profile"+numeroProfile+" supprime avec succes !");
-	}
+	}*/
 }
 
 bool Profile::payer(const int& prix)

@@ -1,1 +1,26 @@
-{"careerStats":{"accidents":0,"carBought":0,"creditsEarned":0,"losses":0,"races":0,"victories":0},"credits":10000,"difficulty":0,"garage":{"boxcount":1,"cars":[{"airIntake":"RaceDriver.Tempest","engine":"Nissan.1.8 TDI","name":"Nissan.Bluebird","spoiler":"RaceDriver.Nitrox","tires":"Continental.180/45 R10"}]},"name":"eses"}
+{
+  "careerStats": {
+    "accidents": 0,
+    "carBought": 0,
+    "creditsEarned": 0,
+    "losses": 0,
+    "races": 0,
+    "victories": 0
+  },
+  "credits": 10000,
+  "difficulty": 0,
+  "garage": {
+    "boxcount": 1,
+    "cars": [
+      {
+        "airIntake": "RaceDriver.Lightning",
+        "engine": "Toyota.WIP 16S",
+        "name": "Toyota.Corona",
+        "spoiler": "RaceDriver.Vapor",
+        "tires": "Continental.180/45 R10",
+        "rank": "D"
+      }
+    ]
+  },
+  "name": "eses"
+}

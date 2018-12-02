@@ -5,11 +5,20 @@
 Collection<Car> Car::collection = Collection<Car>();
 
 Car::Car(const json &data)
- : Part(data), _engine(std::make_shared<Engine>(Engine::collection[data["engine"].get<std::string>()])), _spoiler(std::make_shared<Spoiler>(Spoiler::collection[data["spoiler"].get<std::string>()])),
-  _airIntake(std::make_shared<AirIntake>(AirIntake::collection[data["airIntake"].get<std::string>()])), _tires(std::make_shared<Tires>(Tires::collection[data["tires"].get<std::string>()])), _nitroMax(100),
-  _nitro(_nitroMax), _durability(100)
+ : Part(data), _nitroMax(100), _nitro(_nitroMax), _durability(100)
 {
-
+	std::string id = data["name"].get<std::string>();
+  if (id.find(ID_SEPARATOR) != std::string::npos)
+	{
+		Car &toCopy = collection[id];
+		name = toCopy.name;
+		manufacturer = toCopy.manufacturer;
+		rank = toCopy.rank;
+	}
+ 	_engine = std::make_shared<Engine>(Engine::collection[data["engine"].get<std::string>()]);
+  _spoiler = std::make_shared<Spoiler>(Spoiler::collection[data["spoiler"].get<std::string>()]);
+  _airIntake = std::make_shared<AirIntake>(AirIntake::collection[data["airIntake"].get<std::string>()]);
+	_tires = std::make_shared<Tires>(Tires::collection[data["tires"].get<std::string>()]);
 }
 
 Car::~Car()
@@ -168,6 +177,7 @@ void to_json(json& j, const Car& car) {
 		{"engine", car.getEngine()->getId()},
     {"airIntake", car.getAirIntake()->getId()},
     {"spoiler", car.getSpoiler()->getId()},
-    {"tires", car.getTires()->getId()}
+    {"tires", car.getTires()->getId()},
+    {"rank", car.rank}
 	};
 }

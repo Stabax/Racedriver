@@ -22,14 +22,14 @@ class Collection;
 /*!
  * @brief SFINAE helper to prevent specialization of Collection to a class that is not based on Part.
  */
-template<typename T>
-using EnableIfPolicy = typename std::enable_if<std::is_base_of<Part, T>::value>::type;
+//template<typename T>
+//using EnableIfPolicy = ;
 
 /*!
  * @brief "Container" for any class with a based on Part.
  */
 template <typename T>
-class Collection<T, EnableIfPolicy<T>>
+class Collection<T, typename std::enable_if_t<std::is_base_of<Part, T>::value>>
 {
 public:
   void push(T obj)
@@ -57,18 +57,21 @@ public:
   template <typename ST>
   static const std::string getPath()
   {
+    std::string path = "./Data/";
     if (std::is_same<ST, Car>::value)
     {
-      return ("./Data/Cars.json");
+      path += "Cars";
     }
-    //Parts
-    std::string path = "./Data/Parts/";
-
+    else //Parts
+    {
+     path += "Parts/" + ST::getPath();
+    }
+    /*
     if (std::is_same<ST, Engine>::value) path += "Engines";
     else if (std::is_same<ST, Tires>::value) path += "Tires";
     else if (std::is_same<ST, AirIntake>::value) path += "AirIntakes";
     else if (std::is_same<ST, Spoiler>::value) path += "Spoilers";
-    else throw std::runtime_error("Unknown part type");
+    else throw std::runtime_error("Unknown part type");*/
     return (path+".json");
   }
 

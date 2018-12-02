@@ -14,6 +14,8 @@ public:
 	AirIntake(const json &data);
 	~AirIntake();
 
+  static const std::string getPath() { return ("AirIntakes"); };
+
 	int getAerodynamic() const;
 	int getPrice() const;
 

@@ -18,6 +18,8 @@ public:
 	Tires(const json &data);
 	~Tires();
 
+  static const std::string getPath() { return ("Tires"); };
+
 	static void listerTires();
 
 	int getDurability() const;

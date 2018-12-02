@@ -14,9 +14,15 @@
 class Part
 {
 public:
-  Part(const json &data)
-  : manufacturer(data["manufacturer"].get<std::string>()), name(data["name"].get<std::string>()), rank(charToRank(data["rank"].get<std::string>()[0]))
+  Part(const json &data) //build from json
   {
+    name = data["name"].get<std::string>();
+    try {
+      manufacturer = data["manufacturer"].get<std::string>();
+      rank = charToRank(data["rank"].get<std::string>()[0]);
+    } catch(...) {
+      //We are probably loading an id...
+    }
   }
 
   virtual ~Part() { }

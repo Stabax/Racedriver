@@ -24,6 +24,8 @@ public:
 	Engine(const json &data);
 	~Engine();
 
+  static const std::string getPath() { return ("Engines"); };
+
 	static void listerEngines(const std::string& marque);
 	static void infoEngine(const int& id, const std::string& marque, std::string& modele);
 	static void infoEngine(const int& id, const std::string& marque, int& prix);

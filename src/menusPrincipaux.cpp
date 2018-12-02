@@ -123,37 +123,19 @@ void menuJeu(bool& quitGame)
 
 void menuChargementPartie(bool& quit)
 {
-	std::string sMenu;
-	int menu;
+	int choice;
+	std::vector<std::string> saves = Profile::getSaves("./Data/Saves/");
+	saves.insert(saves.begin(), ""); //Dummy to keep index true
 	std::string nom;
 	//Menu Chargement Profile
 	Terminal::get() << "Charger un Profile: \n"
 									<< "===============\n"
 									<< "Selectionnez un Profile a charger.\n"
 									<< "===============\n\n";
-	Profile::listerSauvegardes();
-	Terminal::get() << "0. Annuler\n";
-	menu = Menu::askChoice();
-	//Redirection de l'utilisateur selon son choix grâce a un switch.
-	if(menu == 0)
-	{
-			Terminal::get().clearScreen(); //On flushe l'ancien ecran
-	}
-	else if(menu > 0 && menu <= Profile::compterSauvegardes())
-	{
-		try {
-			Profile::load("eses");
-		} catch (const std::exception &e)
-		{
-			Menu::error(e.what());
-		}
-		menuJeu(quit);//Redirection de l'utilisateur dans le menu de jeu
-	}
-	else //equivalent de default
-	{
-		Terminal::get().clearScreen(); //On flushe l'ancien ecran
-		Menu::error("Ce Profile n'existe pas");
-	}
+	Profile::displaySavesList();
+	Terminal::get() << "0. Retour\n";
+	choice = Menu::askChoice();
+	Profile::load(saves[choice]);
 }
 
 void menuCreationPartie(bool& quit)
@@ -190,11 +172,11 @@ void menuSuppressionPartie()
 									<< "===============\n"
 									<< "Selectionnez un Profile a supprimer.\n"
 									<< "===============\n\n";
-	Profile::listerSauvegardes();
+	Profile::displaySavesList();
 	Terminal::get() << "0. Annuler\n";
 	menu = Menu::askChoice(); // l'utilisateur entre le menu qu'il souhaite ouvrir
 	//Redirection de l'utilisateur selon son choix grâce a un switch.
-	if(menu == 0)
+	/*if(menu == 0)
 	{
 			Terminal::get().clearScreen(); //On flushe l'ancien ecran
 	}
@@ -245,7 +227,7 @@ void menuSuppressionPartie()
 	{
 		Terminal::get().clearScreen(); //On flushe l'ancien ecran
 		Menu::error("Ce Profile n'existe pas");
-	}
+	}*/
 }
 
 void menuApropos()

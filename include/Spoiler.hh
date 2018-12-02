@@ -16,6 +16,8 @@ public:
 	Spoiler(const json &data);
 	~Spoiler();
 
+  static const std::string getPath() { return ("Spoilers"); };
+
 	int getAerodynamic() const;
 	int getPrice() const;
 

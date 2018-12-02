@@ -44,11 +44,11 @@ public:
 	void registerMethods();
 
 	static void create(const std::string &name);
-	static void load(const std::string &name);
+	static void load(const std::string &path);
 	void save();
 
-	static void listerSauvegardes();
-	static int compterSauvegardes();
+	static std::vector<std::string> getSaves(std::string dir);
+	static void displaySavesList();
 	static void supprimerProfile(const int& numeroSave);
 	static bool compatible(Profile& Player, const int& numeroBox, const char& rangNewPiece);
 

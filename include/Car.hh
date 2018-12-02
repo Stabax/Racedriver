@@ -15,6 +15,8 @@ class Car : public Part
 public:
 	Car(const json &data);
 	~Car();
+	
+  static const std::string getPath() { return ("Cars"); };
 
 	static void listerCars();
 

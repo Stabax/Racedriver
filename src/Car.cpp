@@ -177,7 +177,6 @@ void to_json(json& j, const Car& car) {
 		{"engine", car.getEngine()->getId()},
     {"airIntake", car.getAirIntake()->getId()},
     {"spoiler", car.getSpoiler()->getId()},
-    {"tires", car.getTires()->getId()},
-    {"rank", car.rank}
+    {"tires", car.getTires()->getId()}
 	};
 }

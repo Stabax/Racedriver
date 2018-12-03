@@ -136,6 +136,7 @@ void menuChargementPartie(bool& quit)
 	Terminal::get() << "0. Retour\n";
 	choice = Menu::askChoice();
 	Profile::load(saves[choice]);
+	menuJeu(quit);
 }
 
 void menuCreationPartie(bool& quit)

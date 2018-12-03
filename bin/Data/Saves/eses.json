@@ -17,8 +17,7 @@
         "engine": "Toyota.WIP 16S",
         "name": "Toyota.Corona",
         "spoiler": "RaceDriver.Vapor",
-        "tires": "Continental.180/45 R10",
-        "rank": "D"
+        "tires": "Continental.180/45 R10"
       }
     ]
   },

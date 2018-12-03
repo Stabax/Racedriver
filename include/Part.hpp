@@ -16,13 +16,9 @@ class Part
 public:
   Part(const json &data) //build from json
   {
-    name = data["name"].get<std::string>();
-    try {
-      manufacturer = data["manufacturer"].get<std::string>();
-      rank = charToRank(data["rank"].get<std::string>()[0]);
-    } catch(...) {
-      //We are probably loading an id...
-    }
+    if (data.find("name") != data.end()) name = data["name"].get<std::string>();
+    if (data.find("manufacturer") != data.end()) manufacturer = data["manufacturer"].get<std::string>();
+    if (data.find("rank") != data.end()) rank = charToRank(data["rank"].get<std::string>()[0]);
   }
 
   virtual ~Part() { }

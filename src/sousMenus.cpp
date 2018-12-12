@@ -4,10 +4,9 @@
 
 
 void menuCourseLibre()
-{/*
+{
 	std::string sMenu;
 	int menu;
-	Car &CarPlayer = 0;
 	int nombreCircuits;
 	//Menu Principal
 	Terminal::get() << "Course Libre\n"
@@ -28,8 +27,8 @@ void menuCourseLibre()
 		Circuit::chargerCircuit(menu, CircuitCourant);
 		Terminal::get().clearScreen(); //On flushe l'ancien ecran
 
-		CarPlayer = Profile::active->garage->selectCar();
-		faireCourseLibre(*CircuitCourant, CarPlayer);
+		Car &player = Profile::active->garage.selectCar();
+		faireCourseLibre(*CircuitCourant, &player);
 		delete CircuitCourant;
 		CircuitCourant = 0;
 	}
@@ -37,7 +36,7 @@ void menuCourseLibre()
 	{
 		Terminal::get().clearScreen(); //On flushe l'ancien ecran
 		Menu::error("Saisie invalide");
-	}*/
+	}
 }
 
 void menuCourseChampionnat()
@@ -88,6 +87,7 @@ int menuConsulterGarage(const int& mode)
 	int menu;
 
 	//Menu Principal
+	Terminal::get().clearScreen();
 	Terminal::get() << "Liste des Boxs\n"
 									<< "===============\n";
 	if(mode == 0) //On est en visualisation dans le garage
@@ -157,10 +157,10 @@ int menuConsulterGarage(const int& mode)
 }
 
 void menuAtelier(const int& numeroBox)
-{/*
+{
 	Terminal::get().clearScreen();
 	bool quit = false;
-	Car* Car = Profile::active->getBox(numeroBox);
+	Car &car = Profile::active->garage.getBox(numeroBox);
 
 	while(quit != true)
 	{
@@ -169,7 +169,7 @@ void menuAtelier(const int& numeroBox)
 										<< "===============\n"
 										<< "Selectionnez une piece a modifier.\n"
 										<< "===============\n\n"
-										<< "Car actuelle: [BOX" << numeroBox + 1 << ": " << Car->manufacturer << " " << Car->name << "]\n\n"
+										<< "Car actuel: [BOX" << numeroBox << ": " << car.manufacturer << " " << car.name << "]\n\n"
 										<< "1. Engine\n"
 										<< "2. Prise d'air\n"
 										<< "3. Spoiler\n\n"
@@ -183,22 +183,22 @@ void menuAtelier(const int& numeroBox)
 				break;
 			case 1:
 				Terminal::get().clearScreen(); //On flushe l'ancien ecran
-				menuAtelierEngine(Player, numeroBox);
+				menuAtelierEngine(numeroBox);
 				break;
 			case 2:
 				Terminal::get().clearScreen(); //On flushe l'ancien ecran
-				menuAtelierAirIntake(Player, numeroBox);
+				menuAtelierAirIntake(numeroBox);
 				break;
 			case 3:
 				Terminal::get().clearScreen(); //On flushe l'ancien ecran
-				menuAtelierSpoiler(Player, numeroBox);
+				menuAtelierSpoiler(numeroBox);
 				break;
 			default:
 				Terminal::get().clearScreen(); //On flushe l'ancien ecran
 				Menu::error("Saisie invalide");
 				break;
 		}
-	}*/
+	}
 }
 
 void menuAtelierSpoiler(const int& numeroBox)

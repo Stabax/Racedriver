@@ -76,7 +76,7 @@ void Garage::displayBoxList()
 {
   for (size_t i = 0; i < _boxs.size(); i++)
   {
-    Terminal::get() << i << ". [" << _boxs[i]->manufacturer << " " << _boxs[i]->name << "]\n";
+    Terminal::get() << i+1 << ". [" << _boxs[i]->manufacturer << " " << _boxs[i]->name << "]\n";
   }
 }
 

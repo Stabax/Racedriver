@@ -147,7 +147,7 @@ void Engine::infoEngine(const int& id, const std::string& marque, std::string& m
 	}
 	else
 	{
-		int idActuel; //indique l'id actuellement lu dans le fichier
+		int idActuel = 0; //indique l'id actuellement lu dans le fichier
 
 		while(idActuel!=id && std::getline(engine, var))
 		{
@@ -345,7 +345,7 @@ void Engine::infoEngine(const int& id, const std::string& marque, std::string& m
 	}
 	else
 	{
-		int idActuel; //indique l'id actuellement lu dans le fichier
+		int idActuel = 0; //indique l'id actuellement lu dans le fichier
 
 		while(idActuel!=id && std::getline(engine, var))
 		{

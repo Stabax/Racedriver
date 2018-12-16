@@ -1,5 +1,10 @@
 //menusPrincipaux.cpp
+#ifdef __GNUC__
 #include <unistd.h>
+#endif
+#ifdef _MSC_VER
+#include <windows.h>
+#endif
 #include "Menu.hh"
 #include "menusPrincipaux.hh"
 
@@ -127,6 +132,7 @@ void menuChargementPartie(bool& quit)
 	std::vector<std::string> saves = Profile::getSaves("./Data/Saves/");
 	saves.insert(saves.begin(), ""); //Dummy to keep index true
 	std::string nom;
+	Terminal::get().clearScreen(); //On flushe l'ancien ecran
 	//Menu Chargement Profile
 	Terminal::get() << "Charger un Profile: \n"
 									<< "===============\n"
@@ -145,6 +151,7 @@ void menuCreationPartie(bool& quit)
 	std::string nom;
 
 	//Menu Creation de Profile
+	Terminal::get().clearScreen(); //On flushe l'ancien ecran
 	Terminal::get() << "Creation de votre Profile\n"
 									<< "===============\n\n"
 									<< "Saisissez le nom du Profile.\n\n"
@@ -169,6 +176,7 @@ void menuSuppressionPartie()
 
 	//Debut
 	//Menu Chargement Profile
+	Terminal::get().clearScreen(); //On flushe l'ancien ecran
 	Terminal::get() << "Supprimer un Profile: \n"
 									<< "===============\n"
 									<< "Selectionnez un Profile a supprimer.\n"

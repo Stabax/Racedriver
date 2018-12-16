@@ -16,8 +16,8 @@ Car::Car(const json &data)
 		rank = toCopy.rank;
 	}
  	_engine = std::make_shared<Engine>(Engine::collection[data["engine"].get<std::string>()]);
-  _spoiler = std::make_shared<Spoiler>(Spoiler::collection[data["spoiler"].get<std::string>()]);
-  _airIntake = std::make_shared<AirIntake>(AirIntake::collection[data["airIntake"].get<std::string>()]);
+  if (data["spoiler"].get<std::string>() != "") _spoiler = std::make_shared<Spoiler>(Spoiler::collection[data["spoiler"].get<std::string>()]);
+  if (data["airIntake"].get<std::string>() != "") _airIntake = std::make_shared<AirIntake>(AirIntake::collection[data["airIntake"].get<std::string>()]);
 	_tires = std::make_shared<Tires>(Tires::collection[data["tires"].get<std::string>()]);
 }
 
@@ -61,7 +61,9 @@ float Car::getAcceleration() const
 
 int Car::getAerodynamisme() const
 {
-	return static_cast<float>((_airIntake->getAerodynamic() / 3) + (_spoiler->getAerodynamic() / 3) );
+	float airIntakeValue = (_airIntake != nullptr ? _airIntake->getAerodynamic() : 0) / 3;
+	float spoilerValue = (_spoiler != nullptr ? _spoiler->getAerodynamic() : 0) / 3;
+	return (airIntakeValue + spoilerValue);
 }
 
 int Car::getNitroMax() const

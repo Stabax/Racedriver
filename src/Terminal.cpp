@@ -1,7 +1,12 @@
 #include "Terminal.hh"
 #include <cstdio>
 #include <cstdlib>
+#ifdef __GNUC__
 #include <unistd.h>
+#endif
+#ifdef _MSC_VER
+#include <windows.h>
+#endif
 
 std::unique_ptr<Terminal> Terminal::instance = nullptr;
 

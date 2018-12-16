@@ -1,5 +1,6 @@
 //menus.cpp
-#include <unistd.h>
+#include <chrono>
+#include <thread>
 #include "Menu.hh"
 #include "menus.hh"
 
@@ -170,7 +171,7 @@ void menuSauvegarde()
 										<< "Sauvegarde en cours...\n"
 										<< "===============\n"
 										<< "Veuillez patienter";
-		sleep(0.4f);
+		std::this_thread::sleep_for(std::chrono::seconds(4));
 		Profile::active->save();
 		Terminal::get().clearScreen();
 		Terminal::get() << "Sauvegarder votre Progression\n"

@@ -15,7 +15,7 @@ Les bibliothèques utilisées sont:
 
 Toutes les classes sont instanciées depuis des fichiers .cdx et le fichier mods.txt
 Les différentes classes sont le coeur du jeu:
-	-Circuit
+	-Track
 	-Profile
 	-Car
 	-Engine
@@ -42,8 +42,6 @@ Les conventions de ce programme sont:
 ===============
 */
 
-#include <ctime>
-#include <unistd.h>
 #include "Game.hh"
 
 namespace GLOBAL

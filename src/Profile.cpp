@@ -1,5 +1,10 @@
 //Profiles.cpp
+#ifdef __GNUC__
 #include <dirent.h>
+#endif
+#ifdef _MSC_VER
+#include "dirent.h"
+#endif
 #include "Profile.hh"
 #include "Menu.hh"
 

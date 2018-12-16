@@ -1,6 +1,7 @@
 #ifndef TERMINAL_HH_
 #define TERMINAL_HH_
 
+#include <string>
 #include <memory>
 #include "Utils.hh"
 #ifdef _WIN32

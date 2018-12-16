@@ -1,0 +1,27 @@
+{
+  "collection": [
+  {
+    "name": "Desert",
+    "length": 18,
+    "curves": 5,
+    "climate": "Desert"
+  },
+  {
+    "name": "Montagne",
+    "length": 43,
+    "curves": 13,
+    "climate": "Mountain"
+  },
+  {
+    "name": "Marais",
+    "length": 33,
+    "curves": 11,
+    "climate": "Normal"
+  },
+  {
+    "name": "Banquise",
+    "length": 26,
+    "curves": 9,
+    "climate": "Normal"
+  }]
+}

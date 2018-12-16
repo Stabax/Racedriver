@@ -5,38 +5,10 @@
 
 void menuCourseLibre()
 {
-	std::string sMenu;
-	int menu;
-	int nombreCircuits;
-	//Menu Principal
-	Terminal::get() << "Course Libre\n"
-									<< "===============\n"
-									<< "Selectionnez un circuit.\n"
-									<< "===============\n\n";
-	nombreCircuits = Circuit::listerCircuits();
-	Terminal::get() << "0. Annuler\n";
-	menu = Menu::askChoice();
-	//Redirection de l'utilisateur selon son choix grâce a un if + for.
-	if(menu == 0)
-	{
-			Terminal::get().clearScreen(); //On flushe l'ancien ecran et on quitte
-	}
-	else if(menu > 0 && menu <= nombreCircuits)
-	{
-		Circuit* CircuitCourant = 0;
-		Circuit::chargerCircuit(menu, CircuitCourant);
-		Terminal::get().clearScreen(); //On flushe l'ancien ecran
+	Race race(Profile::active->garage.selectCar());
 
-		Car &player = Profile::active->garage.selectCar();
-		faireCourseLibre(*CircuitCourant, &player);
-		delete CircuitCourant;
-		CircuitCourant = 0;
-	}
-	else
-	{
-		Terminal::get().clearScreen(); //On flushe l'ancien ecran
-		Menu::error("Saisie invalide");
-	}
+	if (race.preparations()) race.start();
+	return;
 }
 
 void menuCourseChampionnat()
@@ -44,13 +16,13 @@ void menuCourseChampionnat()
 	std::string sMenu;
 	int menu;
 	Car &CarPlayer = 0;
-	int nombreCircuits;
+	int nombreTracks;
 	//Menu Principal
 	Terminal::get() << "Course Libre\n"
 									<< "===============\n"
 									<< "Selectionnez un circuit.\n"
 									<< "===============\n\n";
-	nombreCircuits = Circuit::listerCircuits();
+	nombreTracks = Track::listerTracks();
 	Terminal::get() << "0. Annuler\n";
 	menu = Menu::askChoice();
 	//Redirection de l'utilisateur selon son choix grâce a un if + for.
@@ -58,10 +30,10 @@ void menuCourseChampionnat()
 	{
 			Terminal::get().clearScreen(); //On flushe l'ancien ecran et on quitte
 	}
-	else if(menu > 0 && menu <= nombreCircuits)
+	else if(menu > 0 && menu <= nombreTracks)
 	{
-		Circuit* CircuitCourant = 0;
-		Circuit::chargerCircuit(menu, CircuitCourant);
+		Track* TrackCourant = 0;
+		Track::chargerTrack(menu, TrackCourant);
 		Terminal::get().clearScreen(); //On flushe l'ancien ecran
 		CarPlayer = Profile::active->garage->selectCar();
 		if(CarPlayer == 0)
@@ -70,10 +42,10 @@ void menuCourseChampionnat()
 		}
 		else
 		{
-			faireCourseChampionnat(*CircuitCourant, CarPlayer);
+			faireCourseChampionnat(*TrackCourant, CarPlayer);
 		}
-		delete CircuitCourant;
-		CircuitCourant = 0;
+		delete TrackCourant;
+		TrackCourant = 0;
 	}
 	else
 	{
@@ -158,13 +130,13 @@ int menuConsulterGarage(const int& mode)
 
 void menuAtelier(const int& numeroBox)
 {
-	Terminal::get().clearScreen();
 	bool quit = false;
 	Car &car = Profile::active->garage.getBox(numeroBox);
 
 	while(quit != true)
 	{
 		//Menu Principal
+		Terminal::get().clearScreen();
 		Terminal::get() << "Menu Atelier\n"
 										<< "===============\n"
 										<< "Selectionnez une piece a modifier.\n"
@@ -777,6 +749,7 @@ void menuDifficulte()
 {
 	std::string menu;	//un string car le le passe en iss
 
+	Terminal::get().clearScreen();
 	Terminal::get() <<"Augmenter la difficulte augmente les gains\n"
 									<<"====================\n"
 									<<"Choisissez une difficulte\n"
@@ -826,6 +799,7 @@ void menuChangementNomProfile()
 	std::string nom;
 
 	//Menu Creation de Profile
+	Terminal::get().clearScreen();
 	Terminal::get() << "Changement de nom\n"
 									<< "===============\n\n"
 									<< "Saisissez le nouveau nom du Profile.\n\n"

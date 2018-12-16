@@ -1,6 +1,7 @@
 #ifndef COLLECTION_HPP_
 #define COLLECTION_HPP_
 
+#include <iostream>
 #include <vector>
 #include "DataFile.hh"
 #include "Menu.hh"
@@ -18,12 +19,6 @@ class Spoiler;
  */
 template <typename T, typename enable = void>
 class Collection;
-
-/*!
- * @brief SFINAE helper to prevent specialization of Collection to a class that is not based on Part.
- */
-//template<typename T>
-//using EnableIfPolicy = ;
 
 /*!
  * @brief "Container" for any class with a based on Part.

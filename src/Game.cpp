@@ -1,5 +1,7 @@
-#include <unistd.h>
+#include <chrono>
+#include <thread>
 #include <ctime>
+#include <stdio.h>
 #include <libcurl/include/curl/curl.h>
 #include <sstream>
 #include <fstream>
@@ -26,11 +28,15 @@ bool Game::load()
 		Collection<AirIntake>::load(AirIntake::collection);
 		Collection<Spoiler>::load(Spoiler::collection);
 		Collection<Car>::load(Car::collection);
+
+		Track::loadCollection();
+		Race::loadCrash();
+		Race::loadDrivers();
 	}
 	catch (const std::runtime_error &e)
 	{
 		Menu::error(e.what());
-		_term << ">Appuyez sur [ENTREE] pour continuer.\n";
+		Terminal::get() <<"\n\nPressez [ENTREE] pour quitter.\n";
 		getch();
 		return (false);
 	}
@@ -49,7 +55,7 @@ int Game::main()
 	}
 	_term.clearScreen();
 	if (!load()) return -1;
-	usleep(2000);
+	std::this_thread::sleep_for(std::chrono::seconds(2));
 	menuRacedriver(); //on lance le coeur du jeu
 	return 0;
 }

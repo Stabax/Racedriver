@@ -4,8 +4,8 @@
 
 #include <iostream>
 #include "Profile.hh"
-#include "Circuit.hh"
-#include "course.hh"
+#include "Track.hh"
+#include "Race.hh"
 #include"Game.hh"
 
 void menuCourseLibre(); //Menu de Course libre (lobby sp)

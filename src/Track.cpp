@@ -27,6 +27,10 @@ Track Track::selectTrack()
 	auto it = collection.begin();
 	int choice;
 
+	Terminal::get().clearScreen();
+	Terminal::get() << "======\n"
+									<< "Choisissez un circuit:\n"
+									<< "======\n";
 	for (size_t i = 0; i < collection.size(); i++, it++)
 	{
 		Terminal::get() << i+1 << ". " << it->name << "\n";
@@ -34,7 +38,7 @@ Track Track::selectTrack()
 	Terminal::get() << "0. Retour\n";
 	if ((choice = Menu::askChoice()) > 0)
 	{
-		return (collection[choice]);
+		return (collection[choice-1]);
 	}
 	throw (std::runtime_error("No track selected"));
 }

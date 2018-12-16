@@ -11,49 +11,6 @@ void menuCourseLibre()
 	return;
 }
 
-void menuCourseChampionnat()
-{/*
-	std::string sMenu;
-	int menu;
-	Car &CarPlayer = 0;
-	int nombreTracks;
-	//Menu Principal
-	Terminal::get() << "Course Libre\n"
-									<< "===============\n"
-									<< "Selectionnez un circuit.\n"
-									<< "===============\n\n";
-	nombreTracks = Track::listerTracks();
-	Terminal::get() << "0. Annuler\n";
-	menu = Menu::askChoice();
-	//Redirection de l'utilisateur selon son choix grâce a un if + for.
-	if(menu == 0)
-	{
-			Terminal::get().clearScreen(); //On flushe l'ancien ecran et on quitte
-	}
-	else if(menu > 0 && menu <= nombreTracks)
-	{
-		Track* TrackCourant = 0;
-		Track::chargerTrack(menu, TrackCourant);
-		Terminal::get().clearScreen(); //On flushe l'ancien ecran
-		CarPlayer = Profile::active->garage->selectCar();
-		if(CarPlayer == 0)
-		{
-			Menu::error("Aucune voiture selectionnee.");
-		}
-		else
-		{
-			faireCourseChampionnat(*TrackCourant, CarPlayer);
-		}
-		delete TrackCourant;
-		TrackCourant = 0;
-	}
-	else
-	{
-		Terminal::get().clearScreen(); //On flushe l'ancien ecran
-		Menu::error("Saisie invalide");
-	}*/
-}
-
 int menuConsulterGarage(const int& mode)
 {
 	int menu;
@@ -747,7 +704,7 @@ void menuVenteCar(const int& numeroBox)
 
 void menuDifficulte()
 {
-	std::string menu;	//un string car le le passe en iss
+	int choice;
 
 	Terminal::get().clearScreen();
 	Terminal::get() <<"Augmenter la difficulte augmente les gains\n"
@@ -760,38 +717,12 @@ void menuDifficulte()
 									<< "4. DIFFICILE\n"
 									<< "5. EXPERT\n\n"
 									<< "0. Retour\n";
-	//Redirection de l'utilisateur selon son choix grâce a un switch.
-	switch(Menu::askChoice())
+	choice = Menu::askChoice();
+	if (choice > 0 && choice <= 5)
 	{
-		case 0:
-			Terminal::get().clearScreen(); //On flushe l'ancien ecran
-			break;
-		case 1:
-			Terminal::get().clearScreen(); //On flushe l'ancien ecran
-			Profile::active->difficulty = 1;
-			break;
-		case 2:
-			Terminal::get().clearScreen(); //On flushe l'ancien ecran
-			Profile::active->difficulty = 2;
-			break;
-		case 3:
-			Terminal::get().clearScreen(); //On flushe l'ancien ecran
-			Profile::active->difficulty = 3;
-			break;
-		case 4:
-			Terminal::get().clearScreen(); //On flushe l'ancien ecran
-			Profile::active->difficulty = 4;
-			break;
-		case 5:
-			Terminal::get().clearScreen(); //On flushe l'ancien ecran
-			Profile::active->difficulty = 5;
-			break;
-		default:
-			Terminal::get().clearScreen(); //On flushe l'ancien ecran
-			Menu::error("Saisie invalide");
-			break;
+			Profile::active->difficulty = choice;
 	}
-	Profile::active->save();
+	return;
 }
 
 void menuChangementNomProfile()
@@ -800,17 +731,15 @@ void menuChangementNomProfile()
 
 	//Menu Creation de Profile
 	Terminal::get().clearScreen();
-	Terminal::get() << "Changement de nom\n"
-									<< "===============\n\n"
+	Terminal::get() << "===============\n\n"
 									<< "Saisissez le nouveau nom du Profile.\n\n"
-									<< "0. Annuler\n"
 									<< "===============\n"
 									<< "Nom: ";
-	nom = getString(); // l'utilisateur entre le menu qu'il souhaite ouvrir
+	Profile::active->name = getString(); // l'utilisateur entre le menu qu'il souhaite ouvrir
 	Terminal::get().clearScreen(); //on flushe l'ecran
 	if(nom != "0")
 	{
-		Menu::msg("Le nom de votre Profile est maintenant : \""+nom+"\"");
+		Menu::msg("Le nom de votre Profil est maintenant : \""+nom+"\"");
 	}
 	Profile::active->save();
 }

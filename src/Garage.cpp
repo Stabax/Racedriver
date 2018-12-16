@@ -19,6 +19,7 @@ Car &Garage::selectCar() const
 {
 	int choice;
 
+	Terminal::get().clearScreen();
 	Terminal::get() << "Liste des Boxs\n"
 									<< "===============\n"
 									<< "Selectionnez le vehicule qui va faire la course.\n"
@@ -101,19 +102,36 @@ void Garage::displayBoxDetail(int index)
 									<< " |Modele: " << car->getEngine()->name << "\n"
 									<< " |Vitesse: "<< car->getEngine()->getVitesse() << " Km/h\n"
 									<< " |Acceleration: " << car->getEngine()->getAcceleration() << " m/s²\n\n"
-									<< "#Spoiler\n"
-									<< " |Modele: " << car->getSpoiler()->name << "\n"
-									<< " |Rang: "<<  car->getSpoiler()->rank << "\n"
-									<< " |Aerodynamisme: " <<  car->getSpoiler()->getAerodynamic() << " %\n\n"
-									<< "#Prises d'air\n"
-									<< " |Modele: " << car->getAirIntake()->name << "\n"
-									<< " |Rang: "<<  car->getAirIntake()->rank << "\n"
-									<< " |Aerodynamisme: " <<  car->getAirIntake()->getAerodynamic() << " %\n\n"
-									<< "#Tires\n"
+									<< "#Spoiler\n";
+	if (car->getSpoiler() != nullptr)
+	{
+		Terminal::get() << " |Modele: " << car->getSpoiler()->name << "\n"
+										<< " |Marque: " << car->getSpoiler()->manufacturer  << "\n"
+										<< " |Rang: "<<  car->getSpoiler()->rank << "\n"
+										<< " |Aerodynamisme: " <<  car->getSpoiler()->getAerodynamic() << " %\n\n";
+	}
+	else
+	{
+		Terminal::get() << " |Aucun\n";
+	}
+	Terminal::get() << "#Prises d'air\n";
+	if (car->getSpoiler() != nullptr)
+	{
+		Terminal::get() << " |Modele: " << car->getAirIntake()->name << "\n"
+										<< " |Marque: " << car->getAirIntake()->manufacturer << "\n"
+										<< " |Rang: "<<  car->getAirIntake()->rank << "\n"
+										<< " |Aerodynamisme: " <<  car->getAirIntake()->getAerodynamic() << " %\n\n";
+	}
+	else
+	{
+		Terminal::get() << " |Aucun\n";
+	}
+	Terminal::get() << "#Tires\n"
 									<< " |Modele: " << car->getTires()->name << "\n"
+									<< " |Marque: " << car->getTires()->manufacturer << "\n"
 									<< " |Rang: "<<  car->getTires()->rank << "\n"
 									<< "===============\n"
-									<< "Appuyez sur Entree pour revenir au menu precedent";
+									<< "Appuyez sur [Entree] pour revenir au menu precedent";
 	getch();
 }
 

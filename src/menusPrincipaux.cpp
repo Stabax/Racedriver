@@ -62,9 +62,9 @@ void menuJeu(bool& quitGame)
 	std::ostringstream oss;
 	std::string numeroProfile;
 
-	Terminal::get().clearScreen();
-	while(quit != true)
+	while(!quit)
 	{
+	  Terminal::get().clearScreen();
 		Terminal::get() << "Menu Jeu\n"
 										<< "===============\n\n"
 										<< "1. Course\n\n"
@@ -117,6 +117,7 @@ void menuJeu(bool& quitGame)
 				menuOptions();
 				break;
 			case 7:
+				quit = true;
 				break;
 			default:
 				Terminal::get().clearScreen(); //On flushe l'ancien ecran

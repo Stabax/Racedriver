@@ -26,12 +26,6 @@ public:
 
   static const std::string getPath() { return ("Engines"); };
 
-	static void listerEngines(const std::string& marque);
-	static void infoEngine(const int& id, const std::string& marque, std::string& modele);
-	static void infoEngine(const int& id, const std::string& marque, int& prix);
-	static void infoEngine(const int& id, const std::string& marque, std::string& modele, int& vitesse, int& acceleration);
-	static void infoEngine(const int& id, const std::string& marque, std::string& modele, int& vitesse, int& acceleration, char& rang, int& prix);
-	static int compterEngines(const std::string& marque);
 	static float returnPrixCarburant(const std::string& carburant);
 
 	float getVitesse() const;

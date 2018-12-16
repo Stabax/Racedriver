@@ -10,39 +10,26 @@ void menuCourse()
 	while(quit != true)
 	{
 		//Menu Principal
+		Terminal::get().clearScreen();
 		Terminal::get() << "Menu Course\n"
 										<< "===============\n"
 										<< "Selectionnez un mode de course.\n"
 										<< "===============\n\n"
-										<< "1. Carriere\n"
-										<< "2. Championnat\n"
-										<< "3. Course Libre\n\n"
+										<< "1. Course Libre\n\n"
+										<< " <Carriere>\n"
+										<< " <Championnat>\n"
 										<< "0. Retour\n";
 		//Redirection de l'utilisateur selon son choix grâce a un switch.
 		switch(Menu::askChoice())
 		{
 			case 0:
-				Terminal::get().clearScreen(); //On flushe l'ancien ecran
 				quit = true; //INSTRUCTION DE SORTIE
 				break;
-
 			case 1:
-				Terminal::get().clearScreen(); //On flushe l'ancien ecran
-				Menu::error("Non implementee.");
-				break;
-
-			case 2:
-				Terminal::get().clearScreen(); //On flushe l'ancien ecran
-				menuCourseChampionnat();
-				break;
-
-			case 3:
-				Terminal::get().clearScreen(); //On flushe l'ancien ecran
 				menuCourseLibre();
 				break;
 
 			default:
-				Terminal::get().clearScreen(); //On flushe l'ancien ecran
 				Menu::error("Saisie invalide");
 				break;
 		}
@@ -55,6 +42,7 @@ void menuGarage()
 	while(quit != true)
 	{
 		//Menu Principal
+		Terminal::get().clearScreen();
 		Terminal::get() << "Menu Garage\n"
 										<< "===============\n"
 										<< "Credits: " << Profile::active->credits << "c\n"
@@ -68,27 +56,21 @@ void menuGarage()
 		switch(Menu::askChoice())
 		{
 			case 0:
-				Terminal::get().clearScreen(); //On flushe l'ancien ecran
 				quit = true; //INSTRUCTION DE SORTIE
 				break;
 			case 1:
-				Terminal::get().clearScreen(); //On flushe l'ancien ecran
 				menuConsulterGarage(0);
 				break;
 			case 2:
-				Terminal::get().clearScreen(); //On flushe l'ancien ecran
 				menuConsulterGarage(1);
 				break;
 			case 3:
-				Terminal::get().clearScreen(); //On flushe l'ancien ecran
 				menuConsulterGarage(3);
 				break;
 			case 4:
-				Terminal::get().clearScreen(); //On flushe l'ancien ecran
 				menuAcheterBox();
 				break;
 			default:
-				Terminal::get().clearScreen(); //On flushe l'ancien ecran
 				Menu::error("Saisie invalide");
 				break;
 		}
@@ -98,6 +80,7 @@ void menuGarage()
 void menuConcessionaire()
 {
 	//Menu Principal
+	Terminal::get().clearScreen();
 	Terminal::get() << "Concessionnaire\n"
 									<< "===============\n\n"
 									<< "1. Achat\n"
@@ -107,18 +90,14 @@ void menuConcessionaire()
 	switch(Menu::askChoice())
 	{
 		case 0:
-			Terminal::get().clearScreen(); //On flushe l'ancien ecran
 			break;
 		case 1:
-			Terminal::get().clearScreen(); //On flushe l'ancien ecran
 			menuBuyCar();
 			break;
 		case 2:
-			Terminal::get().clearScreen(); //On flushe l'ancien ecran
 			menuConsulterGarage(4);
 			break;
 		default:
-			Terminal::get().clearScreen(); //On flushe l'ancien ecran
 			Menu::error("Saisie invalide");
 			break;
 	}
@@ -126,6 +105,7 @@ void menuConcessionaire()
 
 void menuStats()
 {
+	Terminal::get().clearScreen();
 	Terminal::get() << "Stats du Profile: " << Profile::active->name << "\n"
 									<< "===============\n"
 									<< "#Stats Course:\n"
@@ -143,7 +123,6 @@ void menuStats()
 									<< "===============\n"
 									<< "Appuyez sur [Entree] pour retourner au menu principal...\n";
 	getch();
-	Terminal::get().clearScreen();
 }
 
 void menuSauvegarde()
@@ -153,6 +132,7 @@ void menuSauvegarde()
 	std::ifstream save(cheminFichier.c_str());
 
 	//Menu de sauvegarde de Profile
+	Terminal::get().clearScreen();
 	Terminal::get() << "Sauvegarder votre Progression\n"
 									<< "===============\n";
 	if(save)
@@ -196,44 +176,28 @@ void menuSauvegarde()
 void menuOptions()
 {
 	bool quit = false;
-	std::string saveAuto;
 	while(quit != true)
 	{
 		//Menu Principal
-		saveAuto = "ON";
-		Terminal::get() << "Options " << Profile::active->name << "\n"
+		Terminal::get().clearScreen();
+		Terminal::get() << "Options [" << Profile::active->name << "]\n"
 										<< "===============\n\n"
-										<< "1. Sauvegarde auto [" << saveAuto << "]\n"
-										<< "2. Difficulte ["<< Profile::active->difficulty <<"]\n"
-										<< "3. Raccourcis menus [OFF]\n"
-										<< "4. Changer le nom du Profile\n\n"
+										<< "1. Difficulte ["<< Profile::active->difficulty <<"]\n"
+										<< "2. Changer le nom du Profil\n\n"
 										<< "0. Retour\n";
 		//Redirection de l'utilisateur selon son choix grâce a un switch.
 		switch(Menu::askChoice())
 		{
 			case 0:
-				Terminal::get().clearScreen(); //On flushe l'ancien ecran
 				quit = true; //INSTRUCTION DE SORTIE
 				break;
-
 			case 1:
-				Terminal::get().clearScreen(); //On flushe l'ancien ecran
-				break;
-			case 2:
-				Terminal::get().clearScreen(); //On flushe l'ancien ecran
 				menuDifficulte();
 				break;
-			case 3:
-				Terminal::get().clearScreen(); //On flushe l'ancien ecran
-				Menu::error("non implemente");
-				break;
-			case 4:
-				Terminal::get().clearScreen(); //On flushe l'ancien ecran
+			case 2:
 				menuChangementNomProfile();
 				break;
-
 			default:
-				Terminal::get().clearScreen(); //On flushe l'ancien ecran
 				Menu::error("Saisie invalide");
 				break;
 		}

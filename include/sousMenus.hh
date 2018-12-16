@@ -9,7 +9,6 @@
 #include"Game.hh"
 
 void menuCourseLibre(); //Menu de Course libre (lobby sp)
-void menuCourseChampionnat();
 
 int menuConsulterGarage(const int& mode = 0);
 void menuAtelier(const int& numeroBox);

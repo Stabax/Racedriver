@@ -6,6 +6,19 @@
 #include "Track.hh"
 #include "Profile.hh"
 
+struct Concurrent
+{
+  Concurrent(std::string n, std::shared_ptr<Car> c);
+
+  friend bool operator==(const Concurrent &a, const Concurrent &b);
+  friend bool operator>(const Concurrent &a, const Concurrent &b);
+
+  std::string name;
+  std::shared_ptr<Car> car;
+  int score;
+  bool out;
+};
+
 class Race
 {
 public:
@@ -26,7 +39,8 @@ public:
   static std::vector<std::string> driversCollection;
 
 protected:
-  std::vector<std::pair<std::string, std::shared_ptr<Car>>> players;
+  std::shared_ptr<Concurrent> player;
+  std::vector<Concurrent> players;
   std::shared_ptr<Car> playerCar;
   std::shared_ptr<Track> track;
 };

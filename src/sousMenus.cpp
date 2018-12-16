@@ -736,10 +736,5 @@ void menuChangementNomProfile()
 									<< "===============\n"
 									<< "Nom: ";
 	Profile::active->name = getString(); // l'utilisateur entre le menu qu'il souhaite ouvrir
-	Terminal::get().clearScreen(); //on flushe l'ecran
-	if(nom != "0")
-	{
-		Menu::msg("Le nom de votre Profil est maintenant : \""+nom+"\"");
-	}
 	Profile::active->save();
 }

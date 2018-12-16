@@ -61,8 +61,8 @@ float Car::getAcceleration() const
 
 int Car::getAerodynamisme() const
 {
-	float airIntakeValue = (_airIntake != nullptr ? _airIntake->getAerodynamic() : 0) / 3;
-	float spoilerValue = (_spoiler != nullptr ? _spoiler->getAerodynamic() : 0) / 3;
+	float airIntakeValue = (_airIntake != nullptr ? _airIntake->getAerodynamic() : 0);
+	float spoilerValue = (_spoiler != nullptr ? _spoiler->getAerodynamic() : 0);
 	return (airIntakeValue + spoilerValue);
 }
 

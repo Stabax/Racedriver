@@ -135,16 +135,16 @@ bool Race::start()
 	std::vector<int> probaAccident = calculerProbaAccident();
 
 	//on calcule les voitures ayant un accident en fonction de la probabilite calculee precedement
-	for (size_t njoueur = 0; njoueur <= players.size(); njoueur++)
+	for (size_t i = 0; i <= players.size(); i++)
 	{
-		if(std::rand()%101 < probaAccident[njoueur])
+		if(std::rand()%101 < probaAccident[i])
 		{
-			score[njoueur]=0;
-			if(njoueur == 0)
+			score[i] = 0;
+			if(i == 0)
 			{
 				Profile::active->careerStats.accidents++;
 			}
-			Terminal::get() << "Le joueur " << players[njoueur].first << " " << crashCollection[rand()%crashCollection.size()] <<"\n";
+			Terminal::get() << "Le joueur " << players[i].first << " " << crashCollection[rand()%crashCollection.size()] <<"\n";
 		}
 	}
 	Terminal::get() <<"\n\nPressez [ENTREE] pour voir les resultats.\n";
@@ -251,7 +251,7 @@ std::vector<int> Race::calculerProbaAccident()
 
 	for (size_t i = 0; i < players.size(); i++)
 	{
-		results.push_back(((((track->curves*0)/(players[i].second->getTires()->getDurability()/8))+(0/(players[i].second->getAerodynamisme()*0.75)))/2) + std::rand()%5); //0 is meteo, then wind
+		results.push_back( (players[i].second->getTires()->getDurability() / track->curves) + (players[i].second->getAerodynamisme() / 1) + std::rand()%5); //1 is wind
 	}
 	return (results);
 }

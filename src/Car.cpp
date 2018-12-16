@@ -86,8 +86,8 @@ int Car::getPrix() const
 	int prixEngine=0;
 	int prixSpoiler=0;
 	int prixAirIntake=0;
-	prixSpoiler = _spoiler->getPrice();
-	prixAirIntake = _airIntake->getPrice();
+	prixSpoiler = (_spoiler != nullptr ? _spoiler->getPrice() : 0);
+	prixAirIntake = (_airIntake != nullptr ? _airIntake->getPrice() : 0);
 
 	return static_cast<int>(roundf( (prixEngine + prixSpoiler + prixAirIntake + 0 )  *0.9+ (( _nitroMax ) * 100)+ (( vRang(rank) - 1 ) * 20000)));
 }

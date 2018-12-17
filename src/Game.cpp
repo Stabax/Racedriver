@@ -7,6 +7,7 @@
 #include <fstream>
 #include "Menu.hh"
 #include "Game.hh"
+#include "Accident.hh"
 #include "menusPrincipaux.hh"
 
 //Singleton storage ptr
@@ -30,7 +31,7 @@ bool Game::load()
 		Collection<Car>::load(Car::collection);
 
 		Track::loadCollection();
-		Race::loadCrash();
+		Accident::loadCollection();
 		Race::loadDrivers();
 	}
 	catch (const std::runtime_error &e)

@@ -25,7 +25,6 @@ public:
   Race(Car &pCar);
 
   static void loadDrivers();
-  static void loadCrash();
 
   bool preparations();
   void randomizeOpponents(size_t count);
@@ -35,7 +34,6 @@ public:
 
   std::vector<int> calculerProbaAccident();
 
-  static std::vector<std::string> crashCollection;
   static std::vector<std::string> driversCollection;
 
 protected:

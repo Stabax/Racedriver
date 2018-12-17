@@ -3,8 +3,8 @@
 #include <functional>
 #include "Menu.hh"
 #include "Race.hh"
+#include "Accident.hh"
 
-std::vector<std::string> Race::crashCollection = std::vector<std::string>();
 std::vector<std::string> Race::driversCollection = std::vector<std::string>();
 
 Race::Race(Car &pCar)
@@ -27,21 +27,6 @@ void Race::loadDrivers()
 	for (size_t i = 0; i < data["collection"].size(); i++)
 	{
 		driversCollection.push_back(data["collection"][i].get<std::string>());
-	}
-}
-
-void Race::loadCrash()
-{
-	DataFile file("./Data/Events/Crash.json");
-
-	if (!file.load())
-	{
-		throw (std::runtime_error("Error loading Crash"));
-	}
-	const json &data = file.getData();
-	for (size_t i = 0; i < data["collection"].size(); i++)
-	{
-		crashCollection.push_back(data["collection"][i].get<std::string>());
 	}
 }
 
@@ -165,7 +150,7 @@ void Race::compute()
 			players[i].out = true;
 			players[i].score = 0;
 			if(i == 0) Profile::active->careerStats.accidents++;
-			Terminal::get() << "Le joueur " << players[i].name << " " << crashCollection[rand()%crashCollection.size()] <<"\n";
+			Terminal::get() << "Le joueur " << players[i].name << " " << Accident::collection[rand() % Accident::collection.size()].message <<"\n";
 		}
 	}
 }

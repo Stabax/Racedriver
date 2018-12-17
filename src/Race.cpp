@@ -78,10 +78,17 @@ bool Race::preparations()
 
 void Race::randomizeOpponents(size_t count)
 {
+	std::vector<std::string> usedNames;
+	std::string driver;
+
 	for (size_t i = 0; i < count; i++)
 	{
-		std::shared_ptr<Car> car = std::make_shared<Car>(Car::collection[0]);
-		std::string driver = driversCollection[rand() % driversCollection.size()];
+		std::shared_ptr<Car> car = std::make_shared<Car>(Car::collection[rand() % 2]);
+		do
+		{
+			driver = driversCollection[rand() % driversCollection.size()];
+		} while (std::find(usedNames.begin(), usedNames.end(), driver) != usedNames.end());
+		usedNames.push_back(driver);
 		players.push_back(Concurrent(driver, car));
 	}
 }
@@ -143,9 +150,9 @@ void Race::compute()
 
 	for (size_t i = 0; i < players.size(); i++)
 	{
-		players[i].score = players[i].car->getAcceleration() / track->getSegmentRatio();
-		players[i].score = players[i].car->getVitesse() * static_cast<float>(std::rand() % 2);
-		if(std::rand()%101 < probaAccident[i])
+		players[i].score = players[i].car->getAcceleration() / track->getSegmentRatio() + (std::rand() % 25);
+		players[i].score += players[i].car->getVitesse() * (static_cast<float>(std::rand() % 1) + 1);
+		if(std::rand() % 101 < probaAccident[i])
 		{
 			players[i].out = true;
 			players[i].score = 0;

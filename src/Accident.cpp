@@ -10,7 +10,7 @@ Accident::Accident(const json &data)
 
 void Accident::loadCollection()
 {
-	DataFile file("./Data/Events/Crash.json");
+	DataFile file("./Data/Events/Accidents.json");
 
 	if (!file.load())
 	{

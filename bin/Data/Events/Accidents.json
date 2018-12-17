@@ -1,0 +1,41 @@
+{
+  "collection": [
+  {
+    "damage": 10,
+    "message": "s'est pris un obstacle..."
+  },
+  {
+    "damage": 100,
+    "message": "s'est retourne dans un virage."
+  },
+  {
+    "damage": 20,
+    "message": "a fait un derapage non controle !"
+  },
+  {
+    "damage": 10,
+    "message": "a perdu une roue. Un sabotage ?"
+  },
+  {
+    "damage": 100,
+    "message": "a vu son essieu se briser, on a du mal a croire que c'est un accident !"
+  },
+  {
+    "damage": 100,
+    "message": "a vu son moteur exploser !"
+  },
+  {
+    "damage": 50,
+    "message": "a ses pneus creves."
+  },
+  {
+    "damage": 30,
+    "message": "a du sucre dans son reservoir..."
+  }]
+}
+
+
+
+
+
+

@@ -28,11 +28,11 @@ public:
   static void loadCrash();
 
   bool preparations();
-  void randomizeOpponents(int count);
+  void randomizeOpponents(size_t count);
   bool start();
 
+  void compute();
 
-  std::vector<int> calculerScore();
   std::vector<int> calculerProbaAccident();
 
   static std::vector<std::string> crashCollection;

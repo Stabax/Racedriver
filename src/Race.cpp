@@ -55,7 +55,7 @@ bool Race::preparations()
 		Menu::error("Vous ne disposez pas d'assez de crédits pour payer les preparatifs.");
 		return (false);
 	}
-	else if(playerCar->getEtat() < 20)
+	else if(playerCar->getDurability() < 20)
 	{
 		Menu::error("Votre vehicule est trop endommage pour concourir.");
 		return (false);
@@ -66,7 +66,7 @@ bool Race::preparations()
 		return (false);
 	}
 	Terminal::get().clearScreen(); //On flushe l'ancien ecran
-	if(playerCar->getNiveauNitro() < playerCar->getNitroMax())
+	if(playerCar->getNiveauNitro() < 100)
 	{
 		Menu::msg("Attention: Votre reservoir de nitro n'est pas plein.\n");
 	}
@@ -91,7 +91,7 @@ bool Race::preparations()
 	return (false);
 }
 
-void Race::randomizeOpponents(int count)
+void Race::randomizeOpponents(size_t count)
 {
 	for (size_t i = 0; i < count; i++)
 	{
@@ -130,27 +130,7 @@ bool Race::start()
 	Terminal::get().clearScreen();
 	Menu::msg("GO !");
 	std::this_thread::sleep_for(std::chrono::seconds(1));
-
-	//on calcule Score: celui qui a le plus grand est le vainqueur
-	std::vector<int> score = calculerScore();
-	//on calcule la probabilite que les voitures aient des accidents
-	std::vector<int> probaAccident = calculerProbaAccident();
-
-	//on calcule les voitures ayant un accident en fonction de la probabilite calculee precedement
-	for (size_t i = 0; i <= players.size(); i++)
-	{
-		if(std::rand()%101 < probaAccident[i])
-		{
-			players[i].out = true;
-			players[i].score = 0;
-			if(i == 0) Profile::active->careerStats.accidents++;
-			Terminal::get() << "Le joueur " << players[i].name << " " << crashCollection[rand()%crashCollection.size()] <<"\n";
-		}
-		else
-		{
-			players[i].score = score[i];
-		}
-	}
+	compute(); //Calculer la course
 	Terminal::get() <<"\n\nPressez [ENTREE] pour voir les resultats.\n";
 	getch();
 	std::sort(players.begin(), players.end(), std::greater<Concurrent>());
@@ -172,15 +152,22 @@ bool Race::start()
 	return (true);
 }
 
-std::vector<int> Race::calculerScore()
+void Race::compute()
 {
-	std::vector<int> results;
+	std::vector<int> probaAccident = calculerProbaAccident();
 
 	for (size_t i = 0; i < players.size(); i++)
 	{
-		results.push_back(((players[i].car->getVitesse()/2)+(players[i].car->getAcceleration()*2/track->curves))*((std::rand()%26)+75)/100);
+		players[i].score = players[i].car->getAcceleration() / track->getSegmentRatio();
+		players[i].score = players[i].car->getVitesse() * static_cast<float>(std::rand() % 2);
+		if(std::rand()%101 < probaAccident[i])
+		{
+			players[i].out = true;
+			players[i].score = 0;
+			if(i == 0) Profile::active->careerStats.accidents++;
+			Terminal::get() << "Le joueur " << players[i].name << " " << crashCollection[rand()%crashCollection.size()] <<"\n";
+		}
 	}
-	return (results);
 }
 
 

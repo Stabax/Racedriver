@@ -20,6 +20,7 @@ public:
 	~Track();
 
 	Climate convertClimate(const std::string &climate);
+	int getSegmentRatio();
 
 	static Track selectTrack();
 	static void loadCollection();

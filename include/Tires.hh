@@ -25,12 +25,13 @@ public:
 	int getDurability() const;
 	int getPrice() const;
 
-	void setDurability(int value);
+	void repair();
 
 	static Collection<Tires> collection;
 
 protected:
-	int _durability; //definit la vitesse d'usure des pneus
+	float _pressure;
+	int _integrity;
 	int _price;
 };
 

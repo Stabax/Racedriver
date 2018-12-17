@@ -5,7 +5,9 @@
 Collection<Car> Car::collection = Collection<Car>();
 
 Car::Car(const json &data)
- : Part(data), _nitroMax(100), _nitro(_nitroMax), _durability(100)
+ : Part(data), _nitro(100),
+ 	_fuel(data.find("fuel") != data.end() ? data["fuel"].get<float>() : 0),
+ 	_integrity(data.find("integrity") != data.end() ? data["integrity"].get<int>() : 100)
 {
 	std::string id = data["name"].get<std::string>();
   if (id.find(ID_SEPARATOR) != std::string::npos)
@@ -41,11 +43,11 @@ void Car::displayInfo() const
 
 void Car::listerCars()
 {
-	Terminal::get() << "   |Marque   |Modele     |Capacite nitro  |Aerodynamisme  |Prix  |\n\n";
+	Terminal::get() << "   |Marque   |Modele     |Aerodynamisme  |Prix  |\n\n";
   for (size_t i = 0; i < Car::collection.size(); i++)
 	{
-		Terminal::get() << i << "." << Car::collection[i].manufacturer << " " << Car::collection[i].name << " " << Car::collection[i].getNitroMax()
-										<< " " << Car::collection[i].getAerodynamisme() << " " << Car::collection[i].getPrix() << "c\n";
+		Terminal::get() << i << "." << Car::collection[i].manufacturer << " " << Car::collection[i].name
+												 << " " << Car::collection[i].getAerodynamisme() << " " << Car::collection[i].getPrix() << "c\n";
 	}
 }
 
@@ -66,19 +68,19 @@ int Car::getAerodynamisme() const
 	return (airIntakeValue + spoilerValue);
 }
 
-int Car::getNitroMax() const
-{
-	return _nitroMax;
-}
-
 int Car::getNiveauNitro() const
 {
 	return _nitro;
 }
 
-int Car::getEtat() const
+int Car::getDurability() const
 {
-	return _durability;
+	return _integrity;
+}
+
+int Car::getFuel() const
+{
+	return _fuel;
 }
 
 int Car::getPrix() const
@@ -89,7 +91,7 @@ int Car::getPrix() const
 	prixSpoiler = (_spoiler != nullptr ? _spoiler->getPrice() : 0);
 	prixAirIntake = (_airIntake != nullptr ? _airIntake->getPrice() : 0);
 
-	return static_cast<int>(roundf( (prixEngine + prixSpoiler + prixAirIntake + 0 )  *0.9+ (( _nitroMax ) * 100)+ (( vRang(rank) - 1 ) * 20000)));
+	return static_cast<int>(roundf( (prixEngine + prixSpoiler + prixAirIntake + 0 )  *0.9+ (( 100 ) * 100)+ (( vRang(rank) - 1 ) * 20000)));
 }
 
 std::shared_ptr<Engine> Car::getEngine() const
@@ -142,14 +144,14 @@ void Car::setNitro(const int& ajouter)
 	updateAttributs();
 }
 
-void Car::retirerEtat(const int& retirer)
+void Car::damage(int value)
 {
-	_durability -= retirer;
+	_integrity -= value;
 }
 
 void Car::pleinNitro()
 {
-	_nitro = _nitroMax;
+	_nitro = 100;
 	updateAttributs();
 }
 
@@ -160,17 +162,17 @@ void Car::pleinCarburant()
 
 void Car::reparer()
 {
-	_durability = 100;
+	_integrity = 100;
 }
 
 void Car::updateAttributs()
 {
-	_nitro = _nitroMax;
+	_nitro = 100;
 }
 
 void Car::changerTires()
 {
-	_tires->setDurability(100);
+	_tires->repair();
 }
 
 void to_json(json& j, const Car& car) {
@@ -179,6 +181,11 @@ void to_json(json& j, const Car& car) {
 		{"engine", car.getEngine()->getId()},
     {"airIntake", (car.getAirIntake() != nullptr ? car.getAirIntake()->getId() : "")},
     {"spoiler", (car.getSpoiler() != nullptr ? car.getSpoiler()->getId() : "")},
-    {"tires", car.getTires()->getId()}
+    {"tires", {
+			{"id", car.getTires()->getId()},
+			{"integrity", car.getTires()->getDurability()}
+		}},
+		{"fuel", car.getFuel()},
+		{"integrity", car.getDurability()}
 	};
 }

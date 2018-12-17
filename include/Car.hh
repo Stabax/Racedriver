@@ -24,9 +24,9 @@ public:
 	float getVitesse() const;
 	float getAcceleration() const;
 	int getAerodynamisme() const;
-	int getNitroMax() const;
 	int getNiveauNitro() const;
-	int getEtat() const;
+	int getDurability() const;
+	int getFuel() const;
 	int getAerodynamismeCar() const;
 	int getConsommation() const;
 	int getPrix() const;
@@ -45,7 +45,7 @@ public:
 	void setTires(const Tires &tires);
 	void setNitro(const int& ajouter);
 
-	void retirerEtat(const int& retirer);
+	void damage(int value);
 
 	void pleinNitro();
 
@@ -61,9 +61,9 @@ protected:
 	std::shared_ptr<Spoiler> _spoiler;
 	std::shared_ptr<AirIntake> _airIntake;
 	std::shared_ptr<Tires> _tires;
-	int _nitroMax;	//non modifiable pour une voiture donnée
 	int _nitro;	//se vide en fonction de la longueur du circuit. le plein est fait manuellement via paiement, juste avant une course
-	int _durability;
+	float _fuel;
+	int _integrity;
 };
 
 void to_json(json& j, const Car& car);

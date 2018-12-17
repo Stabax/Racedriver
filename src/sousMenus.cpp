@@ -454,41 +454,34 @@ void menuMaintenance(const int& numeroBox)
 				break;
 			case 2:
 				Terminal::get().clearScreen(); //On flushe l'ancien ecran
-				if(Car.getNitroMax() == 0)
+				nitroManquante = 100 - Car.getNiveauNitro();
+				Terminal::get() << "/!\\ Attention ! /!\\\n"
+												<< "====================\n"
+												<< "Credits: " << Profile::active->credits << "c\n"
+												<< "====================\n"
+												<< "Remplir la Nitro de ce vehicule (Restant: " << Car.getNiveauNitro() << "L/" << 100 << "L)\n"
+												<< "Pour remplir les " << nitroManquante << "L manquants, cela vous coutera " << nitroManquante * 100 << "c\n";
+				if (Menu::askConfirmation())
 				{
-					Menu::error("Votre vehicule n'est pas equipe d'un reservoir de Nitro.");
+					if(Profile::active->payer(nitroManquante * 100 ))
+					{
+						Car.changerTires();
+						Menu::msg("Nitro au max !");
+					}
 				}
 				else
 				{
-					nitroManquante = Car.getNitroMax() - Car.getNiveauNitro();
-					Terminal::get() << "/!\\ Attention ! /!\\\n"
-													<< "====================\n"
-													<< "Credits: " << Profile::active->credits << "c\n"
-													<< "====================\n"
-													<< "Remplir la Nitro de ce vehicule (Restant: " << Car.getNiveauNitro() << "L/" << Car.getNitroMax() << "L)\n"
-													<< "Pour remplir les " << nitroManquante << "L manquants, cela vous coutera " << nitroManquante * 100 << "c\n";
-					if (Menu::askConfirmation())
-					{
-						if(Profile::active->payer(nitroManquante * 100 ))
-						{
-							Car.changerTires();
-							Menu::msg("Nitro au max !");
-						}
-					}
-					else
-					{
-						Menu::msg("Transaction annulee.");
-					}
+					Menu::msg("Transaction annulee.");
 				}
 				break;
 			case 3:
-				if(Car.getEtat()==100)
+				if(Car.getDurability()==100)
 				{
 					Menu::msg("Votre voiture est en parfait etat.");
 				}
 				else
 				{
-					aPayer = (Car.getPrix() * (100 - Car.getEtat())) /100 ;
+					aPayer = (Car.getPrix() * (100 - Car.getDurability())) /100 ;
 					Terminal::get().clearScreen(); //On flushe l'ancien ecran
 					Terminal::get() << "/!\\ Attention ! /!\\\n"
 													<< "====================\n"
@@ -562,7 +555,7 @@ void menuBuyCar()
 void menuAchatCar()
 {
 	std::string sMenu;
-	int menu;
+	size_t menu;
 	int tmenu = 0;
 	bool quit = false;
 	bool achat = false;

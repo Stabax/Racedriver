@@ -43,6 +43,11 @@ Track Track::selectTrack()
 	throw (std::runtime_error("No track selected"));
 }
 
+int Track::getSegmentRatio()
+{
+	return (length / curves);
+}
+
 void Track::loadCollection()
 {
 	DataFile file("./Data/Tracks.json");

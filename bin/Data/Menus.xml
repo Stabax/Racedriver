@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Menu Id="Test">
-  <Text Id="T"/>
+<Menu Id="Main">
+  <Title>Racedriver menu experiment</Title>
   <Sep/>
-  <Input Type="Choice"><!-- Type directive allows Choice or Confirm -->
-    <Item Action="Goto" Target="TestMenu2"/>
-  </Input>
+  <Item Action="Call" Target="Menu::newGame()">Continue game</Item>
+  <Item Action="Call" Target="Menu::newGame()">New game</Item>
+  <Item Action="Call" Target="Main::exit()">Quit</Item>
+</Menu>
+<Menu Id="Test">
+  <Text>TESTTTT</Text>
+  <Sep/>
+  <Item Action="Goto" Target="TestMenu2">Ok, take me back</Item>
 </Menu>
 <Menu Id="TestMenu2">
-  <Text Id="TTTT"/>
+  <Text>TTTT! Wanna save ?</Text>
   <Sep/>
-  <Input Type="Confirm"><!-- Type directive allows Choice or Confirm -->
-    <Item Action="Call" Target="TestMenu2"/>
-  </Input>
+  <Item Type="Call" Target="Profil::save()">Save</Item>
+  <Item Action="Goto" Target="Test">NOPE</Item>
 </Menu>

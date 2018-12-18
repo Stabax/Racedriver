@@ -6,6 +6,15 @@
 #include "DataFile.hh"
 #include "Game.hh"
 
+// Entity types
+struct Entity {
+	enum Type {
+		Curve
+	};
+
+	static std::map<std::string, Entity::Type> collection;
+}
+
 class Track
 {
 public:

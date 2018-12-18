@@ -2,12 +2,24 @@
 #include "Track.hh"
 #include "Menu.hh"
 
+std::map<std::string, Entity::Type> Entity::collection = std::map<std::string, Entity::Type>();
+
+void Entity::loadCollection()
+{
+	collection.emplace("curve", Curve);
+}
+
 std::vector<Track> Track::collection = std::vector<Track>();
 
 Track::Track(const json &data)
- : name(data["name"].get<std::string>()), length(data["length"].get<int>()), curves(data["curves"].get<int>()),
+ : name(data["name"].get<std::string>()),
  	 climate(convertClimate(data["climate"].get<std::string>()))
 {
+	length = data["track"].size();
+	for (size_t i = 0; i < length; i++)
+	{
+
+	}
 }
 
 Track::~Track()

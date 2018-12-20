@@ -25,7 +25,7 @@ public:
 	int getDurability() const;
 	int getPrice() const;
 
-	void repair();
+	void setIntegrity(int value);
 
 	static Collection<Tires> collection;
 

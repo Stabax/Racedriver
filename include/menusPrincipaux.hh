@@ -5,10 +5,10 @@
 #include "menus.hh"
 
 void menuRacedriver();
-void menuJeu(bool& quitter);
+void menuJeu();
 
-void menuChargementPartie(bool& quit);
-void menuCreationPartie(bool& quit);
+void menuChargementPartie();
+void menuCreationPartie();
 void menuSuppressionPartie();
 
 void menuApropos(); //Menu promotionnel

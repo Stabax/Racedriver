@@ -6,7 +6,7 @@ Collection<Tires> Tires::collection = Collection<Tires>();
 
 Tires::Tires(const json &data)
  : Part(data), _pressure(2.5f), _price(vRang(rank) * 1500),
- 	_integrity(data.find("integrity") != data.end() ? data["integrity"].get<int>() : 100)
+ 	_integrity(100)
 {
 
 }
@@ -45,7 +45,7 @@ int Tires::getPrice() const
 	return _price;
 }
 
-void Tires::repair()
+void Tires::setIntegrity(int value)
 {
-	_integrity = 100;
+	_integrity = value;
 }

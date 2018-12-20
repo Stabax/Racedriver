@@ -6,33 +6,24 @@
 
 void menuCourse()
 {
-	bool quit = false;
-	while(quit != true)
+	//Menu Principal
+	Terminal::get().clearScreen();
+	Terminal::get() << "Menu Course\n"
+									<< "===============\n"
+									<< "Selectionnez un mode de course.\n"
+									<< "===============\n\n"
+									<< "1. Course Libre\n\n"
+									<< " <Carriere>\n"
+									<< " <Championnat>\n"
+									<< "0. Retour\n";
+	//Redirection de l'utilisateur selon son choix grâce a un switch.
+	switch(Menu::askChoice())
 	{
-		//Menu Principal
-		Terminal::get().clearScreen();
-		Terminal::get() << "Menu Course\n"
-										<< "===============\n"
-										<< "Selectionnez un mode de course.\n"
-										<< "===============\n\n"
-										<< "1. Course Libre\n\n"
-										<< " <Carriere>\n"
-										<< " <Championnat>\n"
-										<< "0. Retour\n";
-		//Redirection de l'utilisateur selon son choix grâce a un switch.
-		switch(Menu::askChoice())
-		{
-			case 0:
-				quit = true; //INSTRUCTION DE SORTIE
-				break;
-			case 1:
-				menuCourseLibre();
-				break;
-
-			default:
-				Menu::error("Saisie invalide");
-				break;
-		}
+		case 0:
+			break;
+		case 1:
+			menuCourseLibre();
+			break;
 	}
 }
 

@@ -98,7 +98,7 @@ bool Race::start()
 	Terminal::get() << "Bienvenue à tous et a toutes !\n"
 									<< "Aujourd'hui va se derouler l'evenement tant attendu par tous les fans de sportives,"
 									<< "tout le monde s'est reuni et l'ambiance est a son comble sur le circuit: " << track->name << ".\n"
-									<< "On m'annonce qu'il totalise " << track->getLength() << " Km, et comprend pas moins de " << track->curves << " virages serres !\n"
+									<< "On m'annonce qu'il totalise " << track->getLength() << " Km, et comprend pas moins de <JSPCB> de virages serres !\n"
 									<< "<Inserer commentaire meteo>" << "\n"
 									<< "D'autre part, il y a un vent de Force <ZAIREAU> dans l'enceinte du circuit.\n\n"
 									<< "Sans attendre passons tout de suite a la liste des Participants:\n\n";
@@ -150,8 +150,10 @@ void Race::compute()
 
 	for (size_t t = 0; t < track->track.size(); t++)
 	{
+		Terminal::get() << "Kilomètre " << t << ":\n";
 		for (size_t i = 0; i < players.size(); i++)
 		{
+			if (players[i].out) continue; //Skip out players
 			players[i].score += players[i].car->getAcceleration() * track->track[t].gradient + (std::rand() % 25);
 			players[i].score += players[i].car->getVitesse() * (static_cast<float>(std::rand() % 1) + 1);
 			if(std::rand() % 101 < probaAccident[i])
@@ -172,7 +174,7 @@ std::vector<int> Race::calculerProbaAccident()
 
 	for (size_t i = 0; i < players.size(); i++)
 	{
-		results.push_back( (players[i].car->getTires()->getDurability() / track->curves) + (players[i].car->getAerodynamisme() / 1) + std::rand()%5); //1 is wind
+		results.push_back( (players[i].car->getTires()->getDurability() + players[i].car->getAerodynamisme() / 4) + std::rand()%5);
 	}
 	return (results);
 }

@@ -51,7 +51,6 @@ struct Track
 
 	std::string name;
 	std::vector<Step> track;
-	int curves;
 	Climate climate;
 };
 

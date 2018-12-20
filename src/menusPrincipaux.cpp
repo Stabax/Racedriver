@@ -29,34 +29,28 @@ void menuRacedriver()
 		switch(Menu::askChoice())
 		{
 			case 0:
-				Terminal::get().clearScreen(); //On flushe l'ancien ecran
 				quit = true;
 				break;
 			case 1:
-				Terminal::get().clearScreen(); //On flushe l'ancien ecran
-				menuChargementPartie(quit);
+				menuChargementPartie();
 				break;
 			case 2:
-				Terminal::get().clearScreen(); //On flushe l'ancien ecran
-				menuCreationPartie(quit);
+				menuCreationPartie();
 				break;
 			case 3:
-				Terminal::get().clearScreen(); //On flushe l'ancien ecran
 				menuSuppressionPartie();
 				break;
 			case 4:
-				Terminal::get().clearScreen(); //On flushe l'ancien ecran
 				menuApropos();
 				break;
 			default:
-				Terminal::get().clearScreen(); //On flushe l'ancien ecran
 				Menu::error("Saisie invalide");
 				break;
 		}
 	}
 }
 
-void menuJeu(bool& quitGame)
+void menuJeu()
 {
 	bool quit = false;
 	std::ostringstream oss;
@@ -88,7 +82,7 @@ void menuJeu(bool& quitGame)
 				{
 					Profile::active->save();
 				}
-				quitGame = true;
+				quit = true;
 			break;
 			case 1:
 				menuCourse();
@@ -127,7 +121,7 @@ void menuJeu(bool& quitGame)
 	}
 }
 
-void menuChargementPartie(bool& quit)
+void menuChargementPartie()
 {
 	int choice;
 	std::vector<std::string> saves = DataFile::getFolderContents("./Data/Saves/", ".json");
@@ -143,10 +137,10 @@ void menuChargementPartie(bool& quit)
 	Terminal::get() << "0. Retour\n";
 	choice = Menu::askChoice();
 	Profile::load(saves[choice]);
-	menuJeu(quit);
+	menuJeu();
 }
 
-void menuCreationPartie(bool& quit)
+void menuCreationPartie()
 {
 	//Var
 	std::string nom;
@@ -164,7 +158,7 @@ void menuCreationPartie(bool& quit)
 	{
 		Profile::create(nom);
 		Profile::active->save();
-		menuJeu(quit);
+		menuJeu();
 	}
 }
 

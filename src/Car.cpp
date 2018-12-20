@@ -20,7 +20,15 @@ Car::Car(const json &data)
  	_engine = std::make_shared<Engine>(Engine::collection[data["engine"].get<std::string>()]);
   if (data["spoiler"].get<std::string>() != "") _spoiler = std::make_shared<Spoiler>(Spoiler::collection[data["spoiler"].get<std::string>()]);
   if (data["airIntake"].get<std::string>() != "") _airIntake = std::make_shared<AirIntake>(AirIntake::collection[data["airIntake"].get<std::string>()]);
-	_tires = std::make_shared<Tires>(Tires::collection[data["tires"].get<std::string>()]);
+	if (data["tires"].find("id") != data["tires"].end()) //rebuild from save
+	{
+		_tires = std::make_shared<Tires>(Tires::collection[data["tires"]["id"].get<std::string>()]);
+		if (data["tires"].find("integrity") != data["tires"].end()) _tires->setIntegrity(data["tires"]["integrity"].get<int>());
+	}
+	else //build from factory
+	{
+		_tires = std::make_shared<Tires>(Tires::collection[data["tires"].get<std::string>()]);
+	}
 }
 
 Car::~Car()
@@ -172,7 +180,7 @@ void Car::updateAttributs()
 
 void Car::changerTires()
 {
-	_tires->repair();
+	_tires->setIntegrity(100);
 }
 
 void to_json(json& j, const Car& car) {

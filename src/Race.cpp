@@ -34,7 +34,7 @@ bool Race::preparations()
 {
 	int prixCourse;
 
-	prixCourse = (5 * 0.01f * track->length * 5 /*prix carburant remplace par 5 */);
+	prixCourse = (5 * 0.01f * track->getLength() * 5 /*prix carburant remplace par 5 */);
 	if(Profile::active->credits < prixCourse)
 	{
 		Menu::error("Vous ne disposez pas d'assez de crédits pour payer les preparatifs.");
@@ -98,7 +98,7 @@ bool Race::start()
 	Terminal::get() << "Bienvenue à tous et a toutes !\n"
 									<< "Aujourd'hui va se derouler l'evenement tant attendu par tous les fans de sportives,"
 									<< "tout le monde s'est reuni et l'ambiance est a son comble sur le circuit: " << track->name << ".\n"
-									<< "On m'annonce qu'il totalise " << track->length << " Km, et comprend pas moins de " << track->curves << " virages serres !\n"
+									<< "On m'annonce qu'il totalise " << track->getLength() << " Km, et comprend pas moins de " << track->curves << " virages serres !\n"
 									<< "<Inserer commentaire meteo>" << "\n"
 									<< "D'autre part, il y a un vent de Force <ZAIREAU> dans l'enceinte du circuit.\n\n"
 									<< "Sans attendre passons tout de suite a la liste des Participants:\n\n";
@@ -148,16 +148,19 @@ void Race::compute()
 {
 	std::vector<int> probaAccident = calculerProbaAccident();
 
-	for (size_t i = 0; i < players.size(); i++)
+	for (size_t t = 0; t < track->track.size(); t++)
 	{
-		players[i].score = players[i].car->getAcceleration() / track->getSegmentRatio() + (std::rand() % 25);
-		players[i].score += players[i].car->getVitesse() * (static_cast<float>(std::rand() % 1) + 1);
-		if(std::rand() % 101 < probaAccident[i])
+		for (size_t i = 0; i < players.size(); i++)
 		{
-			players[i].out = true;
-			players[i].score = 0;
-			if(i == 0) Profile::active->careerStats.accidents++;
-			Terminal::get() << "Le joueur " << players[i].name << " " << Accident::collection[rand() % Accident::collection.size()].message <<"\n";
+			players[i].score += players[i].car->getAcceleration() * track->track[t].gradient + (std::rand() % 25);
+			players[i].score += players[i].car->getVitesse() * (static_cast<float>(std::rand() % 1) + 1);
+			if(std::rand() % 101 < probaAccident[i])
+			{
+				players[i].out = true;
+				players[i].score = 0;
+				if(i == 0) Profile::active->careerStats.accidents++;
+				Terminal::get() << "Le joueur " << players[i].name << " " << Accident::collection[rand() % Accident::collection.size()].message <<"\n";
+			}
 		}
 	}
 }

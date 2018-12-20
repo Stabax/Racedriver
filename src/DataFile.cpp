@@ -45,6 +45,35 @@ const json &DataFile::getData()
   return (_data);
 }
 
+
+std::vector<std::string> DataFile::getFolderContents(std::string filter)
+{
+	std::vector<std::string> files;
+	DIR *dp;
+	struct dirent *dirp;
+
+	if ((dp = opendir(dir.c_str())) == NULL)
+	{
+			throw (std::runtime_error("Error opening " + dir));
+	}
+	while ((dirp = readdir(dp)) != NULL)
+	{
+		std::string file = std::string(dirp->d_name);
+		size_t extpos = file.find(filter);
+		if (extpos != std::string::npos)
+		{
+			saves.push_back(file.substr(0, extpos));
+		}
+    else
+    {
+      saves.push_back(file);
+    }
+	}
+	closedir(dp);
+	return (saves);
+}
+
+
 //XML
 
 MenuFile::MenuFile(const std::string &path)

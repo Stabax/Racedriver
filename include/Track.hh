@@ -6,18 +6,31 @@
 #include "DataFile.hh"
 #include "Game.hh"
 
-// Entity types
+
 struct Entity {
 	enum Type {
 		Curve
 	};
 
-	static std::map<std::string, Entity::Type> collection;
-}
+	Entity(Type t);
 
-class Track
+	static void loadCollection();
+
+	static std::map<std::string, Entity> collection;
+	Type type;
+};
+
+
+struct Step {
+	Step(const json &data);
+
+	std::vector<Entity> entities;
+	int gradient;
+};
+
+
+struct Track
 {
-public:
 	enum Climate {
 		Normal,
 		Mountain,
@@ -29,7 +42,7 @@ public:
 	~Track();
 
 	Climate convertClimate(const std::string &climate);
-	int getSegmentRatio();
+	int getLength();
 
 	static Track selectTrack();
 	static void loadCollection();
@@ -37,7 +50,7 @@ public:
 	static std::vector<Track> collection;
 
 	std::string name;
-	int length;
+	std::vector<Step> track;
 	int curves;
 	Climate climate;
 };

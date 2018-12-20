@@ -2,12 +2,39 @@
 #include "Track.hh"
 #include "Menu.hh"
 
-std::map<std::string, Entity::Type> Entity::collection = std::map<std::string, Entity::Type>();
+//
+// Entity
+//
+
+std::map<std::string, Entity> Entity::collection = std::map<std::string, Entity>();
+
+Entity::Entity(Entity::Type t)
+ : type(t)
+{
+
+}
 
 void Entity::loadCollection()
 {
-	collection.emplace("curve", Curve);
+	collection.emplace("curve", Entity(Curve));
 }
+
+//
+// Step
+//
+
+Step::Step(const json &data)
+ : gradient(data["gradient"].get<int>())
+{
+	for (size_t i = 0; i < data["entities"].size(); i++)
+	{
+		entities.push_back(Entity::collection.at(data["entities"][i].get<std::string>()));
+	}
+}
+
+//
+// Track
+//
 
 std::vector<Track> Track::collection = std::vector<Track>();
 
@@ -15,10 +42,9 @@ Track::Track(const json &data)
  : name(data["name"].get<std::string>()),
  	 climate(convertClimate(data["climate"].get<std::string>()))
 {
-	length = data["track"].size();
-	for (size_t i = 0; i < length; i++)
+	for (size_t i = 0; i < data["track"].size(); i++)
 	{
-
+		track.push_back(Step(data["track"][i]));
 	}
 }
 
@@ -55,9 +81,9 @@ Track Track::selectTrack()
 	throw (std::runtime_error("No track selected"));
 }
 
-int Track::getSegmentRatio()
+int Track::getLength()
 {
-	return (length / curves);
+	return (track.size());
 }
 
 void Track::loadCollection()

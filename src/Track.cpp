@@ -88,7 +88,7 @@ int Track::getLength()
 
 void Track::loadCollection()
 {
-	DataFile file("./Data/Tracks.json");
+	DataFile file("./Data/Tracks/.json");
 
 	if (!file.load())
 	{

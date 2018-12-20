@@ -30,6 +30,7 @@ bool Game::load()
 		Collection<Spoiler>::load(Spoiler::collection);
 		Collection<Car>::load(Car::collection);
 
+		Entity::loadCollection();
 		Track::loadCollection();
 		Accident::loadCollection();
 		Race::loadDrivers();

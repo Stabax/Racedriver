@@ -130,7 +130,7 @@ void menuJeu(bool& quitGame)
 void menuChargementPartie(bool& quit)
 {
 	int choice;
-	std::vector<std::string> saves = Profile::getSaves("./Data/Saves/");
+	std::vector<std::string> saves = DataFile::getFolderContents("./Data/Saves/", ".json");
 	saves.insert(saves.begin(), ""); //Dummy to keep index true
 	std::string nom;
 	Terminal::get().clearScreen(); //On flushe l'ancien ecran

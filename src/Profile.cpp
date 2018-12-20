@@ -1,10 +1,4 @@
 //Profiles.cpp
-#ifdef __GNUC__
-#include <dirent.h>
-#endif
-#ifdef _MSC_VER
-#include "dirent.h"
-#endif
 #include "Profile.hh"
 #include "Menu.hh"
 
@@ -37,15 +31,15 @@ void Profile::create(const std::string &name)
 	Profile::active = std::make_shared<Profile>(name);
 }
 
-void Profile::load(const std::string &name)
+void Profile::load(const std::string &save)
 {
-	DataFile save("./Data/Saves/"+name+".json");
+	DataFile file("./Data/Saves/"+save);
 
-	if (!save.load())
+	if (!file.load())
 	{
-		throw std::runtime_error("Cannot load profile:"+name);
+		throw std::runtime_error("Cannot load profile:"+save);
 	}
-	Profile::active = std::make_shared<Profile>(save.getData());
+	Profile::active = std::make_shared<Profile>(file.getData());
 }
 
 void Profile::save()
@@ -80,34 +74,9 @@ bool Profile::compatible(Profile& Player, const int& numeroBox, const char& rang
 	return compatible;
 }
 
-std::vector<std::string> Profile::getSaves(std::string dir)
-{
-	std::vector<std::string> saves;
-	DIR *dp;
-	struct dirent *dirp;
-
-	if ((dp = opendir(dir.c_str())) == NULL)
-	{
-			throw (std::runtime_error("Error opening " + dir));
-	}
-	while ((dirp = readdir(dp)) != NULL)
-	{
-		std::string file = std::string(dirp->d_name);
-		size_t extpos = file.find(".json");
-		if (extpos != std::string::npos)
-		{
-			saves.push_back(file.substr(0, extpos));
-		}
-	}
-	closedir(dp);
-	return (saves);
-}
-
-
 void Profile::displaySavesList()
 {
-	std::string path = "./Data/Saves/";
-	std::vector<std::string> saves = getSaves(path);
+	std::vector<std::string> saves = DataFile::getFolderContents("./Data/Saves/", ".json");
 	saves.insert(saves.begin(), ""); //Dummy to keep index true
 
 	for (size_t i = 1; i < saves.size(); i++)
@@ -118,71 +87,7 @@ void Profile::displaySavesList()
 
 void Profile::supprimerProfile(const int& numeroSave)
 {
-	/*
-	bool test;
-	bool fail = false;
-	std::string numeroProfile;
-	std::string numeroNewProfile;
-	std::ostringstream oss;   // stream utilise pour la conversion
-	std::string cheminFichier;
-	std::string newCheminFichier;
-	std::string cheminLock;
-	std::string newCheminLock;
-	int nbSaves = compterSauvegardes();
-
-	oss << numeroSave;      // on insere le int dans le stream oss
-	numeroProfile = oss.str(); // range le int dans la variable numeroSave
-	cheminFichier = "Saves/Profile" + numeroProfile + ".save";
-	cheminLock = "Saves/Profile" + numeroProfile + ".lock";
-	if(remove(cheminFichier.c_str()))
-	{
-		Terminal::get().clearScreen();
-		Menu::error("Impossible de supprimer le Profile");
-		fail = true;
-	}
-	if(remove(cheminLock.c_str()))
-	{
-		Terminal::get().clearScreen();
-		Menu::error("Impossible de supprimer le verrou du Profile");
-		fail = true;
-	}
-	if(nbSaves > numeroSave)
-	{
-		for (int i = numeroSave; i < nbSaves; i++)
-		{
-			oss.str("");
-			oss << i;      // on insere le int dans le stream oss
-			numeroNewProfile = oss.str(); // range le int dans la variable numeroProfile
-			newCheminFichier = "Saves/Profile" + numeroNewProfile + ".save";
-			newCheminLock = "Saves/Profile" + numeroNewProfile + ".lock";
-
-			oss.str("");
-			oss << i + 1;
-			numeroNewProfile = oss.str();
-			cheminFichier = "Saves/Profile" + numeroNewProfile + ".save";
-			cheminLock = "Saves/Profile" + numeroNewProfile + ".lock";
-
-			test = rename(cheminFichier.c_str(), newCheminFichier.c_str()); //On decale toutes les saves d'un cran
-			if(test == 1)
-			{
-				Terminal::get().clearScreen();
-				Menu::error("Impossible de renommer les Profiles suivants.");
-				fail = true;
-			}
-			test = rename(cheminLock.c_str(), newCheminLock.c_str()); //On decale tous les locks d'un cran
-			if(test == 1)
-			{
-				Terminal::get().clearScreen();
-				Menu::error("Impossible de renommer les verrous des Profiles suivants.");
-				fail = true;
-			}
-		}
-	}
-	if(fail == false)
-	{
-		Terminal::get().clearScreen();
-		Menu::msg("Profile"+numeroProfile+" supprime avec succes !");
-	}*/
+	//Not implemented
 }
 
 bool Profile::payer(const int& prix)

@@ -1,4 +1,10 @@
 #include "DataFile.hh"
+#ifdef __GNUC__
+#include <dirent.h>
+#endif
+#ifdef _MSC_VER
+#include "dirent.h"
+#endif
 
 //JSON
 
@@ -46,31 +52,27 @@ const json &DataFile::getData()
 }
 
 
-std::vector<std::string> DataFile::getFolderContents(std::string filter)
+std::vector<std::string> DataFile::getFolderContents(std::string path, std::string filter, bool truncateFilter)
 {
 	std::vector<std::string> files;
 	DIR *dp;
 	struct dirent *dirp;
 
-	if ((dp = opendir(dir.c_str())) == NULL)
+	if ((dp = opendir(path.c_str())) == NULL)
 	{
-			throw (std::runtime_error("Error opening " + dir));
+			throw (std::runtime_error("Error opening " + path));
 	}
 	while ((dirp = readdir(dp)) != NULL)
 	{
 		std::string file = std::string(dirp->d_name);
-		size_t extpos = file.find(filter);
-		if (extpos != std::string::npos)
-		{
-			saves.push_back(file.substr(0, extpos));
-		}
-    else
+    if (filter == "" || file.find(filter) != std::string::npos)
     {
-      saves.push_back(file);
+      if (truncateFilter) files.push_back(file.substr(0, file.find(filter)));
+      else files.push_back(file);
     }
 	}
 	closedir(dp);
-	return (saves);
+	return (files);
 }
 
 

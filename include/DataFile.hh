@@ -16,6 +16,8 @@ class DataFile
 public:
   DataFile(const std::string &path);
 
+  static std::vector<std::string> getFolderContents(std::string path, std::string filter = "", bool truncateFilter = false);
+
   bool load();
   bool save();
   bool save(const json &data);

@@ -28,7 +28,11 @@ Step::Step(const json &data)
 {
 	for (size_t i = 0; i < data["entities"].size(); i++)
 	{
-		entities.push_back(Entity::collection.at(data["entities"][i].get<std::string>()));
+		try {
+			entities.push_back(Entity::collection.at(data["entities"][i].get<std::string>()));
+		} catch(std::exception &e) {
+			Menu::error("Unknown entity");
+		}
 	}
 }
 
@@ -88,15 +92,16 @@ int Track::getLength()
 
 void Track::loadCollection()
 {
-	DataFile file("./Data/Tracks/.json");
+	std::string path = "./Data/Tracks/";
+	std::vector<std::string> tracks = DataFile::getFolderContents(path, ".json");
+	for (size_t i = 0; i < tracks.size(); i++)
+	{
+		DataFile file(path+tracks[i]);
 
-	if (!file.load())
-	{
-		throw (std::runtime_error("Error loading tracks"));
-	}
-	const json &data = file.getData();
-	for (size_t i = 0; i < data["collection"].size(); i++)
-	{
-		collection.push_back(Track(data["collection"][i]));
+		if (!file.load())
+		{
+			throw (std::runtime_error("Error loading tracks"));
+		}
+		collection.push_back(Track(file.getData()));
 	}
 }

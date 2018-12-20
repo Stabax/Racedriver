@@ -534,22 +534,18 @@ void menuAcheterBox()
 
 void menuBuyCar()
 {
-	int choice = 1;
+	int choice;
 
-	while (choice != 0)
-	{
-		Terminal::get().clearScreen();
-		Terminal::get() << "Concessionnaire\n"
-											<< "===============\n"
-											<< "Selectionnez un vehicule a acheter.\n"
-											<< "===============\n\n";
-		Car::listerCars();
-		Terminal::get() << "\n" //On separe le bloc
-										<< "0. Retour\n"
-										<< "===============\n";
-		choice = Menu::askChoice();
-		Profile::active->garage.addCar(Car::collection[choice]);
-	}
+	Terminal::get().clearScreen();
+	Terminal::get() << "Concessionnaire\n"
+										<< "===============\n"
+										<< "Selectionnez un vehicule a acheter.\n"
+										<< "===============\n\n";
+	Car::listerCars();
+	Terminal::get() << "\n" //On separe le bloc
+									<< "0. Retour\n";
+	choice = Menu::askChoice();
+	if (choice > 0 && choice < Car::collection.size())	Profile::active->garage.addCar(Car::collection[choice]);
 }
 
 void menuAchatCar()

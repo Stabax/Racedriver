@@ -38,10 +38,11 @@ void menuGarage()
 										<< "===============\n"
 										<< "Credits: " << Profile::active->credits << "c\n"
 										<< "===============\n\n"
-										<< "1. Consulter Garage\n"
-										<< "2. Visiter Atelier\n"
-										<< "3. Maintenance vehicules\n\n"
-										<< "4. Acheter Box \n\n"
+										<< "1. Concessionaire\n"
+										<< "2. Consulter Garage\n"
+										<< "3. Visiter Atelier\n"
+										<< "4. Maintenance vehicules\n\n"
+										<< "5. Acheter Box \n\n"
 										<< "0. Retour\n";
 		//Redirection de l'utilisateur selon son choix grâce a un switch.
 		switch(Menu::askChoice())
@@ -50,47 +51,25 @@ void menuGarage()
 				quit = true; //INSTRUCTION DE SORTIE
 				break;
 			case 1:
-				menuConsulterGarage(0);
+				menuBuyCar();
+				//Pour vendre: menuConsulterGarage(4);
 				break;
 			case 2:
-				menuConsulterGarage(1);
+				menuConsulterGarage(0);
 				break;
 			case 3:
-				menuConsulterGarage(3);
+				menuConsulterGarage(1);
 				break;
 			case 4:
+				menuConsulterGarage(3);
+				break;
+			case 5:
 				menuAcheterBox();
 				break;
 			default:
 				Menu::error("Saisie invalide");
 				break;
 		}
-	}
-}
-
-void menuConcessionaire()
-{
-	//Menu Principal
-	Terminal::get().clearScreen();
-	Terminal::get() << "Concessionnaire\n"
-									<< "===============\n\n"
-									<< "1. Achat\n"
-									<< "2. Vente\n\n"
-									<< "0. Retour\n";
-	//Redirection de l'utilisateur selon son choix grâce a un switch.
-	switch(Menu::askChoice())
-	{
-		case 0:
-			break;
-		case 1:
-			menuBuyCar();
-			break;
-		case 2:
-			menuConsulterGarage(4);
-			break;
-		default:
-			Menu::error("Saisie invalide");
-			break;
 	}
 }
 

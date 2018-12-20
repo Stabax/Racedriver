@@ -61,27 +61,16 @@ void menuJeu()
 	  Terminal::get().clearScreen();
 		Terminal::get() << "Menu Jeu\n"
 										<< "===============\n\n"
-										<< "1. Course\n\n"
+										<< "1. Course\n"
 										<< "2. Garage\n"
-										<< "3. Concessionaire\n"
-										<< "4. Stats\n\n"
-										<< "5. Sauvegarder\n"
-										<< "6. Options\n"
-										<< "7. Menu Principal\n\n"
+										<< "3. Stats\n\n"
+										<< "4. Options\n\n"
 										<< "0. Quitter\n";
 		//Redirection de l'utilisateur selon son choix grâce a un switch.
 		switch(Menu::askChoice())
 		{
 			case 0:
-				Terminal::get().clearScreen(); //On flushe l'ancien ecran
-				//Profile::chargerProfile(Player.getNumero(), PlayerSaved); // On charge le Profile du fichier
-				Terminal::get() << "/!\\ Attention ! /!\\\n"
-												<< "====================\n"
-												<< "La partie va etre sauvegardee\n";
-				if(Menu::askConfirmation())
-				{
-					Profile::active->save();
-				}
+				Profile::active->save();
 				quit = true;
 			break;
 			case 1:
@@ -91,27 +80,10 @@ void menuJeu()
 				menuGarage();
 				break;
 			case 3:
-				menuConcessionaire();
-				break;
-			case 4:
 				menuStats();
 				break;
-			case 5:
-				Terminal::get().clearScreen(); //On flushe l'ancien ecran
-				//Profile::chargerProfile(Player.getNumero(), PlayerSaved); // On charge le Profile du fichier
-				Terminal::get() << "/!\\ Attention ! /!\\\n"
-											<< "====================\n"
-											<< "La partie va etre sauvegardee\n";
-				if(Menu::askConfirmation())
-				{
-					Profile::active->save();
-				}
-				break;
-			case 6:
+			case 4:
 				menuOptions();
-				break;
-			case 7:
-				quit = true;
 				break;
 			default:
 				Terminal::get().clearScreen(); //On flushe l'ancien ecran

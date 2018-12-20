@@ -54,7 +54,7 @@ void Car::listerCars()
 	Terminal::get() << "   |Marque   |Modele     |Aerodynamisme  |Prix  |\n\n";
   for (size_t i = 0; i < Car::collection.size(); i++)
 	{
-		Terminal::get() << i << "." << Car::collection[i].manufacturer << " " << Car::collection[i].name
+		Terminal::get() << i+1 << "." << Car::collection[i].manufacturer << " " << Car::collection[i].name
 												 << " " << Car::collection[i].getAerodynamisme() << " " << Car::collection[i].getPrix() << "c\n";
 	}
 }

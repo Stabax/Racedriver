@@ -49,7 +49,7 @@ size_t Garage::getBoxCount() const
   return (_boxCount);
 }
 
-bool Garage::addCar(Car car)
+bool Garage::addCar(Car &car)
 {
 	if (_boxs.size() >= _boxCount)
 	{

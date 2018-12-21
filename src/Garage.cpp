@@ -1,5 +1,6 @@
 #include "Garage.hh"
 #include "Profile.hh"
+#include "sousMenus.hh"
 
 Garage::Garage()
  : _boxCount(1)
@@ -62,11 +63,11 @@ bool Garage::addCar(Car &car)
 
 void Garage::sellCar(size_t index)
 {
-	if (_boxs.size() >= _boxCount)
+	if (index >= _boxs.size())
 	{
 		throw (std::runtime_error("Le box est vide"));
 	}
-	Car &car = Profile::active->garage.getBox(index);
+	Car &car = getBox(index);
 	int sellPrice = car.getPrix() * 0.70f;
 	Profile::active->credits += sellPrice;
 	Menu::msg(car.name+" vendue avec succes pour "+std::to_string(sellPrice)+"c");
@@ -131,8 +132,20 @@ void Garage::displayBoxDetail(int index)
 									<< " |Marque: " << car->getTires()->manufacturer << "\n"
 									<< " |Rang: "<<  car->getTires()->rank << "\n"
 									<< "===============\n"
-									<< "Appuyez sur [Entree] pour revenir au menu precedent";
-	getch();
+									<< "1. Atelier\n"
+									<< "2. Vendre\n"
+									<< "0. Retour\n";
+	switch(Menu::askChoice())
+	{
+		case 0:
+			break;
+		case 1:
+			menuAtelier(index);
+			break;
+		case 2:
+			Profile::active->garage.sellCar(index);
+			break;
+	}
 }
 
 void to_json(json& j, const Garage& garage)

@@ -11,6 +11,8 @@
   #include <curses.h>
 #endif
 
+#define BASE_PAIR     1
+
 class Terminal
 {
 public:
@@ -19,12 +21,13 @@ public:
 
   static Terminal &get();
 
+  void initColors();
   void clearScreen();
   void blit();
   void setFullscreen();
   void setCanonical(bool set);
   void setStdinTimeout(int milliseconds);
-  void print(const std::string &str);
+  void print(const std::string &str, int attrs = 0);
   void printAt(Point point, const std::string &str);
   WINDOW *addChildWindow(Point pos, Point size);
 

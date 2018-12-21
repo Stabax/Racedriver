@@ -1,4 +1,5 @@
 #include "Terminal.hh"
+#include <iostream>
 #include <cstdio>
 #include <cstdlib>
 #ifdef __GNUC__
@@ -15,7 +16,9 @@ Terminal::Terminal()
 	_screen = initscr(); // Start Xcurses window
 	setFullscreen();
 	setCanonical(true);
+	keypad(_screen, TRUE);
 	curs_set(2); //Block cursor
+	initColors();
 	Terminal::instance = std::unique_ptr<Terminal>(this);
 }
 
@@ -29,11 +32,24 @@ Terminal &Terminal::get()
 	return (*instance.get());
 }
 
+void Terminal::initColors()
+{
+	if (has_colors() == FALSE)
+	{
+		std::cerr << "Your terminal does not support color\n";
+		throw std::runtime_error("COLOR_ERROR");
+	}
+	start_color();
+	init_pair(BASE_PAIR, COLOR_RED, COLOR_BLACK);
+}
+
 void Terminal::setFullscreen()
 {
 	resize_term(2000, 2000);
 	getmaxyx(_screen, _rows, _cols); // Get the largest physical screen dimensions
-	resize_term(_rows * 0.75f, _cols * 0.75f);
+	_rows *= 0.75f;
+	_cols *= 0.75f;
+	resize_term(_rows, _cols);
 }
 
 void Terminal::clearScreen()
@@ -56,9 +72,11 @@ void Terminal::setStdinTimeout(int milliseconds = -1)
 	wtimeout(_screen, milliseconds);
 }
 
-void Terminal::print(const std::string &str)
+void Terminal::print(const std::string &str, int attrs)
 {
+	if (attrs != 0) attron(attrs);
 	waddstr(_screen, str.c_str());
+	if (attrs != 0) attroff(attrs);
 	blit();
 }
 
@@ -70,7 +88,10 @@ void Terminal::printAt(Point point, const std::string &str)
 
 WINDOW *Terminal::addChildWindow(Point pos, Point size)
 {
-  return (subwin(_screen, size.y, size.x, pos.y, pos.x));
+	WINDOW *win = subwin(_screen, size.y, size.x, pos.y, pos.x);
+	wborder(win, '|', '|', '-', '-', '+', '+', '+', '+');
+	wrefresh(win);
+  return (win);
 }
 
 //I/O Streaming
@@ -90,3 +111,11 @@ Terminal &operator<<(Terminal &term, const char *str)
   term.print(str);
   return (term);
 }
+
+/*
+Terminal &operator<<(Terminal &term, void (Terminal::*fptr)(int))
+{
+	(term.*fptr)();
+	return (term);
+}
+*/

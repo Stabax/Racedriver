@@ -17,6 +17,8 @@ Terminal::Terminal()
 	setFullscreen();
 	setCanonical(true);
 	curs_set(2); //Block cursor
+	initColor();
+	resetAttrs();
 	Terminal::instance = std::unique_ptr<Terminal>(this);
 }
 
@@ -28,6 +30,16 @@ Terminal::~Terminal()
 Terminal &Terminal::get()
 {
 	return (*instance.get());
+}
+
+void Terminal::initColor()
+{
+  if (!has_colors()) throw (std::runtime_error("Color is not supported"));
+	start_color();
+	init_pair(Color::BlackOnWhite, COLOR_BLACK, COLOR_WHITE);
+	init_pair(Color::WhiteOnBlack, COLOR_WHITE, COLOR_BLACK);
+	init_pair(Color::RedOnBlack, COLOR_RED, COLOR_BLACK);
+	init_pair(Color::BlackOnRed, COLOR_BLACK, COLOR_RED);
 }
 
 void Terminal::setFullscreen()
@@ -61,9 +73,21 @@ void Terminal::setStdinTimeout(int milliseconds = -1)
 	wtimeout(_screen, milliseconds);
 }
 
-void Terminal::print(const std::string &str)
+void Terminal::resetAttrs()
 {
+	_currentAttrs = 0;
+}
+
+void Terminal::setAttrs(int attrs)
+{
+	_currentAttrs |= attrs;
+}
+
+void Terminal::print(const std::string &str, int attrs, WINDOW *win)
+{
+	if (attrs != 0) wattrset(win, attrs);
 	waddstr(_screen, str.c_str());
+	if (attrs != 0) wattroff(win, attrs);
 	update();
 }
 
@@ -103,6 +127,30 @@ Terminal &operator<<(Terminal &term, int data)
 
 Terminal &operator<<(Terminal &term, const char *str)
 {
-  term.print(str);
+  term.print(str, term._currentAttrs);
   return (term);
 }
+
+Terminal &operator<<(Terminal &dummy, Terminal &term)
+{
+	return (term);
+}
+
+Terminal &setColor(Terminal::Color color)
+{
+	Terminal::get().setAttrs(COLOR_PAIR(static_cast<int>(color)));
+  return (Terminal::get());
+}
+
+Terminal &setAttrs(int attrs)
+{
+	Terminal::get().setAttrs(attrs);
+  return (Terminal::get());
+}
+
+Terminal &resetAttrs()
+{
+	Terminal::get().resetAttrs();
+  return (Terminal::get());
+}
+

@@ -3,72 +3,72 @@
   {
     "name": "GT100",
     "manufacturer": "Renault",
-    "acceleration": 60,
-    "speed": 10,
+    "torque": 60,
+    "power": 100,
     "rank": "D",
     "energy": "Diesel"
   },
   {
     "name": "GT120",
     "manufacturer": "Renault",
-    "acceleration": 65,
-    "speed": 10,
+    "torque": 65,
+    "power": 100,
     "rank": "D",
     "energy": "Diesel"
   },
   {
     "name": "GT140",
     "manufacturer": "Renault",
-    "acceleration": 70,
-    "speed": 13,
+    "torque": 70,
+    "power": 130,
     "rank": "D",
     "energy": "Diesel"
   },
   {
     "name": "WIP",
     "manufacturer": "Toyota",
-    "acceleration": 62,
-    "speed": 11,
+    "torque": 62,
+    "power": 110,
     "rank": "D",
     "energy": "Diesel"
   },
   {
     "name": "WIP U",
     "manufacturer": "Toyota",
-    "acceleration": 64,
-    "speed": 13,
+    "torque": 64,
+    "power": 130,
     "rank": "D",
     "energy": "Diesel"
   },
   {
     "name": "WIP 16S",
     "manufacturer": "Toyota",
-    "acceleration": 70,
-    "speed": 15,
+    "torque": 70,
+    "power": 150,
     "rank": "D",
     "energy": "Diesel"
   },
   {
     "name": "1.4 SDI",
     "manufacturer": "Nissan",
-    "acceleration": 62,
-    "speed": 10,
+    "torque": 62,
+    "power": 100,
     "rank": "D",
     "energy": "Diesel"
   },
   {
     "name": "1.8 TDI",
     "manufacturer": "Nissan",
-    "acceleration": 70,
-    "speed": 10,
+    "torque": 70,
+    "power": 100,
     "rank": "D",
     "energy": "Diesel"
   },
   {
     "name": "2.0 TSI",
     "manufacturer": "Nissan",
-    "acceleration": 75,
-    "speed": 11,
+    "torque": 75,
+    "power": 110,
     "rank": "D",
     "energy": "Diesel"
   }]

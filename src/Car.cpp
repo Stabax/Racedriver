@@ -61,12 +61,12 @@ void Car::listerCars()
 
 float Car::getVitesse() const
 {
-	return (_engine->getVitesse() + ( getAerodynamisme() / 3 ));
+	return (_engine->getPower() + ( getAerodynamisme() / 3 ));
 }
 
 float Car::getAcceleration() const
 {
-	return (static_cast<float>((( _nitro + _engine->getAcceleration() ) + (getAerodynamisme())/10)));
+	return (static_cast<float>((( _nitro + _engine->getTorque() ) + (getAerodynamisme())/10)));
 }
 
 int Car::getAerodynamisme() const

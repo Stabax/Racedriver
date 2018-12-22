@@ -28,8 +28,8 @@ public:
 
 	static float returnPrixCarburant(const std::string& carburant);
 
-	float getVitesse() const;
-	float getAcceleration() const;
+	float getPower() const;
+	float getTorque() const;
 	Energy getTypeCarburant() const;
 	float getConsommation() const;
 	int getPrix() const;
@@ -39,8 +39,8 @@ public:
 
 protected:
 	int _price;
-	float _speed;
-	float _acceleration;
+	int _power;
+	int _torque;
 	Energy _energy;
 	float _consommation;
 };

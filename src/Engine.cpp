@@ -5,8 +5,8 @@
 Collection<Engine> Engine::collection = Collection<Engine>();
 
 Engine::Engine(const json& data)
- : Part(data), _price(((getVitesse()+getAcceleration())*25)+(vRang(rank)*500)), _speed(data["speed"].get<float>()),
-  _acceleration(data["acceleration"].get<float>()), _energy(Diesel), _consommation(getVitesse()+getAcceleration())
+ : Part(data), _price(((getPower()+getTorque())*25)+(vRang(rank)*500)), _power(data["power"].get<int>()),
+  _torque(data["torque"].get<int>()), _energy(Diesel), _consommation(getPower()+getTorque())
 {
 
 }
@@ -36,31 +36,31 @@ float Engine::returnPrixCarburant(const std::string& carburant)
 	}
 }
 
-float Engine::getVitesse() const
+float Engine::getPower() const
 {
-	return _speed;
+	return (_power);
 }
 
 
-float Engine::getAcceleration() const
+float Engine::getTorque() const
 {
-	return _acceleration;
+	return (_torque);
 }
 
 
 Energy Engine::getTypeCarburant() const
 {
-	return _energy;
+	return (_energy);
 }
 
 
 float Engine::getConsommation() const
 {
-	return _consommation;
+	return (_consommation);
 }
 
 
 int Engine::getPrix() const
 {
-	return _price;
+	return (_price);
 }

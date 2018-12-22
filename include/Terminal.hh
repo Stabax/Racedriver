@@ -3,6 +3,7 @@
 
 #include <string>
 #include <memory>
+#include <vector>
 #include "Utils.hh"
 #ifdef _WIN32
   #undef MOUSE_MOVED
@@ -20,13 +21,14 @@ public:
   static Terminal &get();
 
   void clearScreen();
-  void blit();
+  void update();
   void setFullscreen();
   void setCanonical(bool set);
   void setStdinTimeout(int milliseconds);
   void print(const std::string &str);
   void printAt(Point point, const std::string &str);
   WINDOW *addChildWindow(Point pos, Point size);
+  void removeChildWindow(WINDOW *win);
 
   static std::unique_ptr<Terminal> instance;
 
@@ -36,6 +38,7 @@ public:
 
 private:
   WINDOW *_screen;
+  std::vector<WINDOW *> _windows;
   int _rows;
   int _cols;
 };

@@ -26,7 +26,6 @@ bool Game::load()
 	{
 		Collection<Engine>::load(Engine::collection);
 		Collection<Tires>::load(Tires::collection);
-		Collection<AirIntake>::load(AirIntake::collection);
 		Collection<Spoiler>::load(Spoiler::collection);
 		Collection<Car>::load(Car::collection);
 

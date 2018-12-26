@@ -36,6 +36,11 @@ float Engine::returnPrixCarburant(const std::string& carburant)
 	}
 }
 
+std::string Engine::info()
+{
+	return (Part::info() + " " + std::to_string(_speed) + " " + std::to_string(_acceleration));
+}
+
 float Engine::getVitesse() const
 {
 	return _speed;

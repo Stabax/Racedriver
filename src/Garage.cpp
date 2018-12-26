@@ -115,19 +115,7 @@ void Garage::displayBoxDetail(int index)
 	{
 		Terminal::get() << " |Aucun\n";
 	}
-	Terminal::get() << "#Prises d'air\n";
-	if (car->getSpoiler() != nullptr)
-	{
-		Terminal::get() << " |Modele: " << car->getAirIntake()->name << "\n"
-										<< " |Marque: " << car->getAirIntake()->manufacturer << "\n"
-										<< " |Rang: "<<  car->getAirIntake()->rank << "\n"
-										<< " |Aerodynamisme: " <<  car->getAirIntake()->getAerodynamic() << " %\n\n";
-	}
-	else
-	{
-		Terminal::get() << " |Aucun\n";
-	}
-	Terminal::get() << "#Tires\n"
+	Terminal::get() << "#Pneus\n"
 									<< " |Modele: " << car->getTires()->name << "\n"
 									<< " |Marque: " << car->getTires()->manufacturer << "\n"
 									<< " |Rang: "<<  car->getTires()->rank << "\n"

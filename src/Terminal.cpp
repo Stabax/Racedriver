@@ -16,6 +16,7 @@ Terminal::Terminal()
 	_screen = initscr(); // Start Xcurses window
 	setFullscreen();
 	setCanonical(true);
+	keypad(_screen, TRUE);
 	curs_set(2); //Block cursor
 	initColor();
 	resetAttrs();
@@ -46,7 +47,9 @@ void Terminal::setFullscreen()
 {
 	resize_term(2000, 2000);
 	getmaxyx(_screen, _rows, _cols); // Get the largest physical screen dimensions
-	resize_term(_rows * 0.75f, _cols * 0.75f);
+	_rows *= 0.75f;
+	_cols *= 0.75f;
+	resize_term(_rows, _cols);
 }
 
 void Terminal::clearScreen()

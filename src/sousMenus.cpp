@@ -100,8 +100,7 @@ void menuAtelier(const int& numeroBox)
 										<< "===============\n\n"
 										<< "Car actuel: [BOX" << numeroBox << ": " << car.manufacturer << " " << car.name << "]\n\n"
 										<< "1. Engine\n"
-										<< "2. Prise d'air\n"
-										<< "3. Spoiler\n\n"
+										<< "2. Spoiler\n\n"
 										<< "0. Retour\n";
 		//Redirection de l'utilisateur selon son choix grâce a un switch.
 		switch(Menu::askChoice())
@@ -115,10 +114,6 @@ void menuAtelier(const int& numeroBox)
 				menuAtelierEngine(numeroBox);
 				break;
 			case 2:
-				Terminal::get().clearScreen(); //On flushe l'ancien ecran
-				menuAtelierAirIntake(numeroBox);
-				break;
-			case 3:
 				Terminal::get().clearScreen(); //On flushe l'ancien ecran
 				menuAtelierSpoiler(numeroBox);
 				break;
@@ -175,57 +170,6 @@ void menuAtelierSpoiler(const int& numeroBox)
 	else
 	{
 		Terminal::get().clearScreen(); // la variable de verification prend la valeur n donc on sort de la verification, mais quit vaut faux
-	}*/
-}
-
-void menuAtelierAirIntake(const int& numeroBox)
-{
-	Menu::error("Non implemente");
-	/* No more upgrades...
-	Car* Car = Profile::active->getBox(numeroBox);
-	int id = Car->getIdSpoiler();
-	int idCharge = id + 1;
-
-	const AirIntake &newAirIntake = AirIntake::collection[idCharge];
-	const AirIntake &currentAirIntake = Car->getAirIntake();
-	Terminal::get().clearScreen(); //On flushe l'ancien ecran
-	Terminal::get() << "/!\\ Attention ! /!\\\n"
-									<< "====================\n"
-									<< "Credits: " << Profile::active->credits << "c\n"
-									<< "====================\n"
-									<< "Vous allez ameliorer les prises d'air de votre vehicule,\n"
-									<< "Prix: " << newAirIntake.getPrice() << "c\n\n"
-									<< "#Nouveau Spoiler\n"
-									<< " |Modele: " << newAirIntake.name << "\n"
-									<< " |Rang: " << newAirIntake.rank << "\n"
-									<< " |Aerodynamisme: " << newAirIntake.getAerodynamic() << "%\n\n"
-									<< "#Spoiler Actuel\n"
-									<< " |Modele: " << currentAirIntake.name << "\n"
-									<< " |Rang: " << currentAirIntake.rank << "\n"
-									<< " |Aerodynamisme: " << currentAirIntake.getAerodynamic() << "%\n\n";
-	if(Menu::askConfirmation())
-	{
-		Terminal::get().clearScreen();
-		if(Profile::compatible(Player, numeroBox, newAirIntake.rank) == true)
-		{
-			if(Profile::active->payer(newAirIntake.getPrice()))
-			{
-				Car->setAirIntake(AirIntake::collection[idCharge], id);
-				Menu::msg("Prise d'air amelioree avec succes !");
-			}
-		}
-		else
-		{
-			Menu::error("Cette pièce n'est pas compatible avec votre vehicule");
-		}
-		if(Profile::active->getSauvegardeAuto())
-		{
-			Profile::active->save();
-		}
-	}
-	else
-	{
-			Terminal::get().clearScreen(); // la variable de verification prend la valeur n donc on sort de la verification, mais quit vaut faux
 	}*/
 }
 

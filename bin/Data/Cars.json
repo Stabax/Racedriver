@@ -4,7 +4,6 @@
     "name": "4L",
     "manufacturer": "Renault",
     "engine": "Renault.GT100",
-    "airIntake": "",
     "spoiler": "",
     "tires": "Continental.180/45 R10",
     "rank": "D"
@@ -13,7 +12,6 @@
     "name": "Corona",
     "manufacturer": "Toyota",
     "engine": "Toyota.WIP 16S",
-    "airIntake": "RaceDriver.Lightning",
     "spoiler": "RaceDriver.Vapor",
     "tires": "Continental.180/45 R10",
     "rank": "D"
@@ -22,7 +20,6 @@
     "name": "Bluebird",
     "manufacturer": "Nissan",
     "engine": "Nissan.1.8 TDI",
-    "airIntake": "RaceDriver.Tempest",
     "spoiler": "RaceDriver.Nitrox",
     "tires": "Continental.180/45 R10",
     "rank": "D"

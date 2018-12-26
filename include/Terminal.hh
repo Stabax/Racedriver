@@ -13,6 +13,8 @@
   #include <curses.h>
 #endif
 
+#define BASE_PAIR     1
+
 class Terminal
 {
 public:

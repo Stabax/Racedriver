@@ -24,6 +24,8 @@ public:
 	Engine(const json &data);
 	~Engine();
 
+  virtual std::string info();
+
   static const std::string getPath() { return ("Engines"); };
 
 	static float returnPrixCarburant(const std::string& carburant);

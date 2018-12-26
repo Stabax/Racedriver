@@ -11,7 +11,6 @@
 class Car;
 class Engine;
 class Tires;
-class AirIntake;
 class Spoiler;
 
 /*!
@@ -61,12 +60,6 @@ public:
     {
      path += "Parts/" + ST::getPath();
     }
-    /*
-    if (std::is_same<ST, Engine>::value) path += "Engines";
-    else if (std::is_same<ST, Tires>::value) path += "Tires";
-    else if (std::is_same<ST, AirIntake>::value) path += "AirIntakes";
-    else if (std::is_same<ST, Spoiler>::value) path += "Spoilers";
-    else throw std::runtime_error("Unknown part type");*/
     return (path+".json");
   }
 

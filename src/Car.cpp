@@ -19,7 +19,6 @@ Car::Car(const json &data)
 	}
  	_engine = std::make_shared<Engine>(Engine::collection[data["engine"].get<std::string>()]);
   if (data["spoiler"].get<std::string>() != "") _spoiler = std::make_shared<Spoiler>(Spoiler::collection[data["spoiler"].get<std::string>()]);
-  if (data["airIntake"].get<std::string>() != "") _airIntake = std::make_shared<AirIntake>(AirIntake::collection[data["airIntake"].get<std::string>()]);
 	if (data["tires"].find("id") != data["tires"].end()) //rebuild from save
 	{
 		_tires = std::make_shared<Tires>(Tires::collection[data["tires"]["id"].get<std::string>()]);
@@ -71,9 +70,8 @@ float Car::getAcceleration() const
 
 int Car::getAerodynamisme() const
 {
-	float airIntakeValue = (_airIntake != nullptr ? _airIntake->getAerodynamic() : 0);
 	float spoilerValue = (_spoiler != nullptr ? _spoiler->getAerodynamic() : 0);
-	return (airIntakeValue + spoilerValue);
+	return (spoilerValue);
 }
 
 int Car::getNiveauNitro() const
@@ -93,13 +91,10 @@ int Car::getFuel() const
 
 int Car::getPrix() const
 {
-	int prixEngine=0;
-	int prixSpoiler=0;
-	int prixAirIntake=0;
+	int prixEngine = 0;
+	int prixSpoiler = 0;
 	prixSpoiler = (_spoiler != nullptr ? _spoiler->getPrice() : 0);
-	prixAirIntake = (_airIntake != nullptr ? _airIntake->getPrice() : 0);
-
-	return static_cast<int>(roundf( (prixEngine + prixSpoiler + prixAirIntake + 0 )  *0.9+ (( 100 ) * 100)+ (( vRang(rank) - 1 ) * 20000)));
+	return static_cast<int>(roundf( (prixEngine + prixSpoiler + 0 )  *0.9+ (( 100 ) * 100)+ (( vRang(rank) - 1 ) * 20000)));
 }
 
 std::shared_ptr<Engine> Car::getEngine() const
@@ -110,11 +105,6 @@ std::shared_ptr<Engine> Car::getEngine() const
 std::shared_ptr<Spoiler> Car::getSpoiler() const
 {
 	return (_spoiler);
-}
-
-std::shared_ptr<AirIntake> Car::getAirIntake() const
-{
-	return (_airIntake);
 }
 
 std::shared_ptr<Tires> Car::getTires() const
@@ -131,12 +121,6 @@ void Car::setEngine(const Engine &newEngine)
 void Car::setSpoiler(const Spoiler &newSpoiler)
 {
 	_spoiler = std::make_shared<Spoiler>(newSpoiler);
-	updateAttributs();
-}
-
-void Car::setAirIntake(const AirIntake &newAirIntake)
-{
-	_airIntake = std::make_shared<AirIntake>(newAirIntake);
 	updateAttributs();
 }
 
@@ -187,7 +171,6 @@ void to_json(json& j, const Car& car) {
 	j = {
 		{"name", car.getId()},
 		{"engine", car.getEngine()->getId()},
-    {"airIntake", (car.getAirIntake() != nullptr ? car.getAirIntake()->getId() : "")},
     {"spoiler", (car.getSpoiler() != nullptr ? car.getSpoiler()->getId() : "")},
     {"tires", {
 			{"id", car.getTires()->getId()},

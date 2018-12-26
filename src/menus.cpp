@@ -40,9 +40,7 @@ void menuGarage()
 										<< "===============\n\n"
 										<< "1. Concessionaire\n"
 										<< "2. Consulter Garage\n"
-										<< "3. Visiter Atelier\n"
-										<< "4. Maintenance vehicules\n\n"
-										<< "5. Acheter Box \n\n"
+										<< "3. Acheter Box\n\n"
 										<< "0. Retour\n";
 		//Redirection de l'utilisateur selon son choix grâce a un switch.
 		switch(Menu::askChoice())
@@ -58,12 +56,6 @@ void menuGarage()
 				menuConsulterGarage(0);
 				break;
 			case 3:
-				menuConsulterGarage(1);
-				break;
-			case 4:
-				menuConsulterGarage(3);
-				break;
-			case 5:
 				menuAcheterBox();
 				break;
 			default:

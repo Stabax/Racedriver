@@ -28,6 +28,11 @@ public:
     return (manufacturer+ID_SEPARATOR+name);
   }
 
+  virtual std::string info()
+  {
+    return (manufacturer+" "+name);
+  }
+
   bool operator==(const Part &part)
   {
     return (getId() != part.getId());

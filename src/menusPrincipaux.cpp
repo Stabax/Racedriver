@@ -108,8 +108,11 @@ void menuChargementPartie()
 	Profile::displaySavesList();
 	Terminal::get() << "0. Retour\n";
 	choice = Menu::askChoice();
-	Profile::load(saves[choice]);
-	menuJeu();
+	if (choice > 0 && choice < saves.size())
+	{
+		Profile::load(saves[choice]);
+		menuJeu();
+	}
 }
 
 void menuCreationPartie()

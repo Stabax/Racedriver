@@ -51,7 +51,9 @@ int Game::main()
 	std::srand(std::time(0)); //INITIALISATION DE L'ALEATOIRE
 	if (!update()) //on verifie et fait les mises à jour
 	{
-		_term << ">Vous allez jouer avec une version potentiellement obsolete de Racedriver.\n"
+		_term << setColor(Terminal::Color::RedOnBlack) 
+					<< ">Vous allez jouer avec une version potentiellement obsolete de Racedriver.\n"
+					<< resetAttrs()
 		      << ">Appuyez sur [ENTREE] pour continuer.\n";
 		getch();
 	}
@@ -64,11 +66,13 @@ int Game::main()
 
 void Game::printASCIILogo()
 {
-	_term.print(" ________                  ________       _____                    \n", COLOR_PAIR(BASE_PAIR));
-	_term.print(" ___  __ \\_____ ______________  __ \\_________(_)__   ______________\n", COLOR_PAIR(BASE_PAIR));
-	_term.print(" __  /_/ /  __ `/  ___/  _ \\_  / / /_  ___/_  /__ | / /  _ \\_  ___/\n", COLOR_PAIR(BASE_PAIR));
-	_term.print(" _  _, _// /_/ // /__ /  __/  /_/ /_  /   _  / __ |/ //  __/  /\n", COLOR_PAIR(BASE_PAIR));
-	_term.print(" /_/ |_| \\__,_/ \\___/ \\___//_____/ /_/    /_/  _____/ \\___//_/\n", COLOR_PAIR(BASE_PAIR));
+	_term << setColor(Terminal::Color::RedOnBlack)
+				<<" ________                  ________       _____                    \n"
+				<< " ___  __ \\_____ ______________  __ \\_________(_)__   ______________\n"
+				<< " __  /_/ /  __ `/  ___/  _ \\_  / / /_  ___/_  /__ | / /  _ \\_  ___/\n"
+				<< " _  _, _// /_/ // /__ /  __/  /_/ /_  /   _  / __ |/ //  __/  /    \n"
+				<< " /_/ |_| \\__,_/ \\___/ \\___//_____/ /_/    /_/  _____/ \\___//_/     \n"
+				<< resetAttrs();
 }
 
 void Game::removeUpdatePackage()

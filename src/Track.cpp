@@ -8,15 +8,15 @@
 
 std::map<std::string, Entity> Entity::collection = std::map<std::string, Entity>();
 
-Entity::Entity(Entity::Type t)
- : type(t)
+Entity::Entity(Entity::Type t, int mSpeed)
+ : type(t), maxSpeed(mSpeed)
 {
 
 }
 
 void Entity::loadCollection()
 {
-	collection.emplace("curve", Entity(Curve));
+	collection.emplace("curve", Entity(Curve, 70));
 }
 
 //
@@ -24,7 +24,7 @@ void Entity::loadCollection()
 //
 
 Step::Step(const json &data)
- : gradient(data["gradient"].get<int>())
+ : gradient(data["gradient"].get<int>()), length(data["length"].get<int>())
 {
 	for (size_t i = 0; i < data["entities"].size(); i++)
 	{

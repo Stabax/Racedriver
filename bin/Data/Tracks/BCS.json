@@ -6,24 +6,28 @@
         "entities" : [
             "curve"
         ],
+        "length" : 5,
         "gradient" : 0
     },
     {
         "entities" : [
             "curve"
         ],
+        "length" : 3,
         "gradient" : 0
     },
     {
         "entities" : [
             "curve"
         ],
+        "length" : 5,
         "gradient" : 0
     },
     {
         "entities" : [
             "curve"
         ],
+        "length" : 6,
         "gradient" : 0
     }]
 }

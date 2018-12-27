@@ -30,7 +30,7 @@ public:
 	int getConsommation() const;
 	int getPrix() const;
 
-	void changerTires();
+	void replaceTires();
 
 	//infos acessoires
 	std::shared_ptr<Engine> getEngine() const;

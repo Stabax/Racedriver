@@ -12,11 +12,13 @@ struct Entity {
 		Curve
 	};
 
-	Entity(Type t);
+	Entity(Type t, int mSpeed = -1);
 
 	static void loadCollection();
 
 	static std::map<std::string, Entity> collection;
+
+	int maxSpeed;
 	Type type;
 };
 
@@ -26,6 +28,7 @@ struct Step {
 
 	std::vector<Entity> entities;
 	int gradient;
+	int length;
 };
 
 

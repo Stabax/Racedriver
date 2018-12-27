@@ -162,7 +162,7 @@ void Car::updateAttributs()
 	_nitro = 100;
 }
 
-void Car::changerTires()
+void Car::replaceTires()
 {
 	_tires->setIntegrity(100);
 }

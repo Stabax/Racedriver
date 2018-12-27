@@ -365,9 +365,9 @@ void menuMaintenance(const int& numeroBox)
 										<< "Selectionnez un vehicule a reparer ou entretenir.\n"
 										<< "===============\n\n"
 										<< "Car actuelle: [BOX" << numeroBox + 1 << ": " << Car.manufacturer << " " << Car.name << "]\n\n"
-										<< "1. Changer Tires\n"
+										<< "1. Remplacer Pneus\n"
 										<< "2. Plein Nitro\n"
-										<< "3. Reparer\n\n"
+										<< "3. Reparer Vehicule\n\n"
 										<< "0. Retour\n";
 		//Redirection de l'utilisateur selon son choix grâce a un switch.
 		switch(Menu::askChoice())
@@ -387,7 +387,7 @@ void menuMaintenance(const int& numeroBox)
 				{
 					if(Profile::active->payer(2000))
 					{
-						Car.changerTires();
+						Car.replaceTires();
 						Menu::msg("Tires Changes avec succes !");
 					}
 				}
@@ -409,8 +409,8 @@ void menuMaintenance(const int& numeroBox)
 				{
 					if(Profile::active->payer(nitroManquante * 100 ))
 					{
-						Car.changerTires();
-						Menu::msg("Nitro au max !");
+						Car.pleinNitro();
+						Menu::msg("Nitro remplie au max !");
 					}
 				}
 				else
@@ -419,20 +419,20 @@ void menuMaintenance(const int& numeroBox)
 				}
 				break;
 			case 3:
-				if(Car.getDurability()==100)
+				if(Car.getDurability() == 100)
 				{
 					Menu::msg("Votre voiture est en parfait etat.");
 				}
 				else
 				{
-					aPayer = (Car.getPrix() * (100 - Car.getDurability())) /100 ;
+					aPayer = (Car.getPrix() * (100 - Car.getDurability())) / 100;
 					Terminal::get().clearScreen(); //On flushe l'ancien ecran
 					Terminal::get() << "/!\\ Attention ! /!\\\n"
 													<< "====================\n"
 													<< "Credits: " << Profile::active->credits << "c\n"
 													<< "====================\n"
 													<< "Reparer ce vehicule\n"
-													<< "vous coutera "<<aPayer<<"c\n"
+													<< "vous coutera " << aPayer << "c\n"
 													<< "Etes-vous sur ? [O/n]\n"
 													<< "====================\n";
 					verifAchat = getch();
@@ -442,10 +442,10 @@ void menuMaintenance(const int& numeroBox)
 						if(Profile::active->payer(aPayer))
 						{
 							Car.reparer();
-							Menu::msg("voiture reparee avec succes !");
+							Menu::msg("Voiture reparee avec succes !");
 						}
 					}
-					else if(verifAchat == 'n' || verifAchat == 'n')
+					else
 					{
 						Menu::msg("Transaction annulee.");
 					}
@@ -467,11 +467,12 @@ void menuAcheterBox()
 									<< "====================\n"
 									<< "Credits: " << Profile::active->credits << "c\n"
 									<< "====================\n"
-									<< "Vous allez acheter un " << 1 + 1 << "eme Box,\n"
-									<< "Prix: " << 1 * 20000 << "c\n\n";
+									<< "Vous allez acheter un " << Profile::active->garage.getBoxCount() + 1 << "eme Box,\n"
+									<< "Prix: " << Profile::active->garage.getBoxCount()+1 * 10000 << "c\n\n";
 	if(Menu::askConfirmation())
 	{
 		//Profile::active->acheterBox();
+		Terminal::get() << "Aucun box n'est a vendre!!\n";
 	}
 	Profile::active->save();
 }

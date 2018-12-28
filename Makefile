@@ -33,12 +33,13 @@ SRCS = 	$(SRCDIR)/Game.cpp									\
 				$(SRCDIR)/Menu.cpp									\
 				$(SRCDIR)/DataFile.cpp							\
 				$(SRCDIR)/Utils.cpp									\
-				$(SRCDIR)/Track.cpp								\
+				$(SRCDIR)/Track.cpp									\
 				$(SRCDIR)/Race.cpp									\
 				$(SRCDIR)/main.cpp									\
 				$(SRCDIR)/menus.cpp									\
 				$(SRCDIR)/menusPrincipaux.cpp				\
 				$(SRCDIR)/Engine.cpp								\
+				$(SRCDIR)/HeatEngine.cpp						\
 				$(SRCDIR)/Tires.cpp									\
 				$(SRCDIR)/Profile.cpp								\
 				$(SRCDIR)/sousMenus.cpp							\

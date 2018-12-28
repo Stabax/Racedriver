@@ -12,14 +12,14 @@ struct Entity {
 		Curve
 	};
 
-	Entity(Type t, int mSpeed = -1);
+	Entity(Type t, int v);
 
 	static void loadCollection();
 
 	static std::map<std::string, Entity> collection;
 
-	int maxSpeed;
 	Type type;
+	int value;
 };
 
 

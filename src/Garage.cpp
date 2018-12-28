@@ -101,9 +101,9 @@ void Garage::displayBoxDetail(int index)
 									<< " |Etat: " << car->getDurability() << "%\n\n"
 									<< "#Engine\n"
 									<< " |Modele: " << car->getEngine()->name << "\n"
-									<< " |Puissance: "<< car->getEngine()->getPower() << " ch\n"
-									<< " |Couple: " << car->getEngine()->getTorque() << " nm\n\n"
-									<< "#Spoiler\n";
+									<< " |Puissance: "<< car->getEngine()->power << " ch\n"
+	//Terminal::get() << " |Couple: " << car->getEngine()->torque << " nm\n\n";
+	                << "#Spoiler\n";
 	if (car->getSpoiler() != nullptr)
 	{
 		Terminal::get() << " |Modele: " << car->getSpoiler()->name << "\n"

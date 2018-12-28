@@ -8,8 +8,8 @@
 
 std::map<std::string, Entity> Entity::collection = std::map<std::string, Entity>();
 
-Entity::Entity(Entity::Type t, int mSpeed)
- : type(t), maxSpeed(mSpeed)
+Entity::Entity(Entity::Type t, int v)
+ : type(t), value(v)
 {
 
 }

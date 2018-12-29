@@ -5,7 +5,7 @@
     "manufacturer": "Renault",
     "engine": "Renault.GT100",
     "spoiler": "",
-    "tires": "Continental.180/45 R10",
+    "tires": "Continental.180/45",
     "rank": "D"
   },
   {
@@ -13,7 +13,7 @@
     "manufacturer": "Toyota",
     "engine": "Toyota.WIP 16S",
     "spoiler": "RaceDriver.Vapor",
-    "tires": "Continental.180/45 R10",
+    "tires": "Continental.180/45",
     "rank": "D"
   },
   {
@@ -21,7 +21,7 @@
     "manufacturer": "Nissan",
     "engine": "Nissan.1.8 TDI",
     "spoiler": "RaceDriver.Nitrox",
-    "tires": "Continental.180/45 R10",
+    "tires": "Continental.180/45",
     "rank": "D"
   }]
 }

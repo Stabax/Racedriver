@@ -6,6 +6,7 @@
     "engine": "Renault.GT100",
     "spoiler": "",
     "tires": "Continental.180/45",
+    "mass": 570,
     "rank": "D"
   },
   {
@@ -14,6 +15,7 @@
     "engine": "Toyota.WIP 16S",
     "spoiler": "RaceDriver.Vapor",
     "tires": "Continental.180/45",
+    "mass": 960,
     "rank": "D"
   },
   {
@@ -22,6 +24,7 @@
     "engine": "Nissan.1.8 TDI",
     "spoiler": "RaceDriver.Nitrox",
     "tires": "Continental.180/45",
+    "mass": 1035,
     "rank": "D"
   }]
 }

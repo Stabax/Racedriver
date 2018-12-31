@@ -29,10 +29,11 @@ public:
 
 	static Collection<Tires> collection;
 
+	int radius;
+
 protected:
 	float _pressure;
 	int _integrity;
-	int _radius;
 	int _price;
 };
 

@@ -3,15 +3,15 @@
   {
     "name": "GT100",
     "manufacturer": "Renault",
-    "torque": 60,
+    "revolutions": 6000,
     "power": 100,
     "rank": "D",
-    "energy": "Diesel"
+    "energy": "Gasoline"
   },
   {
     "name": "GT120",
     "manufacturer": "Renault",
-    "torque": 65,
+    "revolutions": 3000,
     "power": 100,
     "rank": "D",
     "energy": "Diesel"
@@ -19,7 +19,7 @@
   {
     "name": "GT140",
     "manufacturer": "Renault",
-    "torque": 70,
+    "revolutions": 3000,
     "power": 130,
     "rank": "D",
     "energy": "Diesel"
@@ -27,7 +27,7 @@
   {
     "name": "WIP",
     "manufacturer": "Toyota",
-    "torque": 62,
+    "revolutions": 3000,
     "power": 110,
     "rank": "D",
     "energy": "Diesel"
@@ -35,7 +35,7 @@
   {
     "name": "WIP U",
     "manufacturer": "Toyota",
-    "torque": 64,
+    "revolutions": 3000,
     "power": 130,
     "rank": "D",
     "energy": "Diesel"
@@ -43,7 +43,7 @@
   {
     "name": "WIP 16S",
     "manufacturer": "Toyota",
-    "torque": 70,
+    "revolutions": 3000,
     "power": 150,
     "rank": "D",
     "energy": "Diesel"
@@ -51,7 +51,7 @@
   {
     "name": "1.4 SDI",
     "manufacturer": "Nissan",
-    "torque": 62,
+    "revolutions": 3000,
     "power": 100,
     "rank": "D",
     "energy": "Diesel"
@@ -59,7 +59,7 @@
   {
     "name": "1.8 TDI",
     "manufacturer": "Nissan",
-    "torque": 70,
+    "revolutions": 3000,
     "power": 100,
     "rank": "D",
     "energy": "Diesel"
@@ -67,7 +67,7 @@
   {
     "name": "2.0 TSI",
     "manufacturer": "Nissan",
-    "torque": 75,
+    "revolutions": 3000,
     "power": 110,
     "rank": "D",
     "energy": "Diesel"

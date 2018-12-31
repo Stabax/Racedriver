@@ -6,7 +6,8 @@
 
 enum Energy {
 	Diesel,
-	Gasoline
+	Gasoline,
+	Electric
 };
 
 class Engine : public Part
@@ -14,13 +15,23 @@ class Engine : public Part
 public:
   Engine(const json &data);
 
-  static const std::string getPath() { return ("Engines"); };
   virtual std::string info();
+	int getPower();
+	void update(int speed, int radius);
+
+  static const std::string getPath() { return ("Engines"); };
 	static Collection<Engine> collection;
 
-	int power;
+	//Manufacturer
+	int _mRevolutions;
+	int mPower;
 	Energy energy;
 	int price;
+
+	//Instance
+	int _power;
+	int _revolutions;
+	int _torque;
 };
 
 #endif /* !ENGINE_HPP_ */

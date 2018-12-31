@@ -1,22 +1,17 @@
 //Car.cpp
 #include "Car.hh"
 #include "Menu.hh"
+#include <cmath>
 
 Collection<Car> Car::collection = Collection<Car>();
 
 Car::Car(const json &data)
  : Part(data), _nitro(100),
  	_fuel(data.find("fuel") != data.end() ? data["fuel"].get<float>() : 0),
- 	_integrity(data.find("integrity") != data.end() ? data["integrity"].get<int>() : 100)
+ 	_integrity(data.find("integrity") != data.end() ? data["integrity"].get<int>() : 100),
+	_mass(data["mass"].get<int>()), _speed(0)
 {
-	std::string id = data["name"].get<std::string>();
-  if (id.find(ID_SEPARATOR) != std::string::npos)
-	{
-		Car &toCopy = collection[id];
-		name = toCopy.name;
-		manufacturer = toCopy.manufacturer;
-		rank = toCopy.rank;
-	}
+  copy(data["name"].get<std::string>()); //Copy if needed
  	_engine = std::make_shared<Engine>(Engine::collection[data["engine"].get<std::string>()]);
   if (data["spoiler"].get<std::string>() != "") _spoiler = std::make_shared<Spoiler>(Spoiler::collection[data["spoiler"].get<std::string>()]);
 	if (data["tires"].find("id") != data["tires"].end()) //rebuild from save
@@ -32,6 +27,16 @@ Car::Car(const json &data)
 
 Car::~Car()
 {
+}
+
+void Car::copy(const std::string &id)
+{
+	if (id.find(ID_SEPARATOR) == std::string::npos) return;
+	Car &toCopy = collection[id];
+	name = toCopy.name;
+	manufacturer = toCopy.manufacturer;
+	_mass = toCopy._mass;
+	rank = toCopy.rank;
 }
 
 void Car::displayInfo() const
@@ -58,9 +63,20 @@ void Car::listerCars()
 	}
 }
 
+void Car::update(int gradient)
+{
+	_engine->update(_speed, _tires->radius);
+	int power = _engine->getPower();
+	float cinetic = (0.5 * _mass * (_speed * _speed));
+	float cineticDiff = power - (_mass * 9.81  * (_speed / gradient));
+
+	_acceleration = sqrt(2 / _mass * cinetic) * (cineticDiff / 2);
+	_speed += _acceleration;
+}
+
 float Car::getVitesse() const
 {
-	return (_engine->power + ( getAerodynamisme() / 3 ));
+	return (_engine->getPower() + ( getAerodynamisme() / 3 ));
 }
 
 float Car::getAcceleration() const

@@ -5,7 +5,7 @@
 #include <string>
 #include <cmath>
 #include "Part.hpp"
-#include "Engine.hpp"
+#include "Engine.hh"
 #include "Spoiler.hh"
 #include "Tires.hh"
 
@@ -19,6 +19,9 @@ public:
 
 	static void listerCars();
 
+	void update(int gradient);
+
+	void copy(const std::string &id);
 	void displayInfo() const;
 	float getVitesse() const;
 	float getAcceleration() const;
@@ -57,9 +60,14 @@ protected:
 	std::shared_ptr<Engine> _engine;
 	std::shared_ptr<Spoiler> _spoiler;
 	std::shared_ptr<Tires> _tires;
+	int _integrity;
+	int _mass;
+
+	//instance
 	int _nitro;	//se vide en fonction de la longueur du circuit. le plein est fait manuellement via paiement, juste avant une course
 	float _fuel;
-	int _integrity;
+	int _speed;
+	float _acceleration;
 };
 
 void to_json(json& j, const Car& car);

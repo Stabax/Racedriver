@@ -16,7 +16,7 @@ CXX = g++
 
 RM = rm -rf
 
-CXXFLAGS	= -std=c++14 -ggdb -W -Wall -Wpedantic -Iinclude -I$(LIBDIR) -I$(LIBDIR)/json/include/ -I$(LIBDIR)/pugixml/src/
+CXXFLAGS	= -std=c++14 -ggdb -W -Wall -Wpedantic -Iinclude -I$(LIBDIR) -I$(LIBDIR)/json/include/ -I$(LIBDIR)/pugixml/src/ -I$(LIBDIR)/omniunit/include/omniunit/
 
 LDFLAGS		= -L$(BINDIR) -lcurl
 # -static-libgcc

@@ -86,12 +86,7 @@ MenuFile::MenuFile(const std::string &path)
 
 bool MenuFile::load()
 {
-  std::ifstream file;
-
-  file.open(_path, std::ifstream::in);
-  if (!file.good()) return (false);
-  //PARSE
-  file.close();
+  _data.load_file(_path.c_str());
   return (true);
 }
 
@@ -100,23 +95,17 @@ bool MenuFile::save()
   return (save(_data));
 }
 
-bool MenuFile::save(const xml_node &data)
+bool MenuFile::save(const xml_document &data)
 {
   std::ofstream file;
 
   file.open(_path, std::ofstream::out | std::ofstream::trunc);
   if (!file.good()) return (false);
-  //DUMP
   file.close();
   return (true);
 }
 
-void MenuFile::setData(const xml_node &data)
-{
-  _data = data;
-}
-
-const xml_node &MenuFile::getData()
+const xml_document &MenuFile::getData()
 {
   return (_data);
 }

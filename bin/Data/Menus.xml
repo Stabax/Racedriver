@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Menu Id="Main">
-  <Title>Racedriver menu experiment</Title>
+  <Text>Racedriver menu experiment</Text>
   <Sep/>
   <Button Type="Goto" Target="Test">Go to Test</Button>
   <Button Type="Script" Target="SPrintTest">Print test</Button>

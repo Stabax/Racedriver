@@ -6,17 +6,45 @@
 
 //Menu
 
-Menu::Menu(const std::string &path)
+Menu::Menu(const std::string &path, const std::string &id)
+ : _cursor(0)
 {
-  MenuFile menu(path);
-	pugi::xml_node root = menu.getData();
+  MenuFile menuFile(path);
+	if (!menuFile.load()) throw(std::runtime_error("Error on loading Menu XML"));
+	const pugi::xml_document &root = menuFile.getData();
+	pugi::xml_node menu = root.first_child();
 
-	for (pugi::xml_node el = root.first_child(); el; el = el.next_sibling())
+	while (menu && strcmp(menu.name(), "Menu") != 0 && menu.attribute("Id").value() != id) menu = menu.next_sibling();
+	if (!menu) throw(std::runtime_error("Menu not found"));
+	for (pugi::xml_node el = menu.first_child(); el; el = el.next_sibling())
 	{
-		_items.push_back(MenuItem::create(el));
+		try {
+			_items.push_back(MenuItem::create(el));
+		} catch(std::exception &e) {
+			Menu::error(e.what());
+		}
 	}
 }
 
+bool Menu::update()
+{
+	char input = getch;
+	if(input == KEY_UP) --_cursor;
+	else if(input == KEY_DOWN) ++_cursor;
+	else return (false);
+	if (_cursor >= _items.size()) _cursor = 0;
+	else if (_cursor < 0) _cursor = _items.size() - 1;
+	return (true);
+}
+
+void Menu::render()
+{
+	Terminal::get().clearScreen();
+	for (size_t i = 0; i < _items.size(); i++)
+	{
+		_items[i]->render();
+	}
+}
 
 void Menu::error(std::string str)
 {

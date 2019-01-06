@@ -15,8 +15,9 @@ Terminal::Terminal()
 {
 	_screen = initscr(); // Start Xcurses window
 	setFullscreen();
-	setCanonical(true);
+	raw();
 	keypad(_screen, TRUE);
+	noecho();
 	curs_set(2); //Block cursor
 	initColor();
 	resetAttrs();
@@ -64,11 +65,6 @@ void Terminal::update()
 	{
 		wrefresh(_windows[i]);
 	}
-}
-
-void Terminal::setCanonical(bool set = true)
-{
-  (set ? cbreak() : nocbreak());
 }
 
 void Terminal::setStdinTimeout(int milliseconds = -1)

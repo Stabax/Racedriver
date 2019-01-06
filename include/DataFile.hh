@@ -6,6 +6,7 @@
 #include <nlohmann/json.hpp>
 using json = nlohmann::json;
 #include <pugixml.hpp>
+using xml_document = pugi::xml_document;
 using xml_node = pugi::xml_node;
 
 /*!
@@ -40,14 +41,13 @@ public:
 
   bool load();
   bool save();
-  bool save(const xml_node &data);
+  bool save(const xml_document &data);
 
-  void setData(const xml_node &data);
-  const xml_node &getData();
+  const xml_document &getData();
 
 private:
   const std::string _path;
-  xml_node _data;
+  xml_document _data;
 };
 
 #endif /* !DATAFILE_HH_ */

@@ -4,21 +4,41 @@
 //MenuItem
 
 MenuItem::MenuItem(xml_node &data)
- : _id(data.attribute("id").value()), _label(data.value())
+ : _id(data.attribute("id").value()), _label(data.first_child().value())
+{
+}
+
+MenuItem::MenuItem(std::string label)
+ : _label(label)
 {
 }
 
 std::shared_ptr<MenuItem> MenuItem::create(xml_node &data)
 {
-  if (strcmp(data.name(), "Button") == 0)
+  std::shared_ptr<MenuItem> el;
+
+  if (strcmp(data.name(), "Text") == 0) el = std::make_shared<MenuItem>(data);
+	else if (strcmp(data.name(), "Sep") == 0) el = std::make_shared<MenuItem>("======");
+  else if (strcmp(data.name(), "Button") == 0)
   {
-    return (std::make_shared<MenuButton>(data));
+    el = std::make_shared<MenuButton>(data);
   }
   else if (strcmp(data.name(),"Input") == 0)
   {
-    return (std::make_shared<MenuInput>(data));
+    el = std::make_shared<MenuInput>(data);
   }
   else throw(std::runtime_error("Error in XML"));
+  return (el);
+}
+
+void MenuItem::select()
+{
+  throw(std::runtime_error("MenuItem should not be selected"));
+}
+
+void MenuItem::render()
+{
+  Terminal::get() << _label << "\n";
 }
 
 //MenuButton
@@ -64,4 +84,10 @@ void MenuInput::select()
 std::string MenuInput::getData()
 {
   return (_data);
+}
+
+void MenuInput::render()
+{
+  MenuItem::render();
+  //Implement logic
 }

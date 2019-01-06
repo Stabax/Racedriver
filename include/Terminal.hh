@@ -35,7 +35,6 @@ public:
   void clearScreen();
   void update();
   void setFullscreen();
-  void setCanonical(bool set);
   void setStdinTimeout(int milliseconds);
   void resetAttrs();
   void setAttrs(int attrs);

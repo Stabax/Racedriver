@@ -18,10 +18,12 @@ public:
   };
 
   MenuItem(xml_node &data);
+  MenuItem(std::string label);
 
   static std::shared_ptr<MenuItem> create(xml_node &data);
 
-  virtual void select() = 0;
+  virtual void select();
+  virtual void render();
 
 protected:
   std::string _id;
@@ -57,6 +59,7 @@ public:
 
   virtual void select();
   std::string getData();
+  virtual void render();
 
 private:
   std::string _data;

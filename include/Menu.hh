@@ -23,10 +23,14 @@ public:
   static int askChoice();
 
   //Instance
-  Menu(const std::string &path);
+  Menu(const std::string &path, const std::string &id);
+
+  bool update();
+  void render();
 
 private:
   std::vector<std::shared_ptr<MenuItem>> _items;
+  int _cursor;
 };
 
 std::string getHashFromFile(std::string path);

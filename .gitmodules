@@ -1,3 +1,6 @@
 [submodule "thirdparty/omniunit"]
 	path = thirdparty/omniunit
 	url = https://bitbucket.org/stabax/omniunit/
+[submodule "thirdparty/sol2"]
+	path = thirdparty/sol2
+	url = https://github.com/ThePhD/sol2.git

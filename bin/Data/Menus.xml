@@ -2,18 +2,14 @@
 <Menu Id="Main">
   <Title>Racedriver menu experiment</Title>
   <Sep/>
-  <Item Action="Call" Target="Menu::newGame()">Continue game</Item>
-  <Item Action="Call" Target="Menu::newGame()">New game</Item>
-  <Item Action="Call" Target="Main::exit()">Quit</Item>
+  <Button Type="Goto" Target="Test">Go to Test</Button>
+  <Button Type="Script" Target="SPrintTest">Print test</Button>
 </Menu>
+<Script Id="SPrintTest">
+  print(test);
+</Script>
 <Menu Id="Test">
   <Text>TESTTTT</Text>
   <Sep/>
-  <Item Action="Goto" Target="TestMenu2">Ok, take me back</Item>
-</Menu>
-<Menu Id="TestMenu2">
-  <Text>TTTT! Wanna save ?</Text>
-  <Sep/>
-  <Item Type="Call" Target="Profil::save()">Save</Item>
-  <Item Action="Goto" Target="Test">NOPE</Item>
+  <Button Type="Goto" Target="Main">Ok, take me back</Button>
 </Menu>

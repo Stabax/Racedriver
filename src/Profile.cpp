@@ -5,25 +5,20 @@
 std::shared_ptr<Profile> Profile::active = nullptr;
 
 Profile::Profile(const std::string &name)
- : name(name), difficulty(0), credits(10000), MenuModule("Profile"), garage()
+ : name(name), difficulty(0), credits(10000), garage()
 {
 	garage.addCar(Car::collection[0]);
 }
 
 
 Profile::Profile(const json &data)
- : name(data["name"].get<std::string>()), difficulty(data["difficulty"].get<int>()), credits(data["credits"].get<int>()), garage(data["garage"]), MenuModule("Profile")
+ : name(data["name"].get<std::string>()), difficulty(data["difficulty"].get<int>()), credits(data["credits"].get<int>()), garage(data["garage"])
 {
 
 }
 
 Profile::~Profile()
 {
-}
-
-void Profile::registerMethods()
-{
-	MenuModule::methods.emplace("save", [] () { Profile::active->save(); });
 }
 
 void Profile::create(const std::string &name)

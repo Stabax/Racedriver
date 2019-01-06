@@ -4,27 +4,19 @@
 #include <fstream>
 #include "sha/sha.h"
 
-std::map<std::string, std::shared_ptr<MenuModule>> Menu::modules = std::map<std::string, std::shared_ptr<MenuModule>>();
+//Menu
 
 Menu::Menu(const std::string &path)
 {
   MenuFile menu(path);
-}
+	pugi::xml_node root = menu.getData();
 
-
-bool Menu::invokeMethod(const std::string &methodPath)
-{
-	size_t sep = methodPath.find(INVOKE_SEPARATOR);
-	if (sep == std::string::npos)
+	for (pugi::xml_node el = root.first_child(); el; el = el.next_sibling())
 	{
-		throw (std::runtime_error("Could not find method"));
-		return (false);
+		_items.push_back(MenuItem::create(el));
 	}
-	std::shared_ptr<MenuModule> module = modules[methodPath.substr(0, sep)];
-
-	module->methods[methodPath.substr(sep, methodPath.size() - sep)]();
-	return (true);
 }
+
 
 void Menu::error(std::string str)
 {
@@ -58,11 +50,6 @@ int Menu::askChoice()
                   << "Choix ? ";
   input = getch();
   return (atoi(&input));
-}
-
-MenuModule::MenuModule(const std::string &id)
-{
-	Menu::modules.emplace(id, std::shared_ptr<MenuModule>(this));
 }
 
 //Helpers

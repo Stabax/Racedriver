@@ -16,9 +16,11 @@ CXX = g++
 
 RM = rm -rf
 
-CXXFLAGS	= -std=c++14 -ggdb -W -Wall -Wpedantic -Iinclude -I$(LIBDIR) -I$(LIBDIR)/json/include/ -I$(LIBDIR)/pugixml/src/ -I$(LIBDIR)/omniunit/include/omniunit/
+CXXFLAGS	= -std=c++14 -ggdb -W -Wall -Wpedantic -Iinclude
+CXXFLAGS += -I$(LIBDIR) -I$(LIBDIR)/json/include/ -I$(LIBDIR)/pugixml/src/ -I$(LIBDIR)/lua/
+CXXFLAGS += -I$(LIBDIR)/omniunit/include/omniunit/ -I$(LIBDIR)/sol2/
 
-LDFLAGS		= -L$(BINDIR) -lcurl
+LDFLAGS		= -L$(BINDIR) -lcurl -L$(LIBDIR)/lua/ -llua
 # -static-libgcc
 
 ifeq ($(OS),Windows_NT)
@@ -31,7 +33,9 @@ NAME = $(BINDIR)/Racedriver
 
 SRCS = 	$(SRCDIR)/Game.cpp									\
 				$(SRCDIR)/Menu.cpp									\
+				$(SRCDIR)/MenuItem.cpp							\
 				$(SRCDIR)/DataFile.cpp							\
+				$(SRCDIR)/ScriptEngine.cpp					\
 				$(SRCDIR)/Utils.cpp									\
 				$(SRCDIR)/Track.cpp									\
 				$(SRCDIR)/Race.cpp									\

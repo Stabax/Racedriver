@@ -34,14 +34,12 @@ struct Stats {
 /*!
  * @brief Player profile. Used to store the GameSave.
  */
-class Profile : public MenuModule
+class Profile
 {
 public:
 	Profile(const std::string &name);
 	Profile(const json &data);
 	~Profile();
-
-	void registerMethods();
 
 	static void create(const std::string &name);
 	static void load(const std::string &save);

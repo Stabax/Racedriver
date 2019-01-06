@@ -1,7 +1,7 @@
 #include <chrono>
 #include <thread>
 #include <ctime>
-#include <stdio.h>
+#include <iostream>
 #include <libcurl/include/curl/curl.h>
 #include <sstream>
 #include <fstream>
@@ -9,6 +9,7 @@
 #include "Game.hh"
 #include "Accident.hh"
 #include "menusPrincipaux.hh"
+#include "ScriptEngine.hh"
 
 //Singleton storage ptr
 std::unique_ptr<Game> Game::instance = nullptr;
@@ -47,10 +48,11 @@ bool Game::load()
 int Game::main()
 {
 	_term.clearScreen();
+	// BEGIN
 	std::srand(std::time(0)); //INITIALISATION DE L'ALEATOIRE
 	if (!update()) //on verifie et fait les mises à jour
 	{
-		_term << setColor(Terminal::Color::RedOnBlack) 
+		_term << setColor(Terminal::Color::RedOnBlack)
 					<< ">Vous allez jouer avec une version potentiellement obsolete de Racedriver.\n"
 					<< resetAttrs()
 		      << ">Appuyez sur [ENTREE] pour continuer.\n";

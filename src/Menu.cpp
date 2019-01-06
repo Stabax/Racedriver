@@ -28,7 +28,7 @@ Menu::Menu(const std::string &path, const std::string &id)
 
 bool Menu::update()
 {
-	char input = getch;
+	char input = getch();
 	if(input == KEY_UP) --_cursor;
 	else if(input == KEY_DOWN) ++_cursor;
 	else return (false);
@@ -42,7 +42,9 @@ void Menu::render()
 	Terminal::get().clearScreen();
 	for (size_t i = 0; i < _items.size(); i++)
 	{
+		if (i == _cursor) Terminal::get() << setColor(Terminal::Color::RedOnBlack);
 		_items[i]->render();
+		if (i == _cursor) Terminal::get() << resetAttrs();
 	}
 }
 

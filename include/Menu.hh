@@ -22,6 +22,10 @@ public:
   static bool askConfirmation();
   static int askChoice();
 
+  static void Goto(std::string id);
+
+  static std::shared_ptr<Menu> active;
+
   //Instance
   Menu(const std::string &path, const std::string &id);
 

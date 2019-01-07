@@ -1,10 +1,13 @@
 #include "Menu.hh"
 #include "Game.hh"
 #include "Collection.hpp"
+#include "ScriptEngine.hh"
 #include <fstream>
 #include "sha/sha.h"
 
 //Menu
+
+std::shared_ptr<Menu> Menu::active = nullptr;
 
 Menu::Menu(const std::string &path, const std::string &id)
  : _cursor(0)
@@ -24,6 +27,7 @@ Menu::Menu(const std::string &path, const std::string &id)
 			Menu::error(e.what());
 		}
 	}
+	ScriptEngine::loadScripts(root);
 }
 
 bool Menu::update()
@@ -80,6 +84,11 @@ int Menu::askChoice()
                   << "Choix ? ";
   input = getch();
   return (atoi(&input));
+}
+
+void Menu::Goto(std::string id)
+{
+	active = std::make_shared<Menu>(Menu("", id));
 }
 
 //Helpers

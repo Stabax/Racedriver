@@ -1,5 +1,6 @@
 #include "MenuItem.hh"
 #include "ScriptEngine.hh"
+#include "Menu.hh"
 
 //MenuItem
 
@@ -54,10 +55,10 @@ void MenuButton::select()
   switch (_type)
   {
   case Goto:
-    //menu with id _target
+    Menu::Goto(_target);
     break;
   case Script:
-    //ScriptEngine::run(); script with id _target
+    ScriptEngine::run(_target);
     break;
   }
 }

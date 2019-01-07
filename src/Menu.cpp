@@ -22,43 +22,47 @@ Menu::Menu(const std::string &path, const std::string &id)
 	for (pugi::xml_node el = menu.first_child(); el; el = el.next_sibling())
 	{
 		try {
-			_items.push_back(MenuItem::create(el));
+			std::shared_ptr<MenuItem> obj = MenuItem::create(el);
+			_entities.push_back(obj);
+			if (obj->isSelectable()) _items.push_back(obj);
 		} catch(std::exception &e) {
 			Menu::error(e.what());
 		}
 	}
+	if (_items.size() > 0) _items[_cursor]->toggleHover();
 	ScriptEngine::loadScripts(root);
 }
 
 bool Menu::update()
 {
-	char input = getch();
+	int prevCursor = _cursor;
+	int input = getch();
 	if(input == KEY_UP) --_cursor;
 	else if(input == KEY_DOWN) ++_cursor;
 	else return (false);
 	if (_cursor >= _items.size()) _cursor = 0;
 	else if (_cursor < 0) _cursor = _items.size() - 1;
+	_items[prevCursor]->toggleHover();
+	_items[_cursor]->toggleHover();
 	return (true);
 }
 
 void Menu::render()
 {
 	Terminal::get().clearScreen();
-	for (size_t i = 0; i < _items.size(); i++)
+	for (size_t i = 0; i < _entities.size(); i++)
 	{
-		if (i == _cursor) Terminal::get() << setColor(Terminal::Color::RedOnBlack);
-		_items[i]->render();
-		if (i == _cursor) Terminal::get() << resetAttrs();
+		_entities[i]->render();
 	}
 }
 
 bool Menu::run()
 {
 	bool quit = false;
-	while (quit)
+	while (!quit)
 	{
-		render();
-		while (!update());
+		active->render();
+		while (!active->update());
 	}
 }
 
@@ -96,9 +100,9 @@ int Menu::askChoice()
   return (atoi(&input));
 }
 
-void Menu::Goto(std::string id)
+void Menu::goTo(std::string path, std::string id)
 {
-	active = std::make_shared<Menu>(Menu("", id));
+	active = std::make_shared<Menu>(Menu(path, id));
 }
 
 //Helpers

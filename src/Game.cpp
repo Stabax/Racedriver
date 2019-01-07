@@ -48,8 +48,8 @@ bool Game::load()
 int Game::main()
 {
 	_term.clearScreen();
-	Menu menu("./Data/Menus.xml", "Main");
-	menu.run();
+	Menu::goTo("./Data/Menus.xml", "Main");
+	Menu::run();
 	getch();
 	// BEGIN
 	std::srand(std::time(0)); //INITIALISATION DE L'ALEATOIRE

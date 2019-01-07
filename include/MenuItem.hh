@@ -22,10 +22,14 @@ public:
 
   static std::shared_ptr<MenuItem> create(xml_node &data);
 
+  void toggleHover();
+
+  virtual bool isSelectable();
   virtual void select();
   virtual void render();
 
 protected:
+  bool _hover;
   std::string _id;
   std::string _label;
 };
@@ -42,6 +46,7 @@ public:
   };
   MenuButton(xml_node &data);
 
+  virtual bool isSelectable();
   virtual void select();
 
 private:
@@ -57,6 +62,7 @@ class MenuInput : public MenuItem
 public:
   MenuInput(xml_node &data);
 
+  virtual bool isSelectable();
   virtual void select();
   std::string getData();
   virtual void render();

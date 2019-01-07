@@ -5,12 +5,12 @@
 //MenuItem
 
 MenuItem::MenuItem(xml_node &data)
- : _id(data.attribute("id").value()), _label(data.first_child().value())
+ : _id(data.attribute("id").value()), _label(data.first_child().value()), _hover(false)
 {
 }
 
 MenuItem::MenuItem(std::string label)
- : _label(label)
+ : _label(label), _hover(false)
 {
 }
 
@@ -32,6 +32,16 @@ std::shared_ptr<MenuItem> MenuItem::create(xml_node &data)
   return (el);
 }
 
+void MenuItem::toggleHover()
+{
+  _hover = !_hover;
+}
+
+bool MenuItem::isSelectable()
+{
+  return (false);
+}
+
 void MenuItem::select()
 {
   throw(std::runtime_error("MenuItem should not be selected"));
@@ -39,7 +49,9 @@ void MenuItem::select()
 
 void MenuItem::render()
 {
+  if (_hover) Terminal::get() << setColor(Terminal::Color::RedOnBlack);
   Terminal::get() << _label << "\n";
+  if (_hover) Terminal::get() << resetAttrs();
 }
 
 //MenuButton
@@ -55,12 +67,17 @@ void MenuButton::select()
   switch (_type)
   {
   case Goto:
-    Menu::Goto(_target);
+    Menu::goTo("", _target);
     break;
   case Script:
     ScriptEngine::run(_target);
     break;
   }
+}
+
+bool MenuButton::isSelectable()
+{
+  return (true);
 }
 
 //MenuInput
@@ -80,6 +97,11 @@ void MenuInput::select()
     if (input == '\b') _data.erase(--_data.end());
     else _data += input;
   }
+}
+
+bool MenuInput::isSelectable()
+{
+  return (true);
 }
 
 std::string MenuInput::getData()

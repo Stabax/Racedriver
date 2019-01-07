@@ -22,7 +22,8 @@ public:
   static bool askConfirmation();
   static int askChoice();
 
-  static void Goto(std::string id);
+  static void goTo(std::string path, std::string id);
+  static bool run();
 
   static std::shared_ptr<Menu> active;
 
@@ -31,9 +32,9 @@ public:
 
   bool update();
   void render();
-  bool run();
 
 private:
+  std::vector<std::shared_ptr<MenuItem>> _entities;
   std::vector<std::shared_ptr<MenuItem>> _items;
   int _cursor;
 };

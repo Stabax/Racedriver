@@ -10,6 +10,7 @@ Racedriver
 *.lib
 *.so
 *.o
+*.a
 *.obj
 
 # Symbols db #

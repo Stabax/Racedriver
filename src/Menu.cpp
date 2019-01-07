@@ -14,10 +14,13 @@ Menu::Menu(const std::string &path, const std::string &id)
 {
   MenuFile menuFile(path);
 	if (!menuFile.load()) throw(std::runtime_error("Error on loading Menu XML"));
-	const pugi::xml_document &root = menuFile.getData();
-	pugi::xml_node menu = root.first_child();
+	const xml_document &root = menuFile.getData();
+	xml_node menu;
 
-	while (menu && strcmp(menu.name(), "Menu") != 0 && menu.attribute("Id").value() != id) menu = menu.next_sibling();
+	for (pugi::xml_node el = root.first_child(); el; el = el.next_sibling())
+	{
+		if (strcmp(el.name(), "Menu") == 0 && el.attribute("Id").value() == id) menu = el;
+	}
 	if (!menu) throw(std::runtime_error("Menu not found"));
 	for (pugi::xml_node el = menu.first_child(); el; el = el.next_sibling())
 	{

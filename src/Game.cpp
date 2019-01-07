@@ -48,9 +48,9 @@ bool Game::load()
 int Game::main()
 {
 	_term.clearScreen();
-	Menu::goTo("./Data/Menus.xml", "Main");
+	/*Menu::goTo("./Data/Menus.xml", "Main");
 	Menu::run();
-	getch();
+	getch();*/
 	// BEGIN
 	std::srand(std::time(0)); //INITIALISATION DE L'ALEATOIRE
 	if (!update()) //on verifie et fait les mises à jour

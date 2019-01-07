@@ -52,6 +52,16 @@ void Menu::render()
 	}
 }
 
+bool Menu::run()
+{
+	bool quit = false;
+	while (quit)
+	{
+		render();
+		while (!update());
+	}
+}
+
 void Menu::error(std::string str)
 {
 	Menu::msg("ERREUR: "+str);

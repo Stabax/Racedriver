@@ -31,6 +31,7 @@ public:
 
   bool update();
   void render();
+  bool run();
 
 private:
   std::vector<std::shared_ptr<MenuItem>> _items;

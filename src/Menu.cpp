@@ -36,6 +36,7 @@ Menu::Menu(const std::string &path, const std::string &id)
 bool Menu::update()
 {
 	int input = getch();
+	Terminal::get().clearScreen();
 	if(input == KEY_UP) updateCursor(false);
 	else if(input == KEY_DOWN) updateCursor(true);
 	else if(input == KEY_ENTER || input == '\n' || input == '\r') _items[_cursor]->select();
@@ -67,7 +68,6 @@ bool Menu::run()
 	bool quit = false;
 	while (!quit)
 	{
-		Terminal::get().clearScreen();
 		active->render();
 		while (!active->update());
 	}

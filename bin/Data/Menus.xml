@@ -6,7 +6,8 @@
   <Button Type="Script" Target="SPrintTest">Print test</Button>
 </Menu>
 <Script Id="SPrintTest">
-  print(test);
+  print(test)
+  pause
 </Script>
 <Menu Id="Test">
   <Text>TESTTTT</Text>

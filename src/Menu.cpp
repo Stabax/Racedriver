@@ -35,21 +35,27 @@ Menu::Menu(const std::string &path, const std::string &id)
 
 bool Menu::update()
 {
-	int prevCursor = _cursor;
 	int input = getch();
-	if(input == KEY_UP) --_cursor;
-	else if(input == KEY_DOWN) ++_cursor;
+	if(input == KEY_UP) updateCursor(false);
+	else if(input == KEY_DOWN) updateCursor(true);
+	else if(input == KEY_ENTER || input == '\n' || input == '\r') _items[_cursor]->select();
 	else return (false);
+	return (true);
+}
+
+void Menu::updateCursor(bool add)
+{
+	int prevCursor = _cursor;
+
+	_cursor += (add ? 1 : -1) * 1;
 	if (_cursor >= _items.size()) _cursor = 0;
 	else if (_cursor < 0) _cursor = _items.size() - 1;
 	_items[prevCursor]->toggleHover();
 	_items[_cursor]->toggleHover();
-	return (true);
 }
 
 void Menu::render()
 {
-	Terminal::get().clearScreen();
 	for (size_t i = 0; i < _entities.size(); i++)
 	{
 		_entities[i]->render();
@@ -61,6 +67,7 @@ bool Menu::run()
 	bool quit = false;
 	while (!quit)
 	{
+		Terminal::get().clearScreen();
 		active->render();
 		while (!active->update());
 	}

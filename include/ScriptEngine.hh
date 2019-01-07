@@ -13,7 +13,7 @@ struct ScriptEngine
 
   static void loadScripts(const xml_document &doc);
 
-  static std::map<std::string, std::string> _scripts;
+  static std::map<std::string, std::string> scripts;
 };
 
 

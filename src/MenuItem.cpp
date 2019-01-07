@@ -57,9 +57,11 @@ void MenuItem::render()
 //MenuButton
 
 MenuButton::MenuButton(xml_node &data)
- : MenuItem(data), _target()
+ : MenuItem(data), _target(data.attribute("Target").value())
 {
-
+  if (strcmp(data.attribute("Type").value(), "Goto") == 0) _type = Goto;
+  else if (strcmp(data.attribute("Type").value(), "Script") == 0) _type = Script;
+  else throw (std::runtime_error("Unknown button type"));
 }
 
 void MenuButton::select()

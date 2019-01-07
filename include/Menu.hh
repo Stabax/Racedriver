@@ -30,6 +30,7 @@ public:
   //Instance
   Menu(const std::string &path, const std::string &id);
 
+  void updateCursor(bool add);
   bool update();
   void render();
 

@@ -6,6 +6,8 @@
 #include "Terminal.hh"
 #include "DataFile.hh"
 
+#define TARGET_SEPARATOR  ":"
+
 /*!
  * @brief Holds menu entry data
  */

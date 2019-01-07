@@ -69,8 +69,12 @@ void MenuButton::select()
   switch (_type)
   {
   case Goto:
-    Menu::goTo("", _target);
+  {
+    int sep = _target.find(TARGET_SEPARATOR);
+    if (sep == std::string::npos) throw (std::runtime_error("Link has invalid target"));
+    Menu::goTo(_target.substr(0, sep), _target.substr(sep + 1, _target.size()));
     break;
+  }
   case Script:
     ScriptEngine::run(_target);
     break;

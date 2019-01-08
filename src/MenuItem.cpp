@@ -98,12 +98,14 @@ void MenuInput::select()
 
   Menu::active->render(); //Render once
   Terminal::get().setCursor(2); //Block cursor
+  Terminal::get().setCursorPos(_dataPos); //set cursor at end of input
   while ((input = getch()) != KEY_ENTER && input != '\r' && input != '\n')
   {
-    if (input.size() > 0 && (input == KEY_BACKSPACE || input == '\b')) _data.erase(--_data.end());
+    if (_data.length() > 0 && (input == KEY_BACKSPACE || input == '\b')) _data.erase(--_data.end());
     else _data += input;
     Terminal::get().clearScreen();
     Menu::active->render(); //Request render to update input
+    Terminal::get().setCursorPos(_dataPos); //set cursor at end of input
   }
   Terminal::get().clearScreen(); //Clear screen for menu redraw
   Terminal::get().setCursor(0); //Disable cursor
@@ -123,4 +125,5 @@ void MenuInput::render()
 {
   MenuItem::render();
   Terminal::get() << ": " + _data;
+  _dataPos = Terminal::get().getCursorPos();
 }

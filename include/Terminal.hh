@@ -30,6 +30,8 @@ public:
 
   static Terminal &get();
 
+  Point getCursorPos();
+  void setCursorPos(const Point &p);
 
   void initColor();
   void clearScreen();

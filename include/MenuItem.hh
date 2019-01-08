@@ -71,6 +71,7 @@ public:
 
 private:
   std::string _data;
+  Point _dataPos;
 };
 
 

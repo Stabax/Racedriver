@@ -34,6 +34,18 @@ Terminal &Terminal::get()
 	return (*instance.get());
 }
 
+Point Terminal::getCursorPos()
+{
+	Point p;
+	getyx(_screen, p.y, p.x);
+	return (p);
+}
+
+void Terminal::setCursorPos(const Point &p)
+{
+	wmove(_screen, p.y, p.x);
+}
+
 void Terminal::initColor()
 {
   if (!has_colors()) throw (std::runtime_error("Color is not supported"));

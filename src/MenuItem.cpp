@@ -100,11 +100,8 @@ void MenuInput::select()
   Terminal::get().setCursor(2); //Block cursor
   while ((input = getch()) != KEY_ENTER && input != '\r' && input != '\n')
   {
-    if (input == KEY_BACKSPACE || input == '\b') _data.erase(--_data.end());
-    else
-    {
-      _data += input;
-    }
+    if (input.size() > 0 && (input == KEY_BACKSPACE || input == '\b')) _data.erase(--_data.end());
+    else _data += input;
     Terminal::get().clearScreen();
     Menu::active->render(); //Request render to update input
   }

@@ -50,7 +50,7 @@ void MenuItem::select()
 void MenuItem::render()
 {
   if (_hover) Terminal::get() << setColor(Terminal::Color::RedOnBlack);
-  Terminal::get() << _label << "\n";
+  Terminal::get() << _label;
   if (_hover) Terminal::get() << resetAttrs();
 }
 
@@ -94,13 +94,22 @@ MenuInput::MenuInput(xml_node &data)
 
 void MenuInput::select()
 {
-  char input;
+  int input;
 
-  while ((input = getch()) != '\n')
+  Menu::active->render(); //Render once
+  Terminal::get().setCursor(2); //Block cursor
+  while ((input = getch()) != KEY_ENTER && input != '\r' && input != '\n')
   {
-    if (input == '\b') _data.erase(--_data.end());
-    else _data += input;
+    if (input == KEY_BACKSPACE || input == '\b') _data.erase(--_data.end());
+    else
+    {
+      _data += input;
+    }
+    Terminal::get().clearScreen();
+    Menu::active->render(); //Request render to update input
   }
+  Terminal::get().clearScreen(); //Clear screen for menu redraw
+  Terminal::get().setCursor(0); //Disable cursor
 }
 
 bool MenuInput::isSelectable()
@@ -116,5 +125,5 @@ std::string MenuInput::getData()
 void MenuInput::render()
 {
   MenuItem::render();
-  //Implement logic
+  Terminal::get() << ": " + _data;
 }

@@ -18,7 +18,7 @@ Terminal::Terminal()
 	raw();
 	keypad(_screen, TRUE);
 	noecho();
-	curs_set(2); //Block cursor
+	setCursor(0); //No cursor
 	initColor();
 	resetAttrs();
 	Terminal::instance = std::unique_ptr<Terminal>(this);
@@ -70,6 +70,11 @@ void Terminal::update()
 void Terminal::setStdinTimeout(int milliseconds = -1)
 {
 	wtimeout(_screen, milliseconds);
+}
+
+void Terminal::setCursor(int style)
+{
+	curs_set(style);
 }
 
 void Terminal::resetAttrs()

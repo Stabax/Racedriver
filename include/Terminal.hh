@@ -36,6 +36,7 @@ public:
   void update();
   void setFullscreen();
   void setStdinTimeout(int milliseconds);
+  void setCursor(int style);
   void resetAttrs();
   void setAttrs(int attrs);
   void print(const std::string &str, int attrs = 0, WINDOW *win = instance->_screen);

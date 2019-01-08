@@ -4,6 +4,7 @@
   <Sep/>
   <Button Type="Goto" Target="Test">Go to Test</Button>
   <Button Type="Script" Target="SPrintTest">Print test</Button>
+  <Input>Input</Input>
 </Menu>
 <Script Id="SPrintTest">
   print("test.\n")

@@ -53,7 +53,7 @@ public:
 
 private:
   Type _type;
-  std::string _target;
+  std::string _target, _path;
 };
 
 /*!

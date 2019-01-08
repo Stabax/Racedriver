@@ -2,7 +2,7 @@
 <Menu Id="Main">
   <Text>Racedriver menu experiment</Text>
   <Sep/>
-  <Button Type="Goto" Target="./Data/Menus.xml:Test">Go to Test</Button>
+  <Button Type="Goto" Target="Test">Go to Test</Button>
   <Button Type="Script" Target="SPrintTest">Print test</Button>
 </Menu>
 <Script Id="SPrintTest">

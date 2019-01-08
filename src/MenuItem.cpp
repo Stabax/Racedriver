@@ -57,7 +57,7 @@ void MenuItem::render()
 //MenuButton
 
 MenuButton::MenuButton(xml_node &data)
- : MenuItem(data), _target(data.attribute("Target").value())
+ : MenuItem(data), _target(data.attribute("Target").value()), _path(data.attribute("Path").value())
 {
   if (strcmp(data.attribute("Type").value(), "Goto") == 0) _type = Goto;
   else if (strcmp(data.attribute("Type").value(), "Script") == 0) _type = Script;
@@ -70,9 +70,7 @@ void MenuButton::select()
   {
   case Goto:
   {
-    int sep = _target.find(TARGET_SEPARATOR);
-    if (sep == std::string::npos) throw (std::runtime_error("Link has invalid target"));
-    Menu::goTo(_target.substr(0, sep), _target.substr(sep + 1, _target.size()));
+    Menu::goTo(_target, _path);
     break;
   }
   case Script:

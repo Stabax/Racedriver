@@ -8,16 +8,14 @@
 //Menu
 
 std::shared_ptr<Menu> Menu::active = nullptr;
+std::shared_ptr<MenuFile> Menu::activeDoc = nullptr;
 
-Menu::Menu(const std::string &path, const std::string &id)
+Menu::Menu(const std::string &id)
  : _cursor(0)
 {
-  MenuFile menuFile(path);
-	if (!menuFile.load()) throw(std::runtime_error("Error on loading Menu XML"));
-	const xml_document &root = menuFile.getData();
 	xml_node menu;
 
-	for (pugi::xml_node el = root.first_child(); el; el = el.next_sibling())
+	for (pugi::xml_node el = activeDoc->getData().first_child(); el; el = el.next_sibling())
 	{
 		if (strcmp(el.name(), "Menu") == 0 && el.attribute("Id").value() == id) menu = el;
 	}
@@ -33,7 +31,13 @@ Menu::Menu(const std::string &path, const std::string &id)
 		}
 	}
 	if (_items.size() > 0) _items[_cursor]->toggleHover();
-	ScriptEngine::loadScripts(root);
+}
+
+void Menu::setActiveDocument(const std::string &path)
+{
+	activeDoc = std::make_shared<MenuFile>(path);
+	if (!activeDoc->load()) throw(std::runtime_error("Error on loading Menu XML"));
+	ScriptEngine::loadScripts(activeDoc->getData());
 }
 
 bool Menu::update()
@@ -110,9 +114,10 @@ int Menu::askChoice()
   return (atoi(&input));
 }
 
-void Menu::goTo(std::string path, std::string id)
+void Menu::goTo(std::string id, std::string path)
 {
-	active = std::make_shared<Menu>(Menu(path, id));
+	if (path != "") setActiveDocument(path);
+	active = std::make_shared<Menu>(Menu(id));
 }
 
 //Helpers

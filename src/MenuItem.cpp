@@ -5,7 +5,7 @@
 //MenuItem
 
 MenuItem::MenuItem(xml_node &data)
- : _id(data.attribute("id").value()), _label(data.first_child().value()), _hover(false)
+ : _id(data.attribute("Id").value()), _label(data.first_child().value()), _hover(false)
 {
 }
 
@@ -42,6 +42,12 @@ bool MenuItem::isSelectable()
   return (false);
 }
 
+
+const std::string &MenuItem::getId()
+{
+  return (_id);
+}
+
 void MenuItem::select()
 {
   throw(std::runtime_error("MenuItem should not be selected"));
@@ -61,6 +67,7 @@ MenuButton::MenuButton(xml_node &data)
 {
   if (strcmp(data.attribute("Type").value(), "Goto") == 0) _type = Goto;
   else if (strcmp(data.attribute("Type").value(), "Script") == 0) _type = Script;
+  else if (strcmp(data.attribute("Type").value(), "Intern") == 0) _type = Intern;
   else throw (std::runtime_error("Unknown button type"));
 }
 
@@ -74,6 +81,9 @@ void MenuButton::select()
     break;
   }
   case Script:
+    ScriptEngine::runScript(_target);
+    break;
+  case Intern:
     ScriptEngine::run(_target);
     break;
   }

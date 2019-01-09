@@ -8,6 +8,7 @@
 
 struct ScriptEngine
 {
+  static void runScript(const std::string &scriptId);
   static void run(const std::string &script);
   static void exposeCpp(sol::state &lua);
 

@@ -99,11 +99,16 @@ void Terminal::setAttrs(int attrs)
 	_currentAttrs |= attrs;
 }
 
-void Terminal::print(const std::string &str, int attrs, WINDOW *win)
+void Terminal::print(const std::string &str, int attrs)
 {
-	if (attrs != 0) wattrset(win, attrs);
-	waddstr(_screen, str.c_str());
-	if (attrs != 0) wattroff(win, attrs);
+	print(_screen, str, attrs);
+}
+
+void Terminal::print(WINDOW *win, const std::string &str, int attrs)
+{
+	if (attrs != 0 || _currentAttrs != 0) wattrset(win, attrs + _currentAttrs);
+	waddstr(win, str.c_str());
+	if (attrs != 0 || _currentAttrs != 0) wattroff(win, attrs + _currentAttrs);
 	update();
 }
 
@@ -143,7 +148,7 @@ Terminal &operator<<(Terminal &term, int data)
 
 Terminal &operator<<(Terminal &term, const char *str)
 {
-  term.print(str, term._currentAttrs);
+  term.print(str);
   return (term);
 }
 

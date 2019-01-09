@@ -30,19 +30,23 @@ public:
 
   static Terminal &get();
 
-  Point getCursorPos();
-  void setCursorPos(const Point &p);
-
   void initColor();
-  void clearScreen();
-  void update();
   void setFullscreen();
   void setStdinTimeout(int milliseconds);
   void setCursor(int style);
+
+  Point getCursorPos();
+  void setCursorPos(const Point &p);
+
   void resetAttrs();
   void setAttrs(int attrs);
-  void print(const std::string &str, int attrs = 0, WINDOW *win = instance->_screen);
+  void print(const std::string &str, int attrs = 0);
+  void print(WINDOW *win, const std::string &str, int attrs = 0);
   void printAt(Point point, const std::string &str);
+
+  void clearScreen();
+  void update();
+
   WINDOW *addChildWindow(Point pos, Point size);
   void removeChildWindow(WINDOW *win);
 

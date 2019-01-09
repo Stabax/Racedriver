@@ -38,6 +38,7 @@ void Menu::setActiveDocument(const std::string &path)
 	activeDoc = std::make_shared<MenuFile>(path);
 	if (!activeDoc->load()) throw(std::runtime_error("Error on loading Menu XML"));
 	ScriptEngine::loadScripts(activeDoc->getData());
+	MenuDialog::load(activeDoc->getData());
 }
 
 bool Menu::update()
@@ -119,6 +120,45 @@ void Menu::goTo(std::string id, std::string path)
 {
 	if (path != "") setActiveDocument(path);
 	active = std::make_shared<Menu>(Menu(id));
+}
+
+std::shared_ptr<MenuItem> Menu::getItem(const std::string &id)
+{
+	auto obj = std::find_if(_entities.begin(), _entities.end(),
+    			[=] (std::shared_ptr<MenuItem> m) { return (m->getId() == id); });
+	if (obj == _entities.end()) throw (std::runtime_error("Specified item does not exist"));
+	return *(obj);
+}
+
+//MenuDialog
+
+std::map<std::string, MenuDialog> MenuDialog::dialogs = std::map<std::string, MenuDialog>();
+
+MenuDialog::MenuDialog(xml_node &data)
+ : _data(data.first_child().value())
+{
+
+}
+
+void MenuDialog::load(const xml_document &doc)
+{
+	for (pugi::xml_node el = doc.first_child(); el; el = el.next_sibling())
+	{
+		if (strcmp(el.name(), "Dialog") == 0)
+		{
+			dialogs.emplace(el.attribute("Id").value(), MenuDialog(el));
+		}
+	}
+}
+
+void MenuDialog::open()
+{
+	_win = Terminal::get().addChildWindow(Point(), Point(50, 50));
+}
+
+void MenuDialog::render()
+{
+
 }
 
 //Helpers

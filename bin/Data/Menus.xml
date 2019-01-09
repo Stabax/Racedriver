@@ -4,10 +4,14 @@
   <Sep/>
   <Button Type="Goto" Target="Test">Go to Test</Button>
   <Button Type="Script" Target="SPrintTest">Print test</Button>
-  <Input>Input</Input>
+  <Button Type="Intern" Target="print('toto')">Print toto</Button>
+  <Input Id="TIn">Input</Input>
 </Menu>
 <Script Id="SPrintTest">
-  print("test.\n")
+  value = getInputData("TIn");
+
+  print("dans la case il y a ecrit:\n")
+  print(value .. "\n")
   print("Appuyez sur entree.\n")
   pause()
 </Script>

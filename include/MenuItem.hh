@@ -26,6 +26,7 @@ public:
 
   void toggleHover();
 
+  const std::string &getId();
   virtual bool isSelectable();
   virtual void select();
   virtual void render();
@@ -44,7 +45,8 @@ class MenuButton : public MenuItem
 public:
   enum Type {
     Goto,
-    Script
+    Script,
+    Intern
   };
   MenuButton(xml_node &data);
 
@@ -73,6 +75,5 @@ private:
   std::string _data;
   Point _dataPos;
 };
-
 
 #endif /* !MENUITEM_HH_ */

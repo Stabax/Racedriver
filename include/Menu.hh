@@ -32,6 +32,8 @@ public:
   //Instance
   Menu(const std::string &id);
 
+  std::shared_ptr<MenuItem> getItem(const std::string &id);
+
   void updateCursor(bool add);
   bool update();
   void render();
@@ -40,6 +42,26 @@ private:
   std::vector<std::shared_ptr<MenuItem>> _entities;
   std::vector<std::shared_ptr<MenuItem>> _items;
   int _cursor;
+};
+
+/*!
+ * @brief Acts as a sub window
+ */
+class MenuDialog
+{
+public:
+  MenuDialog(xml_node &data);
+
+  static void load(const xml_document &doc);
+
+  static std::map<std::string, MenuDialog> dialogs;
+
+  void open();
+  void render();
+
+private:
+  std::string _data;
+  WINDOW *_win;
 };
 
 std::string getHashFromFile(std::string path);

@@ -16,22 +16,22 @@ public:
   Engine(const json &data);
 
   virtual std::string info();
-	int getPower();
-	void update(int speed, int radius);
+	omni::Horsepower getPower();
+	void update(omni::KilometerPerHour speed, omni::Inch radius);
 
   static const std::string getPath() { return ("Engines"); };
 	static Collection<Engine> collection;
 
 	//Manufacturer
-	int _mRevolutions;
-	int mPower;
+	omni::perMinute<int> _mRevolutions;
+	omni::Horsepower mPower;
 	Energy energy;
 	int price;
 
 	//Instance
-	int _power;
-	int _revolutions;
-	int _torque;
+	omni::Horsepower _power;
+	omni::perMinute<int> _revolutions;
+	omni::NewtonMeter _torque;
 };
 
 #endif /* !ENGINE_HPP_ */

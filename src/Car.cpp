@@ -63,25 +63,25 @@ void Car::listerCars()
 	}
 }
 
-void Car::update(int gradient)
+void Car::update(omni::Millisecond tickDuration, omni::Meter gradient)
 {
 	_engine->update(_speed, _tires->radius);
-	int power = _engine->getPower();
-	float cinetic = (0.5 * _mass * (_speed * _speed));
-	float cineticDiff = power - (_mass * 9.81  * (_speed / gradient));
+	omni::Horsepower power = _engine->getPower();
+	omni::NewtonMeter cinetic = (0.5 * _mass * omni::pow<2>(_speed));
+  omni::Watt cineticDiff =  power - (_mass * omni::MeterPerSecond2(9.81) * (gradient / (_speed * tickDuration)) * _speed);
 
-	_acceleration = sqrt(2 / _mass * cinetic) * (cineticDiff / 2);
-	_speed += _acceleration;
+	_acceleration = omni::nroot<2>(2 / (_mass * cinetic)) * (cineticDiff / 2);
+	_speed += _acceleration * tickDuration;
 }
 
-float Car::getVitesse() const
+omni::KilometerPerHour Car::getVitesse() const
 {
-	return (_engine->getPower() + ( getAerodynamisme() / 3 ));
+	return (_speed);
 }
 
-float Car::getAcceleration() const
+omni::MeterPerSecond2 Car::getAcceleration() const
 {
-	return (static_cast<float>(((_nitro) + (getAerodynamisme())/10)));
+	return (static_cast<float>(((_nitro.count()) + (getAerodynamisme())/10)));
 }
 
 int Car::getAerodynamisme() const
@@ -90,7 +90,7 @@ int Car::getAerodynamisme() const
 	return (spoilerValue);
 }
 
-int Car::getNiveauNitro() const
+omni::Liter Car::getNiveauNitro() const
 {
 	return _nitro;
 }
@@ -100,7 +100,7 @@ int Car::getDurability() const
 	return _integrity;
 }
 
-int Car::getFuel() const
+omni::Liter Car::getFuel() const
 {
 	return _fuel;
 }
@@ -146,7 +146,7 @@ void Car::setTires(const Tires &tires)
 	updateAttributs();
 }
 
-void Car::setNitro(const int& ajouter)
+void Car::setNitro(omni::Liter ajouter)
 {
 	_nitro += ajouter;
 	updateAttributs();
@@ -159,7 +159,7 @@ void Car::damage(int value)
 
 void Car::pleinNitro()
 {
-	_nitro = 100;
+	_nitro = omni::Liter(100);
 	updateAttributs();
 }
 
@@ -175,7 +175,7 @@ void Car::reparer()
 
 void Car::updateAttributs()
 {
-	_nitro = 100;
+	_nitro = omni::Liter(100);
 }
 
 void Car::replaceTires()
@@ -192,7 +192,7 @@ void to_json(json& j, const Car& car) {
 			{"id", car.getTires()->getId()},
 			{"integrity", car.getTires()->getDurability()}
 		}},
-		{"fuel", car.getFuel()},
+		{"fuel", car.getFuel().count()},
 		{"integrity", car.getDurability()}
 	};
 }

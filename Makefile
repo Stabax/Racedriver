@@ -1,6 +1,6 @@
 ##
 ## Makefile for RaceDriver
-## 
+##
 ## Made by Maxime Martens
 ##
 
@@ -16,7 +16,7 @@ CXX = g++
 
 RM = rm -rf
 
-CXXFLAGS	= -std=c++14 -ggdb -W -Wall -Wpedantic -Iinclude
+CXXFLAGS	= -std=c++17 -ggdb -W -Wall -Wpedantic -Iinclude
 CXXFLAGS += -I$(LIBDIR) -I$(LIBDIR)/json/include/ -I$(LIBDIR)/pugixml/src/ -I$(LIBDIR)/lua/
 CXXFLAGS += -I$(LIBDIR)/omniunit/include/omniunit/ -I$(LIBDIR)/sol2/
 

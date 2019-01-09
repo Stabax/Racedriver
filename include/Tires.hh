@@ -29,10 +29,10 @@ public:
 
 	static Collection<Tires> collection;
 
-	int radius;
+	omni::Inch radius;
 
 protected:
-	float _pressure;
+	omni::Bar _pressure;
 	int _integrity;
 	int _price;
 };

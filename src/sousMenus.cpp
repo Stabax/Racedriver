@@ -398,7 +398,7 @@ void menuMaintenance(const int& numeroBox)
 				break;
 			case 2:
 				Terminal::get().clearScreen(); //On flushe l'ancien ecran
-				nitroManquante = 100 - Car.getNiveauNitro();
+				nitroManquante = 100 - Car.getNiveauNitro().count();
 				Terminal::get() << "/!\\ Attention ! /!\\\n"
 												<< "====================\n"
 												<< "Credits: " << Profile::active->credits << "c\n"

@@ -19,16 +19,16 @@ public:
 
 	static void listerCars();
 
-	void update(int gradient);
+	void update(omni::Millisecond tickDuration, omni::Meter gradient);
 
 	void copy(const std::string &id);
 	void displayInfo() const;
-	float getVitesse() const;
-	float getAcceleration() const;
+	omni::KilometerPerHour getVitesse() const;
+	omni::MeterPerSecond2 getAcceleration() const;
 	int getAerodynamisme() const;
-	int getNiveauNitro() const;
+	omni::Liter getNiveauNitro() const;
 	int getDurability() const;
-	int getFuel() const;
+	omni::Liter getFuel() const;
 	int getAerodynamismeCar() const;
 	int getConsommation() const;
 	int getPrix() const;
@@ -43,7 +43,7 @@ public:
 	void setEngine(const Engine &newEngine);
 	void setSpoiler(const Spoiler &newSpoiler);
 	void setTires(const Tires &tires);
-	void setNitro(const int& ajouter);
+	void setNitro(omni::Liter ajouter);
 
 	void damage(int value);
 
@@ -61,13 +61,13 @@ protected:
 	std::shared_ptr<Spoiler> _spoiler;
 	std::shared_ptr<Tires> _tires;
 	int _integrity;
-	int _mass;
+	omni::Kilogram _mass;
 
 	//instance
-	int _nitro;	//se vide en fonction de la longueur du circuit. le plein est fait manuellement via paiement, juste avant une course
-	float _fuel;
-	int _speed;
-	float _acceleration;
+	omni::Liter _nitro;	//se vide en fonction de la longueur du circuit. le plein est fait manuellement via paiement, juste avant une course
+	omni::Liter _fuel;
+	omni::KilometerPerHour _speed;
+	omni::MeterPerSecond2 _acceleration;
 };
 
 void to_json(json& j, const Car& car);

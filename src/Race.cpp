@@ -51,7 +51,7 @@ bool Race::preparations()
 		return (false);
 	}
 	Terminal::get().clearScreen(); //On flushe l'ancien ecran
-	if(playerCar->getNiveauNitro() < 100)
+	if(playerCar->getNiveauNitro().count() < 100)
 	{
 		Menu::msg("Attention: Votre reservoir de nitro n'est pas plein.\n");
 	}
@@ -154,8 +154,8 @@ void Race::compute()
 		for (size_t i = 0; i < players.size(); i++)
 		{
 			if (players[i].out) continue; //Skip out players
-			players[i].score += players[i].car->getAcceleration() * track->track[t].gradient + (std::rand() % 25);
-			players[i].score += players[i].car->getVitesse() * (static_cast<float>(std::rand() % 1) + 1);
+			players[i].score += players[i].car->getAcceleration().count() * track->track[t].gradient + (std::rand() % 25);
+			players[i].score += players[i].car->getVitesse().count() * (static_cast<float>(std::rand() % 1) + 1);
 			if(std::rand() % 101 < probaAccident[i])
 			{
 				players[i].out = true;

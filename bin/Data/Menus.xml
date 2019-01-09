@@ -9,9 +9,10 @@
   <Input Id="TIn">Input</Input>
 </Menu>
 <Script Id="SPrintTest">
-  value = getInputData("TIn");
 
-  obj.RunMethod(param1, param2)
+  obj = SpoilersCollection.new();
+
+  value = getInputData("TIn");
 
   print("dans la case il y a ecrit:\n")
   print(value .. "\n")

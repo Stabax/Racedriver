@@ -1,6 +1,7 @@
 #include "ScriptEngine.hh"
 #include "Game.hh"
 #include "Menu.hh"
+#include "Spoiler.hh"
 
 std::map<std::string, std::string> ScriptEngine::scripts = std::map<std::string, std::string>();
 
@@ -31,6 +32,7 @@ void ScriptEngine::exposeCpp(sol::state &lua)
     std::shared_ptr<MenuInput> in = std::dynamic_pointer_cast<MenuInput>(Menu::active->getItem(id));
     return (in != nullptr ? in->getData() : "");
   });
+  //Collection<Spoiler>::expose(lua);
 }
 
 void ScriptEngine::exposeClasses(sol::state &lua)

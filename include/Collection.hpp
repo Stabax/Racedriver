@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <vector>
+#include <sol.hpp>
 #include "DataFile.hh"
 #include "Menu.hh"
 #include "Part.hpp"
@@ -52,14 +53,11 @@ public:
   static const std::string getPath()
   {
     std::string path = "./Data/";
-    if (std::is_same<ST, Car>::value)
+    if (!std::is_same<ST, Car>::value) //Parts have different location
     {
-      path += "Cars";
+     path += "Parts/";
     }
-    else //Parts
-    {
-     path += "Parts/" + ST::getPath();
-    }
+    path += ST::getPath();
     return (path+".json");
   }
 
@@ -88,6 +86,15 @@ public:
         Menu::error("Corrupted data");
       }
     }
+  }
+
+  template <typename ST>
+  static void expose(sol::state &lua)
+  {
+    lua.new_usertype<Collection<ST>>(ST::getPath()+"Collection",
+      // constructor
+      sol::constructors<Collection<ST>()>()
+    );
   }
 
 private:

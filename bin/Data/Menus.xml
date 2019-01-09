@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Menu Id="Main">
+  <Script>printLogo()</Script>
   <Text>Racedriver menu experiment</Text>
   <Sep/>
   <Button Type="Goto" Target="Test">Go to Test</Button>
@@ -9,6 +10,8 @@
 </Menu>
 <Script Id="SPrintTest">
   value = getInputData("TIn");
+
+  obj.RunMethod(param1, param2)
 
   print("dans la case il y a ecrit:\n")
   print(value .. "\n")

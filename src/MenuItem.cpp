@@ -28,6 +28,11 @@ std::shared_ptr<MenuItem> MenuItem::create(xml_node &data)
   {
     el = std::make_shared<MenuInput>(data);
   }
+  else if (strcmp(data.name(),"Script") == 0)
+  {
+    ScriptEngine::run(data.first_child().value());
+    return (nullptr);
+  }
   else throw(std::runtime_error("Error in XML"));
   return (el);
 }

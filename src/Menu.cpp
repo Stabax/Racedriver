@@ -24,6 +24,7 @@ Menu::Menu(const std::string &id)
 	{
 		try {
 			std::shared_ptr<MenuItem> obj = MenuItem::create(el);
+			if (obj == nullptr) continue; //Discard if non-object entity is parsed
 			_entities.push_back(obj);
 			if (obj->isSelectable()) _items.push_back(obj);
 		} catch(std::exception &e) {

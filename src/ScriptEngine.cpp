@@ -2,6 +2,8 @@
 #include "Game.hh"
 #include "Menu.hh"
 #include "Spoiler.hh"
+#include "Engine.hh"
+#include "Tires.hh"
 
 std::map<std::string, std::string> ScriptEngine::scripts = std::map<std::string, std::string>();
 
@@ -16,6 +18,7 @@ void ScriptEngine::run(const std::string &script)
   sol::state lua; // creates a Lua context and loads standard Lua libraries
 
   exposeCpp(lua);
+  exposeCollections(lua);
   try {
     lua.script(script);
   } catch (std::exception &e) {
@@ -32,30 +35,17 @@ void ScriptEngine::exposeCpp(sol::state &lua)
     std::shared_ptr<MenuInput> in = std::dynamic_pointer_cast<MenuInput>(Menu::active->getItem(id));
     return (in != nullptr ? in->getData() : "");
   });
-  //Collection<Spoiler>::expose(lua);
 }
 
-void ScriptEngine::exposeClasses(sol::state &lua)
+void ScriptEngine::exposeCollections(sol::state &lua)
 {
-  /*
-  lua.new_usertype<player>("collection",
-
-          // 3 constructors
-          sol::constructors<player(), player(int), player(int, int)>(),
-
-          // typical member function that returns a variable
-          "shoot", &player::shoot,
-          // typical member function
-          "boost", &player::boost,
-
-          // gets or set the value using member variable syntax
-          "hp", sol::property(&player::get_hp, &player::set_hp),
-
-          // read and write variable
-          "speed", &player::speed,
-          // can only read from, not write to
-          "bullets", sol::readonly( &player::bullets )
-  );*/
+  Collection<Engine>::expose(lua);
+  lua["Engines"] = Engine::collection;
+  Collection<Spoiler>::expose(lua);
+  Spoiler::expose(lua);
+  lua["Spoilers"] = Spoiler::collection;
+  Collection<Tires>::expose(lua);
+  lua["Tires"] = Tires::collection;
 }
 
 void ScriptEngine::loadScripts(const xml_document &doc)

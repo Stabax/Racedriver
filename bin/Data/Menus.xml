@@ -10,7 +10,7 @@
 </Menu>
 <Script Id="SPrintTest">
 
-  obj = SpoilersCollection.new();
+  Spoilers:at(0);  
 
   value = getInputData("TIn");
 

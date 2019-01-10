@@ -49,6 +49,10 @@ public:
     return (_collection[index]);
   }
 
+  T &at(int index) {
+    return (_collection[index]);
+  }
+
   template <typename ST>
   static const std::string getPath()
   {
@@ -88,12 +92,13 @@ public:
     }
   }
 
-  template <typename ST>
   static void expose(sol::state &lua)
   {
-    lua.new_usertype<Collection<ST>>(ST::getPath()+"Collection",
+    lua.new_usertype<Collection<T>>(T::getPath()+"Collection",
       // constructor
-      sol::constructors<Collection<ST>()>()
+      sol::constructors<Collection<T>()>(),
+
+      "at", &Collection<T>::at
     );
   }
 

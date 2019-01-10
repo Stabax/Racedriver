@@ -13,6 +13,17 @@ Spoiler::~Spoiler()
 {
 
 }
+
+void Spoiler::expose(sol::state &lua)
+{
+    lua.new_usertype<Spoiler>("Spoiler",
+      // constructor
+      sol::constructors<Spoiler(const json &data)>(),
+
+      "getId", &Spoiler::getId
+    );
+}
+
 int Spoiler::getAerodynamic() const
 {
 	return _aerodynamic;

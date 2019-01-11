@@ -1,22 +1,44 @@
 
 ## RaceDriver ##
 
+### Dependencies ###
+
+	- Nlhomann's json
+	- Pugixml
+	- libCurl
+	- Lua
+	- Sol2
+	- PicoSha2
+	- OmniUnit
+	- XCurses (PDCurses / NCurses)
+
 ### Contributors ###
 
-	-Stabax Ltd.
-	-Baxlan
-	-Stalker2106
+	- Stabax
+	- Baxlan
+	- Stalker2106
 
 ### How to Build ###
 
-#### Build Curses ####
-1. Go deep down "./thirdparty/lpdcurses/wincon/"
-2. Run make (with argument "DLL=Y" on windows)
-3. copy lpdcurses.dll to "./bin" (from cwd, "../../../bin/")
-#### Build LibCurl ####
-4. Go deep down "./thirdparty/libcurl/"
-5. Run make (with argument "mingw32" on windows)
-6. copy lib/libcurl.dll to "./bin" (from cwd, "../../bin/")
-#### Build Racedriver ####
-7. Run make
-8. ENJOY!
+#### Build (MinGW32 Windows) ####
+    cd ./thirdparty/lpdcurses/wincon/
+    mingw32-make DLL=Y
+    cp lpdcurses.dll ../../../bin
+    cd ../libcurl/
+    mingw32-make mingw32
+    cp lib/libcurl.dll ../../bin/
+    cd ../lua/
+    mingw32-make mingw
+    cd ../../
+    mingw32-make
+
+#### Build (Linux) ####
+    apt-get install libncurses-dev
+    apt-get install libcurl-dev
+    cd ./thirdparty/lua/
+    make linux
+    cd ../../
+    make
+
+
+Enjoy! Racedriver binary was generated inside ./bin folder!

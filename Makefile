@@ -12,6 +12,8 @@ LIBDIR = thirdparty
 
 ##
 
+CMAKE = cmake
+
 CXX = g++
 
 RM = rm -rf
@@ -20,12 +22,15 @@ CXXFLAGS	= -std=c++17 -ggdb -W -Wall -Wpedantic -Iinclude
 CXXFLAGS += -I$(LIBDIR) -I$(LIBDIR)/json/include/ -I$(LIBDIR)/pugixml/src/ -I$(LIBDIR)/lua/
 CXXFLAGS += -I$(LIBDIR)/omniunit/include/omniunit/ -I$(LIBDIR)/sol2/
 
-LDFLAGS		= -L$(BINDIR) -lcurl -L$(LIBDIR)/lua/ -llua
+LDFLAGS		= -L$(LIBDIR)/lua/ -llua
 # -static-libgcc
 
 ifeq ($(OS),Windows_NT)
-	LDFLAGS += -lpdcurses
+	MAKE = mingw32-make
+	LDFLAGS += -L$(LIBDIR)/pdcurses/wincon/ -lpdcurses
+	LDFLAGS += -L$(LIBDIR)/curl/lib/ -lcurl
 else
+	MAKE = make
 	LDFLAGS += -lncurses
 endif
 
@@ -58,10 +63,21 @@ OBJS = $(SRCS:.cpp=.o)
 
 #Rules
 
-all: $(NAME)
+all: racedriver
 
-$(NAME): $(OBJS)
+ifeq ($(OS),Windows_NT)
+deps:
+	cd $(LIBDIR)/pdcurses/wincon/ && $(MAKE) DLL=Y
+	cd $(LIBDIR)/curl/ && $(MAKE) --file=Makefile.dist mingw32
+	cd $(LIBDIR)/lua/ && $(MAKE) mingw
+else
+deps:
+	cd $(LIBDIR)/lua/ && $(MAKE) linux
+endif
+
+racedriver:	deps $(OBJS)
 	$(CXX) $(OBJS) -o $(NAME) $(LDFLAGS)
+
 
 clean:
 	$(RM) $(OBJS)

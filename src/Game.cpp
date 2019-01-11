@@ -2,7 +2,7 @@
 #include <thread>
 #include <ctime>
 #include <iostream>
-#include <libcurl/include/curl/curl.h>
+#include <curl/include/curl/curl.h>
 #include <sstream>
 #include <fstream>
 #include "Menu.hh"

@@ -69,3 +69,7 @@ CTestTestfile.cmake
 ehthumbs.db
 Thumbs.db
 ~$
+
+# Thirdparty libraries #
+########################
+thirdparty

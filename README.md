@@ -20,5 +20,9 @@
 
 ### How to Build ###
 
-The makefile should auto-generate the game based on your platform
-Enjoy! Racedriver binary will be generated inside ./bin folder!
+You need to grab dependencies if they are not installed on your machine,
+you can do so with the following command-lines:
+    git submodule init
+		git submodule update
+Then, running make should auto-generate the game based on your platform.
+Enjoy! Racedriver binary will be built inside ./bin folder!

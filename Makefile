@@ -28,7 +28,7 @@ LDFLAGS		= -L$(LIBDIR)/lua/ -llua
 ifeq ($(OS),Windows_NT)
 	MAKE = mingw32-make
 	LDFLAGS += -L$(LIBDIR)/pdcurses/wincon/ -lpdcurses
-	LDFLAGS += -L$(LIBDIR)/curl/lib/ -lcurl
+	LDFLAGS += -L$(BINDIR) -lcurl
 else
 	MAKE = make
 	LDFLAGS += -lncurses
@@ -68,7 +68,7 @@ all: racedriver
 ifeq ($(OS),Windows_NT)
 deps:
 	cd $(LIBDIR)/pdcurses/wincon/ && $(MAKE) DLL=Y
-	cd $(LIBDIR)/curl/ && $(MAKE) --file=Makefile.dist mingw32
+	cd $(LIBDIR)/curl/ && $(MAKE) --file=Makefile.dist mingw32 && cp ./lib/libcurl.dll ../../bin/
 	cd $(LIBDIR)/lua/ && $(MAKE) mingw
 else
 deps:

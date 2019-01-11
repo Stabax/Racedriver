@@ -5,7 +5,7 @@
 #include "Terminal.hh"
 
 #define GAME_VERSION  "Alpha 2.0.0"
-#define SERVER_PATH "http://racedriver.url.ph/"
+#define SERVER_PATH "http://racedriver.stabax.org/"
 #define PWD_SALT	"RaceDriver"
 
 class Game

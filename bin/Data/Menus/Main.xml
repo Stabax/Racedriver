@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Menu Id="Home">
+  <Script>printLogo()</Script>
+  <Button Type="Script" Target="LoadGame()">Continue game</Button>
+  <Button Type="Script" Target="NewGame()">New game</Button>
+  <Button Type="Goto" Target="Credits">About</Button>
+  <Button Type="Script" Target="Exit()">Quit</Button>
+</Menu>
+<Menu Id="Credits">
+  <Script>
+    printLogo()
+    print(getVersion() .. "\n")
+  </Script>
+  <Sep/>
+  <Button Type="Goto" Target="Home">Back</Button>
+</Menu>
+<Menu Id="Main">
+  <Script>printLogo()</Script>
+  <Button Type="Goto" Target="Race">Race</Button>
+  <Button Type="Goto" Target="Garage">Garage</Button>
+  <Button Type="Goto" Target="Stats">Stats</Button>
+  <Button Type="Goto" Target="Options">Options</Button>
+  <Button Type="Script" Target="Exit()">Quit</Button>
+</Menu>

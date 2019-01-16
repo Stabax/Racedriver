@@ -9,7 +9,6 @@ void menuJeu();
 
 void menuChargementPartie();
 void menuCreationPartie();
-void menuSuppressionPartie();
 
 void menuApropos(); //Menu promotionnel
 

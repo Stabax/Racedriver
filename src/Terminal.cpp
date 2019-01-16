@@ -21,6 +21,7 @@ Terminal::Terminal()
 	setCursor(0); //No cursor
 	initColor();
 	resetAttrs();
+	if (instance != nullptr) throw (std::runtime_error("Cannot reinstanciate singleton"));
 	Terminal::instance = std::unique_ptr<Terminal>(this);
 }
 

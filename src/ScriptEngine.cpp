@@ -31,6 +31,7 @@ void ScriptEngine::exposeCpp(sol::state &lua)
   lua.set_function("clearScreen", [] () { Terminal::get().clearScreen(); });
   lua.set_function("pause", [] () { getch(); });
   lua.set_function("printLogo", [] () { Game::printASCIILogo(); });
+  lua.set_function("getVersion", [] () { return (GAME_VERSION); });
   lua.set_function("getInputData", [=] (std::string id) {
     std::shared_ptr<MenuInput> in = std::dynamic_pointer_cast<MenuInput>(Menu::active->getItem(id));
     return (in != nullptr ? in->getData() : "");

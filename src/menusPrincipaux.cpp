@@ -22,8 +22,7 @@ void menuRacedriver()
 										<< "===============\n\n"
 										<< "1. Continuer partie\n"
 										<< "2. Nouvelle partie\n"
-										<< "3. Supprimer Profiles\n\n"
-										<< "4. A Propos\n"
+										<< "3. A Propos\n"
 										<< "0. Quitter\n";
 		//Redirection de l'utilisateur selon son choix grâce a un switch.
 		switch(Menu::askChoice())
@@ -38,9 +37,6 @@ void menuRacedriver()
 				menuCreationPartie();
 				break;
 			case 3:
-				menuSuppressionPartie();
-				break;
-			case 4:
 				menuApropos();
 				break;
 			default:
@@ -135,78 +131,6 @@ void menuCreationPartie()
 		Profile::active->save();
 		menuJeu();
 	}
-}
-
-void menuSuppressionPartie()
-{
-	//Var
-	char quitVerify = 'x';
-	int menu;
-	std::string nom;
-
-	//Debut
-	//Menu Chargement Profile
-	Terminal::get().clearScreen(); //On flushe l'ancien ecran
-	Terminal::get() << "Supprimer un Profile: \n"
-									<< "===============\n"
-									<< "Selectionnez un Profile a supprimer.\n"
-									<< "===============\n\n";
-	Profile::displaySavesList();
-	Terminal::get() << "0. Annuler\n";
-	menu = Menu::askChoice(); // l'utilisateur entre le menu qu'il souhaite ouvrir
-	//Redirection de l'utilisateur selon son choix grâce a un switch.
-	/*if(menu == 0)
-	{
-			Terminal::get().clearScreen(); //On flushe l'ancien ecran
-	}
-	else if(menu > 0 && menu <= Profile::compterSauvegardes())
-	{
-		for (int i = 1; i <= Profile::compterSauvegardes(); i++)
-		{
-			if(menu == i)
-			{
-				Terminal::get().clearScreen(); //On flushe l'ancien ecran
-				while(quitVerify != 'n') // Boucle de confirmation
-				{
-					Terminal::get() << "/!\\ Attention ! /!\\\n"
-													<< "====================\n"
-													<< "La partie sera perdue !\n"
-													<< "Souhaitez-vous vraiment supprimer Profile" << i << " ? [O/n]\n"
-													<< "====================\n";
-					quitVerify = getch(); // l'utilisateur confirme
-					switch(quitVerify)
-					{
-						case 'o':
-							Terminal::get().clearScreen();
-							Profile::supprimerProfile(i);
-							quitVerify = 'n'; // on quitte la verification
-							break;
-						case 'O':
-							Terminal::get().clearScreen();
-							Profile::supprimerProfile(i);
-							quitVerify = 'n'; // on quitte la verification
-							break;
-						case 'n':
-							Terminal::get().clearScreen(); // la variable de verification prend la valeur n donc on sort de la verification, mais quit vaut faux
-							break;
-						case 'N':
-							Terminal::get().clearScreen();
-							quitVerify = 'n'; // on quitte la verification
-							break;
-						default:
-							Terminal::get().clearScreen();
-							Menu::error("Saisie invalide");
-							break;
-					}
-				}
-			}
-		}
-	}
-	else //equivalent de default
-	{
-		Terminal::get().clearScreen(); //On flushe l'ancien ecran
-		Menu::error("Ce Profile n'existe pas");
-	}*/
 }
 
 void menuApropos()

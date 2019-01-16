@@ -9,9 +9,6 @@
   <Input Id="TIn">Input</Input>
 </Menu>
 <Script Id="SPrintTest">
-
-  Spoilers:at(0);  
-
   value = getInputData("TIn");
 
   print("dans la case il y a ecrit:\n")

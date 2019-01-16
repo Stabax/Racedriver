@@ -48,7 +48,8 @@ bool Game::load()
 int Game::main()
 {
 	_term.clearScreen();
-	Menu::goTo("Main", "./Data/Menus.xml");
+	//Menu::goTo("Main", "./Data/TestMenus.xml");
+	Menu::goTo("Home", "./Data/Menus/Main.xml");
 	Menu::run();
 	getch();
 	// BEGIN

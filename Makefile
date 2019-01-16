@@ -8,7 +8,10 @@ SRCDIR = src
 
 BINDIR = bin
 
+RESDIR = resource
+
 LIBDIR = thirdparty
+
 
 ##
 
@@ -61,6 +64,10 @@ SRCS = 	$(SRCDIR)/Game.cpp									\
 
 OBJS = $(SRCS:.cpp=.o)
 
+ifeq ($(OS),Windows_NT)
+RES = $(RESDIR)/racedriver.res
+endif
+
 #Rules
 
 all: racedriver
@@ -70,14 +77,14 @@ deps:
 	cd $(LIBDIR)/pdcurses/wincon/ && $(MAKE) DLL=Y
 	cd $(LIBDIR)/curl/ && $(MAKE) --file=Makefile.dist mingw32 && cp ./lib/libcurl.dll ../../bin/
 	cd $(LIBDIR)/lua/ && $(MAKE) mingw
+	windres $(RESDIR)/racedriver.rc -O coff -o $(RESDIR)/racedriver.res
 else
 deps:
 	cd $(LIBDIR)/lua/ && $(MAKE) linux
 endif
 
 racedriver:	deps $(OBJS)
-	$(CXX) $(OBJS) -o $(NAME) $(LDFLAGS)
-
+	$(CXX) $(OBJS) $(RES) -o $(NAME) $(LDFLAGS)
 
 clean:
 	$(RM) $(OBJS)

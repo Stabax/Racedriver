@@ -1,7 +1,6 @@
 //sousMenus.cpp
 #include "Menu.hh"
 #include "sousMenus.hh"
-#include "Profile.hh"
 
 
 void menuCourseLibre()
@@ -655,7 +654,7 @@ void menuDifficulte()
 	choice = Menu::askChoice();
 	if (choice > 0 && choice <= 5)
 	{
-			Profile::active->difficulty = static_cast<Difficulty>(choice);
+			Profile::active->difficulty = static_cast<Profile::Difficulty>(choice);
 	}
 	return;
 }

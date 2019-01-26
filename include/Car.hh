@@ -12,8 +12,11 @@
 class Car : public Part
 {
 public:
+	Car();
 	Car(const json &data);
 	~Car();
+
+	static void expose(sol::state &lua);
 
   static const std::string getPath() { return ("Cars"); };
 

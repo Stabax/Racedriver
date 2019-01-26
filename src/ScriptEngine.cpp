@@ -66,11 +66,15 @@ void ScriptEngine::exposeCpp(sol::state &lua)
   lua.set_function("getProfileDifficulty", [] () { return (std::to_string(Profile::active->difficulty)); });
   lua.set_function("loadProfile", [=] (std::string save) { Profile::load(save); });
   lua.set_function("createProfile", [=] (std::string name) { Profile::create(name); });
+  //Garage management
+  Car::expose(lua);
+  lua.set_function("getBox", [=] (std::string index) { return (Profile::active->garage.getBox(atoi(index.c_str()))); });
   //Cpp Menus
   lua.set_function("loadGameMenu", &menuLoadGame);
   lua.set_function("statsMenu", &menuStats);
   lua.set_function("freeRaceMenu", &menuFreeRace);
   lua.set_function("selectCarMenu", &menuSelectCar);
+  lua.set_function("garageMenu", &menuGarage);
   //lua.set_function("career", &menuCourse);
   //lua.set_function("freeRace", &menuCourseLibre);
 }

@@ -5,6 +5,8 @@
 
 Collection<Car> Car::collection = Collection<Car>();
 
+Car::Car() : Part() {} //Dummy for lua
+
 Car::Car(const json &data)
  : Part(data), _nitro(100),
  	_fuel(data.find("fuel") != data.end() ? data["fuel"].get<float>() : 0),
@@ -38,6 +40,18 @@ void Car::copy(const std::string &id)
 	_mass = toCopy._mass;
 	rank = toCopy.rank;
 }
+
+void Car::expose(sol::state &lua)
+{
+	lua.new_usertype<Car>("Car",
+		// constructor
+		sol::constructors<Car()>(),
+
+		"name", &Car::name,
+		"manufacturer", &Car::manufacturer
+	);
+}
+
 
 void Car::displayInfo() const
 {

@@ -15,6 +15,7 @@
 class Part
 {
 public:
+  Part() {}; //Dummy for lua
   Part(const json &data) //build from json
   {
     if (data.find("name") != data.end()) name = data["name"].get<std::string>();

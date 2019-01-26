@@ -31,12 +31,18 @@ Menu::Menu(const std::string &id)
 			Menu::error(e.what());
 		}
 	}
+	if (menu.attribute("OnLoad")) _onLoadScript = menu.attribute("OnLoad").value();
 	if (_items.size() > 0) _items[_cursor]->toggleHover();
 }
 
-void Menu::setActiveDocument(const std::string &path)
+void Menu::onLoad()
 {
-	activeDoc = std::make_shared<MenuFile>(path);
+	if (!_onLoadScript.empty()) ScriptEngine::runScript(_onLoadScript);
+}
+
+void Menu::setActiveDocument(const std::string &source, const DataSource sourceMode)
+{
+	activeDoc = std::make_shared<MenuFile>(source, sourceMode);
 	if (!activeDoc->load()) throw(std::runtime_error("Error on loading Menu XML"));
 	ScriptEngine::loadScripts(activeDoc->getData());
 	MenuDialog::load(activeDoc->getData());
@@ -49,6 +55,7 @@ bool Menu::update()
 	if(input == KEY_UP) updateCursor(false);
 	else if(input == KEY_DOWN) updateCursor(true);
 	else if(input == KEY_ENTER || input == '\n' || input == '\r') _items[_cursor]->select();
+	else if (input == KEY_F(11)) ScriptEngine::console();
 	else return (false);
 	return (true);
 }
@@ -117,10 +124,11 @@ int Menu::askChoice()
   return (atoi(&input));
 }
 
-void Menu::goTo(std::string id, std::string path)
+void Menu::goTo(std::string id, std::string source, const DataSource dataMode)
 {
-	if (path != "") setActiveDocument(path);
+	if (source != "") setActiveDocument(source, dataMode);
 	active = std::make_shared<Menu>(Menu(id));
+	active->onLoad();
 }
 
 std::shared_ptr<MenuItem> Menu::getItem(const std::string &id)

@@ -15,7 +15,10 @@ struct ScriptEngine
 
   static void loadScripts(const xml_document &doc);
 
+  static void console();
+
   static std::map<std::string, std::string> scripts;
+  static std::map<std::string, std::string> environment;
 };
 
 

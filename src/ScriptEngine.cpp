@@ -4,8 +4,11 @@
 #include "Spoiler.hh"
 #include "Engine.hh"
 #include "Tires.hh"
+#include "Profile.hh"
+#include "cppMenus.hh"
 
 std::map<std::string, std::string> ScriptEngine::scripts = std::map<std::string, std::string>();
+std::map<std::string, std::string> ScriptEngine::environment = std::map<std::string, std::string>();
 
 void ScriptEngine::runScript(const std::string &scriptId)
 {
@@ -27,15 +30,49 @@ void ScriptEngine::run(const std::string &script)
 }
 void ScriptEngine::exposeCpp(sol::state &lua)
 {
+  //General
   lua.set_function("print", [=] (std::string x) { Terminal::get() << x; });
   lua.set_function("clearScreen", [] () { Terminal::get().clearScreen(); });
   lua.set_function("pause", [] () { getch(); });
-  lua.set_function("printLogo", [] () { Game::printASCIILogo(); });
-  lua.set_function("getVersion", [] () { return (GAME_VERSION); });
+  lua.set_function("exit", [] () { exit(0); });
+  lua.set_function("goTo", [=] (std::string id) { Menu::goTo(id); });
+  lua.set_function("goToPath", [=] (std::string id, std::string path) { Menu::goTo(id, path); });
+  lua.set_function("setEnv", [=] (std::string key, std::string value) { environment[key] = value; });
+  lua.set_function("getEnv", [=] (std::string key) { return (environment[key]); });
+  //Menu helper
   lua.set_function("getInputData", [=] (std::string id) {
     std::shared_ptr<MenuInput> in = std::dynamic_pointer_cast<MenuInput>(Menu::active->getItem(id));
-    return (in != nullptr ? in->getData() : "");
+    return (in->getData());
   });
+  lua.set_function("setInputData", [=] (std::string id, std::string value) {
+    std::shared_ptr<MenuInput> in = std::dynamic_pointer_cast<MenuInput>(Menu::active->getItem(id));
+    in->setData(value);
+  });
+  lua.set_function("getSelectValue", [=] (std::string id) {
+    std::shared_ptr<MenuSelect> sel = std::dynamic_pointer_cast<MenuSelect>(Menu::active->getItem(id));
+    return (sel->getData());
+  });
+  lua.set_function("setSelectValue", [=] (std::string id, std::string value) {
+    std::shared_ptr<MenuSelect> sel = std::dynamic_pointer_cast<MenuSelect>(Menu::active->getItem(id));
+    sel->setData(value);
+  });
+  //Custom
+  lua.set_function("printLogo", [] () { Game::printASCIILogo(); });
+  lua.set_function("getVersion", [] () { return (GAME_VERSION); });
+  //Profile management
+  lua.set_function("setProfileName", [=] (std::string name) { Profile::active->name = name; });
+  lua.set_function("setProfileDifficulty", [=] (std::string diff) { Profile::active->difficulty = static_cast<Profile::Difficulty>(atoi(diff.c_str())); });
+  lua.set_function("getProfileName", [] () { return (Profile::active->name); });
+  lua.set_function("getProfileDifficulty", [] () { return (std::to_string(Profile::active->difficulty)); });
+  lua.set_function("loadProfile", [=] (std::string save) { Profile::load(save); });
+  lua.set_function("createProfile", [=] (std::string name) { Profile::create(name); });
+  //Cpp Menus
+  lua.set_function("loadGameMenu", &menuLoadGame);
+  lua.set_function("statsMenu", &menuStats);
+  lua.set_function("freeRaceMenu", &menuFreeRace);
+  lua.set_function("selectCarMenu", &menuSelectCar);
+  //lua.set_function("career", &menuCourse);
+  //lua.set_function("freeRace", &menuCourseLibre);
 }
 
 void ScriptEngine::exposeCollections(sol::state &lua)
@@ -59,4 +96,26 @@ void ScriptEngine::loadScripts(const xml_document &doc)
       scripts.emplace(el.attribute("Id").value(), el.first_child().value());
     }
 	}
+}
+
+void ScriptEngine::console()
+{
+  int input;
+  std::string command;
+
+  Terminal::get().clearScreen();
+  Terminal::get() << "> " << command;
+  while ((input = getch()) != KEY_F(11))
+  {
+    Terminal::get().clearScreen();
+    if (input == KEY_ENTER || input == '\r' || input == '\n')
+    {
+      run(command);
+      command.clear();
+    }
+    else if (command.length() > 0 && (input == KEY_BACKSPACE || input == '\b')) command.erase(--command.end());
+    else command += input;
+    Terminal::get() << "> " << command;
+  }
+  Terminal::get().clearScreen();
 }

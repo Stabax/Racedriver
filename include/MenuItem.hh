@@ -46,16 +46,19 @@ public:
   enum Type {
     Goto,
     Script,
-    Intern
+    Intern,
+    Cpp
   };
   MenuButton(xml_node &data);
 
   virtual bool isSelectable();
   virtual void select();
+  void bind(std::function<void(void)> &callback);
 
 private:
   Type _type;
   std::string _target, _path;
+  std::function<void(void)> _cppCallback;
 };
 
 /*!
@@ -69,11 +72,31 @@ public:
   virtual bool isSelectable();
   virtual void select();
   std::string getData();
+  void setData(const std::string data);
   virtual void render();
 
 private:
   std::string _data;
   Point _dataPos;
+};
+
+/*!
+ * @brief Acts as a multi-value selector
+ */
+class MenuSelect : public MenuItem
+{
+public:
+  MenuSelect(xml_node &data);
+
+  virtual bool isSelectable();
+  virtual void select();
+  std::string getData();
+  void setData(const std::string data);
+  virtual void render();
+
+private:
+  std::vector<std::pair<std::string, std::string>> _values;
+  int _cursor;
 };
 
 #endif /* !MENUITEM_HH_ */

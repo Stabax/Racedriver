@@ -1,11 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Menu Id="Home">
   <Script>printLogo()</Script>
-  <Button Type="Script" Target="LoadGame()">Continue game</Button>
-  <Button Type="Script" Target="NewGame()">New game</Button>
+  <Button Type="Intern" Target="loadGameMenu()">Continue game</Button>
+  <Button Type="Goto" Target="NewGame">New game</Button>
   <Button Type="Goto" Target="Credits">About</Button>
-  <Button Type="Script" Target="Exit()">Quit</Button>
+  <Button Type="Intern" Target="exit()">Quit</Button>
 </Menu>
+<Menu Id="NewGame">
+  <Text>Enter Profile Name</Text>
+  <Select Id="Difficulty" Text="Difficulty">
+    <Option Value="0">Easy</Option>
+    <Option Value="1">Medium</Option>
+    <Option Value="2">Hard</Option>
+  </Select>
+  <Input Id="Profile">Name</Input>
+  <Button Type="Script" Target="CreateProfile">Create</Button>
+  <Button Type="Goto" Target="Home">Back</Button>
+</Menu>
+<Script Id="CreateProfile">
+  createProfile(getInputData("Profile"))
+  goTo("Main")
+</Script>
 <Menu Id="Credits">
   <Script>
     printLogo()
@@ -18,7 +33,46 @@
   <Script>printLogo()</Script>
   <Button Type="Goto" Target="Race">Race</Button>
   <Button Type="Goto" Target="Garage">Garage</Button>
-  <Button Type="Goto" Target="Stats">Stats</Button>
+  <Button Type="Intern" Target="statsMenu()">Stats</Button>
   <Button Type="Goto" Target="Options">Options</Button>
-  <Button Type="Script" Target="Exit()">Quit</Button>
+  <Button Type="Intern" Target="exit()">Quit</Button>
+</Menu>
+<Menu Id="Options" OnLoad="OptionsOnLoad">
+  <Select Id="Difficulty" Text="Difficulty">
+    <Option Value="0">Easy</Option>
+    <Option Value="1">Medium</Option>
+    <Option Value="2">Hard</Option>
+  </Select>
+  <Input Id="Profile">Profile name</Input>
+  <Button Type="Script" Target="ApplyOptions">Apply</Button>
+  <Button Type="Goto" Target="Main">Back</Button>
+</Menu>
+<Script Id="OptionsOnLoad">
+  setSelectValue("Difficulty", getProfileDifficulty())
+  setInputData("Profile", getProfileName())
+</Script>
+<Script Id="ApplyOptions">
+  setProfileName(getInputData("Profile"))
+  setProfileDifficulty(getSelectValue("Difficulty"))
+  goTo("Main")
+</Script>
+<Menu Id="Race">
+  <Script>printLogo()</Script>
+  <Button Type="Script" Target="StartRace">Free race</Button>
+  <Text>--Career--</Text>
+  <Button Type="Goto" Target="Main">Back</Button>
+</Menu>
+<Script Id="StartRace">
+  selectCarMenu();
+</Script>
+<Menu Id="Garage">
+  <Script>listGarageCars()</Script>
+  <Button Type="Intern" Target="buyCar()">Buy new car</Button>
+  <Button Type="Goto" Target="Main">Back</Button>
+</Menu>
+<Menu Id="Stats">
+  <Script>
+    printStats()
+  </Script>
+  <Button Type="Goto" Target="Main">Back</Button>
 </Menu>

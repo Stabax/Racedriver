@@ -22,8 +22,9 @@ public:
   static bool askConfirmation();
   static int askChoice();
 
-  static void setActiveDocument(const std::string &path);
-  static void goTo(std::string id, std::string path = "");
+  static void setActiveDocument(const std::string &source, const DataSource sourceMode);
+
+  static void goTo(std::string id, std::string source = "", DataSource sourceMode = DataSource::Filesystem);
   static bool run();
 
   static std::shared_ptr<Menu> active;
@@ -31,7 +32,10 @@ public:
 
   //Instance
   Menu(const std::string &id);
+  Menu(const xml_document &menu);
 
+  void onLoad();
+  
   std::shared_ptr<MenuItem> getItem(const std::string &id);
 
   void updateCursor(bool add);
@@ -41,6 +45,7 @@ public:
 private:
   std::vector<std::shared_ptr<MenuItem>> _entities;
   std::vector<std::shared_ptr<MenuItem>> _items;
+  std::string _onLoadScript;
   int _cursor;
 };
 

@@ -1,6 +1,7 @@
 //sousMenus.cpp
 #include "Menu.hh"
 #include "sousMenus.hh"
+#include "Profile.hh"
 
 
 void menuCourseLibre()

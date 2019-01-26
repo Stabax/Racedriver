@@ -37,7 +37,7 @@ bool Game::load()
 	}
 	catch (const std::runtime_error &e)
 	{
-		Menu::error(e.what());
+		Menu::alert(e.what());
 		Terminal::get() <<"\n\nPressez [ENTREE] pour quitter.\n";
 		getch();
 		return (false);
@@ -98,7 +98,7 @@ bool Game::update()
 	FILE *versionFile = fopen("Update/version.cdx", "w");
 	if (!versionFile)
 	{
-		Menu::error("Impossible d'écrire dans le répertoire du jeu");
+		Menu::alert("Impossible d'écrire dans le répertoire du jeu");
 		return (false);
 	}
 
@@ -118,7 +118,7 @@ bool Game::update()
 	if(CURLE_OK != resVersion)
 	{
 		//echec de la récupération du fichier de version
-		Menu::error("La recuperation des informations de mise a jour a echoue. Verifiez votre connexion.");
+		Menu::alert("La recuperation des informations de mise a jour a echoue. Verifiez votre connexion.");
 		return (false);
 	}
 	std::ifstream latestVersion("Update/version.cdx");
@@ -152,7 +152,7 @@ bool Game::update()
 		//echec du dl
 		if(CURLE_OK != resUpdate)
 		{
-			Menu::error("Le telechargement de la mise a jour a echoue.");
+			Menu::alert("Le telechargement de la mise a jour a echoue.");
 			return (false);
 		}
 		Menu::msg("Le client a ete mis a jour avec succes !");

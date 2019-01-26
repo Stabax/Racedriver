@@ -74,7 +74,7 @@ void menuGarage()
 	menu += "<Menu>";
 	for (size_t i = 0; i < Profile::active->garage.getSize(); i++)
 	{
-		menu += " <Button Id='" + std::to_string(i) + "'>" + Profile::active->garage.getBox(i).name + "</Button>";
+		menu += " <Button Type='Intern' Target='setEnv(\"Box\", \"" + std::to_string(i) + "\") goToPath(\"Box\", \"./Data/Menus/Main.xml\") '>" + Profile::active->garage.getBox(i).name + "</Button>";
 	}
  	menu += "<Button Id='BuyCar'>Buy new car</Button>"
 	 				"	<Button Type='Goto' Path='./Data/Menus/Main.xml' Target='Main'>Back</Button>"

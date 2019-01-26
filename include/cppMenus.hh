@@ -7,5 +7,6 @@ void menuLoadGame();
 void menuStats();
 void menuFreeRace();
 void menuSelectCar();
+void menuGarage();
 
 #endif /* !CPPMENUS_HH_ */

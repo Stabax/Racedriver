@@ -18,29 +18,33 @@ std::shared_ptr<MenuItem> MenuItem::create(const xml_node &data)
 {
   std::shared_ptr<MenuItem> el;
 
-  if (strcmp(data.name(), "Text") == 0) el = std::make_shared<MenuItem>(data);
-	else if (strcmp(data.name(), "Sep") == 0) el = std::make_shared<MenuItem>("======");
-  else if (strcmp(data.name(), "Button") == 0)
-  {
-    el = std::make_shared<MenuButton>(data);
+  try {
+    if (strcmp(data.name(), "Text") == 0) el = std::make_shared<MenuItem>(data);
+    else if (strcmp(data.name(), "Sep") == 0) el = std::make_shared<MenuItem>("======");
+    else if (strcmp(data.name(), "Button") == 0)
+    {
+      el = std::make_shared<MenuButton>(data);
+    }
+    else if (strcmp(data.name(),"Input") == 0)
+    {
+      el = std::make_shared<MenuInput>(data);
+    }
+    else if (strcmp(data.name(),"Select") == 0)
+    {
+      el = std::make_shared<MenuSelect>(data);
+    }
+    else if (strcmp(data.name(),"Script") == 0)
+    {
+      el = std::make_shared<MenuScript>(data);
+    }
+    else if (strcmp(data.name(),"Alert") == 0)
+    {
+      el = std::make_shared<MenuAlert>(data);
+    }
+    else throw(std::runtime_error("Error in XML"));
+  } catch (std::exception &e) {
+    throw (std::runtime_error("Invalid element XML"));
   }
-  else if (strcmp(data.name(),"Input") == 0)
-  {
-    el = std::make_shared<MenuInput>(data);
-  }
-  else if (strcmp(data.name(),"Select") == 0)
-  {
-    el = std::make_shared<MenuSelect>(data);
-  }
-  else if (strcmp(data.name(),"Script") == 0)
-  {
-    el = std::make_shared<MenuScript>(data);
-  }
-  else if (strcmp(data.name(),"Alert") == 0)
-  {
-    el = std::make_shared<MenuAlert>(data);
-  }
-  else throw(std::runtime_error("Error in XML"));
   return (el);
 }
 

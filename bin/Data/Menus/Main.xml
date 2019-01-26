@@ -32,7 +32,7 @@
 <Menu Id="Main">
   <Script>printLogo()</Script>
   <Button Type="Goto" Target="Race">Race</Button>
-  <Button Type="Goto" Target="Garage">Garage</Button>
+  <Button Type="Intern" Target="garageMenu()">Garage</Button>
   <Button Type="Intern" Target="statsMenu()">Stats</Button>
   <Button Type="Goto" Target="Options">Options</Button>
   <Button Type="Intern" Target="exit()">Quit</Button>
@@ -65,14 +65,16 @@
 <Script Id="StartRace">
   selectCarMenu();
 </Script>
-<Menu Id="Garage">
-  <Script>listGarageCars()</Script>
-  <Button Type="Intern" Target="buyCar()">Buy new car</Button>
-  <Button Type="Goto" Target="Main">Back</Button>
-</Menu>
 <Menu Id="Stats">
   <Script>
     printStats()
   </Script>
+  <Button Type="Goto" Target="Main">Back</Button>
+</Menu>
+<Menu Id="Box">
+  <Script>print("Car:"..getBox(getEnv("Box")).name)</Script>
+  <Button Type="Goto" Target="Repair">Repair</Button>
+  <Button Type="Goto" Target="Upgrade">Upgrade</Button>
+  <Button Type="Goto" Target="Sell">Sell</Button>
   <Button Type="Goto" Target="Main">Back</Button>
 </Menu>

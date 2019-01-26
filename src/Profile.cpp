@@ -48,7 +48,7 @@ void Profile::save()
 
 	if (!save.save(data))
 	{
-		Menu::error("Cannot save Profile: "+name);
+		Menu::alert("Cannot save Profile: "+name);
 	}
 }
 
@@ -94,7 +94,7 @@ bool Profile::payer(const int& prix)
 	bool paye;
 	if(prix > credits)
 	{
-		Menu::error("Vous ne disposez pas d'assez de Credits !");
+		Menu::alert("Vous ne disposez pas d'assez de Credits !");
 		paye = false;
 	}
 	else

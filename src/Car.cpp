@@ -9,7 +9,7 @@ Car::Car(const json &data)
  : Part(data), _nitro(100),
  	_fuel(data.find("fuel") != data.end() ? data["fuel"].get<float>() : 0),
  	_integrity(data.find("integrity") != data.end() ? data["integrity"].get<int>() : 100),
-	_mass(data["mass"].get<int>()), _speed(0)
+	_mass(data.find("mass") != data.end() ? data["mass"].get<int>() : -1), _speed(0)
 {
   copy(data["name"].get<std::string>()); //Copy if needed
  	_engine = std::make_shared<Engine>(Engine::collection[data["engine"].get<std::string>()]);

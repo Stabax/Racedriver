@@ -6,6 +6,8 @@
 #include "DataFile.hh"
 #include "Terminal.hh"
 
+class Menu;
+
 struct ScriptEngine
 {
   static void runScript(const std::string &scriptId);
@@ -15,7 +17,7 @@ struct ScriptEngine
 
   static void loadScripts(const xml_document &doc);
 
-  static void console();
+  static void console(Menu &currentMenu);
 
   static std::map<std::string, std::string> scripts;
   static std::map<std::string, std::string> environment;

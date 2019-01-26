@@ -4,7 +4,7 @@
 
 //MenuItem
 
-MenuItem::MenuItem(xml_node &data)
+MenuItem::MenuItem(const xml_node &data)
  : _id(data.attribute("Id").value()), _label(data.first_child().value()), _hover(false)
 {
 }
@@ -14,7 +14,7 @@ MenuItem::MenuItem(std::string label)
 {
 }
 
-std::shared_ptr<MenuItem> MenuItem::create(xml_node &data)
+std::shared_ptr<MenuItem> MenuItem::create(const xml_node &data)
 {
   std::shared_ptr<MenuItem> el;
 
@@ -34,8 +34,11 @@ std::shared_ptr<MenuItem> MenuItem::create(xml_node &data)
   }
   else if (strcmp(data.name(),"Script") == 0)
   {
-    ScriptEngine::run(data.first_child().value());
-    return (nullptr);
+    el = std::make_shared<MenuScript>(data);
+  }
+  else if (strcmp(data.name(),"Alert") == 0)
+  {
+    el = std::make_shared<MenuAlert>(data);
   }
   else throw(std::runtime_error("Error in XML"));
   return (el);
@@ -71,7 +74,7 @@ void MenuItem::render()
 
 //MenuButton
 
-MenuButton::MenuButton(xml_node &data)
+MenuButton::MenuButton(const xml_node &data)
  : MenuItem(data), _target(data.attribute("Target").value()), _path(data.attribute("Path").value())
 {
   if (strcmp(data.attribute("Type").value(), "Goto") == 0) _type = Goto;
@@ -114,7 +117,7 @@ void MenuButton::bind(std::function<void(void)> &callback)
 
 //MenuInput
 
-MenuInput::MenuInput(xml_node &data)
+MenuInput::MenuInput(const xml_node &data)
  : MenuItem(data)
 {
 
@@ -163,7 +166,7 @@ void MenuInput::render()
 
 //MenuSelect
 
-MenuSelect::MenuSelect(xml_node &data)
+MenuSelect::MenuSelect(const xml_node &data)
  : MenuItem(data), _cursor(0)
 {
   _label = data.attribute("Text").value();
@@ -212,4 +215,39 @@ void MenuSelect::render()
 {
   MenuItem::render();
   Terminal::get() << "    <" + _values[_cursor].first + ">";
+}
+
+
+//MenuScript
+
+MenuScript::MenuScript(const xml_node &data)
+ : MenuItem(data)
+{
+}
+
+bool MenuScript::isSelectable()
+{
+  return (false);
+}
+
+void MenuScript::render()
+{
+  ScriptEngine::run(_label);
+}
+
+//MenuAlert
+
+MenuAlert::MenuAlert(const xml_node &data)
+ : MenuItem(data)
+{
+}
+
+bool MenuAlert::isSelectable()
+{
+  return (false);
+}
+
+void MenuAlert::render()
+{
+  Menu::msg(_label);
 }

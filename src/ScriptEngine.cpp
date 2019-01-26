@@ -25,7 +25,7 @@ void ScriptEngine::run(const std::string &script)
   try {
     lua.script(script);
   } catch (std::exception &e) {
-    Menu::error("Script error: "+std::string(e.what()));
+    Menu::alert("Script error: "+std::string(e.what()));
   }
 }
 void ScriptEngine::exposeCpp(sol::state &lua)
@@ -98,13 +98,11 @@ void ScriptEngine::loadScripts(const xml_document &doc)
 	}
 }
 
-void ScriptEngine::console()
+void ScriptEngine::console(Menu &currentMenu)
 {
   int input;
   std::string command;
-
-  Terminal::get().clearScreen();
-  Terminal::get() << "> " << command;
+  currentMenu.renderConsole(command); //Renders console
   while ((input = getch()) != KEY_F(11))
   {
     Terminal::get().clearScreen();
@@ -115,7 +113,7 @@ void ScriptEngine::console()
     }
     else if (command.length() > 0 && (input == KEY_BACKSPACE || input == '\b')) command.erase(--command.end());
     else command += input;
-    Terminal::get() << "> " << command;
+    currentMenu.renderConsole(command);
   }
   Terminal::get().clearScreen();
 }

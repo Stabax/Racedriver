@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include <deque>
 #include <map>
 #include <memory>
 #include <functional>
@@ -16,6 +17,8 @@ class Menu
 {
 public:
   //Generic
+  
+  static void alert(std::string str);
   static void msg(std::string str);
   static void error(std::string str);
 
@@ -36,13 +39,16 @@ public:
 
   void onLoad();
   
+  void addAlert(std::shared_ptr<MenuItem> menuItem);
   std::shared_ptr<MenuItem> getItem(const std::string &id);
 
   void updateCursor(bool add);
   bool update();
   void render();
+  void renderConsole(std::string command);
 
 private:
+  std::deque<std::shared_ptr<MenuItem>> _alerts;
   std::vector<std::shared_ptr<MenuItem>> _entities;
   std::vector<std::shared_ptr<MenuItem>> _items;
   std::string _onLoadScript;

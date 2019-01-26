@@ -19,10 +19,10 @@ public:
     Input
   };
 
-  MenuItem(xml_node &data);
+  MenuItem(const xml_node &data);
   MenuItem(std::string label);
 
-  static std::shared_ptr<MenuItem> create(xml_node &data);
+  static std::shared_ptr<MenuItem> create(const xml_node &data);
 
   void toggleHover();
 
@@ -49,7 +49,7 @@ public:
     Intern,
     Cpp
   };
-  MenuButton(xml_node &data);
+  MenuButton(const xml_node &data);
 
   virtual bool isSelectable();
   virtual void select();
@@ -67,7 +67,7 @@ private:
 class MenuInput : public MenuItem
 {
 public:
-  MenuInput(xml_node &data);
+  MenuInput(const xml_node &data);
 
   virtual bool isSelectable();
   virtual void select();
@@ -86,7 +86,7 @@ private:
 class MenuSelect : public MenuItem
 {
 public:
-  MenuSelect(xml_node &data);
+  MenuSelect(const xml_node &data);
 
   virtual bool isSelectable();
   virtual void select();
@@ -98,5 +98,30 @@ private:
   std::vector<std::pair<std::string, std::string>> _values;
   int _cursor;
 };
+
+/*!
+ * @brief Acts as a nested script
+ */
+class MenuScript : public MenuItem
+{
+public:
+  MenuScript(const xml_node &data);
+
+  virtual bool isSelectable();
+  virtual void render();
+};
+
+/*!
+ * @brief Acts as an alert message
+ */
+class MenuAlert : public MenuItem
+{
+public:
+  MenuAlert(const xml_node &data);
+
+  virtual bool isSelectable();
+  virtual void render();
+};
+
 
 #endif /* !MENUITEM_HH_ */

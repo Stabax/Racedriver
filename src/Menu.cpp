@@ -51,11 +51,10 @@ void Menu::setActiveDocument(const std::string &source, const DataSource sourceM
 bool Menu::update()
 {
 	int input = getch();
-	Terminal::get().clearScreen();
 	if(input == KEY_UP) updateCursor(false);
 	else if(input == KEY_DOWN) updateCursor(true);
 	else if(input == KEY_ENTER || input == '\n' || input == '\r') _items[_cursor]->select();
-	else if (input == KEY_F(11)) ScriptEngine::console();
+	else if (input == KEY_F(11)) ScriptEngine::console(*this);
 	else return (false);
 	return (true);
 }
@@ -73,6 +72,8 @@ void Menu::updateCursor(bool add)
 
 void Menu::render()
 {
+	Terminal::get().clearScreen();
+	for (size_t i = 0; i <_alerts.size(); i++) _alerts[i]->render();
 	for (size_t i = 0; i < _entities.size(); i++)
 	{
 		_entities[i]->render();
@@ -88,6 +89,21 @@ bool Menu::run()
 		active->render();
 		while (!active->update());
 	}
+}
+
+void Menu::renderConsole(std::string command)
+{
+	Terminal::get().clearScreen();
+	for (size_t i = 0; i <_alerts.size(); i++) _alerts[i]->render();
+  Terminal::get() << "> " << command;
+}
+
+void Menu::alert(std::string str)
+{
+	std::string itemXML = "<Alert>" + str + "</Alert>";
+	MenuFile menu(itemXML, DataSource::Document);
+	if (!menu.load()) throw(std::runtime_error("Error on loading Alert XML"));
+	Menu::active->addAlert(MenuItem::create(menu.getData().first_child()));
 }
 
 void Menu::error(std::string str)
@@ -122,6 +138,12 @@ int Menu::askChoice()
                   << "Choix ? ";
   input = getch();
   return (atoi(&input));
+}
+
+void Menu::addAlert(std::shared_ptr<MenuItem> menuItem)
+{
+	_alerts.push_back(menuItem);
+	if (_alerts.size() > 4) _alerts.pop_front();
 }
 
 void Menu::goTo(std::string id, std::string source, const DataSource dataMode)

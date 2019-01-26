@@ -100,10 +100,14 @@ void Menu::renderConsole(std::string command)
 
 void Menu::alert(std::string str)
 {
-	std::string itemXML = "<Alert>" + str + "</Alert>";
-	MenuFile menu(itemXML, DataSource::Document);
-	if (!menu.load()) throw(std::runtime_error("Error on loading Alert XML"));
-	Menu::active->addAlert(MenuItem::create(menu.getData().first_child()));
+	if (Menu::active != nullptr)
+	{
+		std::string itemXML = "<Alert>" + str + "</Alert>";
+		MenuFile menu(itemXML, DataSource::Document);
+		if (!menu.load()) throw(std::runtime_error("Error on loading Alert XML"));
+		Menu::active->addAlert(MenuItem::create(menu.getData().first_child()));
+	}
+	else msg(str);
 }
 
 void Menu::error(std::string str)

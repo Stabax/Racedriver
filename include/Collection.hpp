@@ -87,7 +87,7 @@ public:
         ST obj(data["collection"][i]);
         collection.push(obj);
       } catch (std::exception &e) {
-        Menu::error("Corrupted data");
+        Menu::alert("Corrupted data");
       }
     }
   }

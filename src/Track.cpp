@@ -31,7 +31,7 @@ Step::Step(const json &data)
 		try {
 			entities.push_back(Entity::collection.at(data["entities"][i].get<std::string>()));
 		} catch(std::exception &e) {
-			Menu::error("Unknown entity");
+			Menu::alert("Unknown entity");
 		}
 	}
 }

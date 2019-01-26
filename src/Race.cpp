@@ -37,17 +37,17 @@ bool Race::preparations()
 	prixCourse = (5 * 0.01f * track->getLength() * 5 /*prix carburant remplace par 5 */);
 	if(Profile::active->credits < prixCourse)
 	{
-		Menu::error("Vous ne disposez pas d'assez de crédits pour payer les preparatifs.");
+		Menu::alert("Vous ne disposez pas d'assez de crédits pour payer les preparatifs.");
 		return (false);
 	}
 	else if(playerCar->getDurability() < 20)
 	{
-		Menu::error("Votre vehicule est trop endommage pour concourir.");
+		Menu::alert("Votre vehicule est trop endommage pour concourir.");
 		return (false);
 	}
 	else if(playerCar->getTires()->getDurability() < 15)
 	{
-		Menu::error("Vos pneus sont trop uses pour concourir.");
+		Menu::alert("Vos pneus sont trop uses pour concourir.");
 		return (false);
 	}
 	Terminal::get().clearScreen(); //On flushe l'ancien ecran
@@ -72,7 +72,7 @@ bool Race::preparations()
 			return (true);
 	}
 	Terminal::get().clearScreen();
-	Menu::error("Paiement annule par l'utilisateur");
+	Menu::alert("Paiement annule par l'utilisateur");
 	return (false);
 }
 

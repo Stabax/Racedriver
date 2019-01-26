@@ -39,7 +39,7 @@ Car &Garage::selectCar() const
 	}
 	else
 	{
-		Menu::error("Saisie invalide");
+		Menu::alert("Saisie invalide");
 		throw std::runtime_error("Bad index");
 	}
 }
@@ -64,7 +64,7 @@ bool Garage::addCar(Car &car)
 {
 	if (_boxs.size() >= _boxCount)
 	{
-		Menu::error("Plus de place disponible dans le garage");
+		Menu::alert("Plus de place disponible dans le garage");
 		return (false);
 	}
 	_boxs.push_back(std::make_shared<Car>(car));

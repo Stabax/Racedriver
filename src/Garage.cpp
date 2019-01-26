@@ -10,9 +10,14 @@ Garage::Garage()
 Garage::Garage(const json &data)
 {
 	_boxCount = data["boxcount"];
+	if (data.find("cars") == data.end()) throw (std::runtime_error("Corrupted garage data"));
   for (size_t i = 0; i < data["cars"].size(); i++)
   {
-    _boxs.push_back(std::make_shared<Car>(data["cars"][i]));
+		try {
+    	_boxs.push_back(std::make_shared<Car>(data["cars"][i]));
+		} catch (std::exception &e) {
+			throw (std::runtime_error("Corrupted car data"));
+		}
   }
 }
 
@@ -43,6 +48,11 @@ Car &Garage::getBox(size_t index) const
 {
 	if (index >= _boxs.size()) throw (std::runtime_error("Out of bounds"));
   return (*_boxs[index]);
+}
+
+size_t Garage::getSize() const
+{
+  return (_boxs.size());
 }
 
 size_t Garage::getBoxCount() const

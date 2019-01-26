@@ -47,11 +47,6 @@ bool Game::load()
 
 int Game::main()
 {
-	_term.clearScreen();
-	//Menu::goTo("Main", "./Data/TestMenus.xml");
-	Menu::goTo("Home", "./Data/Menus/Main.xml");
-	Menu::run();
-	getch();
 	// BEGIN
 	std::srand(std::time(0)); //INITIALISATION DE L'ALEATOIRE
 	if (!update()) //on verifie et fait les mises à jour
@@ -65,7 +60,10 @@ int Game::main()
 	_term.clearScreen();
 	if (!load()) return -1;
 	std::this_thread::sleep_for(std::chrono::seconds(2));
-	menuRacedriver(); //on lance le coeur du jeu
+	//Main loop hook
+	Menu::goTo("Home", "./Data/Menus/Main.xml");
+	Menu::run();
+	//menuRacedriver(); //on lance le coeur du jeu
 	return 0;
 }
 

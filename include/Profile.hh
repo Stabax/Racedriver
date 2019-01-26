@@ -37,6 +37,13 @@ struct Stats {
 class Profile
 {
 public:
+
+	enum Difficulty {
+		Easy = 1,
+		Medium,
+		Hard
+	};
+
 	Profile(const std::string &name);
 	Profile(const json &data);
 	~Profile();
@@ -54,7 +61,7 @@ public:
 	static std::shared_ptr<Profile> active;
 
 	std::string name;
-	int difficulty;
+	Difficulty difficulty;
 	int credits;
 
 	Garage garage;

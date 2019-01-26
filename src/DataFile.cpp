@@ -8,20 +8,30 @@
 
 //JSON
 
-DataFile::DataFile(const std::string &path)
- : _path(path)
+DataFile::DataFile(const std::string &source, const DataSource sourceMode)
+ : _source(source), _sourceMode(sourceMode)
 {
 
 }
 
 bool DataFile::load()
 {
-  std::ifstream file;
+  switch(_sourceMode)
+  {
+  case Filesystem:
+  {
+    std::ifstream file;
 
-  file.open(_path, std::ifstream::in);
-  if (!file.good()) return (false);
-  _data = json::parse(file);
-  file.close();
+    file.open(_source, std::ifstream::in);
+    if (!file.good()) return (false);
+    _data = json::parse(file);
+    file.close();
+    break;
+  }
+  case Document:
+    _data = json::parse(_source);
+    break;
+  }
   return (true);
 }
 
@@ -34,7 +44,7 @@ bool DataFile::save(const json &data)
 {
   std::ofstream file;
 
-  file.open(_path, std::ofstream::out | std::ofstream::trunc);
+  file.open(_source, std::ofstream::out | std::ofstream::trunc);
   if (!file.good()) return (false);
   file << data.dump();
   file.close();
@@ -78,15 +88,23 @@ std::vector<std::string> DataFile::getFolderContents(std::string path, std::stri
 
 //XML
 
-MenuFile::MenuFile(const std::string &path)
- : _path(path)
+MenuFile::MenuFile(const std::string &source, const DataSource sourceMode)
+ : _source(source), _sourceMode(sourceMode)
 {
 
 }
 
 bool MenuFile::load()
 {
-  _data.load_file(_path.c_str());
+  switch(_sourceMode)
+  {
+  case Filesystem:
+    _data.load_file(_source.c_str());
+  break;
+  case Document:
+    _data.load_string(_source.c_str());
+  break;
+  }
   return (true);
 }
 
@@ -99,7 +117,7 @@ bool MenuFile::save(const xml_document &data)
 {
   std::ofstream file;
 
-  file.open(_path, std::ofstream::out | std::ofstream::trunc);
+  file.open(_source, std::ofstream::out | std::ofstream::trunc);
   if (!file.good()) return (false);
   file.close();
   return (true);

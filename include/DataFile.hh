@@ -9,13 +9,18 @@ using json = nlohmann::json;
 using xml_document = pugi::xml_document;
 using xml_node = pugi::xml_node;
 
+enum DataSource {
+  Filesystem,
+  Document
+};
+
 /*!
  * @brief JSON File I/O serialization class
  */
 class DataFile
 {
 public:
-  DataFile(const std::string &path);
+  DataFile(const std::string &source, const DataSource sourceMode = Filesystem);
 
   static std::vector<std::string> getFolderContents(std::string path, std::string filter = "", bool truncateFilter = false);
 
@@ -27,7 +32,8 @@ public:
   const json &getData();
 
 private:
-  const std::string _path;
+  const std::string _source;
+  DataSource _sourceMode;
   json _data;
 };
 
@@ -37,7 +43,7 @@ private:
 class MenuFile
 {
 public:
-  MenuFile(const std::string &path);
+  MenuFile(const std::string &source, const DataSource sourceMode = Filesystem);
 
   bool load();
   bool save();
@@ -46,7 +52,8 @@ public:
   const xml_document &getData();
 
 private:
-  const std::string _path;
+  const std::string _source;
+  DataSource _sourceMode;
   xml_document _data;
 };
 

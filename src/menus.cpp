@@ -27,7 +27,7 @@ void menuCourse()
 	}
 }
 
-void menuGarage()
+void menuGarages()
 {
 	bool quit = false;
 	while(quit != true)
@@ -65,7 +65,7 @@ void menuGarage()
 	}
 }
 
-void menuStats()
+void menuStatss()
 {
 	Terminal::get().clearScreen();
 	Terminal::get() << "Stats du Profile: " << Profile::active->name << "\n"

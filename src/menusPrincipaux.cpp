@@ -73,10 +73,10 @@ void menuJeu()
 				menuCourse();
 				break;
 			case 2:
-				menuGarage();
+				menuGarages();
 				break;
 			case 3:
-				menuStats();
+				menuStatss();
 				break;
 			case 4:
 				menuOptions();

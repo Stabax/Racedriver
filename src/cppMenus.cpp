@@ -76,7 +76,7 @@ void menuGarage()
 	{
 		menu += " <Button Type='Intern' Target='setEnv(\"Box\", \"" + std::to_string(i) + "\") goToPath(\"Box\", \"./Data/Menus/Main.xml\") '>" + Profile::active->garage.getBox(i).name + "</Button>";
 	}
- 	menu += "<Button Id='BuyCar'>Buy new car</Button>"
+ 	menu += "<Button Type='Goto' Target='BuyCar'>Buy new car</Button>"
 	 				"	<Button Type='Goto' Path='./Data/Menus/Main.xml' Target='Main'>Back</Button>"
 					"</Menu>";
 	Menu::goTo("", menu, DataSource::Document);

@@ -71,24 +71,30 @@ endif
 
 #Rules
 
-all: racedriver
+all: game
 
+deps:
 ifeq ($(OS),Windows_NT)
-deps:
-	cd $(LIBDIR)/pdcurses/wincon/ && $(MAKE) DLL=Y
-	cd $(LIBDIR)/curl/ && $(MAKE) --file=Makefile.dist mingw32 && cp ./lib/libcurl.dll ../../bin/
-	cd $(LIBDIR)/lua/ && $(MAKE) mingw
-	windres $(RESDIR)/racedriver.rc -O coff -o $(RESDIR)/racedriver.res
+	-cd $(LIBDIR)/pdcurses/wincon/ && $(MAKE) DLL=Y
+	-cd $(LIBDIR)/curl/ && $(MAKE) --file=Makefile.dist mingw32 && cp ./lib/libcurl.dll ../../bin/
+	-cd $(LIBDIR)/lua/ && $(MAKE) mingw
+	-windres $(RESDIR)/racedriver.rc -O coff -o $(RESDIR)/racedriver.res
 else
-deps:
-	cd $(LIBDIR)/lua/ && $(MAKE) linux
+	-cd $(LIBDIR)/lua/ && $(MAKE) linux
 endif
 
-racedriver:	deps $(OBJS)
+game:	$(info ****************** Run "make deps" before compiling game *****************) $(OBJS)
 	$(CXX) $(OBJS) $(RES) -o $(NAME) $(LDFLAGS)
 
 clean:
 	$(RM) $(OBJS)
+ifeq ($(OS),Windows_NT)
+	-cd $(LIBDIR)/curl/ && $(MAKE) --file=Makefile.dist clean
+	-cd $(LIBDIR)/lua/ && $(MAKE) clean
+	-$(RM) $(RESDIR)/racedriver.res
+else
+	-cd $(LIBDIR)/lua/ && $(MAKE) clean
+endif
 
 fclean: clean
 	$(RM) $(NAME)

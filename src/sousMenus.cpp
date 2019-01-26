@@ -654,7 +654,7 @@ void menuDifficulte()
 	choice = Menu::askChoice();
 	if (choice > 0 && choice <= 5)
 	{
-			Profile::active->difficulty = choice;
+			Profile::active->difficulty = static_cast<Difficulty>(choice);
 	}
 	return;
 }

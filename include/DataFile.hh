@@ -22,17 +22,20 @@ class DataFile
 public:
   DataFile(const std::string &source, const DataSource sourceMode = Filesystem);
 
+
+  static bool rename(const std::string &oldName, const std::string &newName);
   static std::vector<std::string> getFolderContents(std::string path, std::string filter = "", bool truncateFilter = false);
 
   bool load();
   bool save();
   bool save(const json &data);
 
+  bool rename(const std::string &name);
   void setData(const json &data);
   const json &getData();
 
 private:
-  const std::string _source;
+  std::string _source;
   DataSource _sourceMode;
   json _data;
 };
@@ -50,9 +53,10 @@ public:
   bool save(const xml_document &data);
 
   const xml_document &getData();
+  void setData(const xml_document &data);
 
 private:
-  const std::string _source;
+  std::string _source;
   DataSource _sourceMode;
   xml_document _data;
 };

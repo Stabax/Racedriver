@@ -53,7 +53,14 @@ bool DataFile::save(const json &data)
 
 void DataFile::setData(const json &data)
 {
+  _source.clear();
   _data = data;
+}
+
+bool DataFile::rename(const std::string &name)
+{
+  if (_sourceMode != Filesystem) return (false);
+  return (!std::rename(_source.c_str(), name.c_str()));
 }
 
 const json &DataFile::getData()
@@ -61,6 +68,10 @@ const json &DataFile::getData()
   return (_data);
 }
 
+bool DataFile::rename(const std::string &oldName, const std::string &newName)
+{
+  return (!std::rename(oldName.c_str(), newName.c_str()));
+}
 
 std::vector<std::string> DataFile::getFolderContents(std::string path, std::string filter, bool truncateFilter)
 {
@@ -126,4 +137,10 @@ bool MenuFile::save(const xml_document &data)
 const xml_document &MenuFile::getData()
 {
   return (_data);
+}
+
+void MenuFile::setData(const xml_document &data)
+{
+  _source.clear();
+  _data.reset(data);
 }

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Menu Id="Home">
-  <Script>printLogo()</Script>
+<Menu Id="Home" Title="1">
   <Button Type="Intern" Target="loadGameMenu()">Continue game</Button>
   <Button Type="Goto" Target="NewGame">New game</Button>
   <Button Type="Goto" Target="Credits">About</Button>
@@ -29,15 +28,14 @@
   <Sep/>
   <Button Type="Goto" Target="Home">Back</Button>
 </Menu>
-<Menu Id="Main">
-  <Script>printLogo()</Script>
+<Menu Id="Main" Title="1">
   <Button Type="Goto" Target="Race">Race</Button>
   <Button Type="Intern" Target="garageMenu()">Garage</Button>
   <Button Type="Intern" Target="statsMenu()">Stats</Button>
   <Button Type="Goto" Target="Options">Options</Button>
   <Button Type="Intern" Target="exit()">Quit</Button>
 </Menu>
-<Menu Id="Options" OnLoad="OptionsOnLoad">
+<Menu Id="Options" Title="2" OnLoad="OptionsOnLoad">
   <Select Id="Difficulty" Text="Difficulty">
     <Option Value="0">Easy</Option>
     <Option Value="1">Medium</Option>
@@ -56,14 +54,15 @@
   setProfileDifficulty(getSelectValue("Difficulty"))
   goTo("Main")
 </Script>
-<Menu Id="Race">
-  <Script>printLogo()</Script>
+<Menu Id="Race" Title="1">
   <Button Type="Script" Target="StartRace">Free race</Button>
   <Text>--Career--</Text>
   <Button Type="Goto" Target="Main">Back</Button>
 </Menu>
 <Script Id="StartRace">
   selectCarMenu();
+  selectTrackMenu();
+  startRace()
 </Script>
 <Menu Id="Stats">
   <Script>
@@ -71,10 +70,24 @@
   </Script>
   <Button Type="Goto" Target="Main">Back</Button>
 </Menu>
-<Menu Id="Box">
+<Menu Id="Box" Title="3">
   <Script>print("Car:"..getBox(getEnv("Box")).name)</Script>
-  <Button Type="Goto" Target="Repair">Repair</Button>
-  <Button Type="Goto" Target="Upgrade">Upgrade</Button>
-  <Button Type="Goto" Target="Sell">Sell</Button>
+  <Button Type="Script" Target="RepairCar">Repair</Button>
+  <Button Type="Goto" Target="UpgradeCar">Upgrade</Button>
+  <Button Type="Script" Target="SellCar">Sell</Button>
+  <Button Type="Goto" Target="Main">Back</Button>
+</Menu>
+<Script Id="RepairCar">
+  print("not impl");
+</Script>
+<Script Id="SellCar">
+  print("not impl")
+</Script>
+<Menu Id="UpgradeCar"  Title="3">
+  <Script>print("Car:"..getBox(getEnv("Box")).name)</Script>
+  <Button Type="Intern" Target="upgradeEngineMenu()">Engine</Button>
+  <Button Type="Intern" Target="upgradeSpoilerMenu()">Spoiler</Button>
+  <Button Type="Intern" Target="upgradeTiresMenu()">Tires</Button>
+  <Button Type="Intern" Target="chooseCharmMenu()">Charm</Button>
   <Button Type="Goto" Target="Main">Back</Button>
 </Menu>

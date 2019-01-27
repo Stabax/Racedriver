@@ -5,6 +5,7 @@
 #include <fstream>
 #include "Track.hh"
 #include "Profile.hh"
+#include <omniunit.hh>
 
 struct Concurrent
 {
@@ -15,6 +16,7 @@ struct Concurrent
 
   std::string name;
   std::shared_ptr<Car> car;
+  omni::Meter position;
   int score;
   bool out;
 };

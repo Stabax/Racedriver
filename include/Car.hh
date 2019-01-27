@@ -22,7 +22,7 @@ public:
 
 	static void listerCars();
 
-	void update(omni::Millisecond tickDuration, omni::Meter gradient);
+	void update(omni::Minute tickDuration, omni::Meter gradient);
 
 	void copy(const std::string &id);
 	void displayInfo() const;

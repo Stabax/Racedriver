@@ -147,19 +147,20 @@ bool Race::start()
 void Race::compute()
 {
 	std::vector<int> probaAccident = calculerProbaAccident();
+	size_t tick = 0;
 
-	for (size_t t = 0; t < track->track.size(); t++)
+	while (!player->out && player->position.count() < track->getLength())
 	{
-		Terminal::get() << "Kilomètre " << t << ":\n";
+		Terminal::get() << "Tick " << tick++ << ":\n";
+		std::this_thread::sleep_for(std::chrono::seconds(1));
 		for (size_t i = 0; i < players.size(); i++)
 		{
 			if (players[i].out) continue; //Skip out players
-			players[i].score += players[i].car->getAcceleration().count() * track->track[t].gradient + (std::rand() % 25);
-			players[i].score += players[i].car->getVitesse().count() * (static_cast<float>(std::rand() % 1) + 1);
+			players[i].car->update(omni::Minute(10), omni::Meter(0));
+			players[i].position += players[i].car->getVitesse() * omni::Minute(10);
 			if(std::rand() % 101 < probaAccident[i])
 			{
 				players[i].out = true;
-				players[i].score = 0;
 				if(i == 0) Profile::active->careerStats.accidents++;
 				Terminal::get() << "Le joueur " << players[i].name << " " << Accident::collection[rand() % Accident::collection.size()].message <<"\n";
 			}
@@ -174,13 +175,13 @@ std::vector<int> Race::calculerProbaAccident()
 
 	for (size_t i = 0; i < players.size(); i++)
 	{
-		results.push_back( (players[i].car->getTires()->getDurability() + players[i].car->getAerodynamisme() / 4) + std::rand()%5);
+		results.push_back(std::rand()%25);
 	}
 	return (results);
 }
 
 Concurrent::Concurrent(std::string n, std::shared_ptr<Car> c)
- : name(n), car(c), score(0), out(false)
+ : name(n), car(c), score(0), out(false), position(0)
 {
 }
 

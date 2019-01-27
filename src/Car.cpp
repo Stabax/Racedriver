@@ -11,7 +11,7 @@ Car::Car(const json &data)
  : Part(data), _nitro(100),
  	_fuel(data.find("fuel") != data.end() ? data["fuel"].get<float>() : 0),
  	_integrity(data.find("integrity") != data.end() ? data["integrity"].get<int>() : 100),
-	_mass(data.find("mass") != data.end() ? data["mass"].get<int>() : -1), _speed(0)
+	_mass(data.find("mass") != data.end() ? data["mass"].get<int>() : -1), _speed(0), _acceleration(0)
 {
   copy(data["name"].get<std::string>()); //Copy if needed
  	_engine = std::make_shared<Engine>(Engine::collection[data["engine"].get<std::string>()]);
@@ -77,15 +77,15 @@ void Car::listerCars()
 	}
 }
 
-void Car::update(omni::Millisecond tickDuration, omni::Meter gradient)
+void Car::update(omni::Minute tickDuration, omni::Meter gradient)
 {
 	_engine->update(_speed, _tires->radius);
 	omni::Horsepower power = _engine->getPower();
 	omni::NewtonMeter cinetic = (0.5 * _mass * omni::pow<2>(_speed));
-  omni::Watt cineticDiff =  power - (_mass * omni::MeterPerSecond2(9.81) * (gradient / (_speed * tickDuration)) * _speed);
+  omni::Watt cineticDiff =  power - (_mass * omni::MeterPerSecond2(9.81) * (_speed > omni::KilometerPerHour(0) ? (gradient / (_speed * tickDuration)) : 1) * _speed);
 
 	_acceleration = omni::nroot<2>(2 / (_mass * cinetic)) * (cineticDiff / 2);
-	_speed += _acceleration * tickDuration;
+	_speed = _acceleration * tickDuration;
 }
 
 omni::KilometerPerHour Car::getVitesse() const

@@ -88,6 +88,11 @@ game:	$(info ****************** Run "make deps" before compiling game **********
 
 clean:
 	$(RM) $(OBJS)
+
+fclean: clean
+	$(RM) $(NAME)
+
+cleandeps:
 ifeq ($(OS),Windows_NT)
 	-cd $(LIBDIR)/curl/ && $(MAKE) --file=Makefile.dist clean
 	-cd $(LIBDIR)/lua/ && $(MAKE) clean
@@ -95,9 +100,6 @@ ifeq ($(OS),Windows_NT)
 else
 	-cd $(LIBDIR)/lua/ && $(MAKE) clean
 endif
-
-fclean: clean
-	$(RM) $(NAME)
 
 re: fclean all
 

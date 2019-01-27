@@ -22,7 +22,7 @@ struct Concurrent
 class Race
 {
 public:
-  Race(Car &pCar);
+  Race(Car &pCar, Track &track);
 
   static void loadDrivers();
 

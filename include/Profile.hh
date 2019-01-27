@@ -56,6 +56,7 @@ public:
 	static void supprimerProfile(const int& numeroSave);
 	static bool compatible(Profile& Player, const int& numeroBox, const char& rangNewPiece);
 
+	bool rename(const std::string &name);
 	bool payer(const int& prix);
 
 	static std::shared_ptr<Profile> active;

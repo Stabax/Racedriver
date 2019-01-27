@@ -15,7 +15,6 @@ public:
 
   bool load();
   int main();
-  static void printASCIILogo();
   void removeUpdatePackage();
   bool update();
 

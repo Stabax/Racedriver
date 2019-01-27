@@ -5,6 +5,7 @@
 #include "Engine.hh"
 #include "Tires.hh"
 #include "Profile.hh"
+#include "Race.hh"
 #include "cppMenus.hh"
 
 std::map<std::string, std::string> ScriptEngine::scripts = std::map<std::string, std::string>();
@@ -57,10 +58,10 @@ void ScriptEngine::exposeCpp(sol::state &lua)
     sel->setData(value);
   });
   //Custom
-  lua.set_function("printLogo", [] () { Game::printASCIILogo(); });
+  lua.set_function("printASCIILogo", [] (int art) { Menu::printASCIILogo(art); });
   lua.set_function("getVersion", [] () { return (GAME_VERSION); });
   //Profile management
-  lua.set_function("setProfileName", [=] (std::string name) { Profile::active->name = name; });
+  lua.set_function("setProfileName", [=] (std::string name) { Profile::active->rename(name); });
   lua.set_function("setProfileDifficulty", [=] (std::string diff) { Profile::active->difficulty = static_cast<Profile::Difficulty>(atoi(diff.c_str())); });
   lua.set_function("getProfileName", [] () { return (Profile::active->name); });
   lua.set_function("getProfileDifficulty", [] () { return (std::to_string(Profile::active->difficulty)); });
@@ -71,10 +72,21 @@ void ScriptEngine::exposeCpp(sol::state &lua)
   lua.set_function("getBox", [=] (std::string index) { return (Profile::active->garage.getBox(atoi(index.c_str()))); });
   //Cpp Menus
   lua.set_function("loadGameMenu", &menuLoadGame);
+  lua.set_function("startRace", [] () {
+    Race race(Profile::active->garage.getBox(atoi(ScriptEngine::environment["Box"].c_str())),
+              Track::collection[(atoi(ScriptEngine::environment["Track"].c_str()))]);
+    if (race.preparations()) race.start();
+  });
   lua.set_function("statsMenu", &menuStats);
-  lua.set_function("freeRaceMenu", &menuFreeRace);
   lua.set_function("selectCarMenu", &menuSelectCar);
+  lua.set_function("selectTrackMenu", &menuSelectTrack);
   lua.set_function("garageMenu", &menuGarage);
+  lua.set_function("buyCarMenu", &menuBuyCar);
+
+  lua.set_function("upgradeEngineMenu", &menuUpgradeEngine);
+  lua.set_function("upgradeSpoilerMenu", &menuUpgradeSpoiler);
+  lua.set_function("upgradeTiresMenu", &menuUpgradeTires);
+  lua.set_function("chooseCharmMenu", &menuChooseCharm);
   //lua.set_function("career", &menuCourse);
   //lua.set_function("freeRace", &menuCourseLibre);
 }

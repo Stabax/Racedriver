@@ -89,6 +89,15 @@ void Profile::supprimerProfile(const int& numeroSave)
 	//Not implemented
 }
 
+bool Profile::rename(const std::string &n)
+{
+	if (!DataFile::rename(name, n))
+	{
+		throw (std::runtime_error("Could not rename profile"));
+	}
+	name = n;
+}
+
 bool Profile::payer(const int& prix)
 {
 	bool paye;

@@ -11,7 +11,7 @@ std::shared_ptr<Menu> Menu::active = nullptr;
 std::shared_ptr<MenuFile> Menu::activeDoc = nullptr;
 
 Menu::Menu(const std::string &id)
- : _cursor(0)
+ : _id(id), _cursor(0), _title(0), _clickCallback(nullptr)
 {
 	xml_node menu;
 
@@ -31,6 +31,7 @@ Menu::Menu(const std::string &id)
 			Menu::error(e.what());
 		}
 	}
+	if (menu.attribute("Title")) _title = atoi(menu.attribute("Title").value());
 	if (menu.attribute("OnLoad")) _onLoadScript = menu.attribute("OnLoad").value();
 	if (_items.size() > 0) _items[_cursor]->toggleHover();
 }
@@ -42,19 +43,29 @@ void Menu::onLoad()
 
 void Menu::setActiveDocument(const std::string &source, const DataSource sourceMode)
 {
-	activeDoc = std::make_shared<MenuFile>(source, sourceMode);
+	setActiveDocument(std::make_shared<MenuFile>(source, sourceMode));
+}
+
+void Menu::setActiveDocument(std::shared_ptr<MenuFile> doc)
+{
+	activeDoc = doc;
 	if (!activeDoc->load()) throw(std::runtime_error("Error on loading Menu XML"));
 	ScriptEngine::loadScripts(activeDoc->getData());
 	MenuDialog::load(activeDoc->getData());
 }
 
+void Menu::setClickCallback(std::function<void()> callback)
+{
+	_clickCallback = std::make_shared<std::function<void()>>(callback);
+}
+
 bool Menu::update()
 {
-	int input = getch();
-	if(input == KEY_UP) updateCursor(false);
-	else if(input == KEY_DOWN) updateCursor(true);
-	else if(input == KEY_ENTER || input == '\n' || input == '\r') _items[_cursor]->select();
-	else if (input == KEY_F(11)) ScriptEngine::console(*this);
+	_lastInput = getch();
+	if(_lastInput == KEY_UP) updateCursor(false);
+	else if(_lastInput == KEY_DOWN) updateCursor(true);
+	else if(_lastInput == KEY_ENTER || _lastInput == '\n' || _lastInput == '\r') _items[_cursor]->select();
+	else if (_lastInput == KEY_F(11)) ScriptEngine::console(*this);
 	else return (false);
 	return (true);
 }
@@ -74,6 +85,11 @@ void Menu::render()
 {
 	Terminal::get().clearScreen();
 	for (size_t i = 0; i <_alerts.size(); i++) _alerts[i]->render();
+	if (_title != 0)
+	{
+		printASCIILogo(_title);
+		Terminal::get() << "\n";
+	}
 	for (size_t i = 0; i < _entities.size(); i++)
 	{
 		_entities[i]->render();
@@ -87,7 +103,13 @@ bool Menu::run()
 	while (!quit)
 	{
 		active->render();
-		while (!active->update());
+		while (!active->update())
+		{
+			if (active->_clickCallback != nullptr)
+			{
+				(*active->_clickCallback)();
+			}
+		}
 	}
 }
 
@@ -108,6 +130,51 @@ void Menu::alert(std::string str)
 		Menu::active->addAlert(MenuItem::create(menu.getData().first_child()));
 	}
 	else msg(str);
+}
+
+void Menu::printASCIILogo(int art)
+{
+	switch (art)
+	{
+	case 1:
+		Terminal::get() << setColor(Terminal::Color::RedOnBlack)
+										<< " ________                  ________       _____                    \n"
+										<< " ___  __ \\_____ ______________  __ \\_________(_)__   ______________\n"
+										<< " __  /_/ /  __ `/  ___/  _ \\_  / / /_  ___/_  /__ | / /  _ \\_  ___/\n"
+										<< " _  _, _// /_/ // /__ /  __/  /_/ /_  /   _  / __ |/ //  __/  /    \n"
+										<< " /_/ |_| \\__,_/ \\___/ \\___//_____/ /_/    /_/  _____/ \\___//_/     \n"
+										<< resetAttrs();
+		break;
+	case 2:
+	Terminal::get() << setColor(Terminal::Color::RedOnBlack)
+									<< "_______          _____ _____                        \n"
+									<< "__  __ \\________ __  /____(_)______ _______ ________\n"
+									<< "_  / / /___  __ \\_  __/__  / _  __ \\__  __ \\__  ___/\n"
+									<< "/ /_/ / __  /_/ // /_  _  /  / /_/ /_  / / /_(__  ) \n"
+									<< "\\____/  _  .___/ \\__/  /_/   \\____/ /_/ /_/ /____/  \n"
+									<< "        /_/                                         \n"
+									<< resetAttrs();
+		break;
+	case 3:
+	Terminal::get() << setColor(Terminal::Color::RedOnBlack)
+									<< "_________                                       \n"
+									<< "__  ____/______ _______________ ________ ______ \n"
+									<< "_  / __  _  __ `/__  ___/_  __ `/__  __ `/_  _ \\\n"
+									<< "/ /_/ /  / /_/ / _  /    / /_/ / _  /_/ / /  __/\n"
+									<< "\\____/   \\__,_/  /_/     \\__,_/  _\\__, /  \\___/ \n"
+									<< "                                 /____/         \n"
+									<< resetAttrs();
+		break;
+	case 4:
+	Terminal::get() << setColor(Terminal::Color::RedOnBlack)
+									<< "_____________         _____         \n"
+									<< "__  ___/__  /_______ ___  /_________\n"
+									<< "_____ \\ _  __/_  __ `/_  __/__  ___/\n"
+									<< "____/ / / /_  / /_/ / / /_  _(__  ) \n"
+									<< "/____/  \\__/  \\__,_/  \\__/  /____/  \n"
+									<< resetAttrs();
+		break;
+	}
 }
 
 void Menu::error(std::string str)
@@ -155,6 +222,25 @@ void Menu::goTo(std::string id, std::string source, const DataSource dataMode)
 	if (source != "") setActiveDocument(source, dataMode);
 	active = std::make_shared<Menu>(Menu(id));
 	active->onLoad();
+}
+
+void Menu::popUp(std::string id, std::string source, const DataSource dataMode)
+{
+	std::shared_ptr<MenuFile> prevDoc = activeDoc;
+	std::string prevId = active->_id;
+	goTo(id, source, dataMode);
+	while (1)
+	{
+		active->render();
+		active->update();
+		if(active->_lastInput == KEY_ENTER || active->_lastInput == '\n' || active->_lastInput == '\r') break;
+	};
+	if (active->_clickCallback != nullptr)
+	{
+		(*active->_clickCallback)();
+	}
+	setActiveDocument(prevDoc);
+	goTo(prevId);
 }
 
 std::shared_ptr<MenuItem> Menu::getItem(const std::string &id)

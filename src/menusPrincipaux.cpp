@@ -15,7 +15,7 @@ void menuRacedriver()
 	while(quit != true)
 	{
 		Terminal::get().clearScreen();
-		Game::instance->printASCIILogo();
+		//Game::instance->printASCIILogo();
 		Terminal::get() << "[" << GAME_VERSION << "]\n\n";
 		//Menu Principal
 		Terminal::get() << "Menu principal\n"
@@ -140,7 +140,7 @@ void menuApropos()
 	//Menu A propos
 	Terminal::get() << "A Propos de\n";
 	Terminal::get() << "===============\n\n";
-	Game::instance->printASCIILogo();
+	//Game::instance->printASCIILogo();
 	Terminal::get() << "Racedriver est un jeu de course de voitures en console. \n";
 	Terminal::get() << "Ce jeu est developpe en C++ par:\n";
 	Terminal::get() << "~Baxlan(contact: Cavalioz@Hotmail.fr)\n";

@@ -17,7 +17,7 @@ void menuAtelierEngine(const int& numeroBox);
 void menuMaintenance(const int& numeroBox);
 void menuAcheterBox();
 
-void menuBuyCar();
+void menuBuyCars();
 void menuAchatCar();
 void menuConcessionaireAchat();
 void menuVenteCar(const int& numeroBox);

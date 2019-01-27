@@ -5,8 +5,14 @@
 
 void menuLoadGame();
 void menuStats();
-void menuFreeRace();
 void menuSelectCar();
+void menuSelectTrack();
 void menuGarage();
+void menuBuyCar();
+
+void menuUpgradeEngine();
+void menuUpgradeSpoiler();
+void menuUpgradeTires();
+void menuChooseCharm();
 
 #endif /* !CPPMENUS_HH_ */

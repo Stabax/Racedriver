@@ -17,7 +17,7 @@ class Menu
 {
 public:
   //Generic
-  
+  static void printASCIILogo(int art);
   static void alert(std::string str);
   static void msg(std::string str);
   static void error(std::string str);
@@ -26,8 +26,10 @@ public:
   static int askChoice();
 
   static void setActiveDocument(const std::string &source, const DataSource sourceMode);
+  static void setActiveDocument(std::shared_ptr<MenuFile> doc);
 
   static void goTo(std::string id, std::string source = "", DataSource sourceMode = DataSource::Filesystem);
+  static void popUp(std::string id, std::string source = "", DataSource sourceMode = DataSource::Filesystem);
   static bool run();
 
   static std::shared_ptr<Menu> active;
@@ -35,12 +37,12 @@ public:
 
   //Instance
   Menu(const std::string &id);
-  Menu(const xml_document &menu);
 
   void onLoad();
-  
+
   void addAlert(std::shared_ptr<MenuItem> menuItem);
   std::shared_ptr<MenuItem> getItem(const std::string &id);
+  void setClickCallback(std::function<void()> callback);
 
   void updateCursor(bool add);
   bool update();
@@ -48,10 +50,14 @@ public:
   void renderConsole(std::string command);
 
 private:
+  std::string _id;
   std::deque<std::shared_ptr<MenuItem>> _alerts;
   std::vector<std::shared_ptr<MenuItem>> _entities;
   std::vector<std::shared_ptr<MenuItem>> _items;
   std::string _onLoadScript;
+  std::shared_ptr<std::function<void()>> _clickCallback;
+  int _lastInput;
+  int _title; //title art
   int _cursor;
 };
 

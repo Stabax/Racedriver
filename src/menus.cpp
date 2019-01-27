@@ -49,7 +49,7 @@ void menuGarages()
 				quit = true; //INSTRUCTION DE SORTIE
 				break;
 			case 1:
-				menuBuyCar();
+				menuBuyCars();
 				//Pour vendre: menuConsulterGarage(4);
 				break;
 			case 2:

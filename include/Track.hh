@@ -47,7 +47,6 @@ struct Track
 	Climate convertClimate(const std::string &climate);
 	int getLength();
 
-	static Track selectTrack();
 	static void loadCollection();
 
 	static std::vector<Track> collection;

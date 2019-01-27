@@ -7,9 +7,9 @@
 
 std::vector<std::string> Race::driversCollection = std::vector<std::string>();
 
-Race::Race(Car &pCar)
+Race::Race(Car &pCar, Track &pTrack)
 {
-	track = std::make_shared<Track>(Track::selectTrack());
+	track = std::make_shared<Track>(pTrack);
 	playerCar = std::make_shared<Car>(pCar);
 	player = std::make_shared<Concurrent>(Profile::active->name, playerCar);
 	players.push_back(*player);

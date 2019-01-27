@@ -5,10 +5,9 @@
 
 void menuCourseLibre()
 {
-	Race race(Profile::active->garage.selectCar());
+	/*Race race(Profile::active->garage.selectCar());
 
-	if (race.preparations()) race.start();
-	return;
+	if (race.preparations()) race.start();*/
 }
 
 int menuConsulterGarage(const int& mode)
@@ -477,7 +476,7 @@ void menuAcheterBox()
 	Profile::active->save();
 }
 
-void menuBuyCar()
+void menuBuyCars()
 {
 	int choice;
 

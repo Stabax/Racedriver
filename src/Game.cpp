@@ -67,17 +67,6 @@ int Game::main()
 	return 0;
 }
 
-void Game::printASCIILogo()
-{
-	Terminal::get() << setColor(Terminal::Color::RedOnBlack)
-									<< " ________                  ________       _____                    \n"
-									<< " ___  __ \\_____ ______________  __ \\_________(_)__   ______________\n"
-									<< " __  /_/ /  __ `/  ___/  _ \\_  / / /_  ___/_  /__ | / /  _ \\_  ___/\n"
-									<< " _  _, _// /_/ // /__ /  __/  /_/ /_  /   _  / __ |/ //  __/  /    \n"
-									<< " /_/ |_| \\__,_/ \\___/ \\___//_____/ /_/    /_/  _____/ \\___//_/     \n"
-									<< resetAttrs();
-}
-
 void Game::removeUpdatePackage()
 {
 	std::remove("Update/update.zip");

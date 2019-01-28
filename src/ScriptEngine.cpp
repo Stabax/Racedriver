@@ -73,8 +73,9 @@ void ScriptEngine::exposeCpp(sol::state &lua)
   //Cpp Menus
   lua.set_function("loadGameMenu", &menuLoadGame);
   lua.set_function("startRace", [] () {
-    Race race(Profile::active->garage.getBox(atoi(ScriptEngine::environment["Box"].c_str())),
+    Race race(std::make_shared<Car>(Profile::active->garage.getBox(atoi(ScriptEngine::environment["Box"].c_str()))),
               Track::collection[(atoi(ScriptEngine::environment["Track"].c_str()))]);
+    
     if (race.preparations()) race.start();
   });
   lua.set_function("statsMenu", &menuStats);

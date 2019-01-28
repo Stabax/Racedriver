@@ -17,14 +17,13 @@ struct Concurrent
   std::string name;
   std::shared_ptr<Car> car;
   omni::Meter position;
-  int score;
   bool out;
 };
 
 class Race
 {
 public:
-  Race(Car &pCar, Track &track);
+  Race(std::shared_ptr<Car> pCar, Track &track);
 
   static void loadDrivers();
 
@@ -39,10 +38,8 @@ public:
   static std::vector<std::string> driversCollection;
 
 protected:
-  std::shared_ptr<Concurrent> player;
-  std::vector<Concurrent> players;
-  std::shared_ptr<Car> playerCar;
-  std::shared_ptr<Track> track;
+  std::vector<Concurrent> _players;
+  std::shared_ptr<Track> _track;
 };
 
 void calculerScore(int score[8], const Car* Adversaire[7],  Car* Player1, const Track& Map);

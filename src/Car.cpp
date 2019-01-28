@@ -81,8 +81,10 @@ void Car::update(omni::Minute tickDuration, omni::Meter gradient)
 {
 	_engine->update(_speed, _tires->radius);
 	omni::Horsepower power = _engine->getPower();
-	omni::NewtonMeter cinetic = (0.5 * _mass * omni::pow<2>(_speed));
-  omni::Watt cineticDiff =  power - (_mass * omni::MeterPerSecond2(9.81) * (_speed > omni::KilometerPerHour(0) ? (gradient / (_speed * tickDuration)) : 1) * _speed);
+  omni::Watt cineticDiff = power - (_mass * omni::MeterPerSecond2(9.81) * (_speed > omni::KilometerPerHour(0) ? (gradient / (_speed * tickDuration)) : 0) * _speed);
+	omni::NewtonMeter cinetic;
+	if (_speed > omni::KilometerPerHour(0)) cinetic = 0.5 * _mass * omni::pow<2>(_speed);
+	else cinetic = cineticDiff * tickDuration;
 
 	_acceleration = omni::nroot<2>(2 / (_mass * cinetic)) * (cineticDiff / 2);
 	_speed = _acceleration * tickDuration;

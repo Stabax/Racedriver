@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include <omniunit.hh>
 #include "DataFile.hh"
 #include "Game.hh"
 
@@ -45,7 +46,7 @@ struct Track
 	~Track();
 
 	Climate convertClimate(const std::string &climate);
-	int getLength();
+	omni::Meter getLength();
 
 	static void loadCollection();
 

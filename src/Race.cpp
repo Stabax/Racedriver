@@ -7,12 +7,10 @@
 
 std::vector<std::string> Race::driversCollection = std::vector<std::string>();
 
-Race::Race(Car &pCar, Track &pTrack)
+Race::Race(std::shared_ptr<Car> pCar, Track &pTrack)
 {
-	track = std::make_shared<Track>(pTrack);
-	playerCar = std::make_shared<Car>(pCar);
-	player = std::make_shared<Concurrent>(Profile::active->name, playerCar);
-	players.push_back(*player);
+	_players.push_back(Concurrent(Profile::active->name, pCar));
+	_track = std::make_shared<Track>(pTrack);
 }
 
 void Race::loadDrivers()
@@ -33,29 +31,31 @@ void Race::loadDrivers()
 bool Race::preparations()
 {
 	int prixCourse;
+	auto player = std::find_if(_players.begin(), _players.end(),
+    			[=] (const Concurrent &c) { return (c.name == Profile::active->name); });
 
-	prixCourse = (5 * 0.01f * track->getLength() * 5 /*prix carburant remplace par 5 */);
+	prixCourse = 50;
 	if(Profile::active->credits < prixCourse)
 	{
 		Menu::alert("Vous ne disposez pas d'assez de crédits pour payer les preparatifs.");
 		return (false);
 	}
-	else if(playerCar->getDurability() < 20)
+	else if(player->car->getDurability() < 20)
 	{
 		Menu::alert("Votre vehicule est trop endommage pour concourir.");
 		return (false);
 	}
-	else if(playerCar->getTires()->getDurability() < 15)
+	else if(player->car->getTires()->getDurability() < 15)
 	{
 		Menu::alert("Vos pneus sont trop uses pour concourir.");
 		return (false);
 	}
 	Terminal::get().clearScreen(); //On flushe l'ancien ecran
-	if(playerCar->getNiveauNitro().count() < 100)
+	if(player->car->getNiveauNitro().count() < 100)
 	{
 		Menu::msg("Attention: Votre reservoir de nitro n'est pas plein.\n");
 	}
-	if(playerCar->getTires()->getDurability() < 55)
+	if(player->car->getTires()->getDurability() < 55)
 	{
 		Menu::msg("Attention: Tires deteriores.\n");
 	}
@@ -63,7 +63,7 @@ bool Race::preparations()
 	Terminal::get() << "====================\n";
 	Terminal::get() << "Credits: " << Profile::active->credits << "c\n";
 	Terminal::get() << "====================\n";
-	Terminal::get() << "Le montant total des preparatifs du circuit: " << track->name << "\n";
+	Terminal::get() << "Le montant total des preparatifs du circuit: " << _track->name << "\n";
 	Terminal::get() << "S'elevent a " << prixCourse << "c\n\n";
 	if(Menu::askConfirmation())
 	{
@@ -89,23 +89,26 @@ void Race::randomizeOpponents(size_t count)
 			driver = driversCollection[rand() % driversCollection.size()];
 		} while (std::find(usedNames.begin(), usedNames.end(), driver) != usedNames.end());
 		usedNames.push_back(driver);
-		players.push_back(Concurrent(driver, car));
+		_players.push_back(Concurrent(driver, car));
 	}
 }
 
 bool Race::start()
 {
+	auto player = std::find_if(_players.begin(), _players.end(),
+    			[=] (const Concurrent &c) { return (c.name == Profile::active->name); });
+
 	Terminal::get() << "Bienvenue à tous et a toutes !\n"
 									<< "Aujourd'hui va se derouler l'evenement tant attendu par tous les fans de sportives,"
-									<< "tout le monde s'est reuni et l'ambiance est a son comble sur le circuit: " << track->name << ".\n"
-									<< "On m'annonce qu'il totalise " << track->getLength() << " Km, et comprend pas moins de <JSPCB> de virages serres !\n"
+									<< "tout le monde s'est reuni et l'ambiance est a son comble sur le circuit: " << _track->name << ".\n"
+									<< "On m'annonce qu'il totalise " << _track->getLength() << " Km, et comprend pas moins de <JSPCB> de virages serres !\n"
 									<< "<Inserer commentaire meteo>" << "\n"
 									<< "D'autre part, il y a un vent de Force <ZAIREAU> dans l'enceinte du circuit.\n\n"
 									<< "Sans attendre passons tout de suite a la liste des Participants:\n\n";
 	//on liste les concurrents
-	for (size_t i = 0; i < players.size(); i++)
+	for (size_t i = 0; i < _players.size(); i++)
 	{
-		Terminal::get() << "En position " << i+1 << ", " << players[i].name << " - " << players[i].car->manufacturer << " " << players[i].car->name << "\n";
+		Terminal::get() << "En position " << i+1 << ", " << _players[i].name << " - " << _players[i].car->manufacturer << " " << _players[i].car->name << "\n";
 	}
 	Terminal::get() <<"\n\nPressez [ENTREE] pour commencer la course.\n";
 	getch();
@@ -125,15 +128,14 @@ bool Race::start()
 	compute(); //Calculer la course
 	Terminal::get() <<"\n\nPressez [ENTREE] pour voir les resultats.\n";
 	getch();
-	std::sort(players.begin(), players.end(), std::greater<Concurrent>());
-	ptrdiff_t playerPos = std::find(players.begin(), players.end(), *player) - players.begin();
-	if (playerPos < 3 && !player->out) Profile::active->careerStats.victories++;//Si le joueur finit sur le podium & pas d'accident
+	std::sort(_players.begin(), _players.end(), std::greater<Concurrent>());
+	if (player - _players.begin() < 3 && !player->out) Profile::active->careerStats.victories++;//Si le joueur finit sur le podium & pas d'accident
 	else Profile::active->careerStats.losses++;
 	//on affiche les resultats
-	for (size_t i = 0; i < players.size(); i++)
+	for (size_t i = 0; i < _players.size(); i++)
 	{
-		Terminal::get() << "[" << i+1 << "e] = " << players[i].score << "="
-										<< players[i].name << " - " << players[i].car->manufacturer << " " << players[i].car->name << "\n";
+		Terminal::get() << "[" << i+1 << "e] = " << _players[i].position << "="
+										<< _players[i].name << " - " << _players[i].car->manufacturer << " " << _players[i].car->name << "\n";
 	}
 	Terminal::get() <<"\n\n";
 	Profile::active->careerStats.races++;
@@ -146,25 +148,28 @@ bool Race::start()
 
 void Race::compute()
 {
+	auto player = std::find_if(_players.begin(), _players.end(),
+    			[=] (Concurrent &c) { return (c.name == Profile::active->name); });
 	std::vector<int> probaAccident = calculerProbaAccident();
-	size_t tick = 0;
+	size_t rtick = 0;
 
-	while (!player->out && player->position.count() < track->getLength())
+	while (!player->out && player->position < _track->getLength())
 	{
-		Terminal::get() << "Tick " << tick++ << ":\n";
-		std::this_thread::sleep_for(std::chrono::seconds(1));
-		for (size_t i = 0; i < players.size(); i++)
+		for (size_t i = 0; i < _players.size(); i++)
 		{
-			if (players[i].out) continue; //Skip out players
-			players[i].car->update(omni::Minute(10), omni::Meter(0));
-			players[i].position += players[i].car->getVitesse() * omni::Minute(10);
-			if(std::rand() % 101 < probaAccident[i])
+			if (_players[i].out) continue; //Skip out _players
+			_players[i].car->update(omni::Second(1), omni::Meter(0));
+			_players[i].position += _players[i].car->getVitesse() * omni::Second(1);
+			if (_players[i].position > _track->getLength()) _players[i].out = true;
+			if((rtick % 10 == 0) && std::rand() % 101 < probaAccident[i]) //each 10 ticks of 1 sec
 			{
-				players[i].out = true;
+				Terminal::get() << "Tick " << rtick % 10 << ":\n";
+				_players[i].out = true;
 				if(i == 0) Profile::active->careerStats.accidents++;
-				Terminal::get() << "Le joueur " << players[i].name << " " << Accident::collection[rand() % Accident::collection.size()].message <<"\n";
+				Terminal::get() << "Le joueur " << _players[i].name << " " << Accident::collection[rand() % Accident::collection.size()].message <<"\n";
 			}
 		}
+			rtick++;
 	}
 }
 
@@ -173,7 +178,7 @@ std::vector<int> Race::calculerProbaAccident()
 {
 	std::vector<int> results;
 
-	for (size_t i = 0; i < players.size(); i++)
+	for (size_t i = 0; i < _players.size(); i++)
 	{
 		results.push_back(std::rand()%25);
 	}
@@ -181,7 +186,7 @@ std::vector<int> Race::calculerProbaAccident()
 }
 
 Concurrent::Concurrent(std::string n, std::shared_ptr<Car> c)
- : name(n), car(c), score(0), out(false), position(0)
+ : name(n), car(c), out(false), position(0)
 {
 }
 
@@ -192,5 +197,5 @@ bool operator==(const Concurrent &a, const Concurrent &b)
 
 bool operator>(const Concurrent &a, const Concurrent &b)
 {
-	return (a.score > b.score);
+	return (a.position > b.position);
 }

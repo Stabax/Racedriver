@@ -64,9 +64,9 @@ Track::Climate Track::convertClimate(const std::string &climate)
 	else return (Normal);
 }
 
-int Track::getLength()
+omni::Meter Track::getLength()
 {
-	return (track.size());
+	return (omni::Meter(1000));
 }
 
 void Track::loadCollection()

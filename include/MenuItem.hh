@@ -32,9 +32,9 @@ public:
   virtual void render();
 
 protected:
-  bool _hover;
   std::string _id;
   std::string _label;
+  bool _hover;
 };
 
 /*!

@@ -49,12 +49,9 @@ SRCS = 	$(SRCDIR)/Game.cpp									\
 				$(SRCDIR)/Race.cpp									\
 				$(SRCDIR)/main.cpp									\
 				$(SRCDIR)/cppMenus.cpp							\
-				$(SRCDIR)/menus.cpp									\
-				$(SRCDIR)/menusPrincipaux.cpp				\
 				$(SRCDIR)/Engine.cpp								\
 				$(SRCDIR)/Tires.cpp									\
 				$(SRCDIR)/Profile.cpp								\
-				$(SRCDIR)/sousMenus.cpp							\
 				$(SRCDIR)/Garage.cpp								\
 				$(SRCDIR)/Spoiler.cpp								\
 				$(SRCDIR)/Terminal.cpp							\

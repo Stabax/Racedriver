@@ -51,14 +51,14 @@ public:
 
 private:
   std::string _id;
-  std::deque<std::shared_ptr<MenuItem>> _alerts;
-  std::vector<std::shared_ptr<MenuItem>> _entities;
-  std::vector<std::shared_ptr<MenuItem>> _items;
-  std::string _onLoadScript;
-  std::shared_ptr<std::function<void()>> _clickCallback;
   int _lastInput;
   int _title; //title art
   int _cursor;
+  std::shared_ptr<std::function<void()>> _clickCallback;
+  std::string _onLoadScript;
+  std::deque<std::shared_ptr<MenuItem>> _alerts;
+  std::vector<std::shared_ptr<MenuItem>> _entities;
+  std::vector<std::shared_ptr<MenuItem>> _items;
 };
 
 /*!

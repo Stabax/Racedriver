@@ -3,8 +3,10 @@
 Collection<Engine> Engine::collection = Collection<Engine>();
 
 Engine::Engine(const json &data)
- : Part(data), mPower(data["power"].get<int>()), energy(Diesel), price((mPower.count()*25)+(vRang(rank)*500)), _mRevolutions(data["revolutions"].get<int>()),
-  _torque(0)
+ : Part(data), mPower(data["power"].get<int>()),
+ 	_mRevolutions(data["revolutions"].get<int>()), energy(Diesel),
+  price((mPower.count()*25)+(vRang(rank)*500)), _power(0),
+	_revolutions(0), _torque(0)
 {
 
 }

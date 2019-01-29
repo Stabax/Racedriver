@@ -23,8 +23,8 @@ public:
 	static Collection<Engine> collection;
 
 	//Manufacturer
-	omni::turnPerMinute<int> _mRevolutions;
 	omni::Horsepower mPower;
+	omni::turnPerMinute<int> _mRevolutions;
 	Energy energy;
 	int price;
 

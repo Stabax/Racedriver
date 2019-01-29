@@ -29,6 +29,7 @@ public:
 
 	static Collection<Tires> collection;
 
+
 	omni::Inch radius;
 
 protected:

@@ -63,10 +63,10 @@ protected:
 	std::shared_ptr<Engine> _engine;
 	std::shared_ptr<Spoiler> _spoiler;
 	std::shared_ptr<Tires> _tires;
-	int _integrity;
 	omni::Kilogram _mass;
 
 	//instance
+	int _integrity;
 	omni::Liter _nitro;	//se vide en fonction de la longueur du circuit. le plein est fait manuellement via paiement, juste avant une course
 	omni::Liter _fuel;
 	omni::KilometerPerHour _speed;

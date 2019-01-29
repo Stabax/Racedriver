@@ -8,10 +8,10 @@ Collection<Car> Car::collection = Collection<Car>();
 Car::Car() : Part() {} //Dummy for lua
 
 Car::Car(const json &data)
- : Part(data), _nitro(100),
- 	_fuel(data.find("fuel") != data.end() ? data["fuel"].get<float>() : 0),
- 	_integrity(data.find("integrity") != data.end() ? data["integrity"].get<int>() : 100),
-	_mass(data.find("mass") != data.end() ? data["mass"].get<int>() : -1), _speed(0), _acceleration(0)
+ : Part(data),
+	_mass(data.find("mass") != data.end() ? data["mass"].get<int>() : -1), 
+ 	_integrity(data.find("integrity") != data.end() ? data["integrity"].get<int>() : 100), _nitro(100),
+	_fuel(data.find("fuel") != data.end() ? data["fuel"].get<float>() : 0), _speed(0), _acceleration(0)
 {
   copy(data["name"].get<std::string>()); //Copy if needed
  	_engine = std::make_shared<Engine>(Engine::collection[data["engine"].get<std::string>()]);

@@ -52,27 +52,6 @@ void Profile::save()
 	}
 }
 
-bool Profile::compatible(Profile& Player, const int& numeroBox, const char& rangNewPiece)
-{
-	bool compatible = false;
-	int rangPiece = 0;
-	int rangCarBox = 0;
-	//Car *CarBox = Player.getBox(numeroBox);
-
-	//rangCarBox = vRang(CarBox->rank);
-	rangPiece = vRang(rangNewPiece);
-
-	if(rangCarBox <= rangPiece)
-	{
-		compatible = true;
-	}
-	else
-	{
-		compatible = false;
-	}
-	return compatible;
-}
-
 void Profile::displaySavesList()
 {
 	std::vector<std::string> saves = DataFile::getFolderContents("./Data/Saves/", ".json");
@@ -84,7 +63,7 @@ void Profile::displaySavesList()
 	}
 }
 
-void Profile::supprimerProfile(const int& numeroSave)
+void Profile::supprimerProfile([[maybe_unused]]const int& numeroSave)
 {
 	//Not implemented
 }
@@ -96,6 +75,7 @@ bool Profile::rename(const std::string &n)
 		throw (std::runtime_error("Could not rename profile"));
 	}
 	name = n;
+	return (true);
 }
 
 bool Profile::payer(const int& prix)

@@ -10,7 +10,7 @@ MenuItem::MenuItem(const xml_node &data)
 }
 
 MenuItem::MenuItem(std::string label)
- : _label(label), _hover(false)
+ : _id(), _label(label), _hover(false)
 {
 }
 
@@ -190,7 +190,7 @@ void MenuSelect::select()
     if (input == KEY_LEFT) --_cursor;
     else if (input == KEY_RIGHT) ++_cursor;
     if (_cursor < 0) _cursor = _values.size()-1;
-    if (_cursor >= _values.size()) _cursor = 0;
+    if (static_cast<size_t>(_cursor) >= _values.size()) _cursor = 0;
     Terminal::get().clearScreen();
     Menu::active->render(); //Request render to update input
   }

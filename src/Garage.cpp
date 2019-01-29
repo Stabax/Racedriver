@@ -1,6 +1,5 @@
 #include "Garage.hh"
 #include "Profile.hh"
-#include "sousMenus.hh"
 
 Garage::Garage()
  : _boxCount(1)
@@ -128,22 +127,7 @@ void Garage::displayBoxDetail(int index)
 	Terminal::get() << "#Pneus\n"
 									<< " |Modele: " << car->getTires()->name << "\n"
 									<< " |Marque: " << car->getTires()->manufacturer << "\n"
-									<< " |Rang: "<<  car->getTires()->rank << "\n"
-									<< "===============\n"
-									<< "1. Atelier\n"
-									<< "2. Vendre\n"
-									<< "0. Retour\n";
-	switch(Menu::askChoice())
-	{
-		case 0:
-			break;
-		case 1:
-			menuAtelier(index);
-			break;
-		case 2:
-			Profile::active->garage.sellCar(index);
-			break;
-	}
+									<< " |Rang: "<<  car->getTires()->rank << "\n";
 }
 
 void to_json(json& j, const Garage& garage)

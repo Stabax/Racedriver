@@ -153,7 +153,7 @@ Terminal &operator<<(Terminal &term, const char *str)
   return (term);
 }
 
-Terminal &operator<<(Terminal &dummy, Terminal &term)
+Terminal &operator<<([[maybe_unused]]Terminal &dummy, Terminal &term)
 {
 	return (term);
 }

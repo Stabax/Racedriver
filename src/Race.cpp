@@ -155,6 +155,7 @@ void Race::compute()
 
 	while (!player->out && player->position < _track->getLength())
 	{
+		if (rtick % 10 == 0) Terminal::get() << "Tick " << rtick % 10 << ":\n";
 		for (size_t i = 0; i < _players.size(); i++)
 		{
 			if (_players[i].out) continue; //Skip out _players
@@ -163,7 +164,6 @@ void Race::compute()
 			if (_players[i].position > _track->getLength()) _players[i].out = true;
 			if((rtick % 10 == 0) && std::rand() % 101 < probaAccident[i]) //each 10 ticks of 1 sec
 			{
-				Terminal::get() << "Tick " << rtick % 10 << ":\n";
 				_players[i].out = true;
 				if(i == 0) Profile::active->careerStats.accidents++;
 				Terminal::get() << "Le joueur " << _players[i].name << " " << Accident::collection[rand() % Accident::collection.size()].message <<"\n";
@@ -186,7 +186,7 @@ std::vector<int> Race::calculerProbaAccident()
 }
 
 Concurrent::Concurrent(std::string n, std::shared_ptr<Car> c)
- : name(n), car(c), out(false), position(0)
+ : name(n), car(c), position(0), out(false)
 {
 }
 

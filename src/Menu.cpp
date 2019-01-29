@@ -11,7 +11,7 @@ std::shared_ptr<Menu> Menu::active = nullptr;
 std::shared_ptr<MenuFile> Menu::activeDoc = nullptr;
 
 Menu::Menu(const std::string &id)
- : _id(id), _cursor(0), _title(0), _clickCallback(nullptr)
+ : _id(id), _lastInput(0), _title(0), _cursor(0), _clickCallback(nullptr)
 {
 	xml_node menu;
 
@@ -75,7 +75,7 @@ void Menu::updateCursor(bool add)
 	int prevCursor = _cursor;
 
 	_cursor += (add ? 1 : -1) * 1;
-	if (_cursor >= _items.size()) _cursor = 0;
+	if (static_cast<size_t>(_cursor) >= _items.size()) _cursor = 0;
 	else if (_cursor < 0) _cursor = _items.size() - 1;
 	_items[prevCursor]->toggleHover();
 	_items[_cursor]->toggleHover();
@@ -111,6 +111,7 @@ bool Menu::run()
 			}
 		}
 	}
+	return (true);
 }
 
 void Menu::renderConsole(std::string command)

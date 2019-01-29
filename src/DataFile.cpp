@@ -3,7 +3,7 @@
 #include <dirent.h>
 #endif
 #ifdef _MSC_VER
-#include "dirent.h"
+#include "dirent/dirent.h"
 #endif
 
 //JSON
@@ -126,11 +126,8 @@ bool MenuFile::save()
 
 bool MenuFile::save(const xml_document &data)
 {
-  std::ofstream file;
-
-  file.open(_source, std::ofstream::out | std::ofstream::trunc);
-  if (!file.good()) return (false);
-  file.close();
+  _data.reset(data);
+  _data.save_file(_source.c_str());
   return (true);
 }
 

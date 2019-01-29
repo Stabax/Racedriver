@@ -7,9 +7,13 @@
 #include <fstream>
 #include "Menu.hh"
 #include "Game.hh"
+#include "Track.hh"
+#include "Collection.hpp"
+#include "Race.hh"
 #include "Accident.hh"
-#include "menusPrincipaux.hh"
 #include "ScriptEngine.hh"
+
+class Car;
 
 //Singleton storage ptr
 std::unique_ptr<Game> Game::instance = nullptr;

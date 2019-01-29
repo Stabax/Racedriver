@@ -24,7 +24,7 @@ You need to grab and build dependencies if they are not installed on your machin
 you can do so with the following command-lines:
 
     git submodule init
-		git submodule update
+    git submodule update
     make deps
 
 Then, running standard
@@ -32,5 +32,5 @@ Then, running standard
     make
 
 should auto-generate the game based on your platform.
-Tested on C++17 compliant MinGW, GCC, and MSBuild.
+Tested on *C++17* compliant *MinGW, GCC, and MSBuild*.
 Enjoy! Racedriver binary will be built inside ./bin folder!

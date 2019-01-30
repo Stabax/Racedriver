@@ -162,9 +162,10 @@ void menuUpgradeTires()
 {
 	Car &car = Profile::active->garage.getBox(atoi(ScriptEngine::environment["Box"].c_str()));
 	std::string menu;
-	menu += "<Menu Title='3'>";
+	menu += "<Menu Title='3'>"
 					" <Text>Current: " + car.getTires()->manufacturer + " " + car.getTires()->name + "</Text>"
-					" <Text>Radius: " + std::to_string(car.getTires()->radius.count()) + "</Text>";
+					" <Text>Radius: " + std::to_string(car.getTires()->radius.count()) + "in</Text>"
+					" <Sep/>";
 	for (size_t i = 0; i < Tires::collection.size(); i++)
 	{
 		menu += " <Button Type='Intern' Target='goToPath(\"Garage\", \"./Data/Menus/Main.xml\") '>"

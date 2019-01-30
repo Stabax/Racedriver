@@ -91,12 +91,26 @@ void menuGarage()
 				  	"[Box " + std::to_string(i) + "] " +  Profile::active->garage.getBox(i).manufacturer + " " + Profile::active->garage.getBox(i).name + "</Button>";
 	}
  	menu += " <Sep/>"
+	 				" <Button Type='Intern' Target='buyBoxMenu()'>Upgrade garage (Buy Box)</Button>"
 	 				" <Button Type='Intern' Target='buyCarMenu()'>Buy new car</Button>"
 	 				" <Sep/>"
 	 				"	<Button Type='Goto' Path='./Data/Menus/Main.xml' Target='Main'>Back</Button>"
 					"</Menu>";
 	Menu::goTo("", menu, DataSource::Document);
 	//static_cast<std::shared_ptr<MenuButton>>(Menu::active->getItem("BuyCar"))->bind()
+}
+
+void menuBuyBox()
+{
+	std::string menu;
+	menu += "<Menu>"
+					" <Text>Vous allez acheter un "+ std::to_string(Profile::active->garage.getBoxCount()+1) +"e Box,"
+					" pour " + std::to_string(Profile::active->garage.getBoxCount()*1000) + " credits</Text>"
+					" <Sep/>"
+					" <Button Type='Intern' Target=''>Oklm</Button>"
+					" <Button Type='Intern' Target=''>Cancel</Button>"
+					"</Menu>";
+	Menu::popUp("", menu, DataSource::Document);
 }
 
 void menuBuyCar()

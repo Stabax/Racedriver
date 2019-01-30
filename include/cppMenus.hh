@@ -8,6 +8,7 @@ void menuStats();
 void menuSelectCar();
 void menuSelectTrack();
 void menuGarage();
+void menuBuyBox();
 void menuBuyCar();
 
 void menuUpgradeEngine();

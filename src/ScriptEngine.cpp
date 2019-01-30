@@ -36,6 +36,7 @@ void ScriptEngine::exposeCpp(sol::state &lua)
   lua.set_function("clearScreen", [] () { Terminal::get().clearScreen(); });
   lua.set_function("pause", [] () { getch(); });
   lua.set_function("exit", [] () { exit(0); });
+  lua.set_function("alert", [=] (std::string msg) { Menu::alert(msg); });
   lua.set_function("goTo", [=] (std::string id) { Menu::goTo(id); });
   lua.set_function("goToPath", [=] (std::string id, std::string path) { Menu::goTo(id, path); });
   lua.set_function("setEnv", [=] (std::string key, std::string value) { environment[key] = value; });
@@ -83,6 +84,7 @@ void ScriptEngine::exposeCpp(sol::state &lua)
   lua.set_function("selectTrackMenu", &menuSelectTrack);
   lua.set_function("garageMenu", &menuGarage);
   lua.set_function("buyCarMenu", &menuBuyCar);
+  lua.set_function("buyBoxMenu", &menuBuyBox);
 
   lua.set_function("upgradeEngineMenu", &menuUpgradeEngine);
   lua.set_function("upgradeSpoilerMenu", &menuUpgradeSpoiler);

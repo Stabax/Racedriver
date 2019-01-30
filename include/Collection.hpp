@@ -53,6 +53,12 @@ public:
     return (_collection[index]);
   }
 
+  std::vector<T> filter(std::function<bool(const T &)> filter) {
+    std::vector<T> subset;
+    std::copy_if(_collection.begin(), _collection.end(), std::back_inserter(subset), filter);
+    return (subset);
+  }
+
   template <typename ST>
   static const std::string getPath()
   {

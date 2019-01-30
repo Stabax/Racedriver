@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- PRE - PROFILE -->
 <Menu Id="Home" Title="1">
   <Button Type="Intern" Target="loadGameMenu()">Continue game</Button>
   <Button Type="Goto" Target="NewGame">New game</Button>
@@ -20,14 +21,14 @@
   createProfile(getInputData("Profile"))
   goTo("Main")
 </Script>
-<Menu Id="Credits">
+<Menu Id="Credits" Title="1">
   <Script>
-    printLogo()
     print(getVersion() .. "\n")
   </Script>
   <Sep/>
   <Button Type="Goto" Target="Home">Back</Button>
 </Menu>
+<!-- GAME -->
 <Menu Id="Main" Title="1">
   <Button Type="Goto" Target="Race">Race</Button>
   <Button Type="Intern" Target="garageMenu()">Garage</Button>
@@ -70,6 +71,7 @@
   </Script>
   <Button Type="Goto" Target="Main">Back</Button>
 </Menu>
+<!-- GARAGE -->
 <Menu Id="Box" Title="3">
   <Script>print("Car:"..getBox(getEnv("Box")).name)</Script>
   <Button Type="Script" Target="RepairCar">Repair</Button>

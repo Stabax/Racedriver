@@ -89,10 +89,10 @@
   <Button Type="Goto" Target="Main">Back</Button>
 </Menu>
 <Script Id="RepairCar">
-  print("not impl");
+  alert("not impl");
 </Script>
 <Script Id="SellCar">
-  print("not impl")
+  alert("not impl")
 </Script>
 <Menu Id="UpgradeCar"  Title="3">
   <Script>

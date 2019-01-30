@@ -74,8 +74,8 @@ void Menu::updateCursor(bool add)
 {
 	int prevCursor = _cursor;
 
-	_cursor += (add ? 1 : -1) * 1;
-	if (static_cast<size_t>(_cursor) >= _items.size()) _cursor = 0;
+	_cursor += (add ? 1 : -1);
+	if (_cursor >= static_cast<int>(_items.size())) _cursor = 0;
 	else if (_cursor < 0) _cursor = _items.size() - 1;
 	_items[prevCursor]->toggleHover();
 	_items[_cursor]->toggleHover();

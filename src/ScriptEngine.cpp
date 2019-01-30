@@ -121,6 +121,8 @@ void ScriptEngine::console(Menu &currentMenu)
 {
   int input;
   std::string command;
+
+  Terminal::get().setCursor(1);
   currentMenu.renderConsole(command); //Renders console
   while ((input = getch()) != KEY_F(11))
   {
@@ -134,5 +136,6 @@ void ScriptEngine::console(Menu &currentMenu)
     else command += input;
     currentMenu.renderConsole(command);
   }
+  Terminal::get().setCursor(0);
   Terminal::get().clearScreen();
 }

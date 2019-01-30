@@ -32,6 +32,7 @@ public:
   bool start();
 
   void compute();
+  void render(int rtick);
 
   std::vector<int> calculerProbaAccident();
 

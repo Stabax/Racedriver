@@ -126,22 +126,11 @@ bool Race::start()
 	Menu::msg("GO !");
 	std::this_thread::sleep_for(std::chrono::seconds(1));
 	compute(); //Calculer la course
-	Terminal::get() <<"\n\nPressez [ENTREE] pour voir les resultats.\n";
-	getch();
-	std::sort(_players.begin(), _players.end(), std::greater<Concurrent>());
 	if (player - _players.begin() < 3 && !player->out) Profile::active->careerStats.victories++;//Si le joueur finit sur le podium & pas d'accident
 	else Profile::active->careerStats.losses++;
-	//on affiche les resultats
-	for (size_t i = 0; i < _players.size(); i++)
-	{
-		Terminal::get() << "[" << i+1 << "e] = " << _players[i].position << "="
-										<< _players[i].name << " - " << _players[i].car->manufacturer << " " << _players[i].car->name << "\n";
-	}
-	Terminal::get() <<"\n\n";
 	Profile::active->careerStats.races++;
-	Terminal::get() <<"Pressez [ENTREE] pour continuer.\n";
+	Terminal::get() <<"Pressez [ENTREE] pour quitter le circuit.\n";
 	getch();
-	Terminal::get().clearScreen();
 	Profile::active->save();
 	return (true);
 }
@@ -153,7 +142,8 @@ void Race::compute()
 	std::vector<int> probaAccident = calculerProbaAccident();
 	size_t rtick = 0;
 
-	while (!player->out && player->position < _track->getLength())
+	while (std::find_if(_players.begin(), _players.end(),
+		 [this] (const Concurrent &c) { return (!c.out && c.position < _track->getLength()); }) != _players.end())
 	{
 		if (rtick % 10 == 0) Terminal::get() << "Tick " << rtick % 10 << ":\n";
 		for (size_t i = 0; i < _players.size(); i++)
@@ -165,11 +155,23 @@ void Race::compute()
 			if((rtick % 10 == 0) && std::rand() % 101 < probaAccident[i]) //each 10 ticks of 1 sec
 			{
 				_players[i].out = true;
-				if(i == 0) Profile::active->careerStats.accidents++;
+				if(player->name == _players[i].name) Profile::active->careerStats.accidents++;
 				Terminal::get() << "Le joueur " << _players[i].name << " " << Accident::collection[rand() % Accident::collection.size()].message <<"\n";
 			}
 		}
-			rtick++;
+		render(rtick);
+		rtick++;
+	}
+}
+
+void Race::render(int rtick)
+{
+	std::sort(_players.begin(), _players.end(), std::greater<Concurrent>());
+	Terminal::get().clearScreen();
+	Terminal::get() << "(Tick " << rtick << ")";
+	for (size_t i = 0; i < _players.size(); i++)
+	{
+		Terminal::get() << "[" << i << "e]" << (_players[i].out ? " <K.O.> " : " ")  << _players[i].name << " : " << _players[i].position << "\n";
 	}
 }
 
@@ -192,7 +194,7 @@ Concurrent::Concurrent(std::string n, std::shared_ptr<Car> c)
 
 bool operator==(const Concurrent &a, const Concurrent &b)
 {
-	return (a.name == b.name);
+	return (a.position > b.position);
 }
 
 bool operator>(const Concurrent &a, const Concurrent &b)

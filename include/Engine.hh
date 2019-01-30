@@ -10,6 +10,8 @@ enum Energy {
 	Electric
 };
 
+static const char* EnergyNames[] = { "Diesel", "Gasoline", "Electric" };
+
 class Engine : public Part
 {
 public:
@@ -24,7 +26,7 @@ public:
 
 	//Manufacturer
 	omni::Horsepower mPower;
-	omni::turnPerMinute<int> _mRevolutions;
+	omni::turnPerMinute<int> mRevolutions;
 	Energy energy;
 	int price;
 

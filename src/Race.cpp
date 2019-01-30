@@ -53,26 +53,26 @@ bool Race::preparations()
 	Terminal::get().clearScreen(); //On flushe l'ancien ecran
 	if(player->car->getNiveauNitro().count() < 100)
 	{
-		Menu::msg("Attention: Votre reservoir de nitro n'est pas plein.\n");
+		Menu::alert("Attention: Votre reservoir de nitro n'est pas plein.\n");
 	}
 	if(player->car->getTires()->getDurability() < 55)
 	{
-		Menu::msg("Attention: Tires deteriores.\n");
+		Menu::alert("Attention: Tires deteriores.\n");
 	}
-	Terminal::get() << "\nPreparatifs\n";
-	Terminal::get() << "====================\n";
-	Terminal::get() << "Credits: " << Profile::active->credits << "c\n";
-	Terminal::get() << "====================\n";
-	Terminal::get() << "Le montant total des preparatifs du circuit: " << _track->name << "\n";
-	Terminal::get() << "S'elevent a " << prixCourse << "c\n\n";
-	if(Menu::askConfirmation())
+	std::string menu;
+	menu += "<Menu>"
+					" <Text>Les preparatifs du circuit: " + _track->name + " s'elevent a " + std::to_string(prixCourse) + "c</Text>"
+					" <Sep/>"
+					" <Button Type='Intern' Target=''>Oklm</Button>"
+					" <Button Type='Intern' Target=''>Cancel</Button>"
+					"</Menu>";
+	Menu::popUp("", menu, DataSource::Document);
+	if(1) //Should be bound to confirm button
 	{
 			Terminal::get().clearScreen();
 			randomizeOpponents(7);
 			return (true);
 	}
-	Terminal::get().clearScreen();
-	Menu::alert("Paiement annule par l'utilisateur");
 	return (false);
 }
 

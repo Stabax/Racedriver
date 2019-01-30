@@ -43,6 +43,7 @@
     <Option Value="2">Hard</Option>
   </Select>
   <Input Id="Profile">Profile name</Input>
+  <Sep/>
   <Button Type="Script" Target="ApplyOptions">Apply</Button>
   <Button Type="Goto" Target="Main">Back</Button>
 </Menu>
@@ -56,8 +57,11 @@
   goTo("Main")
 </Script>
 <Menu Id="Race" Title="1">
+  <Text>Select mode</Text>
+  <Sep/>
   <Button Type="Script" Target="StartRace">Free race</Button>
-  <Text>--Career--</Text>
+  <Text>-Career-</Text>
+  <Sep/>
   <Button Type="Goto" Target="Main">Back</Button>
 </Menu>
 <Script Id="StartRace">
@@ -73,10 +77,15 @@
 </Menu>
 <!-- GARAGE -->
 <Menu Id="Box" Title="3">
-  <Script>print("Car:"..getBox(getEnv("Box")).name)</Script>
+  <Script>
+    car = getBox(getEnv("Box"))
+    print("[Box "..getEnv("Box").."] "..car.manufacturer.." "..car.name)
+  </Script>
+  <Sep/>
   <Button Type="Script" Target="RepairCar">Repair</Button>
   <Button Type="Goto" Target="UpgradeCar">Upgrade</Button>
   <Button Type="Script" Target="SellCar">Sell</Button>
+  <Sep/>
   <Button Type="Goto" Target="Main">Back</Button>
 </Menu>
 <Script Id="RepairCar">
@@ -86,10 +95,15 @@
   print("not impl")
 </Script>
 <Menu Id="UpgradeCar"  Title="3">
-  <Script>print("Car:"..getBox(getEnv("Box")).name)</Script>
+  <Script>
+    car = getBox(getEnv("Box"))
+    print("[Box "..getEnv("Box").."] "..car.manufacturer.." "..car.name)
+  </Script>
+  <Sep/>
   <Button Type="Intern" Target="upgradeEngineMenu()">Engine</Button>
   <Button Type="Intern" Target="upgradeSpoilerMenu()">Spoiler</Button>
   <Button Type="Intern" Target="upgradeTiresMenu()">Tires</Button>
   <Button Type="Intern" Target="chooseCharmMenu()">Charm</Button>
+  <Sep/>
   <Button Type="Goto" Target="Main">Back</Button>
 </Menu>

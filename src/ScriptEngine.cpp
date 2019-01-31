@@ -42,6 +42,7 @@ void ScriptEngine::exposeCpp(sol::state &lua)
   lua.set_function("setEnv", [=] (std::string key, std::string value) { environment[key] = value; });
   lua.set_function("getEnv", [=] (std::string key) { return (environment[key]); });
   //Menu helper
+  lua.set_function("getCursor", [] () { return (Menu::active->getCursor()); });
   lua.set_function("getInputData", [=] (std::string id) {
     std::shared_ptr<MenuInput> in = std::dynamic_pointer_cast<MenuInput>(Menu::active->getItem(id));
     return (in->getData());
@@ -59,7 +60,7 @@ void ScriptEngine::exposeCpp(sol::state &lua)
     sel->setData(value);
   });
   //Custom
-  lua.set_function("printASCIILogo", [] (int art) { Menu::printASCIILogo(art); });
+  lua.set_function("printASCIILogo", [] (std::string art) { Menu::printASCIILogo(Menu::convertASCIILogo(art)); });
   lua.set_function("getVersion", [] () { return (GAME_VERSION); });
   //Profile management
   lua.set_function("setProfileName", [=] (std::string name) { Profile::active->rename(name); });

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- PRE - PROFILE -->
-<Menu Id="Home" Title="1">
+<Menu Id="Home" Title="Game">
   <Button Type="Intern" Target="loadGameMenu()">Continue game</Button>
   <Button Type="Goto" Target="NewGame">New game</Button>
   <Button Type="Goto" Target="Credits">About</Button>
@@ -21,7 +21,7 @@
   createProfile(getInputData("Profile"))
   goTo("Main")
 </Script>
-<Menu Id="Credits" Title="1">
+<Menu Id="Credits" Title="Game">
   <Script>
     print(getVersion() .. "\n")
   </Script>
@@ -29,14 +29,14 @@
   <Button Type="Goto" Target="Home">Back</Button>
 </Menu>
 <!-- GAME -->
-<Menu Id="Main" Title="1">
+<Menu Id="Main" Title="Game">
   <Button Type="Goto" Target="Race">Race</Button>
   <Button Type="Intern" Target="garageMenu()">Garage</Button>
   <Button Type="Intern" Target="statsMenu()">Stats</Button>
   <Button Type="Goto" Target="Options">Options</Button>
   <Button Type="Intern" Target="exit()">Quit</Button>
 </Menu>
-<Menu Id="Options" Title="2" OnLoad="OptionsOnLoad">
+<Menu Id="Options" Title="Options" OnLoad="OptionsOnLoad">
   <Select Id="Difficulty" Text="Difficulty">
     <Option Value="0">Easy</Option>
     <Option Value="1">Medium</Option>
@@ -56,7 +56,7 @@
   setProfileDifficulty(getSelectValue("Difficulty"))
   goTo("Main")
 </Script>
-<Menu Id="Race" Title="1">
+<Menu Id="Race" Title="Game">
   <Text>Select mode</Text>
   <Sep/>
   <Button Type="Script" Target="StartRace">Free race</Button>
@@ -76,7 +76,7 @@
   <Button Type="Goto" Target="Main">Back</Button>
 </Menu>
 <!-- GARAGE -->
-<Menu Id="Box" Title="3">
+<Menu Id="Box" Title="Garage">
   <Script>
     car = getBox(getEnv("Box"))
     print("[Box "..getEnv("Box").."] "..car.manufacturer.." "..car.name)
@@ -94,7 +94,7 @@
 <Script Id="SellCar">
   alert("not impl")
 </Script>
-<Menu Id="UpgradeCar"  Title="3">
+<Menu Id="UpgradeCar"  Title="Garage">
   <Script>
     car = getBox(getEnv("Box"))
     print("[Box "..getEnv("Box").."] "..car.manufacturer.." "..car.name)

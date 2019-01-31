@@ -17,7 +17,15 @@ class Menu
 {
 public:
   //Generic
-  static void printASCIILogo(int art);
+  enum ASCIILogo {
+    None = -1,
+    Game,
+    Options,
+    Garage,
+    Stats
+  };
+  static ASCIILogo convertASCIILogo(std::string art);
+  static void printASCIILogo(ASCIILogo art);
   static void alert(std::string str);
   static void msg(std::string str);
   static void error(std::string str);
@@ -44,6 +52,7 @@ public:
   std::shared_ptr<MenuItem> getItem(const std::string &id);
   void setClickCallback(std::function<void()> callback);
 
+  int getCursor();
   void updateCursor(bool add);
   bool update();
   void render();
@@ -52,7 +61,7 @@ public:
 private:
   std::string _id;
   int _lastInput;
-  int _title; //title art
+  ASCIILogo _title; //title art
   int _cursor;
   std::shared_ptr<std::function<void()>> _clickCallback;
   std::string _onLoadScript;

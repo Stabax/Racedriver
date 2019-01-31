@@ -145,18 +145,18 @@ void Race::compute()
 	while (std::find_if(_players.begin(), _players.end(),
 		 [this] (const Concurrent &c) { return (!c.out && c.position < _track->getLength()); }) != _players.end())
 	{
-		if (rtick % 10 == 0) Terminal::get() << "Tick " << rtick % 10 << ":\n";
+		if (rtick % 25 == 0) Terminal::get() << "Tick " << rtick % 25 << ":\n";
 		for (size_t i = 0; i < _players.size(); i++)
 		{
 			if (_players[i].out) continue; //Skip out _players
 			_players[i].car->update(omni::Second(1), omni::Meter(0));
 			_players[i].position += _players[i].car->getVitesse() * omni::Second(1);
 			if (_players[i].position > _track->getLength()) _players[i].out = true;
-			if((rtick % 10 == 0) && std::rand() % 101 < probaAccident[i]) //each 10 ticks of 1 sec
+			if((rtick % 25 == 0) && std::rand() % 101 < probaAccident[i]) //each 10 ticks of 1 sec
 			{
 				_players[i].out = true;
 				if(player->name == _players[i].name) Profile::active->careerStats.accidents++;
-				Terminal::get() << "Le joueur " << _players[i].name << " " << Accident::collection[rand() % Accident::collection.size()].message <<"\n";
+				_players[i].outmsg = Accident::collection[rand() % Accident::collection.size()].message + " (Tick" + std::to_string(rtick%25) + ")";
 			}
 		}
 		render(rtick);
@@ -168,10 +168,11 @@ void Race::render(int rtick)
 {
 	std::sort(_players.begin(), _players.end(), std::greater<Concurrent>());
 	Terminal::get().clearScreen();
-	Terminal::get() << "(Tick " << rtick << ")";
+	Terminal::get() << "(Tick " << rtick << ")\n";
 	for (size_t i = 0; i < _players.size(); i++)
 	{
 		Terminal::get() << "[" << i << "e]" << (_players[i].out ? " <K.O.> " : " ")  << _players[i].name << " : " << _players[i].position << "\n";
+		if  (_players[i].out) Terminal::get() << "   -> " << _players[i].outmsg << "\n";
 	}
 }
 

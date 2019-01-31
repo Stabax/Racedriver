@@ -10,7 +10,7 @@ enum Energy {
 	Electric
 };
 
-static const char* EnergyNames[] = { "Diesel", "Gasoline", "Electric" };
+[[maybe_unused]]static const char* EnergyNames[] = { "Diesel", "Gasoline", "Electric" };
 
 class Engine : public Part
 {

@@ -15,6 +15,7 @@ struct Concurrent
   friend bool operator>(const Concurrent &a, const Concurrent &b);
 
   std::string name;
+  std::string outmsg;
   std::shared_ptr<Car> car;
   omni::Meter position;
   bool out;

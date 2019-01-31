@@ -11,7 +11,7 @@ std::shared_ptr<Menu> Menu::active = nullptr;
 std::shared_ptr<MenuFile> Menu::activeDoc = nullptr;
 
 Menu::Menu(const std::string &id)
- : _id(id), _lastInput(0), _title(0), _cursor(0), _clickCallback(nullptr)
+ : _id(id), _lastInput(0), _title(None), _cursor(0), _clickCallback(nullptr)
 {
 	xml_node menu;
 
@@ -31,7 +31,7 @@ Menu::Menu(const std::string &id)
 			Menu::error(e.what());
 		}
 	}
-	if (menu.attribute("Title")) _title = atoi(menu.attribute("Title").value());
+	if (menu.attribute("Title")) _title = Menu::convertASCIILogo(menu.attribute("Title").value());
 	if (menu.attribute("OnLoad")) _onLoadScript = menu.attribute("OnLoad").value();
 	if (_items.size() > 0) _items[_cursor]->toggleHover();
 }
@@ -68,6 +68,11 @@ bool Menu::update()
 	else if (_lastInput == KEY_F(11)) ScriptEngine::console(*this);
 	else return (false);
 	return (true);
+}
+
+int Menu::getCursor()
+{
+	return (_cursor);
 }
 
 void Menu::updateCursor(bool add)
@@ -133,11 +138,20 @@ void Menu::alert(std::string str)
 	else msg(str);
 }
 
-void Menu::printASCIILogo(int art)
+Menu::ASCIILogo Menu::convertASCIILogo(std::string art)
+{
+	if (art == "Game") return (Game);
+	else if (art == "Options") return (Options);
+	else if (art == "Garage") return (Garage);
+	else if (art == "Garage") return (Stats);
+	else return (None);
+}
+
+void Menu::printASCIILogo(ASCIILogo art)
 {
 	switch (art)
 	{
-	case 1:
+	case Game:
 		Terminal::get() << setColor(Terminal::Color::RedOnBlack)
 										<< " ________                  ________       _____                    \n"
 										<< " ___  __ \\_____ ______________  __ \\_________(_)__   ______________\n"
@@ -146,7 +160,7 @@ void Menu::printASCIILogo(int art)
 										<< " /_/ |_| \\__,_/ \\___/ \\___//_____/ /_/    /_/  _____/ \\___//_/     \n"
 										<< resetAttrs();
 		break;
-	case 2:
+	case Options:
 	Terminal::get() << setColor(Terminal::Color::RedOnBlack)
 									<< "_______          _____ _____                        \n"
 									<< "__  __ \\________ __  /____(_)______ _______ ________\n"
@@ -156,7 +170,7 @@ void Menu::printASCIILogo(int art)
 									<< "        /_/                                         \n"
 									<< resetAttrs();
 		break;
-	case 3:
+	case Garage:
 	Terminal::get() << setColor(Terminal::Color::RedOnBlack)
 									<< "_________                                       \n"
 									<< "__  ____/______ _______________ ________ ______ \n"
@@ -166,7 +180,7 @@ void Menu::printASCIILogo(int art)
 									<< "                                 /____/         \n"
 									<< resetAttrs();
 		break;
-	case 4:
+	case Stats:
 	Terminal::get() << setColor(Terminal::Color::RedOnBlack)
 									<< "_____________         _____         \n"
 									<< "__  ___/__  /_______ ___  /_________\n"
@@ -174,6 +188,8 @@ void Menu::printASCIILogo(int art)
 									<< "____/ / / /_  / /_/ / / /_  _(__  ) \n"
 									<< "/____/  \\__/  \\__,_/  \\__/  /____/  \n"
 									<< resetAttrs();
+		break;
+	Default:
 		break;
 	}
 }

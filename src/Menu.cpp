@@ -291,7 +291,7 @@ void MenuDialog::load(const xml_document &doc)
 
 void MenuDialog::open()
 {
-	_win = Terminal::get().addChildWindow(Point(), Point(50, 50));
+	//_win = Terminal::get().addChildWindow(Point(), Point(50, 50));
 }
 
 void MenuDialog::render()

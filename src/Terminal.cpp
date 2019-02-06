@@ -9,6 +9,7 @@
 #include <windows.h>
 #endif
 
+std::map<std::string, Terminal> Terminal::windows;
 std::unique_ptr<Terminal> Terminal::instance = nullptr;
 
 Terminal::Terminal()
@@ -23,6 +24,11 @@ Terminal::Terminal()
 	resetAttrs();
 	if (instance != nullptr) throw (std::runtime_error("Cannot reinstanciate singleton"));
 	Terminal::instance = std::unique_ptr<Terminal>(this);
+}
+
+Terminal::Terminal(WINDOW *win)
+{
+	_screen = win;
 }
 
 Terminal::~Terminal()
@@ -74,10 +80,6 @@ void Terminal::clearScreen()
 void Terminal::update()
 {
 	refresh(); //Print all bufferized data
-	for (size_t i = 0; i < _windows.size(); i++) //Update subwindows if exist
-	{
-		wrefresh(_windows[i]);
-	}
 }
 
 void Terminal::setStdinTimeout(int milliseconds = -1)
@@ -119,20 +121,20 @@ void Terminal::printAt(Point point, const std::string &str)
 	update();
 }
 
-WINDOW *Terminal::addChildWindow(Point pos, Point size)
+Terminal &Terminal::addChildWindow(const std::string &winId, Point pos, Point size)
 {
 	WINDOW *win = subwin(_screen, size.y, size.x, pos.y, pos.x);
 	box(win, 0, 0);
-	_windows.push_back(win);
+	windows.emplace(winId, Terminal(win));
 	update();
-  return (win);
+  return (windows[winId]);
 }
 
-void Terminal::removeChildWindow(WINDOW *win)
+void Terminal::removeChildWindow(const std::string &winId)
 {
-	auto it = std::find(_windows.begin(), _windows.end(), win);
-	if (it == _windows.end()) throw std::runtime_error("Unknown window");
-	_windows.erase(it);
+	auto it = windows.find(winId);
+	if (it == windows.end()) throw std::runtime_error("Unknown window");
+	windows.erase(it);
 }
 
 //I/O Streaming

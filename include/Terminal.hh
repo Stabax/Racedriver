@@ -3,7 +3,7 @@
 
 #include <string>
 #include <memory>
-#include <vector>
+#include <map>
 #include <ostream>
 #include "Utils.hh"
 #ifdef _WIN32
@@ -26,6 +26,7 @@ public:
   };
 
   Terminal();
+  Terminal(WINDOW *win);
   ~Terminal();
 
   static Terminal &get();
@@ -47,10 +48,12 @@ public:
   void clearScreen();
   void update();
 
-  WINDOW *addChildWindow(Point pos, Point size);
-  void removeChildWindow(WINDOW *win);
+  Terminal &addChildWindow(const std::string &winId, Point pos, Point size);
+  void removeChildWindow(const std::string &winId);
 
   static std::unique_ptr<Terminal> instance;
+
+  static std::map<std::string, Terminal> windows; //Public window map
 
   friend Terminal &operator<<(Terminal &term, const std::string str);
   friend Terminal &operator<<(Terminal &term, int data);
@@ -58,7 +61,6 @@ public:
 
 private:
   WINDOW *_screen;
-  std::vector<WINDOW *> _windows;
   int _currentAttrs;
   int _rows;
   int _cols;

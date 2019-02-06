@@ -139,7 +139,6 @@ bool Race::start()
 
 void Race::compute()
 {
-	Terminal &term = Terminal::windows.at("main");
 	auto player = std::find_if(_players.begin(), _players.end(),
     			[=] (Concurrent &c) { return (c.name == Profile::active->name); });
 	std::vector<int> probaAccident = calculerProbaAccident();
@@ -148,21 +147,25 @@ void Race::compute()
 	while (std::find_if(_players.begin(), _players.end(),
 		 [this] (const Concurrent &c) { return (!c.out && c.position < _track->getLength()); }) != _players.end())
 	{
-		if (rtick % 25 == 0) term << "Tick " << rtick % 25 << ":\n";
 		for (size_t i = 0; i < _players.size(); i++)
 		{
 			if (_players[i].out) continue; //Skip out _players
 			_players[i].car->update(omni::Second(1), omni::Meter(0));
 			_players[i].position += _players[i].car->getVitesse() * omni::Second(1);
 			if (_players[i].position > _track->getLength()) _players[i].out = true;
-			if((rtick % 25 == 0) && std::rand() % 101 < probaAccident[i]) //each 10 ticks of 1 sec
+			size_t ftick = rtick % 60; //Compute data each n ticks
+			if (ftick == 0)
 			{
-				_players[i].out = true;
-				if(player->name == _players[i].name) Profile::active->careerStats.accidents++;
-				_players[i].outmsg = Accident::collection[rand() % Accident::collection.size()].message + " (Tick" + std::to_string(rtick%25) + ")";
+				ftick = rtick / 60;
+				if (std::rand() % 101 < probaAccident[i]) //each 60 ticks of 1 sec
+				{
+					_players[i].out = true;
+					if(player->name == _players[i].name) Profile::active->careerStats.accidents++;
+					_players[i].outmsg = Accident::collection[rand() % Accident::collection.size()].message + " (Tick" + std::to_string(ftick) + ")";
+				}
+				render(ftick);
 			}
 		}
-		render(rtick);
 		rtick++;
 	}
 }

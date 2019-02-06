@@ -56,6 +56,7 @@ SRCS = 	$(SRCDIR)/Game.cpp									\
 				$(SRCDIR)/Spoiler.cpp								\
 				$(SRCDIR)/Terminal.cpp							\
 				$(SRCDIR)/Car.cpp										\
+				$(SRCDIR)/Localization.cpp					\
 				$(SRCDIR)/Accident.cpp							\
 				$(LIBDIR)/pugixml/src/pugixml.cpp		\
 				$(LIBDIR)/sha/sha.cpp

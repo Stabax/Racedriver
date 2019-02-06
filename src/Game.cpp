@@ -12,6 +12,7 @@
 #include "Race.hh"
 #include "Accident.hh"
 #include "ScriptEngine.hh"
+#include "Localization.hh"
 
 class Car;
 
@@ -29,6 +30,7 @@ bool Game::load()
 {
   Terminal &term = Terminal::windows.at("main");
 
+	Localization::load("en-US");
 	term << "Chargement en Cours...\n";
 	try
 	{

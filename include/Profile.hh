@@ -61,6 +61,7 @@ public:
 	static std::shared_ptr<Profile> active;
 
 	std::string name;
+	std::string localization;
 	Difficulty difficulty;
 	int credits;
 

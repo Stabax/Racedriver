@@ -1,0 +1,37 @@
+{
+  "localization": "Francais",
+  "data": {
+    "global.name": "Nom",
+    "global.apply": "Appliquer",
+    "global.create": "Creer",
+    "global.back": "Retour",
+
+    "race.free": "Course libre",
+    "race.career": "Carriere",
+    "race.start": "Lancer la course",
+
+    "game.new": "Nouvelle partie",
+    "game.continue": "Continuer",
+    "game.about": "A propos",
+    "game.race": "Course",
+    "game.garage": "Garage",
+    "game.stats": "Stats",
+    "game.options": "Options",
+    "game.quit": "Quitter",
+
+    "garage.repair": "Reparer",
+    "garage.sell": "Vendre",
+    "garage.upgrade": "Ameliorer",
+
+    "car.engine": "Moteur",
+    "car.spoiler": "Spoiler",
+    "car.tires": "Pneus",
+    "car.charm": "Charmes",
+
+    "profile.promptname": "Entrez le nom du profil",
+
+    "difficulty.easy": "Facile",
+    "difficulty.medium": "Moyen",
+    "difficulty.hard": "Difficile"
+  }
+}

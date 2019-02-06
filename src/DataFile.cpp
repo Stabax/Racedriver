@@ -141,3 +141,10 @@ void MenuFile::setData(const xml_document &data)
   _source.clear();
   _data.reset(data);
 }
+
+xml_node MenuFile::stringToXML(const std::string &data)
+{
+  xml_document doc;
+  doc.load_string(data.c_str());
+  return (doc.root());
+}

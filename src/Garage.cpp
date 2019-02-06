@@ -22,7 +22,8 @@ Garage::Garage(const json &data)
 
 Car &Garage::getBox(size_t index) const
 {
-	if (index >= _boxs.size()) throw (std::runtime_error("Out of bounds"));
+	if (_boxs.size() > 0 && index >= _boxs.size()) throw (std::runtime_error("Out of bounds"));
+	if (_boxs[index] == nullptr) throw (std::runtime_error("Corrupted garage data"));
   return (*_boxs[index]);
 }
 

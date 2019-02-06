@@ -55,6 +55,8 @@ public:
   const xml_document &getData();
   void setData(const xml_document &data);
 
+  static xml_node stringToXML(const std::string &data);
+
 private:
   std::string _source;
   DataSource _sourceMode;

@@ -1,0 +1,37 @@
+{
+  "localization": "English",
+  "data": {
+    "global.name": "Name",
+    "global.apply": "Apply",
+    "global.create": "Create",
+    "global.back": "Back",
+
+    "race.free": "Free race",
+    "race.career": "Career",
+    "race.start": "Start race",
+
+    "game.new": "New game",
+    "game.continue": "Continue",
+    "game.about": "About",
+    "game.race": "Race",
+    "game.garage": "Garage",
+    "game.stats": "Stats",
+    "game.options": "Options",
+    "game.quit": "Quit",
+
+    "garage.repair": "Repair",
+    "garage.sell": "Sell",
+    "garage.upgrade": "Upgrade",
+
+    "car.engine": "Engine",
+    "car.spoiler": "Spoiler",
+    "car.tires": "Tires",
+    "car.charm": "Charm",
+
+    "profile.promptname": "Enter Profile Name",
+
+    "difficulty.easy": "Easy",
+    "difficulty.medium": "Medium",
+    "difficulty.hard": "Hard"
+  }
+}

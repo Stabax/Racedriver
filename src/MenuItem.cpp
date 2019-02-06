@@ -1,11 +1,14 @@
 #include "MenuItem.hh"
 #include "ScriptEngine.hh"
 #include "Menu.hh"
+#include "Localization.hh"
 
 //MenuItem
 
 MenuItem::MenuItem(const xml_node &data)
- : _id(data.attribute("Id").value()), _label(data.first_child().value()), _hover(false)
+ : _id(data.attribute("Id").value()),
+   _label(Localization::substitute(data.first_child())),
+   _hover(false)
 {
 }
 
@@ -181,7 +184,7 @@ MenuSelect::MenuSelect(const xml_node &data)
   _label = data.attribute("Text").value();
 	for (pugi::xml_node el = data.first_child(); el; el = el.next_sibling())
   {
-		if (strcmp(el.name(), "Option") == 0 ) _values.push_back(std::make_pair<std::string, std::string>(el.first_child().value(), el.attribute("Value").value()));
+		if (strcmp(el.name(), "Option") == 0 ) _values.push_back(std::make_pair<std::string, std::string>(Localization::substitute(el.first_child()), el.attribute("Value").value()));
   }
 }
 

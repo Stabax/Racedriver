@@ -65,8 +65,10 @@ void ScriptEngine::exposeCpp(sol::state &lua)
   //Profile management
   lua.set_function("setProfileName", [=] (std::string name) { Profile::active->rename(name); });
   lua.set_function("setProfileDifficulty", [=] (std::string diff) { Profile::active->difficulty = static_cast<Profile::Difficulty>(atoi(diff.c_str())); });
+  lua.set_function("setProfileLocale", [=] (std::string locale) { Profile::active->localization = locale; });
   lua.set_function("getProfileName", [] () { return (Profile::active->name); });
   lua.set_function("getProfileDifficulty", [] () { return (std::to_string(Profile::active->difficulty)); });
+  lua.set_function("getProfileLocale", [=] () { return (Profile::active->localization); });
   lua.set_function("loadProfile", [=] (std::string save) { Profile::load(save); });
   lua.set_function("createProfile", [=] (std::string name) { Profile::create(name); });
   //Garage management
@@ -77,7 +79,7 @@ void ScriptEngine::exposeCpp(sol::state &lua)
   lua.set_function("startRace", [] () {
     Race race(std::make_shared<Car>(Profile::active->garage.getBox(atoi(ScriptEngine::environment["Box"].c_str()))),
               Track::collection[(atoi(ScriptEngine::environment["Track"].c_str()))]);
-    
+
     if (race.preparations()) race.start();
   });
   lua.set_function("statsMenu", &menuStats);

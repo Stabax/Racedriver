@@ -1,18 +1,20 @@
 //Profiles.cpp
 #include "Profile.hh"
 #include "Menu.hh"
+#include "Localization.hh"
 
 std::shared_ptr<Profile> Profile::active = nullptr;
 
 Profile::Profile(const std::string &name)
- : name(name), difficulty(Difficulty::Easy), credits(10000), garage()
+ : name(name), localization("en-US"), difficulty(Difficulty::Easy), credits(10000), garage()
 {
 	garage.addCar(Car::collection[0]);
 }
 
 
 Profile::Profile(const json &data)
- : name(data["name"].get<std::string>()), difficulty(data["difficulty"].get<Difficulty>()), credits(data["credits"].get<int>()), garage(data["garage"])
+ : name(data["name"].get<std::string>()), localization(data.find("localization") != data.end() ? data["localization"].get<std::string>() : "en-US"),
+   difficulty(data["difficulty"].get<Difficulty>()), credits(data["credits"].get<int>()), garage(data["garage"])
 {
 
 }
@@ -36,8 +38,9 @@ void Profile::load(const std::string &save)
 	}
 	try {
 		Profile::active = std::make_shared<Profile>(file.getData());
+		Localization::load(Profile::active->localization);
 	} catch (std::exception &e) {
-		throw std::runtime_error("Corrupted profile data");
+		throw std::runtime_error("Corrupted profile data:"+std::string(e.what()));
 	}
 }
 
@@ -87,6 +90,7 @@ void to_json(json& j, const Profile& profile) {
 	json garage = profile.garage;
 	j = {
 		{"name", profile.name},
+		{"localization", profile.localization},
 		{"difficulty", profile.difficulty},
 		{"credits", profile.credits},
 		{"careerStats", {

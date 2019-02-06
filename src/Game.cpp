@@ -67,10 +67,10 @@ int Game::main()
 	}
 	term.clearScreen();
 	if (!load()) return -1;
-	std::this_thread::sleep_for(std::chrono::seconds(2));
-	//Main loop hook
+	/*std::this_thread::sleep_for(std::chrono::seconds(2));
 	term.addWindow("test", Point(10, 10), Point(25, 25));
-	getch();
+	getch();*/
+	//Main loop hook
 	Menu::goTo("Home", "./Data/Menus/Main.xml");
 	Menu::run();
 	//menuRacedriver(); //on lance le coeur du jeu

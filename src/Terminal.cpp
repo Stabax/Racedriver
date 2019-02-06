@@ -24,15 +24,16 @@ Terminal::~Terminal()
 void Terminal::start()
 {
 	if (windows.find("main") != windows.end()) throw (std::runtime_error("Cannot reinstanciate main term"));
+	windows.emplace("main", Terminal(initscr())); // Start Xcurses window
+	//Global init
 	raw();
 	initColor();
-	//Specific
-	windows.emplace("main", Terminal(initscr())); // Start Xcurses window
-	Terminal &main = windows.at("main"); 
+	noecho();
+	//Instance init
+	Terminal &main = windows.at("main");
 	main.setFullscreen();
 	main.setCursor(0); //No cursor
 	keypad(main._screen, TRUE);
-	noecho();
 }
 
 void Terminal::initColor()

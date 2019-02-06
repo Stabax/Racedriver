@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- PRE - PROFILE -->
-<Menu Id="Home" Title="Game">
+<Menu Id="Home" Title="Car">
   <Button Type="Intern" Target="loadGameMenu()">Continue game</Button>
   <Button Type="Goto" Target="NewGame">New game</Button>
   <Button Type="Goto" Target="Credits">About</Button>

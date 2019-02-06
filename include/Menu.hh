@@ -22,7 +22,8 @@ public:
     Game,
     Options,
     Garage,
-    Stats
+    Stats,
+    Car
   };
   static ASCIILogo convertASCIILogo(std::string art);
   static void printASCIILogo(ASCIILogo art);

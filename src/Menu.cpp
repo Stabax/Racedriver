@@ -143,7 +143,8 @@ Menu::ASCIILogo Menu::convertASCIILogo(std::string art)
 	if (art == "Game") return (Game);
 	else if (art == "Options") return (Options);
 	else if (art == "Garage") return (Garage);
-	else if (art == "Garage") return (Stats);
+	else if (art == "Stats") return (Stats);
+	else if (art == "Car") return (Car);
 	else return (None);
 }
 
@@ -189,7 +190,24 @@ void Menu::printASCIILogo(ASCIILogo art)
 									<< "/____/  \\__/  \\__,_/  \\__/  /____/  \n"
 									<< resetAttrs();
 		break;
-	Default:
+	case Car:
+	Terminal::get() << setColor(Terminal::Color::RedOnBlack)
+									<< "		                      ___..............._\n"
+									<< "             __.. ' _'.\"\"\"\"\"\"\\\\\"\"\"\"\"\"\"\"- .`-._\n"
+									<< " ______.-'         (_) |      \\\\           ` \\\\`-. _\n"
+									<< "/_       --------------'-------\\\\---....______\\\\__`.`  -..___\n"
+									<< "| T      _.----._           Xxx|x...           |          _.._`--. _\n"
+									<< "| |    .' ..--.. `.         XXX|XXXXXXXXXxx==  |       .'.---..`.     -._\n"
+									<< "\\_j   /  /  __  \\  \\        XXX|XXXXXXXXXXX==  |      / /  __  \\ \\        `-.\n"
+									<< " _|  |  |  /  \\  |  |       XXX|\"\"'            |     / |  /  \\  | |          |\n"
+									<< "|__\\_j  |  \\__/  |  L__________|_______________|_____j |  \\__/  | L__________J\n"
+									<< "     `'\\ \\      / ./__________________________________\\ \\      / /___________\\\n"
+									<< "        `.`----'.'                                     `.`----'.'\n"
+									<< "          `\"\"\"\"'                                         `\"\"\"\"'\n"
+									<< resetAttrs();
+		break;
+	case None:
+	default:
 		break;
 	}
 }

@@ -32,8 +32,8 @@ void ScriptEngine::run(const std::string &script)
 void ScriptEngine::exposeCpp(sol::state &lua)
 {
   //General
-  lua.set_function("print", [=] (std::string x) { Terminal::get() << x; });
-  lua.set_function("clearScreen", [] () { Terminal::get().clearScreen(); });
+  lua.set_function("print", [=] (std::string x) { Terminal::windows.at("main") << x; });
+  lua.set_function("clearScreen", [] () { Terminal::windows.at("main").clearScreen(); });
   lua.set_function("pause", [] () { getch(); });
   lua.set_function("exit", [] () { exit(0); });
   lua.set_function("alert", [=] (std::string msg) { Menu::alert(msg); });
@@ -120,14 +120,15 @@ void ScriptEngine::loadScripts(const xml_document &doc)
 
 void ScriptEngine::console(Menu &currentMenu)
 {
+  Terminal &term = Terminal::windows.at("main");
   int input;
   std::string command;
 
-  Terminal::get().setCursor(1);
+  term.setCursor(1);
   currentMenu.renderConsole(command); //Renders console
   while ((input = getch()) != KEY_F(11))
   {
-    Terminal::get().clearScreen();
+    term.clearScreen();
     if (input == KEY_ENTER || input == '\r' || input == '\n')
     {
       run(command);
@@ -137,6 +138,6 @@ void ScriptEngine::console(Menu &currentMenu)
     else command += input;
     currentMenu.renderConsole(command);
   }
-  Terminal::get().setCursor(0);
-  Terminal::get().clearScreen();
+  term.setCursor(0);
+  term.clearScreen();
 }

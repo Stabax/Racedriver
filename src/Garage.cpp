@@ -20,29 +20,6 @@ Garage::Garage(const json &data)
   }
 }
 
-Car &Garage::selectCar() const
-{
-	int choice;
-
-	Terminal::get().clearScreen();
-	Terminal::get() << "Liste des Boxs\n"
-									<< "===============\n"
-									<< "Selectionnez le vehicule qui va faire la course.\n"
-									<< "===============\n\n";
-	Profile::active->garage.displayBoxList();
-	Terminal::get() << "\n" //On separe le bloc
-									<< "0. Retour\n";
-	if ((choice = Menu::askChoice()) > 0)
-	{
-		return (Profile::active->garage.getBox(choice - 1));
-	}
-	else
-	{
-		Menu::alert("Saisie invalide");
-		throw std::runtime_error("Bad index");
-	}
-}
-
 Car &Garage::getBox(size_t index) const
 {
 	if (index >= _boxs.size()) throw (std::runtime_error("Out of bounds"));
@@ -85,14 +62,16 @@ void Garage::sellCar(size_t index)
 
 void Garage::displayBoxList()
 {
+	/*
   for (size_t i = 0; i < _boxs.size(); i++)
   {
     Terminal::get() << i+1 << ". [" << _boxs[i]->manufacturer << " " << _boxs[i]->name << "]\n";
-  }
+  }*/
 }
 
 void Garage::displayBoxDetail(int index)
 {
+	/*
   auto car = _boxs[index];
 	Terminal::get() << "Vehicule gare dans le Box " << index << "\n"
 									<< "===============\n\n"
@@ -128,6 +107,7 @@ void Garage::displayBoxDetail(int index)
 									<< " |Modele: " << car->getTires()->name << "\n"
 									<< " |Marque: " << car->getTires()->manufacturer << "\n"
 									<< " |Rang: "<<  car->getTires()->rank << "\n";
+									*/
 }
 
 void to_json(json& j, const Garage& garage)

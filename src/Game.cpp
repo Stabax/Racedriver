@@ -22,11 +22,14 @@ Game::Game()
 {
   if (Game::instance != nullptr) throw ("Cannot reinstantiate singleton");
   Game::instance = std::unique_ptr<Game>(this);
+	Terminal::start();
 }
 
 bool Game::load()
 {
-	_term << "Chargement en Cours...\n";
+  Terminal &term = Terminal::windows.at("main");
+
+	term << "Chargement en Cours...\n";
 	try
 	{
 		Collection<Engine>::load(Engine::collection);
@@ -42,7 +45,7 @@ bool Game::load()
 	catch (const std::runtime_error &e)
 	{
 		Menu::alert(e.what());
-		Terminal::get() <<"\n\nPressez [ENTREE] pour quitter.\n";
+		term << "\n\nPressez [ENTREE] pour quitter.\n";
 		getch();
 		return (false);
 	}
@@ -51,19 +54,22 @@ bool Game::load()
 
 int Game::main()
 {
+  Terminal &term = Terminal::windows.at("main");
 	// BEGIN
 	std::srand(std::time(0)); //INITIALISATION DE L'ALEATOIRE
 	if (!update()) //on verifie et fait les mises à jour
 	{
-		_term << setColor(Terminal::Color::RedOnBlack)
+		term << setColor(Terminal::Color::RedOnBlack)
 					<< ">Vous allez jouer avec une version potentiellement obsolete de Racedriver.\n"
-					<< resetAttrs()
+					<< resetAttrs
 		      << ">Appuyez sur [ENTREE] pour continuer.\n";
 		getch();
 	}
-	_term.clearScreen();
+	term.clearScreen();
 	if (!load()) return -1;
-	std::this_thread::sleep_for(std::chrono::seconds(2));
+	/*std::this_thread::sleep_for(std::chrono::seconds(2));
+	term.addWindow("test", Point(10, 10), Point(25, 25));
+	getch();*/
 	//Main loop hook
 	Menu::goTo("Home", "./Data/Menus/Main.xml");
 	Menu::run();
@@ -78,6 +84,8 @@ void Game::removeUpdatePackage()
 
 bool Game::update()
 {
+  Terminal &term = Terminal::windows.at("main");
+
 	CURL *curlVersion = curl_easy_init(); //On crée un flux cURL et on "instancie" le flux
 	CURLcode resVersion; //CURLcode est un type enum de Curl stockant un état d'erreur.
 
@@ -98,7 +106,7 @@ bool Game::update()
 	//on indique le fichier de destination chez le client
 	curl_easy_setopt(curlVersion, CURLOPT_WRITEDATA, versionFile);
 
-	_term << ">Recuperation des informations de mise a jour...\n\n";
+	term << ">Recuperation des informations de mise a jour...\n\n";
 	//on lance le flux (curl version ici) ==> telechargement du fichier
 	//l'état du telechargement est stocké dans un type CURLcode (ici resVersion)
 	resVersion = curl_easy_perform(curlVersion);
@@ -122,7 +130,7 @@ bool Game::update()
 	if(GAME_VERSION != stringLatestVersion)
 	{
 		Menu::msg("Votre client est obsolete, une mise a jour est disponible !");
-		_term << "Vous allez telecharger la derniere version de Racedriver.\n";
+		term << "Vous allez telecharger la derniere version de Racedriver.\n";
 		if (!Menu::askConfirmation()) return (false);
 
 		FILE *updateFile = fopen("Update/update.zip", "w");
@@ -132,12 +140,12 @@ bool Game::update()
 
 		curlUpdate = curl_easy_init();
 		binURL = "bin/"+stringLatestVersion+".zip";
-		_term << "\n>Connexion au serveur distant...\n";
+		term << "\n>Connexion au serveur distant...\n";
 		curl_easy_setopt(curlUpdate, CURLOPT_URL, binURL.c_str());
 		curl_easy_setopt(curlUpdate, CURLOPT_WRITEFUNCTION, fwrite);
 		curl_easy_setopt(curlUpdate, CURLOPT_WRITEDATA, updateFile);
 
-		_term << ">Telechargement de la mise à jour...\n\n";
+		term << ">Telechargement de la mise à jour...\n\n";
 		resUpdate = curl_easy_perform(curlUpdate);
 
 		curl_easy_cleanup(curlUpdate);
@@ -149,8 +157,8 @@ bool Game::update()
 			return (false);
 		}
 		Menu::msg("Le client a ete mis a jour avec succes !");
-		_term << ">Vous devez redemmarer le jeu pour appliquer les modifications.\n";
-		_term << ">Appuyez sur [Entree] pour quitter.";
+		term << ">Vous devez redemmarer le jeu pour appliquer les modifications.\n";
+		term << ">Appuyez sur [Entree] pour quitter.";
 		getch();
 		//décompression du .zip téléchargé
 		//opérateur ternaire: si OS == 0 (linux) on appelle execl pour unpack linux, sinon on appelle execl pour unpack.exe windows
@@ -159,7 +167,7 @@ bool Game::update()
 		return (true);
 	}
 	Menu::msg("Aucune mise à jour disponible.");
-	_term << ">Appuyez sur [Entree] pour continuer.\n";
+	term << ">Appuyez sur [Entree] pour continuer.\n";
 	getch();
 	return (true);
 }

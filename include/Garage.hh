@@ -10,7 +10,6 @@ public:
   Garage();
   Garage(const json &data);
 
-  Car &selectCar() const;
   Car &getBox(size_t index) const;
   size_t getSize() const;
   size_t getBoxCount() const;

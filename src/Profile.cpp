@@ -52,17 +52,6 @@ void Profile::save()
 	}
 }
 
-void Profile::displaySavesList()
-{
-	std::vector<std::string> saves = DataFile::getFolderContents("./Data/Saves/", ".json");
-	saves.insert(saves.begin(), ""); //Dummy to keep index true
-
-	for (size_t i = 1; i < saves.size(); i++)
-	{
-		Terminal::get() << i << ". " << saves[i] << "\n";
-	}
-}
-
 void Profile::supprimerProfile([[maybe_unused]]const int& numeroSave)
 {
 	//Not implemented

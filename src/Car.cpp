@@ -55,6 +55,7 @@ void Car::expose(sol::state &lua)
 
 void Car::displayInfo() const
 {
+	/*
 	Terminal::get() << " |Marque: " << manufacturer << "\n"
 									<< " |Modele: " << name << "\n"
 									<< " #Engine" << "\n"
@@ -65,16 +66,18 @@ void Car::displayInfo() const
 									<< " |Capa. Nitro: " << "L\n"
 									<< " |Aerodynamisme: " << "%\n"
 									<< " |Prix: " << "c\n\n";
+									*/
 }
 
 void Car::listerCars()
 {
+	/*
 	Terminal::get() << "   |Marque   |Modele     |Aerodynamisme  |Prix  |\n\n";
   for (size_t i = 0; i < Car::collection.size(); i++)
 	{
 		Terminal::get() << i+1 << "." << Car::collection[i].manufacturer << " " << Car::collection[i].name
 												 << " " << Car::collection[i].getAerodynamisme() << " " << Car::collection[i].getPrix() << "c\n";
-	}
+	}*/
 }
 
 void Car::update(omni::Minute tickDuration, omni::Meter gradient)

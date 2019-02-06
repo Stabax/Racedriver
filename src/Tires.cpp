@@ -18,6 +18,7 @@ Tires::~Tires()
 
 void Tires::listerTires()
 {
+	/*
 	Terminal::get() <<"   |Marque     |rang  |Prix  |\n\n";
 	for (size_t i = 0; i < collection.size(); i++)
 	{
@@ -31,7 +32,7 @@ void Tires::listerTires()
 			}
 		}
 		Terminal::get() << i << "." << " " << collection[i].name << espace2 << collection[i].rank << espace << "PRIX" << "c\n";
-	}
+	}*/
 }
 
 int Tires::getDurability() const

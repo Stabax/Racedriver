@@ -100,20 +100,17 @@ void Terminal::setAttrs(int attrs)
 
 void Terminal::print(const std::string &str, int attrs)
 {
-	print(_screen, str, attrs);
-}
-
-void Terminal::print(WINDOW *win, const std::string &str, int attrs)
-{
-	if (attrs != 0 || _currentAttrs != 0) wattrset(win, attrs + _currentAttrs);
-	waddstr(win, str.c_str());
-	if (attrs != 0 || _currentAttrs != 0) wattroff(win, attrs + _currentAttrs);
+	if (attrs != 0 || _currentAttrs != 0) wattrset(_screen, attrs + _currentAttrs);
+	waddstr(_screen, str.c_str());
+	if (attrs != 0 || _currentAttrs != 0) wattroff(_screen, attrs + _currentAttrs);
 	update();
 }
 
-void Terminal::printAt(Point point, const std::string &str)
+void Terminal::printAt(Point point, const std::string &str, int attrs)
 {
+	if (attrs != 0 || _currentAttrs != 0) wattrset(_screen, attrs + _currentAttrs);
 	mvwaddstr(_screen, point.y, point.x, str.c_str());
+	if (attrs != 0 || _currentAttrs != 0) wattroff(_screen, attrs + _currentAttrs);
 	update();
 }
 

@@ -42,8 +42,7 @@ public:
   void resetAttrs();
   void setAttrs(int attrs);
   void print(const std::string &str, int attrs = 0);
-  void print(WINDOW *win, const std::string &str, int attrs = 0);
-  void printAt(Point point, const std::string &str);
+  void printAt(Point point, const std::string &str, int attrs = 0);
 
   void clearScreen();
   void update();

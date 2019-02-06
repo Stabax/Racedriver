@@ -24,8 +24,8 @@ omni::Horsepower Engine::getPower()
 //Called every second
 void Engine::update(omni::KilometerPerHour speed, omni::Inch radius)
 {
-	_revolutions = omni::turnPerMinute<int>(speed / (2 * omni::pi::value * radius)) * 1;
-	if (_revolutions < omni::turnPerMinute<int>(800)) _revolutions = 800;
+	_revolutions = omni::revolutionPerMinute<int>(speed / (2 * omni::pi::value * radius)) * 1;
+	if (_revolutions < omni::revolutionPerMinute<int>(800)) _revolutions = 800;
 	_torque = ((_revolutions > mRevolutions ? -1  : 1) * mPower / omni::pow<2>(mRevolutions)) * _revolutions;
 	_power = _torque * _revolutions;
 }

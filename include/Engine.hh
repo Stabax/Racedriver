@@ -26,13 +26,13 @@ public:
 
 	//Manufacturer
 	omni::Horsepower mPower;
-	omni::turnPerMinute<int> mRevolutions;
+	omni::revolutionPerMinute<int> mRevolutions;
 	Energy energy;
 	int price;
 
 	//Instance
 	omni::Horsepower _power;
-	omni::turnPerMinute<int> _revolutions;
+	omni::revolutionPerMinute<int> _revolutions;
 	omni::NewtonMeter _torque;
 };
 

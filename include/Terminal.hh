@@ -5,6 +5,7 @@
 #include <memory>
 #include <map>
 #include <ostream>
+#include <functional>
 #include "Utils.hh"
 #ifdef _WIN32
   #undef MOUSE_MOVED
@@ -25,15 +26,14 @@ public:
     BlackOnRed
   };
 
-  Terminal();
   Terminal(WINDOW *win);
   ~Terminal();
 
-  static Terminal &get();
+  static void start();
+  static void initColor();
+  static void close();
 
-  void initColor();
   void setFullscreen();
-  void setStdinTimeout(int milliseconds);
   void setCursor(int style);
 
   Point getCursorPos();
@@ -48,13 +48,14 @@ public:
   void clearScreen();
   void update();
 
-  Terminal &addChildWindow(const std::string &winId, Point pos, Point size);
-  void removeChildWindow(const std::string &winId);
+  Terminal &addWindow(const std::string &winId, Point pos, Point size);
+  static void removeWindow(const std::string &winId);
 
   static std::unique_ptr<Terminal> instance;
 
   static std::map<std::string, Terminal> windows; //Public window map
 
+  Terminal &operator<<(std::function<Terminal&(Terminal &term)>);
   friend Terminal &operator<<(Terminal &term, const std::string str);
   friend Terminal &operator<<(Terminal &term, int data);
   friend Terminal &operator<<(Terminal &term, const char *str);
@@ -69,9 +70,34 @@ private:
 Terminal &operator<<(Terminal &term, const std::string str);
 Terminal &operator<<(Terminal &term, int data);
 Terminal &operator<<(Terminal &term, const char *str);
-Terminal &operator<<(Terminal &dummy, Terminal &term);
-Terminal &setColor(Terminal::Color color);
-Terminal &setAttrs(int attrs);
-Terminal &resetAttrs();
+
+
+class setColor
+{
+public:
+    explicit setColor(Terminal::Color c): color(c) {}
+    Terminal::Color color;
+
+    friend Terminal& operator<<(Terminal& term, const setColor& colorManip)
+    {
+	    term.setAttrs(COLOR_PAIR(static_cast<int>(colorManip.color)));
+      return (term);
+    }
+};
+
+class setAttrs
+{
+public:
+    explicit setAttrs(int a): attrs(a) {}
+    int attrs;
+
+    friend Terminal& operator<<(Terminal& term, const setAttrs& attrsManip)
+    {
+	    term.setAttrs(attrsManip.attrs);
+      return (term);
+    }
+};
+
+Terminal &resetAttrs(Terminal &term);
 
 #endif /* !TERMINAL_HH_ */

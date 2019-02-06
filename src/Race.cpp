@@ -30,6 +30,7 @@ void Race::loadDrivers()
 
 bool Race::preparations()
 {
+	Terminal &term = Terminal::windows.at("main");
 	int prixCourse;
 	auto player = std::find_if(_players.begin(), _players.end(),
     			[=] (const Concurrent &c) { return (c.name == Profile::active->name); });
@@ -50,7 +51,7 @@ bool Race::preparations()
 		Menu::alert("Vos pneus sont trop uses pour concourir.");
 		return (false);
 	}
-	Terminal::get().clearScreen(); //On flushe l'ancien ecran
+	term.clearScreen(); //On flushe l'ancien ecran
 	if(player->car->getNiveauNitro().count() < 100)
 	{
 		Menu::alert("Attention: Votre reservoir de nitro n'est pas plein.\n");
@@ -69,7 +70,7 @@ bool Race::preparations()
 	Menu::popUp("", menu, DataSource::Document);
 	if(1) //Should be bound to confirm button
 	{
-			Terminal::get().clearScreen();
+			term.clearScreen();
 			randomizeOpponents(7);
 			return (true);
 	}
@@ -95,10 +96,11 @@ void Race::randomizeOpponents(size_t count)
 
 bool Race::start()
 {
+	Terminal &term = Terminal::windows.at("main");
 	auto player = std::find_if(_players.begin(), _players.end(),
     			[=] (const Concurrent &c) { return (c.name == Profile::active->name); });
 
-	Terminal::get() << "Bienvenue à tous et a toutes !\n"
+	term << "Bienvenue à tous et a toutes !\n"
 									<< "Aujourd'hui va se derouler l'evenement tant attendu par tous les fans de sportives,"
 									<< "tout le monde s'est reuni et l'ambiance est a son comble sur le circuit: " << _track->name << ".\n"
 									<< "On m'annonce qu'il totalise " << _track->getLength() << " Km, et comprend pas moins de <JSPCB> de virages serres !\n"
@@ -108,28 +110,28 @@ bool Race::start()
 	//on liste les concurrents
 	for (size_t i = 0; i < _players.size(); i++)
 	{
-		Terminal::get() << "En position " << i+1 << ", " << _players[i].name << " - " << _players[i].car->manufacturer << " " << _players[i].car->name << "\n";
+		term << "En position " << i+1 << ", " << _players[i].name << " - " << _players[i].car->manufacturer << " " << _players[i].car->name << "\n";
 	}
-	Terminal::get() <<"\n\nPressez [ENTREE] pour commencer la course.\n";
+	term <<"\n\nPressez [ENTREE] pour commencer la course.\n";
 	getch();
 
-	Terminal::get().clearScreen();
+	term.clearScreen();
 	Menu::msg("Depart dans 3...");
 	std::this_thread::sleep_for(std::chrono::seconds(1));
-	Terminal::get().clearScreen();
+	term.clearScreen();
 	Menu::msg("Depart dans 2...");
 	std::this_thread::sleep_for(std::chrono::seconds(1));
-	Terminal::get().clearScreen();
+	term.clearScreen();
 	Menu::msg("Depart dans 1...");
 	std::this_thread::sleep_for(std::chrono::seconds(1));
-	Terminal::get().clearScreen();
+	term.clearScreen();
 	Menu::msg("GO !");
 	std::this_thread::sleep_for(std::chrono::seconds(1));
 	compute(); //Calculer la course
 	if (player - _players.begin() < 3 && !player->out) Profile::active->careerStats.victories++;//Si le joueur finit sur le podium & pas d'accident
 	else Profile::active->careerStats.losses++;
 	Profile::active->careerStats.races++;
-	Terminal::get() <<"Pressez [ENTREE] pour quitter le circuit.\n";
+	term <<"Pressez [ENTREE] pour quitter le circuit.\n";
 	getch();
 	Profile::active->save();
 	return (true);
@@ -137,6 +139,7 @@ bool Race::start()
 
 void Race::compute()
 {
+	Terminal &term = Terminal::windows.at("main");
 	auto player = std::find_if(_players.begin(), _players.end(),
     			[=] (Concurrent &c) { return (c.name == Profile::active->name); });
 	std::vector<int> probaAccident = calculerProbaAccident();
@@ -145,7 +148,7 @@ void Race::compute()
 	while (std::find_if(_players.begin(), _players.end(),
 		 [this] (const Concurrent &c) { return (!c.out && c.position < _track->getLength()); }) != _players.end())
 	{
-		if (rtick % 25 == 0) Terminal::get() << "Tick " << rtick % 25 << ":\n";
+		if (rtick % 25 == 0) term << "Tick " << rtick % 25 << ":\n";
 		for (size_t i = 0; i < _players.size(); i++)
 		{
 			if (_players[i].out) continue; //Skip out _players
@@ -166,13 +169,15 @@ void Race::compute()
 
 void Race::render(int rtick)
 {
+	Terminal &term = Terminal::windows.at("main");
+
 	std::sort(_players.begin(), _players.end(), std::greater<Concurrent>());
-	Terminal::get().clearScreen();
-	Terminal::get() << "(Tick " << rtick << ")\n";
+	term.clearScreen();
+	term << "(Tick " << rtick << ")\n";
 	for (size_t i = 0; i < _players.size(); i++)
 	{
-		Terminal::get() << "[" << i << "e]" << (_players[i].out ? " <K.O.> " : " ")  << _players[i].name << " : " << _players[i].position << "\n";
-		if  (_players[i].out) Terminal::get() << "   -> " << _players[i].outmsg << "\n";
+		term << "[" << i << "e]" << (_players[i].out ? " <K.O.> " : " ")  << _players[i].name << " : " << _players[i].position << "\n";
+		if (_players[i].out) term << "   -> " << _players[i].outmsg << "\n";
 	}
 }
 

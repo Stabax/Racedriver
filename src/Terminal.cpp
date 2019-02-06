@@ -10,35 +10,44 @@
 #endif
 
 std::map<std::string, Terminal> Terminal::windows;
-std::unique_ptr<Terminal> Terminal::instance = nullptr;
-
-Terminal::Terminal()
-{
-	_screen = initscr(); // Start Xcurses window
-	setFullscreen();
-	raw();
-	keypad(_screen, TRUE);
-	noecho();
-	setCursor(0); //No cursor
-	initColor();
-	resetAttrs();
-	if (instance != nullptr) throw (std::runtime_error("Cannot reinstanciate singleton"));
-	Terminal::instance = std::unique_ptr<Terminal>(this);
-}
 
 Terminal::Terminal(WINDOW *win)
+ : _currentAttrs(0)
 {
 	_screen = win;
 }
 
 Terminal::~Terminal()
 {
-	endwin();	//Close Xcurses
 }
 
-Terminal &Terminal::get()
+void Terminal::start()
 {
-	return (*instance.get());
+	if (windows.find("main") != windows.end()) throw (std::runtime_error("Cannot reinstanciate main term"));
+	raw();
+	initColor();
+	//Specific
+	windows.emplace("main", Terminal(initscr())); // Start Xcurses window
+	Terminal &main = windows.at("main"); 
+	main.setFullscreen();
+	main.setCursor(0); //No cursor
+	keypad(main._screen, TRUE);
+	noecho();
+}
+
+void Terminal::initColor()
+{
+  if (!has_colors()) throw (std::runtime_error("Color is not supported"));
+	start_color();
+	init_pair(Color::BlackOnWhite, COLOR_BLACK, COLOR_WHITE);
+	init_pair(Color::WhiteOnBlack, COLOR_WHITE, COLOR_BLACK);
+	init_pair(Color::RedOnBlack, COLOR_RED, COLOR_BLACK);
+	init_pair(Color::BlackOnRed, COLOR_BLACK, COLOR_RED);
+}
+
+void Terminal::close()
+{
+	endwin();	//Close Xcurses
 }
 
 Point Terminal::getCursorPos()
@@ -53,15 +62,6 @@ void Terminal::setCursorPos(const Point &p)
 	wmove(_screen, p.y, p.x);
 }
 
-void Terminal::initColor()
-{
-  if (!has_colors()) throw (std::runtime_error("Color is not supported"));
-	start_color();
-	init_pair(Color::BlackOnWhite, COLOR_BLACK, COLOR_WHITE);
-	init_pair(Color::WhiteOnBlack, COLOR_WHITE, COLOR_BLACK);
-	init_pair(Color::RedOnBlack, COLOR_RED, COLOR_BLACK);
-	init_pair(Color::BlackOnRed, COLOR_BLACK, COLOR_RED);
-}
 
 void Terminal::setFullscreen()
 {
@@ -79,12 +79,7 @@ void Terminal::clearScreen()
 
 void Terminal::update()
 {
-	refresh(); //Print all bufferized data
-}
-
-void Terminal::setStdinTimeout(int milliseconds = -1)
-{
-	wtimeout(_screen, milliseconds);
+	wrefresh(_screen); //Print all bufferized data
 }
 
 void Terminal::setCursor(int style)
@@ -121,20 +116,22 @@ void Terminal::printAt(Point point, const std::string &str)
 	update();
 }
 
-Terminal &Terminal::addChildWindow(const std::string &winId, Point pos, Point size)
+Terminal &Terminal::addWindow(const std::string &winId, Point pos, Point size)
 {
-	WINDOW *win = subwin(_screen, size.y, size.x, pos.y, pos.x);
-	box(win, 0, 0);
-	windows.emplace(winId, Terminal(win));
-	update();
-  return (windows[winId]);
+	windows.emplace(winId, Terminal(subwin(_screen, size.y, size.x, pos.y, pos.x)));
+	return (windows.at(winId));
 }
 
-void Terminal::removeChildWindow(const std::string &winId)
+void Terminal::removeWindow(const std::string &winId)
 {
 	auto it = windows.find(winId);
 	if (it == windows.end()) throw std::runtime_error("Unknown window");
 	windows.erase(it);
+}
+
+Terminal &Terminal::operator<<(std::function<Terminal &(Terminal &term)> f)
+{
+	return (f(*this));
 }
 
 //I/O Streaming
@@ -155,26 +152,9 @@ Terminal &operator<<(Terminal &term, const char *str)
   return (term);
 }
 
-Terminal &operator<<([[maybe_unused]]Terminal &dummy, Terminal &term)
+Terminal &resetAttrs(Terminal &term)
 {
-	return (term);
-}
-
-Terminal &setColor(Terminal::Color color)
-{
-	Terminal::get().setAttrs(COLOR_PAIR(static_cast<int>(color)));
-  return (Terminal::get());
-}
-
-Terminal &setAttrs(int attrs)
-{
-	Terminal::get().setAttrs(attrs);
-  return (Terminal::get());
-}
-
-Terminal &resetAttrs()
-{
-	Terminal::get().resetAttrs();
-  return (Terminal::get());
+	term.resetAttrs();
+  return (term);
 }
 

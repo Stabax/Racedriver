@@ -52,7 +52,6 @@ public:
 	static void load(const std::string &save);
 	void save();
 
-	static void displaySavesList();
 	static void supprimerProfile(const int& numeroSave);
 	static bool compatible(Profile& Player, const int& numeroBox, const char& rangNewPiece);
 

@@ -21,7 +21,6 @@ public:
   static std::unique_ptr<Game> instance; //Singleton handle
 
 private:
-  Terminal _term;
 };
 
 #endif /* !GAME_HH_ */

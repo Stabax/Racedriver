@@ -88,17 +88,19 @@ void Menu::updateCursor(bool add)
 
 void Menu::render()
 {
-	Terminal::get().clearScreen();
+	Terminal &term = Terminal::windows.at("main");
+
+	term.clearScreen();
 	for (size_t i = 0; i <_alerts.size(); i++) _alerts[i]->render();
 	if (_title != 0)
 	{
 		printASCIILogo(_title);
-		Terminal::get() << "\n";
+		term << "\n";
 	}
 	for (size_t i = 0; i < _entities.size(); i++)
 	{
 		_entities[i]->render();
-		Terminal::get() << "\n";
+		term << "\n";
 	}
 }
 
@@ -121,9 +123,10 @@ bool Menu::run()
 
 void Menu::renderConsole(std::string command)
 {
-	Terminal::get().clearScreen();
+	Terminal &term = Terminal::windows.at("main");
+	term.clearScreen();
 	for (size_t i = 0; i <_alerts.size(); i++) _alerts[i]->render();
-  Terminal::get() << "> " << command;
+  term << "> " << command;
 }
 
 void Menu::alert(std::string str)
@@ -149,47 +152,48 @@ Menu::ASCIILogo Menu::convertASCIILogo(std::string art)
 
 void Menu::printASCIILogo(ASCIILogo art)
 {
+	Terminal &term = Terminal::windows.at("main");
 	switch (art)
 	{
 	case Game:
-		Terminal::get() << setColor(Terminal::Color::RedOnBlack)
-										<< " ________                  ________       _____                    \n"
-										<< " ___  __ \\_____ ______________  __ \\_________(_)__   ______________\n"
-										<< " __  /_/ /  __ `/  ___/  _ \\_  / / /_  ___/_  /__ | / /  _ \\_  ___/\n"
-										<< " _  _, _// /_/ // /__ /  __/  /_/ /_  /   _  / __ |/ //  __/  /    \n"
-										<< " /_/ |_| \\__,_/ \\___/ \\___//_____/ /_/    /_/  _____/ \\___//_/     \n"
-										<< resetAttrs();
+		term << setColor(Terminal::Color::RedOnBlack)
+				 << " ________                  ________       _____                    \n"
+				 << " ___  __ \\_____ ______________  __ \\_________(_)__   ______________\n"
+				 << " __  /_/ /  __ `/  ___/  _ \\_  / / /_  ___/_  /__ | / /  _ \\_  ___/\n"
+				 << " _  _, _// /_/ // /__ /  __/  /_/ /_  /   _  / __ |/ //  __/  /    \n"
+				 << " /_/ |_| \\__,_/ \\___/ \\___//_____/ /_/    /_/  _____/ \\___//_/     \n"
+				 << resetAttrs;
 		break;
 	case Options:
-	Terminal::get() << setColor(Terminal::Color::RedOnBlack)
-									<< "_______          _____ _____                        \n"
-									<< "__  __ \\________ __  /____(_)______ _______ ________\n"
-									<< "_  / / /___  __ \\_  __/__  / _  __ \\__  __ \\__  ___/\n"
-									<< "/ /_/ / __  /_/ // /_  _  /  / /_/ /_  / / /_(__  ) \n"
-									<< "\\____/  _  .___/ \\__/  /_/   \\____/ /_/ /_/ /____/  \n"
-									<< "        /_/                                         \n"
-									<< resetAttrs();
+		term << setColor(Terminal::Color::RedOnBlack)
+				 << "_______          _____ _____                        \n"
+				 << "__  __ \\________ __  /____(_)______ _______ ________\n"
+				 << "_  / / /___  __ \\_  __/__  / _  __ \\__  __ \\__  ___/\n"
+				 << "/ /_/ / __  /_/ // /_  _  /  / /_/ /_  / / /_(__  ) \n"
+				 << "\\____/  _  .___/ \\__/  /_/   \\____/ /_/ /_/ /____/  \n"
+				 << "        /_/                                         \n"
+				 << resetAttrs;
 		break;
 	case Garage:
-	Terminal::get() << setColor(Terminal::Color::RedOnBlack)
-									<< "_________                                       \n"
-									<< "__  ____/______ _______________ ________ ______ \n"
-									<< "_  / __  _  __ `/__  ___/_  __ `/__  __ `/_  _ \\\n"
-									<< "/ /_/ /  / /_/ / _  /    / /_/ / _  /_/ / /  __/\n"
-									<< "\\____/   \\__,_/  /_/     \\__,_/  _\\__, /  \\___/ \n"
-									<< "                                 /____/         \n"
-									<< resetAttrs();
+		term << setColor(Terminal::Color::RedOnBlack)
+				 << "_________                                       \n"
+				 << "__  ____/______ _______________ ________ ______ \n"
+				 << "_  / __  _  __ `/__  ___/_  __ `/__  __ `/_  _ \\\n"
+				 << "/ /_/ /  / /_/ / _  /    / /_/ / _  /_/ / /  __/\n"
+				 << "\\____/   \\__,_/  /_/     \\__,_/  _\\__, /  \\___/ \n"
+				 << "                                 /____/         \n"
+				 << resetAttrs;
 		break;
 	case Stats:
-	Terminal::get() << setColor(Terminal::Color::RedOnBlack)
-									<< "_____________         _____         \n"
-									<< "__  ___/__  /_______ ___  /_________\n"
-									<< "_____ \\ _  __/_  __ `/_  __/__  ___/\n"
-									<< "____/ / / /_  / /_/ / / /_  _(__  ) \n"
-									<< "/____/  \\__/  \\__,_/  \\__/  /____/  \n"
-									<< resetAttrs();
+		term << setColor(Terminal::Color::RedOnBlack)
+				 << "_____________         _____         \n"
+				 << "__  ___/__  /_______ ___  /_________\n"
+				 << "_____ \\ _  __/_  __ `/_  __/__  ___/\n"
+				 << "____/ / / /_  / /_/ / / /_  _(__  ) \n"
+				 << "/____/  \\__/  \\__,_/  \\__/  /____/  \n"
+				 << resetAttrs;
 		break;
-	Default:
+	default:
 		break;
 	}
 }
@@ -201,19 +205,21 @@ void Menu::error(std::string str)
 
 void Menu::msg(std::string str)
 {
-	Terminal::get() << setColor(Terminal::Color::BlackOnRed)
-									<< "::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::\n"
-	                << ":: " << str << "\n"
-	                << "::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::\n\n"
-									<< resetAttrs();
+	Terminal &term = Terminal::windows.at("main");
+	term << setColor(Terminal::Color::BlackOnRed)
+			 << "::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::\n"
+			 << ":: " << str << "\n"
+			 << "::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::\n\n"
+			 << resetAttrs;
 }
 
 bool Menu::askConfirmation()
 {
+	Terminal &term = Terminal::windows.at("main");
   char input;
-  Terminal::get() << "=====================\n"
-                  << "Etes-vous sur ? [O/n]\n"
-                  << "=====================\n";
+  term << "=====================\n"
+			 << "Etes-vous sur ? [O/n]\n"
+			 << "=====================\n";
   input = getch();
   if (input == 'o' || input == 'O') return (true);
   return (false);
@@ -221,9 +227,10 @@ bool Menu::askConfirmation()
 
 int Menu::askChoice()
 {
+	Terminal &term = Terminal::windows.at("main");
   char input;
-  Terminal::get() << "=====================\n"
-                  << "Choix ? ";
+  term << "=====================\n"
+			 << "Choix ? ";
   input = getch();
   return (atoi(&input));
 }

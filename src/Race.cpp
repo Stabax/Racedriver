@@ -46,7 +46,7 @@ bool Race::preparations()
 		Menu::alert("Votre vehicule est trop endommage pour concourir.");
 		return (false);
 	}
-	else if(player->car->getTires()->getDurability() < 15)
+	else if(player->car->getTires()->integrity < 15)
 	{
 		Menu::alert("Vos pneus sont trop uses pour concourir.");
 		return (false);
@@ -56,7 +56,7 @@ bool Race::preparations()
 	{
 		Menu::alert("Attention: Votre reservoir de nitro n'est pas plein.\n");
 	}
-	if(player->car->getTires()->getDurability() < 55)
+	if(player->car->getTires()->integrity < 55)
 	{
 		Menu::alert("Attention: Tires deteriores.\n");
 	}
@@ -151,7 +151,7 @@ void Race::compute()
 		{
 			if (_players[i].out) continue; //Skip out _players
 			_players[i].car->update(omni::Second(1), omni::Meter(0));
-			_players[i].position += _players[i].car->getVitesse() * omni::Second(1);
+			_players[i].position += _players[i].car->getSpeed() * omni::Second(1);
 			if (_players[i].position > _track->getLength()) _players[i].out = true;
 			size_t ftick = rtick % 60; //Compute data each n ticks
 			if (ftick == 0)

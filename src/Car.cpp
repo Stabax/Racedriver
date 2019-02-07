@@ -9,7 +9,7 @@ Car::Car() : Part() {} //Dummy for lua
 
 Car::Car(const json &data)
  : Part(data),
-	_mass(data.find("mass") != data.end() ? data["mass"].get<int>() : -1), 
+	_mass(data.find("mass") != data.end() ? data["mass"].get<int>() : -1),
  	_integrity(data.find("integrity") != data.end() ? data["integrity"].get<int>() : 100), _nitro(100),
 	_fuel(data.find("fuel") != data.end() ? data["fuel"].get<float>() : 0), _speed(0), _acceleration(0)
 {
@@ -19,7 +19,7 @@ Car::Car(const json &data)
 	if (data["tires"].find("id") != data["tires"].end()) //rebuild from save
 	{
 		_tires = std::make_shared<Tires>(Tires::collection[data["tires"]["id"].get<std::string>()]);
-		if (data["tires"].find("integrity") != data["tires"].end()) _tires->setIntegrity(data["tires"]["integrity"].get<int>());
+		if (data["tires"].find("integrity") != data["tires"].end()) _tires->integrity = data["tires"]["integrity"].get<int>();
 	}
 	else //build from factory
 	{
@@ -91,19 +91,21 @@ void Car::update(omni::Minute tickDuration, omni::Meter gradient)
 
 	_acceleration = omni::nroot<2>(2 / (_mass * cinetic)) * (cineticDiff / 2);
 	_speed = _acceleration * tickDuration;
+	omni::Newton rWind = NewtonHour2PerKilometer2(1) * omni::pow<2>(_speed) * (omni::Value(1.5) - omni::Percent(getAerodynamic()));
+	omni::Newton rSol = NewtonHourPerKilometer(1) * _speed * (_tires->mPressure /_tires->pressure) * omni::exp(omni::Percent(_tires->integrity) * 3);
 }
 
-omni::KilometerPerHour Car::getVitesse() const
+omni::KilometerPerHour Car::getSpeed() const
 {
 	return (_speed);
 }
 
 omni::MeterPerSecond2 Car::getAcceleration() const
 {
-	return (static_cast<float>(((_nitro.count()) + (getAerodynamisme())/10)));
+	return (static_cast<float>(((_nitro.count()) + (getAerodynamic())/10)));
 }
 
-int Car::getAerodynamisme() const
+int Car::getAerodynamic() const
 {
 	float spoilerValue = (_spoiler != nullptr ? _spoiler->getAerodynamic() : 0);
 	return (spoilerValue);
@@ -199,7 +201,7 @@ void Car::updateAttributs()
 
 void Car::replaceTires()
 {
-	_tires->setIntegrity(100);
+	_tires->integrity = 100;
 }
 
 void to_json(json& j, const Car& car) {
@@ -209,7 +211,7 @@ void to_json(json& j, const Car& car) {
     {"spoiler", (car.getSpoiler() != nullptr ? car.getSpoiler()->getId() : "")},
     {"tires", {
 			{"id", car.getTires()->getId()},
-			{"integrity", car.getTires()->getDurability()}
+			{"integrity", car.getTires()->integrity}
 		}},
 		{"fuel", car.getFuel().count()},
 		{"integrity", car.getDurability()}

@@ -6,7 +6,7 @@ Collection<Tires> Tires::collection = Collection<Tires>();
 
 Tires::Tires(const json &data)
  : Part(data), radius(data["radius"].get<int>()),
- _pressure(2.5f), _integrity(100), _price(vRang(rank) * 1500)
+ pressure(2.5f), mPressure(2.5f), integrity(100), _price(vRang(rank) * 1500)
 {
 
 }
@@ -35,18 +35,8 @@ void Tires::listerTires()
 	}*/
 }
 
-int Tires::getDurability() const
-{
-	return _integrity;
-}
-
 
 int Tires::getPrice() const
 {
 	return _price;
-}
-
-void Tires::setIntegrity(int value)
-{
-	_integrity = value;
 }

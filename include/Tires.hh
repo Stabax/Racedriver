@@ -22,19 +22,15 @@ public:
 
 	static void listerTires();
 
-	int getDurability() const;
 	int getPrice() const;
-
-	void setIntegrity(int value);
 
 	static Collection<Tires> collection;
 
-
 	omni::Inch radius;
+	omni::Bar pressure, mPressure;
+	int integrity;
 
 protected:
-	omni::Bar _pressure;
-	int _integrity;
 	int _price;
 };
 

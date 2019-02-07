@@ -7,7 +7,7 @@
   <Button Type="Intern" Target="exit()"><Text Id="game.quit"/></Button>
 </Menu>
 <Menu Id="NewGame">
-  <Text><Text Id="profile.promptname"/></Text>
+  <Text Id="profile.promptname"/>
   <Select Id="Difficulty" Text="Difficulty">
     <Option Value="0"><Text Id="difficulty.easy"/></Option>
     <Option Value="1"><Text Id="difficulty.medium"/></Option>

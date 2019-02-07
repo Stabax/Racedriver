@@ -30,7 +30,8 @@ std::string Localization::substitute(xml_node data)
 {
   std::string str;
 
-	for (pugi::xml_node &el = data; el; el = el.next_sibling())
+  str +=  Localization::data[data.attribute("Id").value()];
+	for (pugi::xml_node el = data.first_child(); el; el = el.next_sibling())
   {
     if (strcmp(el.name(), "Text") == 0) str += Localization::data[el.attribute("Id").value()];
     else if (el.value()) str += el.value();

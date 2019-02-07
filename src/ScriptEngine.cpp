@@ -6,6 +6,7 @@
 #include "Tires.hh"
 #include "Profile.hh"
 #include "Race.hh"
+#include "Localization.hh"
 #include "cppMenus.hh"
 
 std::map<std::string, std::string> ScriptEngine::scripts = std::map<std::string, std::string>();
@@ -65,12 +66,19 @@ void ScriptEngine::exposeCpp(sol::state &lua)
   //Profile management
   lua.set_function("setProfileName", [=] (std::string name) { Profile::active->rename(name); });
   lua.set_function("setProfileDifficulty", [=] (std::string diff) { Profile::active->difficulty = static_cast<Profile::Difficulty>(atoi(diff.c_str())); });
-  lua.set_function("setProfileLocale", [=] (std::string locale) { Profile::active->localization = locale; });
-  lua.set_function("getProfileName", [] () { return (Profile::active->name); });
-  lua.set_function("getProfileDifficulty", [] () { return (std::to_string(Profile::active->difficulty)); });
-  lua.set_function("getProfileLocale", [=] () { return (Profile::active->localization); });
+  lua.set_function("setProfileLocale", [=] (std::string locale) {
+    Profile::active->localization = locale;
+    Localization::load(Profile::active->localization);
+  });
+  //Profile bindings
   lua.set_function("loadProfile", [=] (std::string save) { Profile::load(save); });
-  lua.set_function("createProfile", [=] (std::string name) { Profile::create(name); });
+  lua.set_function("createProfile", [=] (std::string name, std::string locale) { Profile::create(name, locale); });
+  if (Profile::active != nullptr)
+  {
+    lua.set_function("getProfileName", [] () { return (Profile::active->name); });
+    lua.set_function("getProfileDifficulty", [] () { return (std::to_string(Profile::active->difficulty)); });
+    lua.set_function("getProfileLocale", [=] () { return (Profile::active->localization); });
+  }
   //Garage management
   Car::expose(lua);
   lua.set_function("getBox", [=] (std::string index) { return (Profile::active->garage.getBox(atoi(index.c_str()))); });

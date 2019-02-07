@@ -5,8 +5,8 @@
 
 std::shared_ptr<Profile> Profile::active = nullptr;
 
-Profile::Profile(const std::string &name)
- : name(name), localization("en-US"), difficulty(Difficulty::Easy), credits(10000), garage()
+Profile::Profile(const std::string &name, const std::string &locale)
+ : name(name), localization(locale), difficulty(Difficulty::Easy), credits(10000), garage()
 {
 	garage.addCar(Car::collection[0]);
 }
@@ -23,9 +23,9 @@ Profile::~Profile()
 {
 }
 
-void Profile::create(const std::string &name)
+void Profile::create(const std::string &name, const std::string &locale)
 {
-	Profile::active = std::make_shared<Profile>(name);
+	Profile::active = std::make_shared<Profile>(name, locale);
 }
 
 void Profile::load(const std::string &save)

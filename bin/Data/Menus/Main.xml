@@ -22,7 +22,7 @@
   <Button Type="Goto" Target="Home"><Text Id="global.back"/></Button>
 </Menu>
 <Script Id="CreateProfile">
-  createProfile(getInputData("Profile"))
+  createProfile(getInputData("Profile"), getSelectValue("Locale"))
   goTo("Main")
 </Script>
 <Menu Id="Credits" Title="Game">
@@ -50,7 +50,7 @@
     <Option Value="en-US">en-US</Option>
     <Option Value="fr-FR">fr-FR</Option>
   </Select>
-  <Input Id="Profile">Profile name</Input>
+  <Input Id="Profile"><Text Id="profile.name"/></Input>
   <Sep/>
   <Button Type="Script" Target="ApplyOptions"><Text Id="global.apply"/></Button>
   <Button Type="Goto" Target="Main"><Text Id="global.back"/></Button>

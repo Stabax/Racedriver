@@ -44,11 +44,11 @@ public:
 		Hard
 	};
 
-	Profile(const std::string &name);
+	Profile(const std::string &name, const std::string &locale);
 	Profile(const json &data);
 	~Profile();
 
-	static void create(const std::string &name);
+	static void create(const std::string &name, const std::string &locale);
 	static void load(const std::string &save);
 	void save();
 

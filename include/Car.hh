@@ -37,14 +37,12 @@ public:
 
 	void copy(const std::string &id);
 	void displayInfo() const;
+	int getPrice() const;
 	omni::KilometerPerHour getSpeed() const;
 	omni::MeterPerSecond2 getAcceleration() const;
-	int getAerodynamic() const;
+	omni::Percent getAerodynamic() const;
 	omni::Liter getNiveauNitro() const;
-	int getDurability() const;
-	omni::Liter getFuel() const;
 	int getConsommation() const;
-	int getPrix() const;
 
 	void replaceTires();
 
@@ -58,8 +56,6 @@ public:
 	void setTires(const Tires &tires);
 	void setNitro(omni::Liter ajouter);
 
-	void damage(int value);
-
 	void pleinNitro();
 
 	void pleinCarburant();
@@ -69,18 +65,16 @@ public:
 
 	static Collection<Car> collection;
 
+	//instance
+	omni::Percent integrity;
+	omni::Liter nitro;	//se vide en fonction de la longueur du circuit. le plein est fait manuellement via paiement, juste avant une course
+	omni::Liter fuel;
+	omni::KilometerPerHour speed;
+	omni::MeterPerSecond2 acceleration;
 protected:
 	std::shared_ptr<Engine> _engine;
 	std::shared_ptr<Spoiler> _spoiler;
 	std::shared_ptr<Tires> _tires;
-	omni::Kilogram _mass;
-
-	//instance
-	int _integrity;
-	omni::Liter _nitro;	//se vide en fonction de la longueur du circuit. le plein est fait manuellement via paiement, juste avant une course
-	omni::Liter _fuel;
-	omni::KilometerPerHour _speed;
-	omni::MeterPerSecond2 _acceleration;
 };
 
 void to_json(json& j, const Car& car);

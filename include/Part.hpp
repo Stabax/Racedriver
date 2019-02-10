@@ -19,6 +19,7 @@ public:
   Part(const json &data) //build from json
   {
     if (data.find("name") != data.end()) name = data["name"].get<std::string>();
+    if (data.find("mass") != data.end()) mass = omni::Kilogram(data["mass"].get<int>());
     if (data.find("manufacturer") != data.end()) manufacturer = data["manufacturer"].get<std::string>();
     if (data.find("rank") != data.end()) rank = charToRank(data["rank"].get<std::string>()[0]);
   }
@@ -42,6 +43,7 @@ public:
 
   std::string manufacturer;
   std::string name;
+	omni::Kilogram mass;
   Rank rank;
 };
 

@@ -156,7 +156,7 @@ void menuUpgradeSpoiler()
 	std::string menu;
 	menu += "<Menu Title='Garage'>"
 					" <Text>Current: " + (car.getSpoiler() == nullptr ? "None" : car.getSpoiler()->manufacturer + " " + car.getSpoiler()->name) + "</Text>"
-					" <Text>Aerodynamic: " + (car.getSpoiler() == nullptr ? "N/A" : std::to_string(car.getSpoiler()->getAerodynamic())) + "</Text>"
+					" <Text>Aerodynamic: " + (car.getSpoiler() == nullptr ? "N/A" : std::to_string(car.getSpoiler()->aerodynamic.count()*100)) + "</Text>"
 					" <Sep/>";
 	for (size_t i = 0; i < Spoiler::collection.size(); i++)
 	{

@@ -5,7 +5,7 @@
 Collection<Spoiler> Spoiler::collection = Collection<Spoiler>();
 
 Spoiler::Spoiler(const json &data)
- : Part(data), _aerodynamic(data["aerodynamic"].get<int>())
+ : Part(data), aerodynamic(data["aerodynamic"].get<int>())
 {
 }
 
@@ -22,14 +22,4 @@ void Spoiler::expose(sol::state &lua)
 
       "getId", &Spoiler::getId
     );
-}
-
-int Spoiler::getAerodynamic() const
-{
-	return _aerodynamic;
-}
-
-int Spoiler::getPrice() const
-{
-	return _price;
 }

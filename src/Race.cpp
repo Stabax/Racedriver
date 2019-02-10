@@ -36,30 +36,6 @@ bool Race::preparations()
     			[=] (const Concurrent &c) { return (c.name == Profile::active->name); });
 
 	prixCourse = 50;
-	if(Profile::active->credits < prixCourse)
-	{
-		Menu::alert("Vous ne disposez pas d'assez de crédits pour payer les preparatifs.");
-		return (false);
-	}
-	else if(player->car->getDurability() < 20)
-	{
-		Menu::alert("Votre vehicule est trop endommage pour concourir.");
-		return (false);
-	}
-	else if(player->car->getTires()->integrity < 15)
-	{
-		Menu::alert("Vos pneus sont trop uses pour concourir.");
-		return (false);
-	}
-	term.clearScreen(); //On flushe l'ancien ecran
-	if(player->car->getNiveauNitro().count() < 100)
-	{
-		Menu::alert("Attention: Votre reservoir de nitro n'est pas plein.\n");
-	}
-	if(player->car->getTires()->integrity < 55)
-	{
-		Menu::alert("Attention: Tires deteriores.\n");
-	}
 	std::string menu;
 	menu += "<Menu>"
 					" <Text>Les preparatifs du circuit: " + _track->name + " s'elevent a " + std::to_string(prixCourse) + "c</Text>"
@@ -68,9 +44,31 @@ bool Race::preparations()
 					" <Button Type='Intern' Target=''>Cancel</Button>"
 					"</Menu>";
 	Menu::popUp("", menu, DataSource::Document);
+	if(Profile::active->credits < prixCourse)
+	{
+		Menu::alert("Vous ne disposez pas d'assez de crédits pour payer les preparatifs.");
+		return (false);
+	}
+	else if(player->car->integrity.count()*100 < 20)
+	{
+		Menu::alert("Votre vehicule est trop endommage pour concourir.");
+		return (false);
+	}
+	else if(player->car->getTires()->integrity.count() < 15)
+	{
+		Menu::alert("Vos pneus sont trop uses pour concourir.");
+		return (false);
+	}
+	if(player->car->nitro.count() < 100)
+	{
+		Menu::alert("Attention: Votre reservoir de nitro n'est pas plein.\n");
+	}
+	if(player->car->getTires()->integrity.count() < 55)
+	{
+		Menu::alert("Attention: Tires deteriores.\n");
+	}
 	if(1) //Should be bound to confirm button
 	{
-			term.clearScreen();
 			randomizeOpponents(7);
 			return (true);
 	}
@@ -100,13 +98,14 @@ bool Race::start()
 	auto player = std::find_if(_players.begin(), _players.end(),
     			[=] (const Concurrent &c) { return (c.name == Profile::active->name); });
 
+	term.clearScreen();
 	term << "Bienvenue à tous et a toutes !\n"
-									<< "Aujourd'hui va se derouler l'evenement tant attendu par tous les fans de sportives,"
-									<< "tout le monde s'est reuni et l'ambiance est a son comble sur le circuit: " << _track->name << ".\n"
-									<< "On m'annonce qu'il totalise " << _track->getLength() << " Km, et comprend pas moins de <JSPCB> de virages serres !\n"
-									<< "<Inserer commentaire meteo>" << "\n"
-									<< "D'autre part, il y a un vent de Force <ZAIREAU> dans l'enceinte du circuit.\n\n"
-									<< "Sans attendre passons tout de suite a la liste des Participants:\n\n";
+			 << "Aujourd'hui va se derouler l'evenement tant attendu par tous les fans de sportives,"
+			 << "tout le monde s'est reuni et l'ambiance est a son comble sur le circuit: " << _track->name << ".\n"
+			 << "On m'annonce qu'il totalise " << _track->length << " m, et comprend pas moins de <JSPCB> de virages serres !\n"
+			 << "<Inserer commentaire meteo>" << "\n"
+			 << "D'autre part, il y a un vent de Force <ZAIREAU> dans l'enceinte du circuit.\n\n"
+			 << "Sans attendre passons tout de suite a la liste des Participants:\n\n";
 	//on liste les concurrents
 	for (size_t i = 0; i < _players.size(); i++)
 	{
@@ -142,30 +141,30 @@ void Race::compute()
 	auto player = std::find_if(_players.begin(), _players.end(),
     			[=] (Concurrent &c) { return (c.name == Profile::active->name); });
 	std::vector<int> probaAccident = calculerProbaAccident();
-	size_t rtick = 0;
+	size_t rtick = 0, ftick = 0;
 
 	while (std::find_if(_players.begin(), _players.end(),
-		 [this] (const Concurrent &c) { return (!c.out && c.position < _track->getLength()); }) != _players.end())
+		 [this] (const Concurrent &c) { return (!c.out && c.position < _track->length); }) != _players.end())
 	{
 		for (size_t i = 0; i < _players.size(); i++)
 		{
 			if (_players[i].out) continue; //Skip out _players
 			_players[i].car->update(omni::Second(1), omni::Meter(0));
-			_players[i].position += _players[i].car->getSpeed() * omni::Second(1);
-			if (_players[i].position > _track->getLength()) _players[i].out = true;
-			size_t ftick = rtick % 60; //Compute data each n ticks
-			if (ftick == 0)
+			_players[i].position += _players[i].car->speed * omni::Second(1);
+			if (_players[i].position > _track->length) _players[i].out = true;
+			if (rtick % 30 == 0) //each 30 ticks of 1 sec
 			{
-				ftick = rtick / 60;
-				if (std::rand() % 101 < probaAccident[i]) //each 60 ticks of 1 sec
+				if (std::rand() % 101 < probaAccident[i])
 				{
 					_players[i].out = true;
 					if(player->name == _players[i].name) Profile::active->careerStats.accidents++;
 					_players[i].outmsg = Accident::collection[rand() % Accident::collection.size()].message + " (Tick" + std::to_string(ftick) + ")";
 				}
-				render(ftick);
+				ftick++;
 			}
 		}
+		render(rtick);
+		std::this_thread::sleep_for(std::chrono::seconds(1));
 		rtick++;
 	}
 }
@@ -179,8 +178,10 @@ void Race::render(int rtick)
 	term << "(Tick " << rtick << ")\n";
 	for (size_t i = 0; i < _players.size(); i++)
 	{
-		term << "[" << i << "e]" << (_players[i].out ? " <K.O.> " : " ")  << _players[i].name << " : " << _players[i].position << "\n";
-		if (_players[i].out) term << "   -> " << _players[i].outmsg << "\n";
+		term << "[" << i+1 << "e]" << (_players[i].out ? " <K.O.> " : " ")  << _players[i].name << " : " << _players[i].position << "\n"
+			   << "  |-> " << _players[i].car->speed.count() << "km/h (" << _players[i].car->getEngine()->power.count() << "ch at " << _players[i].car->getEngine()->revolutions.count() << ")\n"
+				 << "  |-> " << _players[i].car->getEngine()->torque.count() << "Nm\n";
+		if (_players[i].out) term << "  |-> " << _players[i].outmsg << "\n";
 	}
 }
 

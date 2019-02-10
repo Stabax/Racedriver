@@ -55,7 +55,7 @@ void Garage::sellCar(size_t index)
 		throw (std::runtime_error("Le box est vide"));
 	}
 	Car &car = getBox(index);
-	int sellPrice = car.getPrix() * 0.70f;
+	int sellPrice = car.getPrice() * 0.70f;
 	Profile::active->credits += sellPrice;
 	Menu::msg(car.name+" vendue avec succes pour "+std::to_string(sellPrice)+"c");
 	_boxs.erase(_boxs.begin() + index);

@@ -21,14 +21,11 @@ public:
 
   static const std::string getPath() { return ("Spoilers"); };
 
-	int getAerodynamic() const;
-	int getPrice() const;
 
 	static Collection<Spoiler> collection;
 
-protected:
-	int _aerodynamic;
-	int _price;
+	omni::Percent aerodynamic;
+	int price;
 };
 
 #endif /* SPOILER_HH_ */

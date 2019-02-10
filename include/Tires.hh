@@ -22,16 +22,13 @@ public:
 
 	static void listerTires();
 
-	int getPrice() const;
-
 	static Collection<Tires> collection;
 
-	omni::Inch radius;
+	omni::Inch diameter;
 	omni::Bar pressure, mPressure;
-	int integrity;
+	omni::Percent integrity;
 
-protected:
-	int _price;
+	int price;
 };
 
 #endif /* !TIRES_HH_ */

@@ -3,31 +3,23 @@
     "climate" : "normal",
     "track" : [
     {
-        "entities" : [
-            "curve"
-        ],
-        "length" : 5,
-        "gradient" : 0
+        "length" : 5000,
+        "gradient" : 0,
+        "curve": 0
     },
     {
-        "entities" : [
-            "curve"
-        ],
-        "length" : 3,
-        "gradient" : 0
+        "length" : 1000,
+        "gradient" : 0,
+        "curve": 180
     },
     {
-        "entities" : [
-            "curve"
-        ],
-        "length" : 5,
-        "gradient" : 0
+        "length" : 5000,
+        "gradient" : 0,
+        "curve": 0
     },
     {
-        "entities" : [
-            "curve"
-        ],
-        "length" : 6,
-        "gradient" : 0
+        "length" : 1000,
+        "gradient" : 0,
+        "curve": 180
     }]
 }

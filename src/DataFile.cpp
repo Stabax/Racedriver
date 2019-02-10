@@ -86,7 +86,8 @@ std::vector<std::string> DataFile::getFolderContents(std::string path, std::stri
 	while ((dirp = readdir(dp)) != NULL)
 	{
 		std::string file = std::string(dirp->d_name);
-    if (filter == "" || file.find(filter) != std::string::npos)
+    size_t pos = file.find(filter);
+    if (filter == "" || (pos != std::string::npos && (pos + filter.length()) == file.length()))
     {
       if (truncateFilter) files.push_back(file.substr(0, file.find(filter)));
       else files.push_back(file);

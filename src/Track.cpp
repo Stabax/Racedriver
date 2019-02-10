@@ -20,20 +20,12 @@ void Entity::loadCollection()
 }
 
 //
-// Step
+// Segment
 //
 
-Step::Step(const json &data)
- : gradient(data["gradient"].get<int>()), length(data["length"].get<int>())
+Segment::Segment(const json &data)
+ : gradient(data["gradient"].get<int>()), length(data["length"].get<int>()), curve(data["curve"].get<int>())
 {
-	for (size_t i = 0; i < data["entities"].size(); i++)
-	{
-		try {
-			entities.push_back(Entity::collection.at(data["entities"][i].get<std::string>()));
-		} catch(std::exception &e) {
-			Menu::alert("Unknown entity");
-		}
-	}
 }
 
 //
@@ -48,7 +40,8 @@ Track::Track(const json &data)
 {
 	for (size_t i = 0; i < data["track"].size(); i++)
 	{
-		track.push_back(Step(data["track"][i]));
+		track.push_back(Segment(data["track"][i]));
+		length += track.back().length;
 	}
 }
 
@@ -62,11 +55,6 @@ Track::Climate Track::convertClimate(const std::string &climate)
 	if (climate == "Desert") return (Desert);
 	if (climate == "Sea") return (Sea);
 	else return (Normal);
-}
-
-omni::Meter Track::getLength()
-{
-	return (omni::Meter(1000));
 }
 
 void Track::loadCollection()

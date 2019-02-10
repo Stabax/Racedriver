@@ -24,12 +24,12 @@ struct Entity {
 };
 
 
-struct Step {
-	Step(const json &data);
+struct Segment {
+	Segment(const json &data);
 
-	std::vector<Entity> entities;
-	int gradient;
-	int length;
+	omni::Meter gradient;
+	omni::Meter length;
+	omni::Degree curve;
 };
 
 
@@ -53,7 +53,8 @@ struct Track
 	static std::vector<Track> collection;
 
 	std::string name;
-	std::vector<Step> track;
+	std::vector<Segment> track;
+	omni::Meter length;
 	Climate climate;
 };
 

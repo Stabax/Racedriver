@@ -186,6 +186,7 @@ void Race::render(int rtick)
 	for (size_t i = 0; i < _players.size(); i++)
 	{
 		term << "[" << i+1 << "e]" << (_players[i].out ? " <K.O.> " : " ")  << _players[i].name << " : " << _players[i].position << "\n"
+				 << "  |-> " << _players[i].car->manufacturer << " " << _players[i].car->name << "\n"
 			   << "  |-> " << _players[i].car->speed.count() << "km/h (" << _players[i].car->getEngine()->power.count() << "ch at " << _players[i].car->getEngine()->revolutions.count() << ") [" << _players[i].car->getEngine()->gear << "]\n"
 				 << "  |-> " << _players[i].car->getEngine()->torque.count() << "Nm\n";
 		if (_players[i].out)

@@ -3,56 +3,20 @@
   {
     "name": "GT100",
     "manufacturer": "Renault",
-    "gears": 4,
-    "revolutions": 3000,
+    "gears": 3,
+    "revolutions": 4000,
     "power": 34,
     "rank": "D",
     "energy": "Gasoline"
   },
   {
-    "name": "GT120",
-    "manufacturer": "Renault",
-    "gears": 5,
-    "revolutions": 2000,
-    "power": 100,
-    "rank": "D",
-    "energy": "Diesel"
-  },
-  {
-    "name": "GT140",
-    "manufacturer": "Renault",
-    "gears": 5,
-    "revolutions": 2000,
-    "power": 130,
-    "rank": "D",
-    "energy": "Diesel"
-  },
-  {
-    "name": "WIP",
+    "name": "WIP 45",
     "manufacturer": "Toyota",
-    "gears": 5,
-    "revolutions": 2000,
-    "power": 110,
+    "gears": 3,
+    "revolutions": 4000,
+    "power": 45,
     "rank": "D",
-    "energy": "Diesel"
-  },
-  {
-    "name": "WIP U",
-    "manufacturer": "Toyota",
-    "gears": 5,
-    "revolutions": 2000,
-    "power": 130,
-    "rank": "D",
-    "energy": "Diesel"
-  },
-  {
-    "name": "WIP 16S",
-    "manufacturer": "Toyota",
-    "gears": 5,
-    "revolutions": 2000,
-    "power": 150,
-    "rank": "D",
-    "energy": "Diesel"
+    "energy": "Gasoline"
   },
   {
     "name": "1.4 SDI",

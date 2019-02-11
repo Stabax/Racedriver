@@ -176,7 +176,7 @@ void menuUpgradeTires()
 	std::string menu;
 	menu += "<Menu Title='Garage'>"
 					" <Text>Current: " + car.getTires()->manufacturer + " " + car.getTires()->name + "</Text>"
-					" <Text>Radius: " + std::to_string(car.getTires()->radius.count()) + "in</Text>"
+					" <Text>Diameter: " + std::to_string(car.getTires()->diameter.count()) + "in</Text>"
 					" <Sep/>";
 	for (size_t i = 0; i < Tires::collection.size(); i++)
 	{

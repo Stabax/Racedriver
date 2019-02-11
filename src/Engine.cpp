@@ -26,7 +26,7 @@ void Engine::update(omni::KilometerPerHour speed, omni::Inch diameter)
 	if (revolutions > mRevolutions) torque = -torque + (2 * mTorque);
 	if (torque < omni::NewtonMeter(0)) torque = 0;
 	power = torque * revolutions;
-	if (gear < mGears)
+	if (gear < mGears - 1)
 	{
 		if (revolutions < (mRevolutions + omni::revolutionPerMinute<int>(1000)) && (revolutions > mRevolutions + omni::revolutionPerMinute<int>(500)) && (rand() % 10 == 0)) gear++;
 	 	else if (revolutions > (mRevolutions + omni::revolutionPerMinute<int>(1000))) gear++; //shift anyway

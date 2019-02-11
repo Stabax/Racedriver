@@ -12,7 +12,7 @@ enum Energy {
 
 [[maybe_unused]]static const char* EnergyNames[] = { "Diesel", "Gasoline", "Electric" };
 
-[[maybe_unused]]static const float gearMultiplier[] = { 3, 2, 1.5, 1, 0.6 };
+[[maybe_unused]]static const float gearMultiplier[] = { 3.36, 1.95, 1.3, 1.03, 0.84, 0.68 };
 
 class Engine : public Part
 {
@@ -28,6 +28,8 @@ public:
 	//Manufacturer
 	omni::Horsepower mPower;
 	omni::revolutionPerMinute<int> mRevolutions;
+	omni::NewtonMeter mTorque;
+	int mGears;
 	Energy energy;
 	int price;
 

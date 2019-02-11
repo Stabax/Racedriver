@@ -11,14 +11,14 @@
 
 //Custom unit definition
 template <typename Rep = OMNI_DEFAULT_TYPE>
-using newtonHour2PerKilometer2 = omni::Unit<omni::Dimension<-1,1,0,0,0,0,0>, Rep, typename omni::Ratio_power<omni::Ratio<omni::secondsPerHour, omni::E3>, 2>::type, omni::zero>;
+using millinewtonHour2PerKilometer2 = omni::Unit<omni::Dimension<-1,1,0,0,0,0,0>, Rep, typename omni::Ratio_over_value<typename omni::Ratio_power<omni::Ratio<omni::secondsPerHour, omni::E3>, 2>::type, omni::E3>::type, omni::zero>;
 
-typedef newtonHour2PerKilometer2<> NewtonHour2PerKilometer2;
+typedef millinewtonHour2PerKilometer2<> MillinewtonHour2PerKilometer2;
 
 template <typename Rep = OMNI_DEFAULT_TYPE>
-using newtonHourPerKilometer = omni::Unit<omni::Dimension<0,1,-1,0,0,0,0>, Rep, omni::Ratio<omni::secondsPerHour, omni::E3>, omni::zero>;
+using millinewtonHourPerKilometer = omni::Unit<omni::Dimension<0,1,-1,0,0,0,0>, Rep, omni::Ratio<omni::secondsPerHour, omni::E6>, omni::zero>;
 
-typedef newtonHourPerKilometer<> NewtonHourPerKilometer;
+typedef millinewtonHourPerKilometer<> MillinewtonHourPerKilometer;
 
 class Car : public Part
 {

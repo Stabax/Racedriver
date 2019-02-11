@@ -1,6 +1,7 @@
 #include <chrono>
 #include <thread>
 #include <functional>
+#include <iomanip>
 #include "Menu.hh"
 #include "Race.hh"
 #include "Accident.hh"
@@ -142,6 +143,7 @@ void Race::compute()
     			[=] (Concurrent &c) { return (c.name == Profile::active->name); });
 	std::vector<int> probaAccident = calculerProbaAccident();
 	size_t rtick = 0, ftick = 0;
+	omni::Second tickDuration = omni::Second(1);
 
 	while (std::find_if(_players.begin(), _players.end(),
 		 [this] (const Concurrent &c) { return (!c.out && c.position < _track->length); }) != _players.end())
@@ -149,14 +151,19 @@ void Race::compute()
 		for (size_t i = 0; i < _players.size(); i++)
 		{
 			if (_players[i].out) continue; //Skip out _players
-			_players[i].car->update(omni::Second(1), omni::Meter(0));
+			_players[i].car->update(tickDuration, omni::Meter(0));
 			_players[i].position += _players[i].car->speed * omni::Second(1);
-			if (_players[i].position > _track->length) _players[i].out = true;
+			if (_players[i].position > _track->length)
+			{
+				_players[i].out = true;
+				_players[i].time = tickDuration * rtick;
+			}
 			if (rtick % 30 == 0) //each 30 ticks of 1 sec
 			{
 				if (std::rand() % 101 < probaAccident[i])
 				{
 					_players[i].out = true;
+					_players[i].time = tickDuration * rtick;
 					if(player->name == _players[i].name) Profile::active->careerStats.accidents++;
 					_players[i].outmsg = Accident::collection[rand() % Accident::collection.size()].message + " (Tick" + std::to_string(ftick) + ")";
 				}
@@ -179,9 +186,16 @@ void Race::render(int rtick)
 	for (size_t i = 0; i < _players.size(); i++)
 	{
 		term << "[" << i+1 << "e]" << (_players[i].out ? " <K.O.> " : " ")  << _players[i].name << " : " << _players[i].position << "\n"
-			   << "  |-> " << _players[i].car->speed.count() << "km/h (" << _players[i].car->getEngine()->power.count() << "ch at " << _players[i].car->getEngine()->revolutions.count() << ")\n"
+			   << "  |-> " << _players[i].car->speed.count() << "km/h (" << _players[i].car->getEngine()->power.count() << "ch at " << _players[i].car->getEngine()->revolutions.count() << ") [" << _players[i].car->getEngine()->gear << "]\n"
 				 << "  |-> " << _players[i].car->getEngine()->torque.count() << "Nm\n";
-		if (_players[i].out) term << "  |-> " << _players[i].outmsg << "\n";
+		if (_players[i].out)
+		{
+			time_t timecpy = _players[i].time.count();
+			std::ostringstream oss;
+			oss << std::put_time(std::localtime(&timecpy), "%H:%M:%S");
+			term << "  |-> " << _players[i].outmsg << "\n";
+			term << "  |-> " << oss.str() << "\n";
+		}
 	}
 }
 

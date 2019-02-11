@@ -18,6 +18,7 @@ struct Concurrent
   std::string outmsg;
   std::shared_ptr<Car> car;
   omni::Meter position;
+  omni::Second time;
   bool out;
 };
 

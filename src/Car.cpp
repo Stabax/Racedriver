@@ -89,9 +89,9 @@ void Car::update(omni::Minute tickDuration, omni::Meter gradient)
 	else cinetic = cineticDiff * tickDuration;
 
 	acceleration = omni::nroot<2>(2 / (mass * cinetic)) * (cineticDiff / 2);
-	//omni::Newton rWind = NewtonHour2PerKilometer2(1) * omni::pow<2>(speed) * (omni::Value(1.5) - omni::Percent(getAerodynamic()));
-	//omni::Newton rGround = NewtonHourPerKilometer(1) * speed * (_tires->mPressure /_tires->pressure) * omni::exp(_tires->integrity * 3);
-	//acceleration -= (rWind / mass) - (rGround / mass);
+	omni::Newton rWind = MillinewtonHour2PerKilometer2(350) * omni::pow<2>(speed) * (omni::Value(1.5) - omni::Percent(getAerodynamic()));
+	omni::Newton rGround = MillinewtonHourPerKilometer(500) * speed * (_tires->mPressure /_tires->pressure) * omni::exp(_tires->integrity * 3);
+	acceleration -= (rWind / mass) - (rGround / mass);
 	speed += acceleration * tickDuration;
 }
 

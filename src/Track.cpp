@@ -40,8 +40,8 @@ Track::Track(const json &data)
 {
 	for (size_t i = 0; i < data["track"].size(); i++)
 	{
-		track.push_back(Segment(data["track"][i]));
-		length += track.back().length;
+		_track.push_back(Segment(data["track"][i]));
+		length += _track.back().length;
 	}
 }
 
@@ -55,6 +55,20 @@ Track::Climate Track::convertClimate(const std::string &climate)
 	if (climate == "Desert") return (Desert);
 	if (climate == "Sea") return (Sea);
 	else return (Normal);
+}
+
+Segment &Track::getSegmentAt(const omni::Meter &at)
+{
+	size_t index = 0;
+	omni::Meter total = 0;
+
+	if (at > length) throw (std::runtime_error("Getting segment out of range"));
+	while (at < total)
+	{
+		total += _track[index].length;
+		index++;
+	}
+	return (_track[index]);
 }
 
 void Track::loadCollection()

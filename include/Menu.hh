@@ -50,6 +50,7 @@ public:
   void onLoad();
 
   void addAlert(std::shared_ptr<MenuItem> menuItem);
+  void clearAlerts();
   std::shared_ptr<MenuItem> getItem(const std::string &id);
   void setClickCallback(std::function<void()> callback);
 

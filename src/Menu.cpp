@@ -257,6 +257,12 @@ void Menu::addAlert(std::shared_ptr<MenuItem> menuItem)
 {
 	_alerts.push_back(menuItem);
 	if (_alerts.size() > 4) _alerts.pop_front();
+	render();
+}
+
+void Menu::clearAlerts()
+{
+	_alerts.clear();
 }
 
 void Menu::goTo(std::string id, std::string source, const DataSource dataMode)

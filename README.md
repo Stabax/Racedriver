@@ -11,6 +11,7 @@
 	- PicoSha2
 	- OmniUnit
 	- XCurses (PDCurses / NCurses)
+	- (libreadline-dev on linux)
 
 ### Contributors ###
 
@@ -19,6 +20,12 @@
 	- Stalker2106
 
 ### How to Build ###
+
+NOTE: If you are on linux, you might need to install lua subdependency "libreadline-dev", and "libcurl".
+			They should be available within your package manager:
+
+    sudo apt-get install libreadline-dev
+    sudo apt-get install libcurl4-gnutls-dev
 
 You need to grab and build dependencies if they are not installed on your machine (which is probably the case),
 you can do so with the following command-lines:

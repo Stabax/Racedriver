@@ -40,9 +40,23 @@ void Terminal::initColor()
 {
   if (!has_colors()) throw (std::runtime_error("Color is not supported"));
 	start_color();
+	//White bg
 	init_pair(Color::BlackOnWhite, COLOR_BLACK, COLOR_WHITE);
+	init_pair(Color::RedOnWhite, COLOR_RED, COLOR_BLACK);
+	init_pair(Color::BlueOnWhite, COLOR_BLUE, COLOR_BLACK);
+	init_pair(Color::YellowOnWhite, COLOR_YELLOW, COLOR_BLACK);
+	init_pair(Color::GreenOnWhite, COLOR_GREEN, COLOR_BLACK);
+	init_pair(Color::MagentaOnWhite, COLOR_YELLOW, COLOR_BLACK);
+	init_pair(Color::CyanOnWhite, COLOR_GREEN, COLOR_BLACK);
+	//Black bg
 	init_pair(Color::WhiteOnBlack, COLOR_WHITE, COLOR_BLACK);
 	init_pair(Color::RedOnBlack, COLOR_RED, COLOR_BLACK);
+	init_pair(Color::BlueOnBlack, COLOR_BLUE, COLOR_BLACK);
+	init_pair(Color::YellowOnBlack, COLOR_YELLOW, COLOR_BLACK);
+	init_pair(Color::GreenOnBlack, COLOR_GREEN, COLOR_BLACK);
+	init_pair(Color::MagentaOnBlack, COLOR_YELLOW, COLOR_BLACK);
+	init_pair(Color::CyanOnBlack, COLOR_GREEN, COLOR_BLACK);
+	//Custom
 	init_pair(Color::BlackOnRed, COLOR_BLACK, COLOR_RED);
 }
 

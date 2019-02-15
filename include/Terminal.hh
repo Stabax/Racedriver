@@ -20,9 +20,23 @@ class Terminal
 {
 public:
   enum Color {
+    //White bg
     BlackOnWhite,
+    RedOnWhite,
+    BlueOnWhite,
+    YellowOnWhite,
+    GreenOnWhite,
+    MagentaOnWhite,
+    CyanOnWhite,
+    //Black bg
     WhiteOnBlack,
     RedOnBlack,
+    BlueOnBlack,
+    YellowOnBlack,
+    GreenOnBlack,
+    MagentaOnBlack,
+    CyanOnBlack,
+    //Custom
     BlackOnRed
   };
 

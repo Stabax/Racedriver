@@ -79,7 +79,9 @@ bool Race::preparations()
 void Race::randomizeOpponents(size_t count)
 {
 	std::vector<std::string> usedNames;
+	std::vector<Terminal::Color> usedColors;
 	std::string driver;
+	Terminal::Color color;
 
 	for (size_t i = 0; i < count; i++)
 	{
@@ -89,7 +91,12 @@ void Race::randomizeOpponents(size_t count)
 			driver = driversCollection[rand() % driversCollection.size()];
 		} while (std::find(usedNames.begin(), usedNames.end(), driver) != usedNames.end());
 		usedNames.push_back(driver);
-		_players.push_back(Concurrent(driver, car));
+		do
+		{
+			color = static_cast<Terminal::Color>(rand() % 16); //Any of 16 Colors defined
+		} while (std::find(usedColors.begin(), usedColors.end(), color) != usedColors.end());
+		usedColors.push_back(color);
+		_players.push_back(Concurrent(driver, color, car));
 	}
 }
 
@@ -185,7 +192,7 @@ void Race::render(int rtick)
 	term << "(Tick " << rtick << ")\n";
 	for (size_t i = 0; i < _players.size(); i++)
 	{
-		term << "[" << i+1 << "e]" << (_players[i].out ? " <K.O.> " : " ")  << _players[i].name << " : " << _players[i].position << "\n"
+		term << "[" << i+1 << "e]" << setColor(_players[i].color) << (_players[i].out ? " <K.O.> " : " ")  << _players[i].name << " : " << _players[i].position << "\n"
 				 << "  |-> " << _players[i].car->manufacturer << " " << _players[i].car->name << "\n"
 			   << "  |-> " << _players[i].car->speed.count() << "km/h (" << _players[i].car->getEngine()->power.count() << "ch at " << _players[i].car->getEngine()->revolutions.count() << ") [" << _players[i].car->getEngine()->gear + 1 << "]\n"
 				 << "  |-> " << _players[i].car->getEngine()->torque.count() << "Nm\n";
@@ -197,6 +204,7 @@ void Race::render(int rtick)
 			term << "  |-> " << _players[i].outmsg << "\n";
 			term << "  |-> " << oss.str() << "\n";
 		}
+		term << resetAttrs;
 	}
 }
 
@@ -212,8 +220,8 @@ std::vector<int> Race::calculerProbaAccident()
 	return (results);
 }
 
-Concurrent::Concurrent(std::string n, std::shared_ptr<Car> c)
- : name(n), car(c), position(0), out(false)
+Concurrent::Concurrent(std::string n, Terminal::Color cl, std::shared_ptr<Car> c)
+ : name(n), color(cl), car(c), position(0), out(false)
 {
 }
 

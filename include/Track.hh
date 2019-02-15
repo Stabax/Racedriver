@@ -46,16 +46,18 @@ struct Track
 	~Track();
 
 	Climate convertClimate(const std::string &climate);
-	omni::Meter getLength();
+	Segment &getSegmentAt(const omni::Meter &at);
 
 	static void loadCollection();
 
 	static std::vector<Track> collection;
 
 	std::string name;
-	std::vector<Segment> track;
 	omni::Meter length;
 	Climate climate;
+
+private:
+	std::vector<Segment> _track;
 };
 
 #endif /* !TRACK_HH_ */

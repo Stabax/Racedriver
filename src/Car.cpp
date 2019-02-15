@@ -79,11 +79,11 @@ void Car::listerCars()
 	}*/
 }
 
-void Car::update(omni::Minute tickDuration, omni::Meter gradient)
+void Car::update(omni::Minute tickDuration, Segment segment)
 {
 	_engine->update(speed, _tires->diameter);
 	omni::Horsepower power = _engine->power;
-  omni::Watt cineticDiff = power - (mass * omni::MeterPerSecond2(9.81) * (speed > omni::KilometerPerHour(0) ? (gradient / (speed * tickDuration)) : 0) * speed);
+  omni::Watt cineticDiff = power - (mass * omni::MeterPerSecond2(9.81) * (speed > omni::KilometerPerHour(0) ? (segment.gradient / (speed * tickDuration)) : 0) * speed);
 	omni::NewtonMeter cinetic;
 	if (speed > omni::KilometerPerHour(0)) cinetic = 0.5 * mass * omni::pow<2>(speed);
 	else cinetic = cineticDiff * tickDuration;

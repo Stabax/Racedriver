@@ -8,6 +8,7 @@
 #include "Engine.hh"
 #include "Spoiler.hh"
 #include "Tires.hh"
+#include "Track.hh"
 
 //Custom unit definition
 template <typename Rep = OMNI_DEFAULT_TYPE>
@@ -33,7 +34,7 @@ public:
 
 	static void listerCars();
 
-	void update(omni::Minute tickDuration, omni::Meter gradient);
+	void update(omni::Minute tickDuration, Segment segment);
 
 	void copy(const std::string &id);
 	void displayInfo() const;

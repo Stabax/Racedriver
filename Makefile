@@ -34,7 +34,7 @@ ifeq ($(OS),Windows_NT)
 	LDFLAGS += -L$(BINDIR) -lcurl
 else
 	MAKE = make
-	LDFLAGS += -lncurses
+	LDFLAGS += -lncurses -lcurl
 endif
 
 NAME = $(BINDIR)/Racedriver

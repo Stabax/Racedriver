@@ -31,7 +31,6 @@ void Race::loadDrivers()
 
 bool Race::preparations()
 {
-	Terminal &term = Terminal::windows.at("main");
 	int prixCourse;
 	auto player = std::find_if(_players.begin(), _players.end(),
     			[=] (const Concurrent &c) { return (c.name == Profile::active->name); });
@@ -106,39 +105,40 @@ bool Race::start()
 	auto player = std::find_if(_players.begin(), _players.end(),
     			[=] (const Concurrent &c) { return (c.name == Profile::active->name); });
 
-	term.clearScreen();
-	term << "Bienvenue à tous et a toutes !\n"
-			 << "Aujourd'hui va se derouler l'evenement tant attendu par tous les fans de sportives,"
-			 << "tout le monde s'est reuni et l'ambiance est a son comble sur le circuit: " << _track->name << ".\n"
-			 << "On m'annonce qu'il totalise " << _track->length << " m, et comprend pas moins de <JSPCB> de virages serres !\n"
-			 << "<Inserer commentaire meteo>" << "\n"
-			 << "D'autre part, il y a un vent de Force <ZAIREAU> dans l'enceinte du circuit.\n\n"
-			 << "Sans attendre passons tout de suite a la liste des Participants:\n\n";
+	std::string menu;
+	menu += "<Menu>"
+					" <Text>"
+				  "Bienvenue à tous et a toutes !\n"
+				  "Aujourd'hui va se derouler l'evenement tant attendu par tous les fans de sportives,"
+				  "tout le monde s'est reuni et l'ambiance est a son comble sur le circuit: " + _track->name + ".\n"
+				  "On m'annonce qu'il totalise " + std::to_string(_track->length.count()) + " m, et comprend pas moins de -JSPCB- de virages serres !\n"
+				  "-Inserer commentaire meteo-" + "\n"
+				  "D'autre part, il y a un vent de Force -ZAIREAU- dans l'enceinte du circuit.\n\n"
+				  "Sans attendre passons tout de suite a la liste des Participants:\n\n";
 	//on liste les concurrents
 	for (size_t i = 0; i < _players.size(); i++)
 	{
-		term << "En position " << i+1 << ", " << _players[i].name << " - " << _players[i].car->manufacturer << " " << _players[i].car->name << "\n";
+		menu += "En position " + std::to_string(i+1) + ", " + _players[i].name + " avec une " + _players[i].car->manufacturer + " " + _players[i].car->name + "\n";
 	}
-	term <<"\n\nPressez [ENTREE] pour commencer la course.\n";
-	getch();
-
-	term.clearScreen();
-	Menu::msg("Depart dans 3...");
+	menu +=	" </Text>"
+					" <Sep/>"
+					" <Button Type='Intern' Target=''>C'est parti!</Button>"
+					"</Menu>";
+	Menu::popUp("", menu, DataSource::Document);
+	Menu::alert("Depart dans 3...");
 	std::this_thread::sleep_for(std::chrono::seconds(1));
-	term.clearScreen();
-	Menu::msg("Depart dans 2...");
+	Menu::alert("Depart dans 2...");
 	std::this_thread::sleep_for(std::chrono::seconds(1));
-	term.clearScreen();
-	Menu::msg("Depart dans 1...");
+	Menu::alert("Depart dans 1...");
 	std::this_thread::sleep_for(std::chrono::seconds(1));
-	term.clearScreen();
-	Menu::msg("GO !");
+	Menu::alert("GO !");
 	std::this_thread::sleep_for(std::chrono::seconds(1));
+	Menu::active->clearAlerts();
 	compute(); //Calculer la course
 	if (player - _players.begin() < 3 && !player->out) Profile::active->careerStats.victories++;//Si le joueur finit sur le podium & pas d'accident
 	else Profile::active->careerStats.losses++;
 	Profile::active->careerStats.races++;
-	term <<"Pressez [ENTREE] pour quitter le circuit.\n";
+	term << setColor(Terminal::Color::BlackOnRed) << "Pressez [ENTREE] pour quitter le circuit.\n" << resetAttrs;
 	getch();
 	Profile::active->save();
 	return (true);
@@ -158,7 +158,7 @@ void Race::compute()
 		for (size_t i = 0; i < _players.size(); i++)
 		{
 			if (_players[i].out) continue; //Skip out _players
-			_players[i].car->update(tickDuration, omni::Meter(0));
+			_players[i].car->update(tickDuration, _track->getSegmentAt(_players[i].position));
 			_players[i].position += _players[i].car->speed * omni::Second(1);
 			if (_players[i].position > _track->length)
 			{
@@ -178,7 +178,7 @@ void Race::compute()
 			}
 		}
 		render(rtick);
-		std::this_thread::sleep_for(std::chrono::seconds(1));
+		std::this_thread::sleep_for(std::chrono::milliseconds(250));
 		rtick++;
 	}
 }

@@ -151,24 +151,22 @@ void Race::compute()
 		for (size_t i = 0; i < _players.size(); i++)
 		{
 			if (_players[i].out) continue; //Skip out _players
-			_players[i].car->update(tickDuration, _track->getSegmentAt(_players[i].position));
-			_players[i].position += _players[i].car->speed * omni::Second(1);
+			omni::Meter distance = _players[i].car->speed * tickDuration;
+			Segment seg = _track->getSegmentBetween(_players[i].position, _players[i].position + distance);
+			_players[i].position += distance;
+			if (!_players[i].car->update(tickDuration, seg))
+			{
+				_players[i].out = true;
+				_players[i].time = tickDuration * rtick;
+				if(player->name == _players[i].name) Profile::active->careerStats.accidents++;
+				_players[i].outmsg = Accident::collection[rand() % Accident::collection.size()].message + " (Tick" + std::to_string(ftick) + ")";
+			}
 			if (_players[i].position > _track->length)
 			{
 				_players[i].out = true;
 				_players[i].time = tickDuration * rtick;
 			}
-			if (rtick % 30 == 0) //each 30 ticks of 1 sec
-			{
-				if (std::rand() % 101 < probaAccident[i])
-				{
-					_players[i].out = true;
-					_players[i].time = tickDuration * rtick;
-					if(player->name == _players[i].name) Profile::active->careerStats.accidents++;
-					_players[i].outmsg = Accident::collection[rand() % Accident::collection.size()].message + " (Tick" + std::to_string(ftick) + ")";
-				}
-				ftick++;
-			}
+			ftick++;
 		}
 		render(rtick);
 		std::this_thread::sleep_for(std::chrono::milliseconds(250));
@@ -188,7 +186,7 @@ void Race::render(int rtick)
 		term << "[" << i+1 << "e]" << (_players[i].out ? " <K.O.> " : " ")  << _players[i].name << " : " << _players[i].position << "\n"
 				 << "  |-> " << _players[i].car->manufacturer << " " << _players[i].car->name << "\n"
 			   << "  |-> " << _players[i].car->speed.count() << "km/h (" << _players[i].car->getEngine()->power.count() << "ch at " << _players[i].car->getEngine()->revolutions.count() << ") [" << _players[i].car->getEngine()->gear + 1 << "]\n"
-				 << "  |-> " << _players[i].car->getEngine()->torque.count() << "Nm\n";
+				 << "  |-> C: " << _players[i].car->getEngine()->torque.count() << "Nm - Fc: " << _players[i].car->fc.count() << "N \n";
 		if (_players[i].out)
 		{
 			time_t timecpy = _players[i].time.count();

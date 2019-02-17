@@ -1,0 +1,25 @@
+{
+  "name" : "Ring",
+  "climate" : "normal",
+  "track" : [
+  {
+      "length" : 1000,
+      "gradient" : 180,
+      "curve": 0
+  },
+  {
+      "length" : 1000,
+      "gradient" : 180,
+      "curve": 180
+  },
+  {
+      "length" : 1000,
+      "gradient" : 180,
+      "curve": 0
+  },
+  {
+      "length" : 1000,
+      "gradient" : 180,
+      "curve": 180
+  }]
+}

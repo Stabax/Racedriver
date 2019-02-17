@@ -10,7 +10,7 @@ Car::Car() : Part() {} //Dummy for lua
 Car::Car(const json &data)
  : Part(data),
  	integrity(data.find("integrity") != data.end() ? data["integrity"].get<int>() : 100), nitro(100),
-	fuel(data.find("fuel") != data.end() ? data["fuel"].get<float>() : 0), speed(0), acceleration(0)
+	fuel(data.find("fuel") != data.end() ? data["fuel"].get<float>() : 0), speed(0), acceleration(0), fc(0)
 {
   copy(data["name"].get<std::string>()); //Copy if needed
  	_engine = std::make_shared<Engine>(Engine::collection[data["engine"].get<std::string>()]);
@@ -79,7 +79,7 @@ void Car::listerCars()
 	}*/
 }
 
-void Car::update(omni::Minute tickDuration, Segment segment)
+bool Car::update(const omni::Minute &tickDuration, const Segment &segment)
 {
 	_engine->update(speed, _tires->diameter);
 	omni::Horsepower power = _engine->power;
@@ -93,6 +93,10 @@ void Car::update(omni::Minute tickDuration, Segment segment)
 	omni::Newton rGround = MillinewtonHourPerKilometer(500) * speed * (_tires->mPressure /_tires->pressure) * omni::exp(_tires->integrity * 3);
 	acceleration -= (rWind / mass) - (rGround / mass);
 	speed += acceleration * tickDuration;
+	if (segment.getRadius() != omni::Meter(0)) fc = mass * omni::pow<2>(speed) / segment.getRadius();
+	else fc = omni::Newton(0);
+	if (fc > omni::Newton(1)) return (false);
+	return (true);
 }
 
 omni::Percent Car::getAerodynamic() const

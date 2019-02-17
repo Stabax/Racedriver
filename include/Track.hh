@@ -25,7 +25,10 @@ struct Entity {
 
 
 struct Segment {
+	Segment(const omni::Meter &g = 0, const omni::Meter &l = 0, const omni::Degree &c = 0);
 	Segment(const json &data);
+
+	omni::Meter getRadius() const;
 
 	omni::Meter gradient;
 	omni::Meter length;
@@ -42,11 +45,18 @@ struct Track
 		Sea
 	};
 
+	enum Orientation {
+		North,
+		East,
+		South,
+		West
+	};
+
 	Track(const json &data);
 	~Track();
 
 	Climate convertClimate(const std::string &climate);
-	Segment &getSegmentAt(const omni::Meter &at);
+	Segment getSegmentBetween(const omni::Meter &at, const omni::Meter &to);
 
 	static void loadCollection();
 

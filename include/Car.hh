@@ -34,7 +34,7 @@ public:
 
 	static void listerCars();
 
-	void update(omni::Minute tickDuration, Segment segment);
+	bool update(const omni::Minute &tickDuration, const Segment &segment);
 
 	void copy(const std::string &id);
 	void displayInfo() const;
@@ -72,6 +72,7 @@ public:
 	omni::Liter fuel;
 	omni::KilometerPerHour speed;
 	omni::MeterPerSecond2 acceleration;
+	omni::Newton fc;
 protected:
 	std::shared_ptr<Engine> _engine;
 	std::shared_ptr<Spoiler> _spoiler;

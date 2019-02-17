@@ -9,13 +9,14 @@
 
 struct Concurrent
 {
-  Concurrent(std::string n, std::shared_ptr<Car> c);
+  Concurrent(std::string n, Terminal::Color cl, std::shared_ptr<Car> c);
 
   friend bool operator==(const Concurrent &a, const Concurrent &b);
   friend bool operator>(const Concurrent &a, const Concurrent &b);
 
   std::string name;
   std::string outmsg;
+  Terminal::Color color;
   std::shared_ptr<Car> car;
   omni::Meter position;
   omni::Second time;

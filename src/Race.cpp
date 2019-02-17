@@ -10,7 +10,7 @@ std::vector<std::string> Race::driversCollection = std::vector<std::string>();
 
 Race::Race(std::shared_ptr<Car> pCar, Track &pTrack)
 {
-	_players.push_back(Concurrent(Profile::active->name, pCar));
+	_players.push_back(Concurrent(Profile::active->name, Terminal::Color::GreenOnBlack, pCar));
 	_track = std::make_shared<Track>(pTrack);
 }
 

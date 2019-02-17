@@ -70,7 +70,8 @@ const json &DataFile::getData()
 
 bool DataFile::rename(const std::string &oldName, const std::string &newName)
 {
-  return (!std::rename(oldName.c_str(), newName.c_str()));
+  std::string path = "./Data/Saves/";
+  return (!std::rename((path+oldName+".json").c_str(), (path+newName+".json").c_str()));
 }
 
 std::vector<std::string> DataFile::getFolderContents(std::string path, std::string filter, bool truncateFilter)

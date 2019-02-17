@@ -13,7 +13,9 @@ MenuItem::MenuItem(const xml_node &data)
 }
 
 MenuItem::MenuItem(std::string label)
- : _id(), _label(label), _hover(false)
+ : _id(),
+ _label(Localization::substitute(label)),
+ _hover(false)
 {
 }
 

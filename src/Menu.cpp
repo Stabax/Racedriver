@@ -38,6 +38,7 @@ Menu::Menu(const std::string &id)
 
 void Menu::onLoad()
 {
+	ScriptEngine::reset(); //Clears lua state
 	if (!_onLoadScript.empty()) ScriptEngine::runScript(_onLoadScript);
 }
 
@@ -143,7 +144,7 @@ void Menu::alert(std::string str)
 
 Menu::ASCIILogo Menu::convertASCIILogo(std::string art)
 {
-	if (art == "Game") return (Game);
+	if (art == "Game") return (Menu::ASCIILogo::Game);
 	else if (art == "Options") return (Options);
 	else if (art == "Garage") return (Garage);
 	else if (art == "Stats") return (Stats);
@@ -156,7 +157,7 @@ void Menu::printASCIILogo(ASCIILogo art)
 	Terminal &term = Terminal::windows.at("main");
 	switch (art)
 	{
-	case Game:
+	case Menu::ASCIILogo::Game:
 		term << setColor(Terminal::Color::RedOnBlack)
 				 << " ________                  ________       _____                    \n"
 				 << " ___  __ \\_____ ______________  __ \\_________(_)__   ______________\n"

@@ -62,6 +62,7 @@ void Profile::supprimerProfile([[maybe_unused]]const int& numeroSave)
 
 bool Profile::rename(const std::string &n)
 {
+	if (n == name) return (true);
 	if (!DataFile::rename(name, n))
 	{
 		throw (std::runtime_error("Could not rename profile"));

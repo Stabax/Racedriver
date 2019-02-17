@@ -36,7 +36,7 @@
 <Menu Id="Main" Title="Game">
   <Button Type="Goto" Target="Race"><Text Id="game.race"/></Button>
   <Button Type="Intern" Target="garageMenu()"><Text Id="game.garage"/></Button>
-  <Button Type="Intern" Target="statsMenu()"><Text Id="game.stats"/></Button>
+  <Button Type="Goto" Target="Stats"><Text Id="game.stats"/></Button>
   <Button Type="Goto" Target="Options"><Text Id="game.options"/></Button>
   <Button Type="Intern" Target="exit()"><Text Id="game.quit"/></Button>
 </Menu>
@@ -50,7 +50,7 @@
     <Option Value="en-US">en-US</Option>
     <Option Value="fr-FR">fr-FR</Option>
   </Select>
-  <Input Id="Profile"><Text Id="profile.name"/></Input>
+  <Input Id="Profile"><Text Id="profile.promptname"/></Input>
   <Sep/>
   <Button Type="Script" Target="ApplyOptions"><Text Id="global.apply"/></Button>
   <Button Type="Goto" Target="Main"><Text Id="global.back"/></Button>
@@ -79,11 +79,32 @@
   selectTrackMenu();
   startRace()
 </Script>
-<Menu Id="Stats">
+<Menu Id="Stats" Title='Stats'>
+  <Text>Stats du Profile: </Text>
   <Script>
-    printStats()
+    print(getProfileName())
+    pstats = getProfileStats()
   </Script>
-  <Button Type="Goto" Target="Main"><Text Id="global.back"/></Button>
+  <Sep/>
+  <Text> |Courses effectuees: </Text>
+  <Script>print(pstats.races)</Script>
+  <Text> |</Text>
+  <Text> |Victoires:  </Text>
+  <Script>print(pstats.victories)</Script>
+  <Text> |Defaites:   </Text>
+  <Script>print(pstats.losses)</Script>
+  <Text> |[V/D Ratio:  ]</Text>
+  <Text> |</Text>
+  <Text> |Accidents: </Text>
+  <Script>print(pstats.accidents)</Script>
+  <Text>#Stats Carriere:</Text>
+  <Text> |Credits remportes:</Text>
+  <Script>print(pstats.creditsEarned)</Script>
+  <Text> |</Text>
+  <Text> |Cars achetees:</Text>
+  <Script>print(pstats.carBought)</Script>
+  <Sep/>
+  <Button Type='Goto' Target='Main'>Back</Button>
 </Menu>
 <!-- GARAGE -->
 <Menu Id="Box" Title="Garage">

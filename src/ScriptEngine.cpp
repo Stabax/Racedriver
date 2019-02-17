@@ -12,6 +12,10 @@
 std::map<std::string, std::string> ScriptEngine::scripts = std::map<std::string, std::string>();
 std::map<std::string, std::string> ScriptEngine::environment = std::map<std::string, std::string>();
 
+void ScriptEngine::reset()
+{
+}
+
 void ScriptEngine::runScript(const std::string &scriptId)
 {
   if (scriptId == "") throw (std::runtime_error("No script given"));
@@ -30,6 +34,7 @@ void ScriptEngine::run(const std::string &script)
     Menu::alert("Script error: "+std::string(e.what()));
   }
 }
+
 void ScriptEngine::exposeCpp(sol::state &lua)
 {
   //General
@@ -76,6 +81,7 @@ void ScriptEngine::exposeCpp(sol::state &lua)
   if (Profile::active != nullptr)
   {
     lua.set_function("getProfileName", [] () { return (Profile::active->name); });
+    lua.set_function("getProfileStats", [] () { return (Profile::active->careerStats); });
     lua.set_function("getProfileDifficulty", [] () { return (std::to_string(Profile::active->difficulty)); });
     lua.set_function("getProfileLocale", [=] () { return (Profile::active->localization); });
   }
@@ -107,6 +113,7 @@ void ScriptEngine::exposeCpp(sol::state &lua)
 
 void ScriptEngine::exposeCollections(sol::state &lua)
 {
+  Stats::expose(lua);
   Collection<Engine>::expose(lua);
   lua["Engines"] = Engine::collection;
   Collection<Spoiler>::expose(lua);

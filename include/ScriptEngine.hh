@@ -10,6 +10,7 @@ class Menu;
 
 struct ScriptEngine
 {
+  static void reset();
   static void runScript(const std::string &scriptId);
   static void run(const std::string &script);
   static void exposeCpp(sol::state &lua);

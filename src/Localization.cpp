@@ -30,10 +30,13 @@ std::string Localization::substitute(xml_node data)
 {
   std::string str;
 
-  try {
-    str += Localization::data.at(data.attribute("Id").value());
-  } catch(...) {
-    str += data.attribute("Id").value();
+  if (strcmp(data.name(), "Text") == 0)
+  {
+    try {
+      str += Localization::data.at(data.attribute("Id").value());
+    } catch(...) {
+      str += data.attribute("Id").value();
+    }
   }
 	for (pugi::xml_node el = data.first_child(); el; el = el.next_sibling())
   {

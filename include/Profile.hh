@@ -29,6 +29,21 @@ struct Stats {
 		creditsEarned = cr;
 		carBought = c;
 	}
+
+  static void expose(sol::state &lua)
+  {
+    lua.new_usertype<Stats>("Stats",
+      // constructor
+      sol::constructors<Stats()>(),
+
+      "races", &Stats::races,
+      "victories", &Stats::victories,
+      "losses", &Stats::losses,
+      "accidents", &Stats::accidents,
+      "creditsEarned", &Stats::creditsEarned,
+      "carBought", &Stats::carBought
+    );
+  }
 };
 
 /*!

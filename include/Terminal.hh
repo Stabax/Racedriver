@@ -64,8 +64,6 @@ public:
   Terminal &addWindow(const std::string &winId, Point pos, Point size);
   static void removeWindow(const std::string &winId);
 
-  static std::unique_ptr<Terminal> instance;
-
   static std::map<std::string, Terminal> windows; //Public window map
 
   Terminal &operator<<(std::function<Terminal&(Terminal &term)>);

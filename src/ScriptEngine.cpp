@@ -26,6 +26,7 @@ void ScriptEngine::run(const std::string &script)
 {
   sol::state lua; // creates a Lua context and loads standard Lua libraries
 
+	lua.open_libraries(sol::lib::base);
   exposeCpp(lua);
   exposeCollections(lua);
   try {
@@ -114,12 +115,17 @@ void ScriptEngine::exposeCpp(sol::state &lua)
 void ScriptEngine::exposeCollections(sol::state &lua)
 {
   Stats::expose(lua);
-  Collection<Engine>::expose(lua);
-  lua["Engines"] = Engine::collection;
-  Collection<Spoiler>::expose(lua);
+  Car::expose(lua);
+  Engine::expose(lua);
   Spoiler::expose(lua);
-  lua["Spoilers"] = Spoiler::collection;
+  Tires::expose(lua);
+  Collection<Car>::expose(lua);
+  Collection<Engine>::expose(lua);
+  Collection<Spoiler>::expose(lua);
   Collection<Tires>::expose(lua);
+  lua["Cars"] = Car::collection;
+  lua["Engines"] = Engine::collection;
+  lua["Spoilers"] = Spoiler::collection;
   lua["Tires"] = Tires::collection;
 }
 

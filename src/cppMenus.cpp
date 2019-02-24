@@ -129,66 +129,6 @@ void menuBuyCar()
 	//static_cast<std::shared_ptr<MenuButton>>(Menu::active->getItem("BuyCar"))->bind()
 }
 
-void menuUpgradeEngine()
-{
-	Car &car = Profile::active->garage.getBox(atoi(ScriptEngine::environment["Box"].c_str()));
-	std::vector<Engine> items = Engine::collection.filter([&] (const Engine &e) {
-		return (e.manufacturer == car.manufacturer);
-	});
-	std::string menu;
-	menu += "<Menu Title='Garage'>"
-					" <Text>Current: " + car.getEngine()->name + "</Text>"
-					" <Text>Power: " + std::to_string(car.getEngine()->mPower.count()) + "ch at " + std::to_string(car.getEngine()->mRevolutions.count()) + "rpm</Text>"
-					" <Text>Energy: " + EnergyNames[car.getEngine()->energy] + "</Text>"
-					" <Sep/>";
-	for (size_t i = 0; i < items.size(); i++)
-	{
-		menu += " <Button Type='Intern' Target='goToPath(\"Garage\", \"./Data/Menus/Main.xml\") '>" + items[i].name + "</Button>";
-	}
- 	menu += " <Sep/>"
-	 				"	<Button Type='Goto' Path='./Data/Menus/Main.xml' Target='UpgradeCar'>Back</Button>"
-					"</Menu>";
-	Menu::goTo("", menu, DataSource::Document);
-}
-void menuUpgradeSpoiler()
-{
-	Car &car = Profile::active->garage.getBox(atoi(ScriptEngine::environment["Box"].c_str()));
-	std::string menu;
-	menu += "<Menu Title='Garage'>"
-					" <Text>Current: " + (car.getSpoiler() == nullptr ? "None" : car.getSpoiler()->manufacturer + " " + car.getSpoiler()->name) + "</Text>"
-					" <Text>Aerodynamic: " + (car.getSpoiler() == nullptr ? "N/A" : std::to_string(car.getSpoiler()->aerodynamic.count()*100)) + "</Text>"
-					" <Sep/>";
-	for (size_t i = 0; i < Spoiler::collection.size(); i++)
-	{
-		menu += " <Button Type='Intern' Target='goToPath(\"Garage\", \"./Data/Menus/Main.xml\") '>"
-		      + Spoiler::collection[i].manufacturer + " " + Spoiler::collection[i].name + "</Button>";
-	}
- 	menu += " <Sep/>"
-	 				"	<Button Type='Goto' Path='./Data/Menus/Main.xml' Target='UpgradeCar'>Back</Button>"
-					"</Menu>";
-	Menu::goTo("", menu, DataSource::Document);
-	//static_cast<std::shared_ptr<MenuButton>>(Menu::active->getItem("BuyCar"))->bind()
-}
-
-void menuUpgradeTires()
-{
-	Car &car = Profile::active->garage.getBox(atoi(ScriptEngine::environment["Box"].c_str()));
-	std::string menu;
-	menu += "<Menu Title='Garage'>"
-					" <Text>Current: " + car.getTires()->manufacturer + " " + car.getTires()->name + "</Text>"
-					" <Text>Diameter: " + std::to_string(car.getTires()->diameter.count()) + "in</Text>"
-					" <Sep/>";
-	for (size_t i = 0; i < Tires::collection.size(); i++)
-	{
-		menu += " <Button Type='Intern' Target='goToPath(\"Garage\", \"./Data/Menus/Main.xml\") '>"
-				  + Tires::collection[i].manufacturer + " " + Tires::collection[i].name + "</Button>";
-	}
- 	menu += " <Sep/>"
-	 				"	<Button Type='Goto' Path='./Data/Menus/Main.xml' Target='UpgradeCar'>Back</Button>"
-					"</Menu>";
-	Menu::goTo("", menu, DataSource::Document);
-}
-
 void menuChooseCharm()
 {
 	Menu::alert("not impl!");

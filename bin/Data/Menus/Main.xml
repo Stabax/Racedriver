@@ -131,10 +131,52 @@
     print("[Box "..getEnv("Box").."] "..car.manufacturer.." "..car.name)
   </Script>
   <Sep/>
-  <Button Type="Intern" Target="upgradeEngineMenu()"><Text Id="car.engine"/></Button>
-  <Button Type="Intern" Target="upgradeSpoilerMenu()"><Text Id="car.spoiler"/></Button>
-  <Button Type="Intern" Target="upgradeTiresMenu()"><Text Id="car.tires"/></Button>
+  <Button Type="Goto" Target="UpgradeEngine"><Text Id="car.engine"/></Button>
+  <Button Type="Goto" Target="UpgradeSpoiler"><Text Id="car.spoiler"/></Button>
+  <Button Type="Goto" Target="UpgradeTires"><Text Id="car.tires"/></Button>
   <Button Type="Intern" Target="chooseCharmMenu()"><Text Id="car.charm"/></Button>
+  <Sep/>
+  <Button Type="Goto" Target="Main"><Text Id="global.back"/></Button>
+</Menu>
+<Menu Id="UpgradeEngine" Title="Garage">
+  <Script>
+    car = getBox(getEnv("Box"))
+    print("[Box "..getEnv("Box").."] "..car.manufacturer.." "..car.name)
+  </Script>
+  <Sep/>
+  <Script>
+    for i = 0, #Engines do
+      print(Engines:at(i).manufacturer .. " - " .. Engines:at(i).name .. "\n")
+    end
+  </Script>
+  <Sep/>
+  <Button Type="Goto" Target="Main"><Text Id="global.back"/></Button>
+</Menu>
+<Menu Id="UpgradeSpoiler" Title="Garage">
+  <Script>
+    car = getBox(getEnv("Box"))
+    print("[Box "..getEnv("Box").."] "..car.manufacturer.." "..car.name)
+  </Script>
+  <Sep/>
+  <Script>
+    for i = 0, #Spoilers do
+      print(Spoilers:at(i).manufacturer .. " - " .. Spoilers:at(i).name .. "\n")
+    end
+  </Script>
+  <Sep/>
+  <Button Type="Goto" Target="Main"><Text Id="global.back"/></Button>
+</Menu>
+<Menu Id="UpgradeTires" Title="Garage">
+  <Script>
+    car = getBox(getEnv("Box"))
+    print("[Box "..getEnv("Box").."] "..car.manufacturer.." "..car.name)
+  </Script>
+  <Sep/>
+  <Script>
+    for i = 0, #Tires do
+      print(Tires:at(i).manufacturer .. " - " .. Tires:at(i).name .. "\n")
+    end
+  </Script>
   <Sep/>
   <Button Type="Goto" Target="Main"><Text Id="global.back"/></Button>
 </Menu>

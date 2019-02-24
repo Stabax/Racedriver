@@ -11,9 +11,6 @@ void menuGarage();
 void menuBuyBox();
 void menuBuyCar();
 
-void menuUpgradeEngine();
-void menuUpgradeSpoiler();
-void menuUpgradeTires();
 void menuChooseCharm();
 
 #endif /* !CPPMENUS_HH_ */

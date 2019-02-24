@@ -104,12 +104,7 @@ void ScriptEngine::exposeCpp(sol::state &lua)
   lua.set_function("buyCarMenu", &menuBuyCar);
   lua.set_function("buyBoxMenu", &menuBuyBox);
 
-  lua.set_function("upgradeEngineMenu", &menuUpgradeEngine);
-  lua.set_function("upgradeSpoilerMenu", &menuUpgradeSpoiler);
-  lua.set_function("upgradeTiresMenu", &menuUpgradeTires);
   lua.set_function("chooseCharmMenu", &menuChooseCharm);
-  //lua.set_function("career", &menuCourse);
-  //lua.set_function("freeRace", &menuCourseLibre);
 }
 
 void ScriptEngine::exposeCollections(sol::state &lua)

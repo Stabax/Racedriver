@@ -266,5 +266,5 @@ bool MenuAlert::isSelectable()
 
 void MenuAlert::render()
 {
-  Menu::msg(_label);
+  Terminal::windows.at("main") << "::::\n" << _label << "\n::::\n";
 }

@@ -131,9 +131,7 @@ bool Game::update()
 	//si la verion actuelle est differente de la version disponible, on telecharge la derniere version de racedriver
 	if(GAME_VERSION != stringLatestVersion)
 	{
-		Menu::msg("Votre client est obsolete, une mise a jour est disponible !");
-		term << "Vous allez telecharger la derniere version de Racedriver.\n";
-		if (!Menu::askConfirmation()) return (false);
+		Menu::alert("Votre client est obsolete, une mise a jour est disponible !");
 
 		FILE *updateFile = fopen("Update/update.zip", "w");
 		CURL *curlUpdate;
@@ -158,7 +156,7 @@ bool Game::update()
 			Menu::alert("Le telechargement de la mise a jour a echoue.");
 			return (false);
 		}
-		Menu::msg("Le client a ete mis a jour avec succes !");
+		Menu::alert("Le client a ete mis a jour avec succes !");
 		term << ">Vous devez redemmarer le jeu pour appliquer les modifications.\n";
 		term << ">Appuyez sur [Entree] pour quitter.";
 		getch();
@@ -168,7 +166,7 @@ bool Game::update()
 		//le programme se termine ici grace à l'apel à execl()
 		return (true);
 	}
-	Menu::msg("Aucune mise à jour disponible.");
+	Menu::alert("Aucune mise à jour disponible.");
 	term << ">Appuyez sur [Entree] pour continuer.\n";
 	getch();
 	return (true);

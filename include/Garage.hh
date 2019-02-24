@@ -17,9 +17,6 @@ public:
   bool addCar(Car &car);
   void sellCar(size_t index);
 
-  void displayBoxList();
-  void displayBoxDetail(int index);
-
 private:
   std::vector<std::shared_ptr<Car>> _boxs;
   size_t _boxCount;

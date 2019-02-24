@@ -28,7 +28,7 @@ Menu::Menu(const std::string &id)
 			_entities.push_back(obj);
 			if (obj->isSelectable()) _items.push_back(obj);
 		} catch(std::exception &e) {
-			Menu::error(e.what());
+			Menu::alert(e.what());
 		}
 	}
 	if (menu.attribute("Title")) _title = Menu::convertASCIILogo(menu.attribute("Title").value());
@@ -55,9 +55,9 @@ void Menu::setActiveDocument(std::shared_ptr<MenuFile> doc)
 	MenuDialog::load(activeDoc->getData());
 }
 
-void Menu::setClickCallback(std::function<void()> callback)
+void Menu::setClickCallback(std::function<void(std::shared_ptr<MenuItem>)> callback)
 {
-	_clickCallback = std::make_shared<std::function<void()>>(callback);
+	_clickCallback = std::make_shared<std::function<void(std::shared_ptr<MenuItem>)>>(callback);
 }
 
 bool Menu::update()
@@ -115,11 +115,16 @@ bool Menu::run()
 		{
 			if (active->_clickCallback != nullptr)
 			{
-				(*active->_clickCallback)();
+				(*active->_clickCallback)(active->getHoveredItem());
 			}
 		}
 	}
 	return (true);
+}
+
+std::shared_ptr<MenuItem> Menu::getHoveredItem()
+{
+	return (_entities[_cursor]);
 }
 
 void Menu::renderConsole(std::string command)
@@ -139,7 +144,7 @@ void Menu::alert(std::string str)
 		if (!menu.load()) throw(std::runtime_error("Error on loading Alert XML"));
 		Menu::active->addAlert(MenuItem::create(menu.getData().first_child()));
 	}
-	else msg(str);
+	else Terminal::windows.at("main").print(str+"\n");
 }
 
 Menu::ASCIILogo Menu::convertASCIILogo(std::string art)
@@ -217,43 +222,6 @@ void Menu::printASCIILogo(ASCIILogo art)
 	}
 }
 
-void Menu::error(std::string str)
-{
-	Menu::msg("ERREUR: "+str);
-}
-
-void Menu::msg(std::string str)
-{
-	Terminal &term = Terminal::windows.at("main");
-	term << setColor(Terminal::Color::BlackOnRed)
-			 << "::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::\n"
-			 << ":: " << str << "\n"
-			 << "::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::\n\n"
-			 << resetAttrs;
-}
-
-bool Menu::askConfirmation()
-{
-	Terminal &term = Terminal::windows.at("main");
-  char input;
-  term << "=====================\n"
-			 << "Etes-vous sur ? [O/n]\n"
-			 << "=====================\n";
-  input = getch();
-  if (input == 'o' || input == 'O') return (true);
-  return (false);
-}
-
-int Menu::askChoice()
-{
-	Terminal &term = Terminal::windows.at("main");
-  char input;
-  term << "=====================\n"
-			 << "Choix ? ";
-  input = getch();
-  return (atoi(&input));
-}
-
 void Menu::addAlert(std::shared_ptr<MenuItem> menuItem)
 {
 	_alerts.push_back(menuItem);
@@ -286,7 +254,7 @@ void Menu::popUp(std::string id, std::string source, const DataSource dataMode)
 	};
 	if (active->_clickCallback != nullptr)
 	{
-		(*active->_clickCallback)();
+		(*active->_clickCallback)(active->getHoveredItem());
 	}
 	setActiveDocument(prevDoc);
 	goTo(prevId);

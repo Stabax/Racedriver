@@ -28,11 +28,6 @@ public:
   static ASCIILogo convertASCIILogo(std::string art);
   static void printASCIILogo(ASCIILogo art);
   static void alert(std::string str);
-  static void msg(std::string str);
-  static void error(std::string str);
-
-  static bool askConfirmation();
-  static int askChoice();
 
   static void setActiveDocument(const std::string &source, const DataSource sourceMode);
   static void setActiveDocument(std::shared_ptr<MenuFile> doc);
@@ -52,7 +47,7 @@ public:
   void addAlert(std::shared_ptr<MenuItem> menuItem);
   void clearAlerts();
   std::shared_ptr<MenuItem> getItem(const std::string &id);
-  void setClickCallback(std::function<void()> callback);
+  void setClickCallback(std::function<void(std::shared_ptr<MenuItem>)> callback);
 
   int getCursor();
   void updateCursor(bool add);
@@ -61,11 +56,13 @@ public:
   void renderConsole(std::string command);
 
 private:
+  std::shared_ptr<MenuItem> getHoveredItem();
+
   std::string _id;
   int _lastInput;
   ASCIILogo _title; //title art
   int _cursor;
-  std::shared_ptr<std::function<void()>> _clickCallback;
+  std::shared_ptr<std::function<void(std::shared_ptr<MenuItem>)>> _clickCallback;
   std::string _onLoadScript;
   std::deque<std::shared_ptr<MenuItem>> _alerts;
   std::vector<std::shared_ptr<MenuItem>> _entities;

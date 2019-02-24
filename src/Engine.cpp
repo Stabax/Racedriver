@@ -9,7 +9,19 @@ Engine::Engine(const json &data)
 	price((mPower.count()*25)+(vRang(rank)*500)), gear(0), power(0),
 	revolutions(0), torque(0)
 {
+}
 
+void Engine::expose(sol::state &lua)
+{
+	lua.new_usertype<Engine>("Engine",
+		// constructor
+		sol::constructors<Engine(const json &data)>(),
+
+		"getId", &Engine::getId,
+		"name", &Engine::name,
+		"manufacturer", &Engine::manufacturer,
+		"rank", &Engine::rank
+	);
 }
 
 std::string Engine::info()

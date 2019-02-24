@@ -16,10 +16,13 @@ Spoiler::~Spoiler()
 
 void Spoiler::expose(sol::state &lua)
 {
-    lua.new_usertype<Spoiler>("Spoiler",
-      // constructor
-      sol::constructors<Spoiler(const json &data)>(),
+	lua.new_usertype<Spoiler>("Spoiler",
+		// constructor
+		sol::constructors<Spoiler(const json &data)>(),
 
-      "getId", &Spoiler::getId
-    );
+		"getId", &Spoiler::getId,
+		"name", &Spoiler::name,
+		"manufacturer", &Spoiler::manufacturer,
+		"rank", &Spoiler::rank
+	);
 }

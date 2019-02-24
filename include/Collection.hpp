@@ -104,7 +104,8 @@ public:
       // constructor
       sol::constructors<Collection<T>()>(),
 
-      "size", &Collection<T>::size
+      "size", &Collection<T>::size,
+      "at", &Collection<T>::at
     );
   }
 

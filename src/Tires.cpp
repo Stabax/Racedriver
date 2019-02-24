@@ -8,29 +8,22 @@ Tires::Tires(const json &data)
  : Part(data), diameter(data["diameter"].get<int>()),
  pressure(2.5f), mPressure(2.5f), integrity(100), price(vRang(rank) * 1500)
 {
-
 }
 
 Tires::~Tires()
 {
-
 }
 
-void Tires::listerTires()
+
+void Tires::expose(sol::state &lua)
 {
-	/*
-	Terminal::get() <<"   |Marque     |rang  |Prix  |\n\n";
-	for (size_t i = 0; i < collection.size(); i++)
-	{
-		std::string espace = "      "; //6 espaces
-		std::string espace2;
-		if(collection[i].name.size() < 12)
-		{
-			for (size_t i = 0; i < 12 - collection[i].name.size(); i++)
-			{
-				espace2 += " ";
-			}
-		}
-		Terminal::get() << i << "." << " " << collection[i].name << espace2 << collection[i].rank << espace << "PRIX" << "c\n";
-	}*/
+	lua.new_usertype<Tires>("Tires",
+		// constructor
+		sol::constructors<Tires(const json &data)>(),
+
+		"getId", &Tires::getId,
+		"name", &Tires::name,
+		"manufacturer", &Tires::manufacturer,
+		"rank", &Tires::rank
+	);
 }

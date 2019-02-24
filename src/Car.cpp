@@ -46,8 +46,11 @@ void Car::expose(sol::state &lua)
 		// constructor
 		sol::constructors<Car()>(),
 
+		"getId", &Car::getId,
 		"name", &Car::name,
-		"manufacturer", &Car::manufacturer
+		"manufacturer", &Car::manufacturer,
+		"mass", &Car::mass,
+		"rank", &Car::rank
 	);
 }
 

@@ -18,9 +18,9 @@ public:
 	Tires(const json &data);
 	~Tires();
 
-  static const std::string getPath() { return ("Tires"); };
+	static void expose(sol::state &lua);
 
-	static void listerTires();
+  static const std::string getPath() { return ("Tires"); };
 
 	static Collection<Tires> collection;
 

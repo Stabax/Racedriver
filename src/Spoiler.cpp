@@ -5,7 +5,7 @@
 Collection<Spoiler> Spoiler::collection = Collection<Spoiler>();
 
 Spoiler::Spoiler(const json &data)
- : Part(data), aerodynamic(data["aerodynamic"].get<int>())
+ : Part(data, TSpoiler), aerodynamic(data["aerodynamic"].get<int>())
 {
 }
 

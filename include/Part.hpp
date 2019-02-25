@@ -15,8 +15,15 @@
 class Part
 {
 public:
-  Part() {}; //Dummy for lua
-  Part(const json &data) //build from json
+  enum Type {
+    TCar,
+    TEngine,
+    TSpoiler,
+    TTires
+  };
+
+  Part(const json &data, Type t) //build from json
+   : type(t)
   {
     if (data.find("name") != data.end()) name = data["name"].get<std::string>();
     if (data.find("mass") != data.end()) mass = omni::Kilogram(data["mass"].get<int>());
@@ -45,6 +52,7 @@ public:
   std::string name;
 	omni::Kilogram mass;
   Rank rank;
+  Type type;
 };
 
 #endif /* !PART_HPP_ */

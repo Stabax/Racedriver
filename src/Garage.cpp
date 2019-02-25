@@ -37,6 +37,18 @@ size_t Garage::getBoxCount() const
   return (_boxCount);
 }
 
+bool Garage::addBox()
+{
+	if (static_cast<int>(Profile::active->credits - (_boxCount * 1000)) < 0)
+	{
+		Menu::alert("Not enough money");
+		return (false);
+	}
+	_boxCount++;
+	Menu::alert("Garage agrandi avec succes!");
+	return (true);
+}
+
 bool Garage::addCar(Car &car)
 {
 	if (_boxs.size() >= _boxCount)
@@ -46,6 +58,22 @@ bool Garage::addCar(Car &car)
 	}
 	_boxs.push_back(std::make_shared<Car>(car));
 	return (true);
+}
+
+bool Garage::buyCar(Car &car)
+{
+	if (Profile::active->credits - car.getPrice() < 0)
+	{
+		Menu::alert("Not enough money");
+		return (false);
+	}
+	Profile::active->credits -= car.getPrice();
+	if (addCar(car))
+	{
+		Menu::alert(car.name+" achetee avec succes !");
+		return (true);
+	}
+	return (false);
 }
 
 void Garage::sellCar(size_t index)

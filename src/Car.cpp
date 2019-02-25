@@ -5,10 +5,8 @@
 
 Collection<Car> Car::collection = Collection<Car>();
 
-Car::Car() : Part() {} //Dummy for lua
-
 Car::Car(const json &data)
- : Part(data),
+ : Part(data, TCar),
  	integrity(data.find("integrity") != data.end() ? data["integrity"].get<int>() : 100), nitro(100),
 	fuel(data.find("fuel") != data.end() ? data["fuel"].get<float>() : 0), speed(0), acceleration(0), fc(0)
 {
@@ -44,7 +42,7 @@ void Car::expose(sol::state &lua)
 {
 	lua.new_usertype<Car>("Car",
 		// constructor
-		sol::constructors<Car()>(),
+		sol::constructors<Car(const json &)>(),
 
 		"getId", &Car::getId,
 		"name", &Car::name,
@@ -128,6 +126,25 @@ std::shared_ptr<Spoiler> Car::getSpoiler() const
 std::shared_ptr<Tires> Car::getTires() const
 {
 	return (_tires);
+}
+
+void Car::setPart(const Part &part)
+{
+	switch (part.type)
+	{
+		case TEngine:
+			setEngine(dynamic_cast<const Engine &>(part));
+			break;
+		case TSpoiler:
+			setSpoiler(dynamic_cast<const Spoiler &>(part));
+			break;
+		case TTires:
+			setTires(dynamic_cast<const Tires &>(part));
+			break;
+		default:
+			throw ("Unmountable part");
+			break;
+	}
 }
 
 void Car::setEngine(const Engine &newEngine)

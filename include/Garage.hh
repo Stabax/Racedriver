@@ -14,7 +14,9 @@ public:
   size_t getSize() const;
   size_t getBoxCount() const;
 
+  bool addBox();
   bool addCar(Car &car);
+  bool buyCar(Car &car);
   void sellCar(size_t index);
 
 private:

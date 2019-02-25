@@ -27,8 +27,8 @@ void ScriptEngine::run(const std::string &script)
   sol::state lua; // creates a Lua context and loads standard Lua libraries
 
 	lua.open_libraries(sol::lib::base);
-  exposeCpp(lua);
   exposeCollections(lua);
+  exposeCpp(lua);
   try {
     lua.script(script);
   } catch (std::exception &e) {
@@ -93,8 +93,9 @@ void ScriptEngine::exposeCpp(sol::state &lua)
     lua.set_function("getProfileLocale", [=] () { return (Profile::active->localization); });
   }
   //Garage management
-  Car::expose(lua);
   lua.set_function("getBox", [=] (std::string index) { return (Profile::active->garage.getBox(atoi(index.c_str()))); });
+  lua.set_function("buyCar", [=] (Car car) { Profile::active->garage.buyCar(car); });
+  lua.set_function("setPart", [=] (Car &car, Part &part) { car.setPart(part); });
   //Cpp Menus
   lua.set_function("loadGameMenu", &menuLoadGame);
   lua.set_function("startRace", [] () {

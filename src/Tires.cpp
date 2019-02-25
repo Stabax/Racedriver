@@ -5,7 +5,7 @@
 Collection<Tires> Tires::collection = Collection<Tires>();
 
 Tires::Tires(const json &data)
- : Part(data), diameter(data["diameter"].get<int>()),
+ : Part(data, TTires), diameter(data["diameter"].get<int>()),
  pressure(2.5f), mPressure(2.5f), integrity(100), price(vRang(rank) * 1500)
 {
 }

@@ -24,7 +24,6 @@ typedef millinewtonHourPerKilometer<> MillinewtonHourPerKilometer;
 class Car : public Part
 {
 public:
-	Car();
 	Car(const json &data);
 	~Car();
 
@@ -52,6 +51,7 @@ public:
 	std::shared_ptr<Spoiler> getSpoiler() const;
 	std::shared_ptr<Tires> getTires() const;
 
+	void setPart(const Part &part);
 	void setEngine(const Engine &newEngine);
 	void setSpoiler(const Spoiler &newSpoiler);
 	void setTires(const Tires &tires);

@@ -11,9 +11,20 @@
 
 std::map<std::string, std::string> ScriptEngine::scripts = std::map<std::string, std::string>();
 std::map<std::string, std::string> ScriptEngine::environment = std::map<std::string, std::string>();
+sol::state ScriptEngine::engine;
+sol::environment ScriptEngine::scriptEnv;
+
+void ScriptEngine::init()
+{
+  engine.open_libraries(sol::lib::base);
+}
 
 void ScriptEngine::reset()
 {
+  scriptEnv = sol::environment(ScriptEngine::engine, sol::create);
+  exposeCollections();
+  exposeCpp();
+  engine.collect_garbage();
 }
 
 void ScriptEngine::runScript(const std::string &scriptId)
@@ -24,111 +35,108 @@ void ScriptEngine::runScript(const std::string &scriptId)
 
 void ScriptEngine::run(const std::string &script)
 {
-  sol::state lua; // creates a Lua context and loads standard Lua libraries
+  //sol::state lua; // creates a Lua context and loads standard Lua libraries
 
-	lua.open_libraries(sol::lib::base);
-  exposeCollections(lua);
-  exposeCpp(lua);
   try {
-    lua.script(script);
+    engine.script(script, scriptEnv);
   } catch (std::exception &e) {
     Menu::alert("Script error: "+std::string(e.what()));
   }
 }
 
-void ScriptEngine::exposeCpp(sol::state &lua)
+void ScriptEngine::exposeCpp()
 {
   //General
-  lua.set_function("print", [=] (std::string x) { Terminal::windows.at("main") << x; });
-  lua.set_function("clearScreen", [] () { Terminal::windows.at("main").clearScreen(); });
-  lua.set_function("pause", [] () { getch(); });
-  lua.set_function("exit", [] () { exit(0); });
-  lua.set_function("alert", [=] (std::string msg) { Menu::alert(msg); });
-  lua.set_function("goTo", [=] (std::string id) { Menu::goTo(id); });
-  lua.set_function("goToPath", [=] (std::string id, std::string path) { Menu::goTo(id, path); });
-  lua.set_function("setEnv", [=] (std::string key, std::string value) { environment[key] = value; });
-  lua.set_function("getEnv", [=] (std::string key) { return (environment[key]); });
+  scriptEnv.set_function("print", [=] (std::string x) { Terminal::windows.at("main") << x; });
+  scriptEnv.set_function("clearScreen", [] () { Terminal::windows.at("main").clearScreen(); });
+  scriptEnv.set_function("pause", [] () { getch(); });
+  scriptEnv.set_function("exit", [] () { exit(0); });
+  scriptEnv.set_function("alert", [=] (std::string msg) { Menu::alert(msg); });
+  scriptEnv.set_function("goTo", [=] (std::string id) { Menu::goTo(id); });
+  scriptEnv.set_function("goToPath", [=] (std::string id, std::string path) { Menu::goTo(id, path); });
+  scriptEnv.set_function("setEnv", [=] (std::string key, std::string value) { environment[key] = value; });
+  scriptEnv.set_function("getEnv", [=] (std::string key) { return (environment[key]); });
   //Menu helper
-  lua.set_function("addMenuItem", [=] (int idx, std::string xml) {
+  scriptEnv.set_function("addMenuItem", [=] (int idx, std::string xml) {
     MenuFile menu(xml, DataSource::Document);
 
     if (!menu.load()) Menu::alert("Invalid XML injection");
     Menu::active->addItem(menu.getData().first_child(), idx);
   });
-  lua.set_function("getCursor", [] () { return (Menu::active->getCursor()); });
-  lua.set_function("getInputData", [=] (std::string id) {
+  scriptEnv.set_function("getCursor", [] () { return (Menu::active->getCursor()); });
+  scriptEnv.set_function("getInputData", [=] (std::string id) {
     std::shared_ptr<MenuInput> in = std::dynamic_pointer_cast<MenuInput>(Menu::active->getItem(id));
     return (in->getData());
   });
-  lua.set_function("setInputData", [=] (std::string id, std::string value) {
+  scriptEnv.set_function("setInputData", [=] (std::string id, std::string value) {
     std::shared_ptr<MenuInput> in = std::dynamic_pointer_cast<MenuInput>(Menu::active->getItem(id));
     in->setData(value);
   });
-  lua.set_function("getSelectValue", [=] (std::string id) {
+  scriptEnv.set_function("getSelectValue", [=] (std::string id) {
     std::shared_ptr<MenuSelect> sel = std::dynamic_pointer_cast<MenuSelect>(Menu::active->getItem(id));
     return (sel->getData());
   });
-  lua.set_function("setSelectValue", [=] (std::string id, std::string value) {
+  scriptEnv.set_function("setSelectValue", [=] (std::string id, std::string value) {
     std::shared_ptr<MenuSelect> sel = std::dynamic_pointer_cast<MenuSelect>(Menu::active->getItem(id));
     sel->setData(value);
   });
   //Custom
-  lua.set_function("printASCIILogo", [] (std::string art) { Menu::printASCIILogo(Menu::convertASCIILogo(art)); });
-  lua.set_function("getVersion", [] () { return (GAME_VERSION); });
+  scriptEnv.set_function("printASCIILogo", [] (std::string art) { Menu::printASCIILogo(Menu::convertASCIILogo(art)); });
+  scriptEnv.set_function("getVersion", [] () { return (GAME_VERSION); });
   //Profile management
-  lua.set_function("setProfileName", [=] (std::string name) { Profile::active->rename(name); });
-  lua.set_function("setProfileDifficulty", [=] (std::string diff) { Profile::active->difficulty = static_cast<Profile::Difficulty>(atoi(diff.c_str())); });
-  lua.set_function("setProfileLocale", [=] (std::string locale) {
+  scriptEnv.set_function("setProfileName", [=] (std::string name) { Profile::active->rename(name); });
+  scriptEnv.set_function("setProfileDifficulty", [=] (std::string diff) { Profile::active->difficulty = static_cast<Profile::Difficulty>(atoi(diff.c_str())); });
+  scriptEnv.set_function("setProfileLocale", [=] (std::string locale) {
     Profile::active->localization = locale;
     Localization::load(Profile::active->localization);
   });
   //Profile bindings
-  lua.set_function("loadProfile", [=] (std::string save) { Profile::load(save); });
-  lua.set_function("createProfile", [=] (std::string name, std::string locale) { Profile::create(name, locale); });
+  scriptEnv.set_function("loadProfile", [=] (std::string save) { Profile::load(save); });
+  scriptEnv.set_function("createProfile", [=] (std::string name, std::string locale) { Profile::create(name, locale); });
   if (Profile::active != nullptr)
   {
-    lua.set_function("getProfileName", [] () { return (Profile::active->name); });
-    lua.set_function("getProfileStats", [] () { return (Profile::active->careerStats); });
-    lua.set_function("getProfileDifficulty", [] () { return (std::to_string(Profile::active->difficulty)); });
-    lua.set_function("getProfileLocale", [=] () { return (Profile::active->localization); });
+    scriptEnv.set_function("getProfileName", [] () { return (Profile::active->name); });
+    scriptEnv.set_function("getProfileStats", [] () { return (Profile::active->careerStats); });
+    scriptEnv.set_function("getProfileDifficulty", [] () { return (std::to_string(Profile::active->difficulty)); });
+    scriptEnv.set_function("getProfileLocale", [=] () { return (Profile::active->localization); });
   }
   //Garage management
-  lua.set_function("getBox", [=] (std::string index) { return (Profile::active->garage.getBox(atoi(index.c_str()))); });
-  lua.set_function("buyCar", [=] (Car car) { Profile::active->garage.buyCar(car); });
-  lua.set_function("setPart", [=] (Car &car, Part &part) { car.setPart(part); });
+  scriptEnv.set_function("getBox", [=] (std::string index) { return (Profile::active->garage.getBox(atoi(index.c_str()))); });
+  scriptEnv.set_function("buyCar", [=] (Car car) { Profile::active->garage.buyCar(car); });
+  scriptEnv.set_function("setPart", [=] (Car &car, Part &part) { car.setPart(part); });
   //Cpp Menus
-  lua.set_function("loadGameMenu", &menuLoadGame);
-  lua.set_function("startRace", [] () {
+  scriptEnv.set_function("loadGameMenu", &menuLoadGame);
+  scriptEnv.set_function("startRace", [] () {
     Race race(std::make_shared<Car>(Profile::active->garage.getBox(atoi(ScriptEngine::environment["Box"].c_str()))),
               Track::collection[(atoi(ScriptEngine::environment["Track"].c_str()))]);
 
     if (race.preparations()) race.start();
   });
-  lua.set_function("statsMenu", &menuStats);
-  lua.set_function("selectCarMenu", &menuSelectCar);
-  lua.set_function("selectTrackMenu", &menuSelectTrack);
-  lua.set_function("garageMenu", &menuGarage);
-  lua.set_function("buyCarMenu", &menuBuyCar);
-  lua.set_function("buyBoxMenu", &menuBuyBox);
+  scriptEnv.set_function("statsMenu", &menuStats);
+  scriptEnv.set_function("selectCarMenu", &menuSelectCar);
+  scriptEnv.set_function("selectTrackMenu", &menuSelectTrack);
+  scriptEnv.set_function("garageMenu", &menuGarage);
+  scriptEnv.set_function("buyCarMenu", &menuBuyCar);
+  scriptEnv.set_function("buyBoxMenu", &menuBuyBox);
 
-  lua.set_function("chooseCharmMenu", &menuChooseCharm);
+  scriptEnv.set_function("chooseCharmMenu", &menuChooseCharm);
 }
 
-void ScriptEngine::exposeCollections(sol::state &lua)
+void ScriptEngine::exposeCollections()
 {
-  Stats::expose(lua);
-  Car::expose(lua);
-  Engine::expose(lua);
-  Spoiler::expose(lua);
-  Tires::expose(lua);
-  Collection<Car>::expose(lua);
-  Collection<Engine>::expose(lua);
-  Collection<Spoiler>::expose(lua);
-  Collection<Tires>::expose(lua);
-  lua["Cars"] = Car::collection;
-  lua["Engines"] = Engine::collection;
-  lua["Spoilers"] = Spoiler::collection;
-  lua["Tires"] = Tires::collection;
+  Stats::expose(scriptEnv);
+  Car::expose(scriptEnv);
+  Engine::expose(scriptEnv);
+  Spoiler::expose(scriptEnv);
+  Tires::expose(scriptEnv);
+  Collection<Car>::expose(scriptEnv);
+  Collection<Engine>::expose(scriptEnv);
+  Collection<Spoiler>::expose(scriptEnv);
+  Collection<Tires>::expose(scriptEnv);
+  scriptEnv["Cars"] = Car::collection;
+  scriptEnv["Engines"] = Engine::collection;
+  scriptEnv["Spoilers"] = Spoiler::collection;
+  scriptEnv["Tires"] = Tires::collection;
 }
 
 void ScriptEngine::loadScripts(const xml_document &doc)

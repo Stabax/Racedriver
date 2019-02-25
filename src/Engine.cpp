@@ -11,7 +11,7 @@ Engine::Engine(const json &data)
 {
 }
 
-void Engine::expose(sol::state &lua)
+void Engine::expose(sol::environment &lua)
 {
 	lua.new_usertype<Engine>("Engine",
 		// constructor

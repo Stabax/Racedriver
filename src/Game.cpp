@@ -43,6 +43,7 @@ bool Game::load()
 		Track::loadCollection();
 		Accident::loadCollection();
 		Race::loadDrivers();
+		ScriptEngine::init();
 	}
 	catch (const std::runtime_error &e)
 	{

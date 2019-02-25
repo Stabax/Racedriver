@@ -98,7 +98,7 @@ public:
     }
   }
 
-  static void expose(sol::state &lua)
+  static void expose(sol::environment &lua)
   {
     lua.new_usertype<Collection<T>>(T::getPath()+"Collection",
       // constructor

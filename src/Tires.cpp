@@ -15,7 +15,7 @@ Tires::~Tires()
 }
 
 
-void Tires::expose(sol::state &lua)
+void Tires::expose(sol::environment &lua)
 {
 	lua.new_usertype<Tires>("Tires",
 		// constructor

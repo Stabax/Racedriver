@@ -17,7 +17,7 @@ public:
 	Spoiler(const json &data);
 	~Spoiler();
 
-	static void expose(sol::state &lua);
+	static void expose(sol::environment &lua);
 
   static const std::string getPath() { return ("Spoilers"); };
 

@@ -27,7 +27,7 @@ public:
 	Car(const json &data);
 	~Car();
 
-	static void expose(sol::state &lua);
+	static void expose(sol::environment &lua);
 
   static const std::string getPath() { return ("Cars"); };
 

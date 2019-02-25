@@ -38,7 +38,7 @@ void Car::copy(const std::string &id)
 	rank = toCopy.rank;
 }
 
-void Car::expose(sol::state &lua)
+void Car::expose(sol::environment &lua)
 {
 	lua.new_usertype<Car>("Car",
 		// constructor

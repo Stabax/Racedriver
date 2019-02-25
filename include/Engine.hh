@@ -19,7 +19,7 @@ class Engine : public Part
 public:
   Engine(const json &data);
 
-  static void expose(sol::state &lua);
+  static void expose(sol::environment &lua);
 
   virtual std::string info();
 	void update(omni::KilometerPerHour speed, omni::Inch diameter);

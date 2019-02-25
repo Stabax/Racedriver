@@ -15,6 +15,7 @@ Menu::Menu(const std::string &id)
 {
 	xml_node menu;
 
+	ScriptEngine::reset(); //Clears lua state
 	for (pugi::xml_node el = activeDoc->getData().first_child(); el; el = el.next_sibling())
 	{
 		if (strcmp(el.name(), "Menu") == 0 && el.attribute("Id").value() == id) menu = el;
@@ -30,7 +31,6 @@ Menu::Menu(const std::string &id)
 
 void Menu::onLoad()
 {
-	ScriptEngine::reset(); //Clears lua state
 	if (!_onLoadScript.empty()) ScriptEngine::runScript(_onLoadScript);
 }
 

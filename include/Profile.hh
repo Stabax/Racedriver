@@ -30,7 +30,7 @@ struct Stats {
 		carBought = c;
 	}
 
-  static void expose(sol::state &lua)
+  static void expose(sol::environment &lua)
   {
     lua.new_usertype<Stats>("Stats",
       // constructor

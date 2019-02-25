@@ -14,7 +14,7 @@ Spoiler::~Spoiler()
 
 }
 
-void Spoiler::expose(sol::state &lua)
+void Spoiler::expose(sol::environment &lua)
 {
 	lua.new_usertype<Spoiler>("Spoiler",
 		// constructor

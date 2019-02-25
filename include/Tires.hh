@@ -18,7 +18,7 @@ public:
 	Tires(const json &data);
 	~Tires();
 
-	static void expose(sol::state &lua);
+	static void expose(sol::environment &lua);
 
   static const std::string getPath() { return ("Tires"); };
 

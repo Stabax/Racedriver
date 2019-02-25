@@ -44,9 +44,11 @@ public:
 
   void onLoad();
 
+	void resetCursor();
   void addAlert(std::shared_ptr<MenuItem> menuItem);
   void clearAlerts();
   std::shared_ptr<MenuItem> getItem(const std::string &id);
+  void addItem(const xml_node &el, int idx = -1);
   void setClickCallback(std::function<void(std::shared_ptr<MenuItem>)> callback);
 
   int getCursor();
@@ -61,11 +63,10 @@ private:
   std::string _id;
   int _lastInput;
   ASCIILogo _title; //title art
-  int _cursor;
+  std::vector<std::shared_ptr<MenuItem>>::iterator _selection;
   std::shared_ptr<std::function<void(std::shared_ptr<MenuItem>)>> _clickCallback;
   std::string _onLoadScript;
   std::deque<std::shared_ptr<MenuItem>> _alerts;
-  std::vector<std::shared_ptr<MenuItem>> _entities;
   std::vector<std::shared_ptr<MenuItem>> _items;
 };
 

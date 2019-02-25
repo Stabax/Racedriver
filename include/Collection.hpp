@@ -105,7 +105,8 @@ public:
       sol::constructors<Collection<T>()>(),
 
       "size", &Collection<T>::size,
-      "at", &Collection<T>::at
+      sol::meta_function::index, static_cast<T &(Collection<T>::*)(int)>(&Collection<T>::operator[]),
+      "get", static_cast<T &(Collection<T>::*)(const std::string &)>(&Collection<T>::operator[])
     );
   }
 

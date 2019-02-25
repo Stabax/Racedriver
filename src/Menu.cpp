@@ -11,7 +11,7 @@ std::shared_ptr<Menu> Menu::active = nullptr;
 std::shared_ptr<MenuFile> Menu::activeDoc = nullptr;
 
 Menu::Menu(const std::string &id)
- : _id(id), _lastInput(0), _title(None), _cursor(0), _clickCallback(nullptr)
+ : _id(id), _lastInput(0), _title(None), _clickCallback(nullptr)
 {
 	xml_node menu;
 
@@ -22,18 +22,10 @@ Menu::Menu(const std::string &id)
 	if (!menu) throw(std::runtime_error("Menu not found"));
 	for (pugi::xml_node el = menu.first_child(); el; el = el.next_sibling())
 	{
-		try {
-			std::shared_ptr<MenuItem> obj = MenuItem::create(el);
-			if (obj == nullptr) continue; //Discard if non-object entity is parsed
-			_entities.push_back(obj);
-			if (obj->isSelectable()) _items.push_back(obj);
-		} catch(std::exception &e) {
-			Menu::alert(e.what());
-		}
+		addItem(el);
 	}
 	if (menu.attribute("Title")) _title = Menu::convertASCIILogo(menu.attribute("Title").value());
 	if (menu.attribute("OnLoad")) _onLoadScript = menu.attribute("OnLoad").value();
-	if (_items.size() > 0) _items[_cursor]->toggleHover();
 }
 
 void Menu::onLoad()
@@ -65,7 +57,7 @@ bool Menu::update()
 	_lastInput = getch();
 	if(_lastInput == KEY_UP) updateCursor(false);
 	else if(_lastInput == KEY_DOWN) updateCursor(true);
-	else if(_lastInput == KEY_ENTER || _lastInput == '\n' || _lastInput == '\r') _items[_cursor]->select();
+	else if(_lastInput == KEY_ENTER || _lastInput == '\n' || _lastInput == '\r') (*_selection)->select();
 	else if (_lastInput == KEY_F(11)) ScriptEngine::console(*this);
 	else return (false);
 	return (true);
@@ -73,18 +65,33 @@ bool Menu::update()
 
 int Menu::getCursor()
 {
-	return (_cursor);
+	return (_selection - _items.begin());
+}
+void Menu::resetCursor()
+{
+	_selection = _items.begin();
+	while (_selection != _items.end() && !((*_selection)->isSelectable())) _selection++;
 }
 
 void Menu::updateCursor(bool add)
 {
-	int prevCursor = _cursor;
+	auto prevSel = _selection;
 
-	_cursor += (add ? 1 : -1);
-	if (_cursor >= static_cast<int>(_items.size())) _cursor = 0;
-	else if (_cursor < 0) _cursor = _items.size() - 1;
-	_items[prevCursor]->toggleHover();
-	_items[_cursor]->toggleHover();
+	(*_selection)->toggleHover();
+	if ((!add && _selection == _items.begin()) || (add && _selection == --_items.end())) //Check for invalidation
+	{
+		_selection = (add ? _items.begin() : --_items.end());
+	}
+	else _selection += (add ? 1 : -1);
+	while (_selection != prevSel && !((*_selection)->isSelectable())) //Continue browsing if not selectable
+	{
+		if ((!add && _selection == _items.begin()) || (add && _selection == --_items.end())) //Check for invalidation
+		{
+			_selection = (add ? _items.begin() : --_items.end());
+		}
+		else _selection += (add ? 1 : -1);
+	}
+	(*_selection)->toggleHover();
 }
 
 void Menu::render()
@@ -98,9 +105,9 @@ void Menu::render()
 		printASCIILogo(_title);
 		term << "\n";
 	}
-	for (size_t i = 0; i < _entities.size(); i++)
+	for (size_t i = 0; i < _items.size(); i++)
 	{
-		_entities[i]->render();
+		_items[i]->render();
 		term << "\n";
 	}
 }
@@ -124,7 +131,7 @@ bool Menu::run()
 
 std::shared_ptr<MenuItem> Menu::getHoveredItem()
 {
-	return (_entities[_cursor]);
+	return (*_selection);
 }
 
 void Menu::renderConsole(std::string command)
@@ -262,10 +269,25 @@ void Menu::popUp(std::string id, std::string source, const DataSource dataMode)
 
 std::shared_ptr<MenuItem> Menu::getItem(const std::string &id)
 {
-	auto obj = std::find_if(_entities.begin(), _entities.end(),
+	auto obj = std::find_if(_items.begin(), _items.end(),
     			[=] (std::shared_ptr<MenuItem> m) { return (m->getId() == id); });
-	if (obj == _entities.end()) throw (std::runtime_error("Specified item does not exist"));
+	if (obj == _items.end()) throw (std::runtime_error("Specified item does not exist"));
 	return *(obj);
+}
+
+void Menu::addItem(const xml_node &el, int idx)
+{
+	if (_selection != _items.end()) (*_selection)->toggleHover(); //Unselect previous selection
+	try {
+		std::shared_ptr<MenuItem> obj = MenuItem::create(el);
+		auto it = (idx == -1 ? _items.end() : _items.begin() + idx);
+		if (obj == nullptr) return; //Discard if non-object entity is parsed
+		_items.insert(it, obj);
+	} catch(std::exception &e) {
+		Menu::alert(e.what());
+	}
+	resetCursor();
+	if (_selection != _items.end()) (*_selection)->toggleHover();
 }
 
 //MenuDialog

@@ -49,6 +49,12 @@ void ScriptEngine::exposeCpp(sol::state &lua)
   lua.set_function("setEnv", [=] (std::string key, std::string value) { environment[key] = value; });
   lua.set_function("getEnv", [=] (std::string key) { return (environment[key]); });
   //Menu helper
+  lua.set_function("addMenuItem", [=] (int idx, std::string xml) {
+    MenuFile menu(xml, DataSource::Document);
+
+    if (!menu.load()) Menu::alert("Invalid XML injection");
+    Menu::active->addItem(menu.getData().first_child(), idx);
+  });
   lua.set_function("getCursor", [] () { return (Menu::active->getCursor()); });
   lua.set_function("getInputData", [=] (std::string id) {
     std::shared_ptr<MenuInput> in = std::dynamic_pointer_cast<MenuInput>(Menu::active->getItem(id));

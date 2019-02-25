@@ -1,6 +1,12 @@
 {
   "collection": [
   {
+    "name": "None",
+    "manufacturer": "",
+    "aerodynamic": 0,
+    "rank": "D"
+  },
+  {
     "name": "Aileron",
     "manufacturer": "RaceDriver",
     "aerodynamic": 10,

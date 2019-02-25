@@ -4,7 +4,7 @@
     "name": "4L",
     "manufacturer": "Renault",
     "engine": "Renault.GT100",
-    "spoiler": "",
+    "spoiler": ".None",
     "tires": "Continental.180/45",
     "mass": 570,
     "rank": "D"

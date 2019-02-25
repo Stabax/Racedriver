@@ -31,12 +31,9 @@ public:
 
   static const std::string getPath() { return ("Cars"); };
 
-	static void listerCars();
-
 	bool update(const omni::Minute &tickDuration, const Segment &segment);
 
 	void copy(const std::string &id);
-	void displayInfo() const;
 	int getPrice() const;
 	omni::KilometerPerHour getSpeed() const;
 	omni::MeterPerSecond2 getAcceleration() const;
@@ -47,9 +44,9 @@ public:
 	void replaceTires();
 
 	//infos acessoires
-	std::shared_ptr<Engine> getEngine() const;
-	std::shared_ptr<Spoiler> getSpoiler() const;
-	std::shared_ptr<Tires> getTires() const;
+	Engine &getEngine() const;
+	Spoiler &getSpoiler() const;
+	Tires &getTires() const;
 
 	void setPart(const Part &part);
 	void setEngine(const Engine &newEngine);

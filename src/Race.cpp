@@ -54,7 +54,7 @@ bool Race::preparations()
 		Menu::alert("Votre vehicule est trop endommage pour concourir.");
 		return (false);
 	}
-	else if(player->car->getTires()->integrity.count() < 15)
+	else if(player->car->getTires().integrity.count() < 15)
 	{
 		Menu::alert("Vos pneus sont trop uses pour concourir.");
 		return (false);
@@ -63,7 +63,7 @@ bool Race::preparations()
 	{
 		Menu::alert("Attention: Votre reservoir de nitro n'est pas plein.\n");
 	}
-	if(player->car->getTires()->integrity.count() < 55)
+	if(player->car->getTires().integrity.count() < 55)
 	{
 		Menu::alert("Attention: Tires deteriores.\n");
 	}
@@ -119,6 +119,7 @@ bool Race::start()
 	for (size_t i = 0; i < _players.size(); i++)
 	{
 		menu += "En position " + std::to_string(i+1) + ", " + _players[i].name + " avec une " + _players[i].car->manufacturer + " " + _players[i].car->name + "\n";
+		menu += "Engine: " + _players[i].car->getEngine().getId() + " Spoiler: " + _players[i].car->getSpoiler().getId() + " Tires: " + _players[i].car->getTires().getId() + "\n";
 	}
 	menu +=	" </Text>"
 					" <Sep/>"
@@ -192,8 +193,8 @@ void Race::render(int rtick)
 	{
 		term << "[" << i+1 << "e]" << setColor(_players[i].color) << (_players[i].out ? " <K.O.> " : " ")  << _players[i].name << " : " << _players[i].position << "\n"
 				 << "  |-> " << _players[i].car->manufacturer << " " << _players[i].car->name << "\n"
-			   << "  |-> " << _players[i].car->speed.count() << "km/h (" << _players[i].car->getEngine()->power.count() << "ch at " << _players[i].car->getEngine()->revolutions.count() << ") [" << _players[i].car->getEngine()->gear + 1 << "]\n"
-				 << "  |-> C: " << _players[i].car->getEngine()->torque.count() << "Nm - Fc: " << _players[i].car->fc.count() << "N \n";
+			   << "  |-> " << _players[i].car->speed.count() << "km/h (" << _players[i].car->getEngine().power.count() << "ch at " << _players[i].car->getEngine().revolutions.count() << ") [" << _players[i].car->getEngine().gear + 1 << "]\n"
+				 << "  |-> C: " << _players[i].car->getEngine().torque.count() << "Nm - Fc: " << _players[i].car->fc.count() << "N \n";
 		if (_players[i].out)
 		{
 			time_t timecpy = _players[i].time.count();

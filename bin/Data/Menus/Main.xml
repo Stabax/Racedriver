@@ -115,7 +115,10 @@
 <Menu Id="Box" Title="Garage">
   <Script><![CDATA[
     car = getBox(getEnv("Box"))
-    print("[Box "..getEnv("Box").."] "..car.manufacturer.." "..car.name)
+    print("[Box "..getEnv("Box").."] "..car.manufacturer.." "..car.name .. "\n")
+    print(" Engine: "..car:getEngine().manufacturer.." "..car:getEngine().name.."\n")
+    print(" Spoiler: "..car:getSpoiler().manufacturer.." "..car:getSpoiler().name.."\n")
+    print(" Tires: "..car:getTires().manufacturer.." "..car:getTires().name.."\n")
   ]]></Script>
   <Sep/>
   <Button Type="Script" Target="RepairCar"><Text Id="garage.repair"/></Button>
@@ -134,7 +137,10 @@
 <Menu Id="UpgradeCar"  Title="Garage">
   <Script><![CDATA[
     car = getBox(getEnv("Box"))
-    print("[Box "..getEnv("Box").."] "..car.manufacturer.." "..car.name)
+    print("[Box "..getEnv("Box").."] "..car.manufacturer.." "..car.name .. "\n")
+    print(" Engine: "..car:getEngine().manufacturer.." "..car:getEngine().name.."\n")
+    print(" Spoiler: "..car:getSpoiler().manufacturer.." "..car:getSpoiler().name.."\n")
+    print(" Tires: "..car:getTires().manufacturer.." "..car:getTires().name.."\n")
   ]]></Script>
   <Sep/>
   <Button Type="Goto" Target="UpgradeEngine"><Text Id="car.engine"/></Button>
@@ -148,44 +154,53 @@
 <Menu Id="UpgradeEngine" Title="Garage" OnLoad="UpgradeEngineOnLoad">
   <Script><![CDATA[
     car = getBox(getEnv("Box"))
-    print("[Box "..getEnv("Box").."] "..car.manufacturer.." "..car.name)
+    print("[Box "..getEnv("Box").."] "..car.manufacturer.." "..car.name .. "\n")
+    print(" Engine: "..car:getEngine().manufacturer.." "..car:getEngine().name.."\n")
   ]]></Script>
   <Sep/>
   <Sep/>
   <Button Type="Goto" Target="UpgradeCar"><Text Id="global.back"/></Button>
 </Menu>
 <Script Id="UpgradeEngineOnLoad"><![CDATA[
-  for i = 0, Engines:size()-1 do
-    addMenuItem(2 + i, "<Button Type='Intern' Target='alert(\"not impl\")'>" .. Engines[i].manufacturer .. " - " .. Engines[i].name .. "</Button>")
+  i = 0
+  while (i < Engines:size()) do
+    addMenuItem(2 + i, "<Button Type='Intern' Target='car:setEngine(Engines[" .. i .. "])'>" .. Engines[i].manufacturer .. " - " .. Engines[i].name .. "</Button>")
+    i = i + 1
   end
 ]]></Script>
 <!-- Menu -->
 <Menu Id="UpgradeSpoiler" Title="Garage"  OnLoad="UpgradeSpoilerOnLoad">
   <Script><![CDATA[
     car = getBox(getEnv("Box"))
-    print("[Box "..getEnv("Box").."] "..car.manufacturer.." "..car.name)
+    print("[Box "..getEnv("Box").."] "..car.manufacturer.." "..car.name .. "\n")
+    print(" Spoiler: "..car:getSpoiler().manufacturer.." "..car:getSpoiler().name.."\n")
   ]]></Script>
   <Sep/>
   <Sep/>
   <Button Type="Goto" Target="UpgradeCar"><Text Id="global.back"/></Button>
 </Menu>
 <Script Id="UpgradeSpoilerOnLoad"><![CDATA[
-  for i = 0, Spoilers:size()-1 do
-    addMenuItem(2 + i, "<Button Type='Intern' Target='alert(\"not impl\")'>" .. Spoilers[i].manufacturer .. " - " .. Spoilers[i].name .. "</Button>")
+  i = 0
+  while (i < Spoilers:size()) do
+    addMenuItem(2 + i, "<Button Type='Intern' Target='car:setSpoiler(Spoilers[" .. i .. "])'>" .. Spoilers[i].manufacturer .. " - " .. Spoilers[i].name .. "</Button>")
+    i = i + 1
   end
 ]]></Script>
 <!-- Menu -->
 <Menu Id="UpgradeTires" Title="Garage"  OnLoad="UpgradeTiresOnLoad">
   <Script><![CDATA[
     car = getBox(getEnv("Box"))
-    print("[Box "..getEnv("Box").."] "..car.manufacturer.." "..car.name)
+    print("[Box "..getEnv("Box").."] "..car.manufacturer.." "..car.name .. "\n")
+    print(" Tires: "..car:getTires().manufacturer.." "..car:getTires().name.."\n")
   ]]></Script>
   <Sep/>
   <Sep/>
   <Button Type="Goto" Target="UpgradeCar"><Text Id="global.back"/></Button>
 </Menu>
 <Script Id="UpgradeTiresOnLoad"><![CDATA[
-  for i = 0, Tires:size()-1 do
-    addMenuItem(2 + i, "<Button Type='Intern' Target='alert(\"not impl\")'>" .. Tires[i].manufacturer .. " - " .. Tires[i].name .. "</Button>")
+  i = 0
+  while (i < Tires:size()) do
+    addMenuItem(2 + i, "<Button Type='Intern' Target='car:setTires(Tires[" .. i .. "])'>" .. Tires[i].manufacturer .. " - " .. Tires[i].name .. "</Button>")
+    i = i + 1
   end
 ]]></Script>

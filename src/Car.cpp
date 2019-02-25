@@ -45,39 +45,19 @@ void Car::expose(sol::environment &lua)
 		sol::constructors<Car(const json &)>(),
 
 		"getId", &Car::getId,
+		"setEngine", &Car::setEngine,
+		"setSpoiler", &Car::setSpoiler,
+		"setTires", &Car::setTires,
+
 		"name", &Car::name,
 		"manufacturer", &Car::manufacturer,
 		"mass", &Car::mass,
-		"rank", &Car::rank
+		"rank", &Car::rank,
+
+		"getEngine", &Car::getEngine,
+		"getSpoiler", &Car::getSpoiler,
+		"getTires", &Car::getTires
 	);
-}
-
-
-void Car::displayInfo() const
-{
-	/*
-	Terminal::get() << " |Marque: " << manufacturer << "\n"
-									<< " |Modele: " << name << "\n"
-									<< " #Engine" << "\n"
-									<< "  |Marque: " << manufacturer << "\n"
-									<< "  |Modele: " << name << "\n"
-									<< "  |Vitese: " << "Km/h\n"
-									<< "  |Acceleration: " << "m/s²\n"
-									<< " |Capa. Nitro: " << "L\n"
-									<< " |Aerodynamisme: " << "%\n"
-									<< " |Prix: " << "c\n\n";
-									*/
-}
-
-void Car::listerCars()
-{
-	/*
-	Terminal::get() << "   |Marque   |Modele     |Aerodynamisme  |Prix  |\n\n";
-  for (size_t i = 0; i < Car::collection.size(); i++)
-	{
-		Terminal::get() << i+1 << "." << Car::collection[i].manufacturer << " " << Car::collection[i].name
-												 << " " << Car::collection[i].getAerodynamisme() << " " << Car::collection[i].getPrix() << "c\n";
-	}*/
 }
 
 bool Car::update(const omni::Minute &tickDuration, const Segment &segment)
@@ -113,19 +93,19 @@ int Car::getPrice() const
 	return static_cast<int>(roundf( (prixEngine + prixSpoiler + 0 )  *0.9+ (( 100 ) * 100)+ (( vRang(rank) - 1 ) * 20000)));
 }
 
-std::shared_ptr<Engine> Car::getEngine() const
+Engine &Car::getEngine() const
 {
-	return (_engine);
+	return (*_engine);
 }
 
-std::shared_ptr<Spoiler> Car::getSpoiler() const
+Spoiler &Car::getSpoiler() const
 {
-	return (_spoiler);
+	return (*_spoiler);
 }
 
-std::shared_ptr<Tires> Car::getTires() const
+Tires &Car::getTires() const
 {
-	return (_tires);
+	return (*_tires);
 }
 
 void Car::setPart(const Part &part)
@@ -200,11 +180,11 @@ void Car::replaceTires()
 void to_json(json& j, const Car& car) {
 	j = {
 		{"name", car.getId()},
-		{"engine", car.getEngine()->getId()},
-    {"spoiler", (car.getSpoiler() != nullptr ? car.getSpoiler()->getId() : "")},
+		{"engine", car.getEngine().getId()},
+    {"spoiler", car.getSpoiler().getId()},
     {"tires", {
-			{"id", car.getTires()->getId()},
-			{"integrity", car.getTires()->integrity.count()}
+			{"id", car.getTires().getId()},
+			{"integrity", car.getTires().integrity.count()}
 		}},
 		{"fuel", car.fuel.count()},
 		{"integrity", car.integrity.count()}

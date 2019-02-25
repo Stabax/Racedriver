@@ -16,7 +16,7 @@ sol::environment ScriptEngine::scriptEnv;
 
 void ScriptEngine::init()
 {
-  engine.open_libraries(sol::lib::base);
+  engine.open_libraries(sol::lib::base, sol::lib::string);
 }
 
 void ScriptEngine::reset()
@@ -35,12 +35,10 @@ void ScriptEngine::runScript(const std::string &scriptId)
 
 void ScriptEngine::run(const std::string &script)
 {
-  //sol::state lua; // creates a Lua context and loads standard Lua libraries
-
   try {
     engine.script(script, scriptEnv);
   } catch (std::exception &e) {
-    Menu::alert("Script error: "+std::string(e.what()));
+    Menu::alert(std::string(e.what()));
   }
 }
 
@@ -101,9 +99,8 @@ void ScriptEngine::exposeCpp()
     scriptEnv.set_function("getProfileLocale", [=] () { return (Profile::active->localization); });
   }
   //Garage management
-  scriptEnv.set_function("getBox", [=] (std::string index) { return (Profile::active->garage.getBox(atoi(index.c_str()))); });
-  scriptEnv.set_function("buyCar", [=] (Car car) { Profile::active->garage.buyCar(car); });
-  scriptEnv.set_function("setPart", [=] (Car &car, Part &part) { car.setPart(part); });
+  scriptEnv.set_function("getBox", [&] (std::string index) ->Car& { return (Profile::active->garage.getBox(atoi(index.c_str()))); });
+  scriptEnv.set_function("buyCar", [&] (Car &car) { Profile::active->garage.buyCar(car); });
   //Cpp Menus
   scriptEnv.set_function("loadGameMenu", &menuLoadGame);
   scriptEnv.set_function("startRace", [] () {

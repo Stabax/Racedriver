@@ -1,1 +1,29 @@
-{"careerStats":{"accidents":1,"carBought":0,"creditsEarned":0,"losses":1,"races":1,"victories":0},"credits":10000,"difficulty":1,"garage":{"boxcount":1,"cars":[{"engine":"Renault.GT100","fuel":0.0,"integrity":100,"name":"Renault.4L","spoiler":"","tires":{"id":"Continental.180/45","integrity":100}}]},"name":""}
+{
+  "careerStats": {
+    "accidents": 1,
+    "carBought": 0,
+    "creditsEarned": 0,
+    "losses": 1,
+    "races": 1,
+    "victories": 0
+  },
+  "credits": 10000,
+  "difficulty": 1,
+  "garage": {
+    "boxcount": 1,
+    "cars": [
+      {
+        "engine": "Renault.GT100",
+        "fuel": 0.0,
+        "integrity": 100,
+        "name": "Renault.4L",
+        "spoiler": ".None",
+        "tires": {
+          "id": "Continental.180/45",
+          "integrity": 100
+        }
+      }
+    ]
+  },
+  "name": ""
+}

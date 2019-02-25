@@ -1,1 +1,30 @@
-{"careerStats":{"accidents":2,"carBought":0,"creditsEarned":0,"losses":1,"races":1,"victories":0},"credits":10000,"difficulty":5,"garage":{"boxcount":1,"cars":[{"engine":"Toyota.WIP 16S","fuel":0.0,"integrity":100,"name":"Toyota.Corona","spoiler":"RaceDriver.Vapor","tires":{"id":"Continental.180/45","integrity":100}}]},"localization":"en-US","name":"eses"}
+{
+  "careerStats": {
+    "accidents": 2,
+    "carBought": 0,
+    "creditsEarned": 0,
+    "losses": 1,
+    "races": 1,
+    "victories": 0
+  },
+  "credits": 10000,
+  "difficulty": 5,
+  "garage": {
+    "boxcount": 1,
+    "cars": [
+      {
+        "engine": "Toyota.WIP 16S",
+        "fuel": 0.0,
+        "integrity": 100,
+        "name": "Toyota.Corona",
+        "spoiler": "RaceDriver.Vapor",
+        "tires": {
+          "id": "Continental.180/45",
+          "integrity": 100
+        }
+      }
+    ]
+  },
+  "localization": "en-US",
+  "name": "eses"
+}

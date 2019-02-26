@@ -44,7 +44,6 @@ SRCS = 	$(SRCDIR)/Game.cpp									\
 				$(SRCDIR)/MenuItem.cpp							\
 				$(SRCDIR)/DataFile.cpp							\
 				$(SRCDIR)/ScriptEngine.cpp					\
-				$(SRCDIR)/Utils.cpp									\
 				$(SRCDIR)/Track.cpp									\
 				$(SRCDIR)/Race.cpp									\
 				$(SRCDIR)/main.cpp									\

@@ -39,11 +39,7 @@ size_t Garage::getBoxCount() const
 
 bool Garage::addBox()
 {
-	if (static_cast<int>(Profile::active->credits - (_boxCount * 1000)) < 0)
-	{
-		Menu::alert("Not enough money");
-		return (false);
-	}
+	if (!Profile::active->pay(_boxCount * 1000)) return (false);
 	_boxCount++;
 	Menu::alert("Garage agrandi avec succes!");
 	return (true);
@@ -62,12 +58,7 @@ bool Garage::addCar(Car &car)
 
 bool Garage::buyCar(Car &car)
 {
-	if (Profile::active->credits - car.getPrice() < 0)
-	{
-		Menu::alert("Not enough money");
-		return (false);
-	}
-	Profile::active->credits -= car.getPrice();
+	if (!Profile::active->pay(car.price)) return (false);
 	if (addCar(car))
 	{
 		Menu::alert(car.name+" achetee avec succes !");
@@ -83,7 +74,7 @@ void Garage::sellCar(size_t index)
 		throw (std::runtime_error("Le box est vide"));
 	}
 	Car &car = getBox(index);
-	int sellPrice = car.getPrice() * 0.70f;
+	int sellPrice = car.getTotalPrice() * 0.70f;
 	Profile::active->credits += sellPrice;
 	Menu::alert(car.name+" vendue avec succes pour "+std::to_string(sellPrice)+"c");
 	_boxs.erase(_boxs.begin() + index);

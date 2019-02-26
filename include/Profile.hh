@@ -71,7 +71,7 @@ public:
 	static bool compatible(Profile& Player, const int& numeroBox, const char& rangNewPiece);
 
 	bool rename(const std::string &name);
-	bool payer(const int& prix);
+	bool pay(int price);
 
 	static std::shared_ptr<Profile> active;
 

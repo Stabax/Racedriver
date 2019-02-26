@@ -3,46 +3,46 @@
   {
     "name": "GT100",
     "manufacturer": "Renault",
+    "price": 100,
     "gears": 3,
     "revolutions": 4000,
     "power": 34,
-    "rank": "D",
     "energy": "Gasoline"
   },
   {
     "name": "WIP 45",
     "manufacturer": "Toyota",
+    "price": 150,
     "gears": 3,
     "revolutions": 4000,
     "power": 45,
-    "rank": "D",
     "energy": "Gasoline"
   },
   {
     "name": "1.4 SDI",
     "manufacturer": "Nissan",
+    "price": 200,
     "gears": 5,
     "revolutions": 2000,
     "power": 100,
-    "rank": "D",
     "energy": "Diesel"
   },
   {
     "name": "1.8 TDI",
     "manufacturer": "Nissan",
+    "price": 250,
     "gears": 5,
     "revolutions": 2000,
     "power": 100,
-    "rank": "D",
     "energy": "Diesel"
   },
   {
     "name": "2.0 TSI",
     "manufacturer": "Nissan",
+    "price": 300,
     "gears": 5,
     "revolutions": 2000,
     "power": 110,
-    "rank": "D",
     "energy": "Diesel"
   }]
 }

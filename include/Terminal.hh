@@ -6,13 +6,23 @@
 #include <map>
 #include <ostream>
 #include <functional>
-#include "Utils.hh"
 #ifdef _WIN32
   #undef MOUSE_MOVED
   #include <pdcurses/curses.h>
 #elif __linux__
   #include <curses.h>
 #endif
+
+
+struct Point {
+  int x;
+  int y;
+
+  Point (int x_ = 0, int y_ = 0)
+   : x(x_), y(y_)
+  {
+  }
+};
 
 #define BASE_PAIR     1
 

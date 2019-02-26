@@ -25,7 +25,6 @@ public:
 	static Collection<Spoiler> collection;
 
 	omni::Percent aerodynamic;
-	int price;
 };
 
 #endif /* SPOILER_HH_ */

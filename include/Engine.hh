@@ -33,7 +33,6 @@ public:
 	omni::NewtonMeter mTorque;
 	int mGears;
 	Energy energy;
-	int price;
 
 	//Instance
 	int gear;

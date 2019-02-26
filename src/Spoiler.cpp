@@ -23,6 +23,6 @@ void Spoiler::expose(sol::environment &lua)
 		"getId", &Spoiler::getId,
 		"name", &Spoiler::name,
 		"manufacturer", &Spoiler::manufacturer,
-		"rank", &Spoiler::rank
+		"price", &Spoiler::price
 	);
 }

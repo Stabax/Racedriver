@@ -10,17 +10,6 @@
 #include "Tires.hh"
 #include "Track.hh"
 
-//Custom unit definition
-template <typename Rep = OMNI_DEFAULT_TYPE>
-using millinewtonHour2PerKilometer2 = omni::Unit<omni::Dimension<-1,1,0,0,0,0,0>, Rep, typename omni::Ratio_over_value<typename omni::Ratio_power<omni::Ratio<omni::secondsPerHour, omni::E3>, 2>::type, omni::E3>::type, omni::zero>;
-
-typedef millinewtonHour2PerKilometer2<> MillinewtonHour2PerKilometer2;
-
-template <typename Rep = OMNI_DEFAULT_TYPE>
-using millinewtonHourPerKilometer = omni::Unit<omni::Dimension<0,1,-1,0,0,0,0>, Rep, omni::Ratio<omni::secondsPerHour, omni::E6>, omni::zero>;
-
-typedef millinewtonHourPerKilometer<> MillinewtonHourPerKilometer;
-
 class Car : public Part
 {
 public:
@@ -34,7 +23,7 @@ public:
 	bool update(const omni::Minute &tickDuration, const Segment &segment);
 
 	void copy(const std::string &id);
-	int getPrice() const;
+	int getTotalPrice() const;
 	omni::KilometerPerHour getSpeed() const;
 	omni::MeterPerSecond2 getAcceleration() const;
 	omni::Percent getAerodynamic() const;
@@ -48,10 +37,9 @@ public:
 	Spoiler &getSpoiler() const;
 	Tires &getTires() const;
 
-	void setPart(const Part &part);
-	void setEngine(const Engine &newEngine);
-	void setSpoiler(const Spoiler &newSpoiler);
-	void setTires(const Tires &tires);
+	void buyEngine(const Engine &newEngine);
+	void buySpoiler(const Spoiler &newSpoiler);
+	void buyTires(const Tires &tires);
 	void setNitro(omni::Liter ajouter);
 
 	void pleinNitro();

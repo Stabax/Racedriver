@@ -2,9 +2,8 @@
 #define PART_HPP_
 
 #include <vector>
-#include <omniunit.hh>
+#include "Units.hpp"
 #include "DataFile.hh"
-#include "Utils.hh"
 #include "Menu.hh"
 
 #define ID_SEPARATOR '.'
@@ -28,7 +27,7 @@ public:
     if (data.find("name") != data.end()) name = data["name"].get<std::string>();
     if (data.find("mass") != data.end()) mass = omni::Kilogram(data["mass"].get<int>());
     if (data.find("manufacturer") != data.end()) manufacturer = data["manufacturer"].get<std::string>();
-    if (data.find("rank") != data.end()) rank = charToRank(data["rank"].get<std::string>()[0]);
+    if (data.find("price") != data.end()) price = data["price"].get<int>();
   }
 
   virtual ~Part() { }
@@ -51,7 +50,7 @@ public:
   std::string manufacturer;
   std::string name;
 	omni::Kilogram mass;
-  Rank rank;
+	int price;
   Type type;
 };
 

@@ -4,66 +4,66 @@
     "name": "Zephyr",
     "manufacturer": "RaceDriver",
     "aerodynamic": 6,
-    "rank": "D"
+    "price": 10
   },
   {
     "name": "Lightning",
     "manufacturer": "RaceDriver",
     "aerodynamic": 12,
-    "rank": "C"
+    "price": 20
   },
   {
     "name": "Titan",
     "manufacturer": "RaceDriver",
     "aerodynamic": 19,
-    "rank": "B"
+    "price": 30
   },
   {
     "name": "Pro Silent",
     "manufacturer": "RaceDriver",
     "aerodynamic": 27,
-    "rank": "A"
+    "price": 40
   },
   {
     "name": "Cyclone",
     "manufacturer": "RaceDriver",
     "aerodynamic": 36,
-    "rank": "S"
+    "price": 50
   },
   {
     "name": "Razor",
     "manufacturer": "RaceDriver",
     "aerodynamic": 42,
-    "rank": "A"
+    "price": 60
   },
   {
     "name": "Arctic Blaster",
     "manufacturer": "RaceDriver",
     "aerodynamic": 50,
-    "rank": "A"
+    "price": 70
   },
   {
     "name": "Tempest",
     "manufacturer": "RaceDriver",
     "aerodynamic": 57,
-    "rank": "A"
+    "price": 80
   },
   {
     "name": "Matrix",
     "manufacturer": "RaceDriver",
     "aerodynamic": 66,
-    "rank": "A"
+    "price": 90
   },
   {
     "name": "Aerocool",
     "manufacturer": "RaceDriver",
     "aerodynamic": 78,
-    "rank": "A"
+    "price": 100
   },
   {
     "name": "Ultimate",
     "manufacturer": "RaceDriver",
     "aerodynamic": 95,
-    "rank": "A"
+    "price": 110
   }]
 }

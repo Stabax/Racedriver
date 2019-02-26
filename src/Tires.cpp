@@ -6,7 +6,7 @@ Collection<Tires> Tires::collection = Collection<Tires>();
 
 Tires::Tires(const json &data)
  : Part(data, TTires), diameter(data["diameter"].get<int>()),
- pressure(2.5f), mPressure(2.5f), integrity(100), price(vRang(rank) * 1500)
+ pressure(2.5f), mPressure(2.5f), integrity(100)
 {
 }
 
@@ -24,6 +24,6 @@ void Tires::expose(sol::environment &lua)
 		"getId", &Tires::getId,
 		"name", &Tires::name,
 		"manufacturer", &Tires::manufacturer,
-		"rank", &Tires::rank
+		"price", &Tires::price
 	);
 }

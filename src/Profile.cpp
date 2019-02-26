@@ -71,20 +71,15 @@ bool Profile::rename(const std::string &n)
 	return (true);
 }
 
-bool Profile::payer(const int& prix)
+bool Profile::pay(int price)
 {
-	bool paye;
-	if(prix > credits)
+	if(price > credits)
 	{
-		Menu::alert("Vous ne disposez pas d'assez de Credits !");
-		paye = false;
+		Menu::alert("Not enough credits !");
+		return (false);
 	}
-	else
-	{
-		credits -= prix;
-		paye = true;
-	}
-	return paye;
+	credits -= price;
+	return (true);
 }
 
 void to_json(json& j, const Profile& profile) {

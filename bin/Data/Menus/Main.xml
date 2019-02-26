@@ -164,7 +164,7 @@
 <Script Id="UpgradeEngineOnLoad"><![CDATA[
   i = 0
   while (i < Engines:size()) do
-    addMenuItem(2 + i, "<Button Type='Intern' Target='car:setEngine(Engines[" .. i .. "])'>" .. Engines[i].manufacturer .. " - " .. Engines[i].name .. "</Button>")
+    addMenuItem(2 + i, "<Button Type='Intern' Target='car:buyEngine(Engines[" .. i .. "])'>" .. Engines[i].manufacturer .. " - " .. Engines[i].name .. "</Button>")
     i = i + 1
   end
 ]]></Script>
@@ -182,7 +182,7 @@
 <Script Id="UpgradeSpoilerOnLoad"><![CDATA[
   i = 0
   while (i < Spoilers:size()) do
-    addMenuItem(2 + i, "<Button Type='Intern' Target='car:setSpoiler(Spoilers[" .. i .. "])'>" .. Spoilers[i].manufacturer .. " - " .. Spoilers[i].name .. "</Button>")
+    addMenuItem(2 + i, "<Button Type='Intern' Target='car:buySpoiler(Spoilers[" .. i .. "])'>" .. Spoilers[i].manufacturer .. " - " .. Spoilers[i].name .. "</Button>")
     i = i + 1
   end
 ]]></Script>
@@ -200,7 +200,7 @@
 <Script Id="UpgradeTiresOnLoad"><![CDATA[
   i = 0
   while (i < Tires:size()) do
-    addMenuItem(2 + i, "<Button Type='Intern' Target='car:setTires(Tires[" .. i .. "])'>" .. Tires[i].manufacturer .. " - " .. Tires[i].name .. "</Button>")
+    addMenuItem(2 + i, "<Button Type='Intern' Target='car:buyTires(Tires[" .. i .. "])'>" .. Tires[i].manufacturer .. " - " .. Tires[i].name .. "</Button>")
     i = i + 1
   end
 ]]></Script>

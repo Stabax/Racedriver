@@ -27,8 +27,6 @@ public:
 	omni::Inch diameter;
 	omni::Bar pressure, mPressure;
 	omni::Percent integrity;
-
-	int price;
 };
 
 #endif /* !TIRES_HH_ */

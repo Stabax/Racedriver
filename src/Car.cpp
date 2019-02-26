@@ -1,7 +1,7 @@
 //Car.cpp
 #include "Car.hh"
 #include "Menu.hh"
-#include <cmath>
+#include "Profile.hh"
 
 Collection<Car> Car::collection = Collection<Car>();
 
@@ -35,7 +35,7 @@ void Car::copy(const std::string &id)
 	name = toCopy.name;
 	manufacturer = toCopy.manufacturer;
 	mass = toCopy.mass;
-	rank = toCopy.rank;
+	price = toCopy.price;
 }
 
 void Car::expose(sol::environment &lua)
@@ -45,14 +45,15 @@ void Car::expose(sol::environment &lua)
 		sol::constructors<Car(const json &)>(),
 
 		"getId", &Car::getId,
-		"setEngine", &Car::setEngine,
-		"setSpoiler", &Car::setSpoiler,
-		"setTires", &Car::setTires,
+		"getTotalPrice", &Car::getTotalPrice,
+		"buyEngine", &Car::buyEngine,
+		"buySpoiler", &Car::buySpoiler,
+		"buyTires", &Car::buyTires,
 
 		"name", &Car::name,
 		"manufacturer", &Car::manufacturer,
 		"mass", &Car::mass,
-		"rank", &Car::rank,
+		"price", &Car::price,
 
 		"getEngine", &Car::getEngine,
 		"getSpoiler", &Car::getSpoiler,
@@ -85,12 +86,9 @@ omni::Percent Car::getAerodynamic() const
 	return (_spoiler != nullptr ? _spoiler->aerodynamic : omni::Percent(0));
 }
 
-int Car::getPrice() const
+int Car::getTotalPrice() const
 {
-	int prixEngine = 0;
-	int prixSpoiler = 0;
-	prixSpoiler = (_spoiler != nullptr ? _spoiler->price : 0);
-	return static_cast<int>(roundf( (prixEngine + prixSpoiler + 0 )  *0.9+ (( 100 ) * 100)+ (( vRang(rank) - 1 ) * 20000)));
+	return (price + _engine->price + _spoiler->price + _tires->price);
 }
 
 Engine &Car::getEngine() const
@@ -108,40 +106,24 @@ Tires &Car::getTires() const
 	return (*_tires);
 }
 
-void Car::setPart(const Part &part)
+void Car::buyEngine(const Engine &newEngine)
 {
-	switch (part.type)
-	{
-		case TEngine:
-			setEngine(dynamic_cast<const Engine &>(part));
-			break;
-		case TSpoiler:
-			setSpoiler(dynamic_cast<const Spoiler &>(part));
-			break;
-		case TTires:
-			setTires(dynamic_cast<const Tires &>(part));
-			break;
-		default:
-			throw ("Unmountable part");
-			break;
-	}
-}
-
-void Car::setEngine(const Engine &newEngine)
-{
+	if (!Profile::active->pay(newEngine.price)) return;
 	_engine = std::make_shared<Engine>(newEngine);
 	updateAttributs();
 }
 
-void Car::setSpoiler(const Spoiler &newSpoiler)
+void Car::buySpoiler(const Spoiler &newSpoiler)
 {
+	if (!Profile::active->pay(newSpoiler.price)) return;
 	_spoiler = std::make_shared<Spoiler>(newSpoiler);
 	updateAttributs();
 }
 
-void Car::setTires(const Tires &tires)
+void Car::buyTires(const Tires &newTires)
 {
-	_tires = std::make_shared<Tires>(tires);
+	if (!Profile::active->pay(newTires.price)) return;
+	_tires = std::make_shared<Tires>(newTires);
 	updateAttributs();
 }
 

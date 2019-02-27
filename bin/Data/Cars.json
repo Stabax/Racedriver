@@ -7,7 +7,8 @@
     "spoiler": ".None",
     "tires": "Continental.180/45",
     "mass": 570,
-    "price": 100
+    "price": 100,
+    "socket": "R1"
   },
   {
     "name": "Corona",
@@ -16,7 +17,8 @@
     "spoiler": "RaceDriver.Vapor",
     "tires": "Continental.180/45",
     "mass": 960,
-    "price": 150
+    "price": 150,
+    "socket": "T1"
   },
   {
     "name": "Bluebird",
@@ -25,6 +27,7 @@
     "spoiler": "RaceDriver.Nitrox",
     "tires": "Continental.180/45",
     "mass": 1035,
-    "price": 200
+    "price": 200,
+    "socket": "N1"
   }]
 }

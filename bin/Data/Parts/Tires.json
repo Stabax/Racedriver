@@ -16,18 +16,21 @@
     "name": "220/45",
     "diameter": 17,
     "manufacturer": "Michelin",
-    "price": 100
+    "price": 100,
+    "socket": "Generic"
   },
   {
     "name": "240/55",
     "diameter": 18,
     "manufacturer": "Dunlop",
-    "price": 125
+    "price": 125,
+    "socket": "Generic"
   },
   {
     "name": "280/55",
     "diameter": 20,
     "manufacturer": "Pirelli",
-    "price": 150
+    "price": 150,
+    "socket": "Generic"
   }]
 }

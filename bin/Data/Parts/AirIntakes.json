@@ -4,66 +4,77 @@
     "name": "Zephyr",
     "manufacturer": "RaceDriver",
     "aerodynamic": 6,
-    "price": 10
+    "price": 10,
+    "socket": "Generic"
   },
   {
     "name": "Lightning",
     "manufacturer": "RaceDriver",
     "aerodynamic": 12,
-    "price": 20
+    "price": 20,
+    "socket": "Generic"
   },
   {
     "name": "Titan",
     "manufacturer": "RaceDriver",
     "aerodynamic": 19,
-    "price": 30
+    "price": 30,
+    "socket": "Generic"
   },
   {
     "name": "Pro Silent",
     "manufacturer": "RaceDriver",
     "aerodynamic": 27,
-    "price": 40
+    "price": 40,
+    "socket": "Generic"
   },
   {
     "name": "Cyclone",
     "manufacturer": "RaceDriver",
     "aerodynamic": 36,
-    "price": 50
+    "price": 50,
+    "socket": "Generic"
   },
   {
     "name": "Razor",
     "manufacturer": "RaceDriver",
     "aerodynamic": 42,
-    "price": 60
+    "price": 60,
+    "socket": "Generic"
   },
   {
     "name": "Arctic Blaster",
     "manufacturer": "RaceDriver",
     "aerodynamic": 50,
-    "price": 70
+    "price": 70,
+    "socket": "Generic"
   },
   {
     "name": "Tempest",
     "manufacturer": "RaceDriver",
     "aerodynamic": 57,
-    "price": 80
+    "price": 80,
+    "socket": "Generic"
   },
   {
     "name": "Matrix",
     "manufacturer": "RaceDriver",
     "aerodynamic": 66,
-    "price": 90
+    "price": 90,
+    "socket": "Generic"
   },
   {
     "name": "Aerocool",
     "manufacturer": "RaceDriver",
     "aerodynamic": 78,
-    "price": 100
+    "price": 100,
+    "socket": "Generic"
   },
   {
     "name": "Ultimate",
     "manufacturer": "RaceDriver",
     "aerodynamic": 95,
-    "price": 110
+    "price": 110,
+    "socket": "Generic"
   }]
 }

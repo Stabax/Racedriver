@@ -27,7 +27,7 @@ template <typename T>
 class Collection<T, typename std::enable_if_t<std::is_base_of<Part, T>::value>>
 {
 public:
-  void push(T obj)
+  void push_back(const T &obj)
   {
     _collection.push_back(obj);
   }
@@ -53,9 +53,14 @@ public:
     return (_collection[index]);
   }
 
-  std::vector<T> filter(std::function<bool(const T &)> filter) {
-    std::vector<T> subset;
-    std::copy_if(_collection.begin(), _collection.end(), std::back_inserter(subset), filter);
+  Collection<T> filterCompatible(const Car &p)
+  {
+    Collection<T> subset;
+
+    for (size_t i = 0; i < _collection.size(); i++)
+    {
+      if (_collection[i].socket == "Generic" || _collection[i].socket == dynamic_cast<const Part &>(p).socket) subset.push_back(_collection[i]);
+    }
     return (subset);
   }
 
@@ -91,7 +96,7 @@ public:
     {
       try {
         ST obj(data["collection"][i]);
-        collection.push(obj);
+        collection.push_back(obj);
       } catch (std::exception &e) {
         Menu::alert("Corrupted data");
       }
@@ -105,6 +110,7 @@ public:
       sol::constructors<Collection<T>()>(),
 
       "size", &Collection<T>::size,
+      "filterCompatible", &Collection<T>::filterCompatible,
       sol::meta_function::index, static_cast<T &(Collection<T>::*)(int)>(&Collection<T>::operator[]),
       "get", static_cast<T &(Collection<T>::*)(const std::string &)>(&Collection<T>::operator[])
     );

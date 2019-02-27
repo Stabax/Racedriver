@@ -4,48 +4,56 @@
     "name": "None",
     "manufacturer": "",
     "aerodynamic": 0,
-    "price": 10
+    "price": 10,
+    "socket": "Generic"
   },
   {
     "name": "Aileron",
     "manufacturer": "RaceDriver",
     "aerodynamic": 10,
-    "price": 20
+    "price": 20,
+    "socket": "Generic"
   },
   {
     "name": "Viper",
     "manufacturer": "RaceDriver",
     "aerodynamic": 25,
-    "price": 30
+    "price": 30,
+    "socket": "Generic"
   },
   {
     "name": "Vapor",
     "manufacturer": "RaceDriver",
     "aerodynamic": 40,
-    "price": 40
+    "price": 40,
+    "socket": "Generic"
   },
   {
     "name": "GP",
     "manufacturer": "RaceDriver",
     "aerodynamic": 55,
-    "price": 50
+    "price": 50,
+    "socket": "Generic"
   },
   {
     "name": "Nitrox",
     "manufacturer": "RaceDriver",
     "aerodynamic": 65,
-    "price": 60
+    "price": 60,
+    "socket": "Generic"
   },
   {
     "name": "Boost",
     "manufacturer": "RaceDriver",
     "aerodynamic": 80,
-    "price": 70
+    "price": 70,
+    "socket": "Generic"
   },
   {
     "name": "Racing",
     "manufacturer": "RaceDriver",
     "aerodynamic": 90,
-    "price": 80
+    "price": 80,
+    "socket": "Generic"
   }]
 }

@@ -7,7 +7,18 @@
     "gears": 3,
     "revolutions": 4000,
     "power": 34,
-    "energy": "Gasoline"
+    "energy": "Gasoline",
+    "socket": "R1"
+  },
+  {
+    "name": "GT120",
+    "manufacturer": "Renault",
+    "price": 150,
+    "gears": 4,
+    "revolutions": 4000,
+    "power": 40,
+    "energy": "Gasoline",
+    "socket": "R1"
   },
   {
     "name": "WIP 45",
@@ -16,7 +27,8 @@
     "gears": 3,
     "revolutions": 4000,
     "power": 45,
-    "energy": "Gasoline"
+    "energy": "Gasoline",
+    "socket": "T1"
   },
   {
     "name": "1.4 SDI",
@@ -25,7 +37,8 @@
     "gears": 5,
     "revolutions": 2000,
     "power": 100,
-    "energy": "Diesel"
+    "energy": "Diesel",
+    "socket": "N1"
   },
   {
     "name": "1.8 TDI",
@@ -34,7 +47,8 @@
     "gears": 5,
     "revolutions": 2000,
     "power": 100,
-    "energy": "Diesel"
+    "energy": "Diesel",
+    "socket": "N1"
   },
   {
     "name": "2.0 TSI",
@@ -43,6 +57,7 @@
     "gears": 5,
     "revolutions": 2000,
     "power": 110,
-    "energy": "Diesel"
+    "energy": "Diesel",
+    "socket": "N1"
   }]
 }

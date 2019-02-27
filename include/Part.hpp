@@ -25,8 +25,9 @@ public:
    : type(t)
   {
     if (data.find("name") != data.end()) name = data["name"].get<std::string>();
-    if (data.find("mass") != data.end()) mass = omni::Kilogram(data["mass"].get<int>());
     if (data.find("manufacturer") != data.end()) manufacturer = data["manufacturer"].get<std::string>();
+    if (data.find("socket") != data.end()) socket = data["socket"].get<std::string>();
+    if (data.find("mass") != data.end()) mass = omni::Kilogram(data["mass"].get<int>());
     if (data.find("price") != data.end()) price = data["price"].get<int>();
   }
 
@@ -49,6 +50,7 @@ public:
 
   std::string manufacturer;
   std::string name;
+  std::string socket;
 	omni::Kilogram mass;
 	int price;
   Type type;

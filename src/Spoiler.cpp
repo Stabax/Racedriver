@@ -14,6 +14,11 @@ Spoiler::~Spoiler()
 
 }
 
+std::string Spoiler::getAerodynamic()
+{
+	return (std::to_string(aerodynamic.count()));
+}
+
 void Spoiler::expose(sol::environment &lua)
 {
 	lua.new_usertype<Spoiler>("Spoiler",
@@ -23,6 +28,8 @@ void Spoiler::expose(sol::environment &lua)
 		"getId", &Spoiler::getId,
 		"name", &Spoiler::name,
 		"manufacturer", &Spoiler::manufacturer,
-		"price", &Spoiler::price
+		"price", &Spoiler::price,
+
+		"getAerodynamic", &Spoiler::getAerodynamic
 	);
 }

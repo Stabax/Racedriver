@@ -34,6 +34,7 @@ void Car::copy(const std::string &id)
 	Car &toCopy = collection[id];
 	name = toCopy.name;
 	manufacturer = toCopy.manufacturer;
+	socket = toCopy.socket;
 	mass = toCopy.mass;
 	price = toCopy.price;
 }

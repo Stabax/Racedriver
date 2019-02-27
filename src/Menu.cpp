@@ -65,7 +65,13 @@ bool Menu::update()
 
 int Menu::getCursor()
 {
-	return (_selection - _items.begin());
+	size_t cursor = 0;
+	for (auto it = _items.begin(); it != _items.end() && it != _selection; it++)
+	{
+		if ((*it)->isSelectable()) cursor++;
+	}
+	if (cursor >= _items.size()) return (-1);
+	return (cursor);
 }
 void Menu::resetCursor()
 {
@@ -94,13 +100,18 @@ void Menu::updateCursor(bool add)
 	(*_selection)->toggleHover();
 }
 
+void Menu::renderAlerts()
+{
+	for (size_t i = 0; i <_alerts.size(); i++) _alerts[i]->render();
+}
+
 void Menu::render()
 {
 	Terminal &term = Terminal::windows.at("main");
 
 	term.clearScreen();
-	for (size_t i = 0; i <_alerts.size(); i++) _alerts[i]->render();
-	if (_title != 0)
+	renderAlerts();
+	if (_title != -1)
 	{
 		printASCIILogo(_title);
 		term << "\n";
@@ -233,7 +244,7 @@ void Menu::addAlert(std::shared_ptr<MenuItem> menuItem)
 {
 	_alerts.push_back(menuItem);
 	if (_alerts.size() > 4) _alerts.pop_front();
-	render();
+	renderAlerts();
 }
 
 void Menu::clearAlerts()

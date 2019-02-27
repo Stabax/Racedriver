@@ -54,6 +54,7 @@ public:
   int getCursor();
   void updateCursor(bool add);
   bool update();
+  void renderAlerts();
   void render();
   void renderConsole(std::string command);
 

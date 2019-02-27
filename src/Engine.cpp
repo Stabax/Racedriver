@@ -19,8 +19,22 @@ void Engine::expose(sol::environment &lua)
 		"getId", &Engine::getId,
 		"name", &Engine::name,
 		"manufacturer", &Engine::manufacturer,
-		"price", &Engine::price
+		"price", &Engine::price,
+
+		"getPower", &Engine::getPower,
+		"getRevolutions", &Engine::getRevolutions,
+		"gears", &Engine::mGears
 	);
+}
+
+std::string Engine::getPower()
+{
+	return (std::to_string(mPower.count()));
+}
+
+std::string Engine::getRevolutions()
+{
+	return (std::to_string(mRevolutions.count()));
 }
 
 std::string Engine::info()

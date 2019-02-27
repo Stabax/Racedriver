@@ -17,6 +17,7 @@ public:
 	Spoiler(const json &data);
 	~Spoiler();
 
+	std::string getAerodynamic();
 	static void expose(sol::environment &lua);
 
   static const std::string getPath() { return ("Spoilers"); };

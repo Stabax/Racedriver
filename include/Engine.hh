@@ -21,6 +21,9 @@ public:
 
   static void expose(sol::environment &lua);
 
+	std::string getPower();
+	std::string getRevolutions();
+
   virtual std::string info();
 	void update(omni::KilometerPerHour speed, omni::Inch diameter);
 

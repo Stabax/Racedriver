@@ -16,7 +16,7 @@ sol::environment ScriptEngine::scriptEnv;
 
 void ScriptEngine::init()
 {
-  engine.open_libraries(sol::lib::base, sol::lib::string);
+  engine.open_libraries(sol::lib::base);
 }
 
 void ScriptEngine::reset()
@@ -46,6 +46,7 @@ void ScriptEngine::exposeCpp()
 {
   //General
   scriptEnv.set_function("print", [=] (std::string x) { Terminal::windows.at("main") << x; });
+  scriptEnv.set_function("tostring", [=] (int x) { return (std::to_string(x)); });
   scriptEnv.set_function("clearScreen", [] () { Terminal::windows.at("main").clearScreen(); });
   scriptEnv.set_function("pause", [] () { getch(); });
   scriptEnv.set_function("exit", [] () { exit(0); });

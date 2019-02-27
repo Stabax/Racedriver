@@ -1,0 +1,139 @@
+
+<!-- Garage main menu -->
+<Menu Id="Garage" Title="Garage" OnLoad="GarageOnLoad">
+  <Sep/>
+  <Button Type="Goto" Target="BuyCar"><Text Id="garage.buy"/></Button>
+  <Sep/>
+  <Button Type="Goto" Target="Main" Path="./Data/Menus/Main.xml"><Text Id="global.back"/></Button>
+</Menu>
+<Script Id="GarageOnLoad"><![CDATA[
+  i = 0
+  while (i < Garage:size()) do
+    car = Garage:get(i)
+    addMenuItem(0 + i, "<Button Type='Intern' Target='setEnv(\"Box\", \""..i.."\") goTo(\"Box\")'>[Box " .. i .. "] "..car.manufacturer.." "..car.name .. "</Button>")
+    i = i + 1
+  end
+]]></Script>
+<!-- Garage buy car menu -->
+<Menu Id="BuyCar" Title="Garage">
+  <Sep/>
+  <Button Type="Goto" Target="Main"><Text Id="global.back"/></Button>
+</Menu>
+<!-- Box inspection menu -->
+<Menu Id="Box" Title="Garage">
+  <Script><![CDATA[
+    car = Garage:get(getEnvInt("Box"))
+    print("[Box "..getEnv("Box").."] "..car.manufacturer.." "..car.name .. "\n")
+    print(" Engine: "..car:getEngine().manufacturer.." "..car:getEngine().name.."\n")
+    print(" Spoiler: "..car:getSpoiler().manufacturer.." "..car:getSpoiler().name.."\n")
+    print(" Tires: "..car:getTires().manufacturer.." "..car:getTires().name.."\n")
+  ]]></Script>
+  <Sep/>
+  <Button Type="Script" Target="RepairCar"><Text Id="garage.repair"/></Button>
+  <Button Type="Goto" Target="UpgradeCar"><Text Id="garage.upgrade"/></Button>
+  <Button Type="Script" Target="SellCar"><Text Id="garage.sell"/></Button>
+  <Sep/>
+  <Button Type="Goto" Target="Garage"><Text Id="global.back"/></Button>
+</Menu>
+<Script Id="RepairCar"><![CDATA[
+  alert("not impl");
+]]></Script>
+<Script Id="SellCar"><![CDATA[
+  alert("not impl")
+]]></Script>
+<!-- Upgrade Car Home -->
+<Menu Id="UpgradeCar"  Title="Garage">
+  <Script><![CDATA[
+    car = Garage:get(getEnvInt("Box"))
+    print("[Box "..getEnv("Box").."] "..car.manufacturer.." "..car.name .. "\n")
+    print(" Engine: "..car:getEngine().manufacturer.." "..car:getEngine().name.."\n")
+    print(" Spoiler: "..car:getSpoiler().manufacturer.." "..car:getSpoiler().name.."\n")
+    print(" Tires: "..car:getTires().manufacturer.." "..car:getTires().name.."\n")
+  ]]></Script>
+  <Sep/>
+  <Button Type="Goto" Target="UpgradeEngine"><Text Id="car.engine"/></Button>
+  <Button Type="Goto" Target="UpgradeSpoiler"><Text Id="car.spoiler"/></Button>
+  <Button Type="Goto" Target="UpgradeTires"><Text Id="car.tires"/></Button>
+  <Button Type="Intern" Target="chooseCharmMenu()"><Text Id="car.charm"/></Button>
+  <Sep/>
+  <Button Type="Goto" Target="Box"><Text Id="global.back"/></Button>
+</Menu>
+<!-- Upgrade Engine Menu -->
+<Menu Id="UpgradeEngine" Title="Garage" OnLoad="UpgradeEngineOnLoad">
+  <Script><![CDATA[
+    print("[Box "..getEnv("Box").."] "..car.manufacturer.." "..car.name .. "\n")
+    print(" Engine: "..engine.manufacturer.." "..engine.name.."\n")
+    print(" Power: "..engine:getPower().."ch at ".. engine:getRevolutions().."rpm\n")
+    if (getCursor() < parts:size()) then
+      selection = parts[getCursor()]
+      print("[Selected]\n")
+      print(" Engine: "..selection.manufacturer.." "..selection.name.."\n")
+      print(" Power: "..selection:getPower().."ch at ".. selection:getRevolutions().."rpm\n")
+    end
+  ]]></Script>
+  <Sep/>
+  <Sep/>
+  <Button Type="Goto" Target="UpgradeCar"><Text Id="global.back"/></Button>
+</Menu>
+<Script Id="UpgradeEngineOnLoad"><![CDATA[
+  i = 0
+  car = Garage:get(getEnvInt("Box"))
+  engine = car:getEngine()
+  parts = Engines:filterCompatible(car)
+  while (i < parts:size()) do
+    addMenuItem(2 + i, "<Button Type='Intern' Target='car:buyEngine(parts["..i.."])'>"..parts[i].manufacturer.." - "..parts[i].name.." ["..parts[i].price.."c]</Button>")
+    i = i + 1
+  end
+]]></Script>
+<!-- Upgrade Spoiler Menu -->
+<Menu Id="UpgradeSpoiler" Title="Garage"  OnLoad="UpgradeSpoilerOnLoad">
+  <Script><![CDATA[
+    print("[Box "..getEnv("Box").."] "..car.manufacturer.." "..car.name .. "\n")
+    print(" Spoiler: "..spoiler.manufacturer.." "..spoiler.name.."\n")
+    print(" Aerodynamic: "..spoiler:getAerodynamic().."\n")
+    if (getCursor() < parts:size()) then
+      selection = parts[getCursor()]
+      print("[Selected]\n")
+      print(" Spoiler: "..selection.manufacturer.." "..selection.name.."\n")
+      print(" Aerodynamic: "..selection:getAerodynamic().."\n")
+    end
+  ]]></Script>
+  <Sep/>
+  <Sep/>
+  <Button Type="Goto" Target="UpgradeCar"><Text Id="global.back"/></Button>
+</Menu>
+<Script Id="UpgradeSpoilerOnLoad"><![CDATA[
+  i = 0
+  car = Garage:get(getEnvInt("Box"))
+  spoiler = car:getSpoiler()
+  parts = Spoilers:filterCompatible(car)
+  while (i < parts:size()) do
+    addMenuItem(2 + i, "<Button Type='Intern' Target='car:buySpoiler(parts[" .. i .. "])'>" .. parts[i].manufacturer .. " - " .. parts[i].name .." ["..parts[i].price.."c]</Button>")
+    i = i + 1
+  end
+]]></Script>
+<!-- Upgrade Tires Menu -->
+<Menu Id="UpgradeTires" Title="Garage"  OnLoad="UpgradeTiresOnLoad">
+  <Script><![CDATA[
+    print("[Box "..getEnv("Box").."] "..car.manufacturer.." "..car.name .. "\n")
+    print(" Tires: "..tires.manufacturer.." "..tires.name.."\n")
+    if (getCursor() < parts:size()) then
+      selection = parts[getCursor()]
+      print("[Selected]\n")
+      print(" Tires: "..selection.manufacturer.." "..selection.name.."\n")
+    end
+  ]]></Script>
+  <Sep/>
+  <Sep/>
+  <Button Type="Goto" Target="UpgradeCar"><Text Id="global.back"/></Button>
+</Menu>
+<Script Id="UpgradeTiresOnLoad"><![CDATA[
+  i = 0
+  car = Garage:get(getEnvInt("Box"))
+  tires = car:getTires()
+  parts = Tires:filterCompatible(car)
+  while (i < parts:size()) do
+    addMenuItem(2 + i, "<Button Type='Intern' Target='car:buyTires(parts[" .. i .. "])'>" .. parts[i].manufacturer .. " - " .. parts[i].name.." ["..parts[i].price.."c]</Button>")
+    i = i + 1
+  end
+]]></Script>

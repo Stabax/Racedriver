@@ -78,7 +78,11 @@ void MenuItem::render()
 {
 	Terminal &term = Terminal::windows.at("main");
 
-  if (_hover) term << setColor(Terminal::Color::RedOnBlack);
+  if (_hover)
+  {
+    term << setColor(Terminal::Color::RedOnBlack)
+         << ">";
+  }
   term << _label;
   if (_hover) term << resetAttrs;
 }

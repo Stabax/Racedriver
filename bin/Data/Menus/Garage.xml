@@ -2,9 +2,9 @@
 <!-- Garage main menu -->
 <Menu Id="Garage" Title="Garage" OnLoad="GarageOnLoad">
   <Sep/>
-  <Button Type="Goto" Target="BuyCar"><Text Id="garage.buy"/></Button>
+  <Button Type="Goto" Target="BuyCar"><Lang Id="garage.buy"/></Button>
   <Sep/>
-  <Button Type="Goto" Target="Main" Path="./Data/Menus/Main.xml"><Text Id="global.back"/></Button>
+  <Button Type="Goto" Target="Main" Path="./Data/Menus/Main.xml"><Lang Id="global.back"/></Button>
 </Menu>
 <Script Id="GarageOnLoad"><![CDATA[
   i = 0
@@ -17,7 +17,7 @@
 <!-- Garage buy car menu -->
 <Menu Id="BuyCar" Title="Garage">
   <Sep/>
-  <Button Type="Goto" Target="Main"><Text Id="global.back"/></Button>
+  <Button Type="Goto" Target="Main"><Lang Id="global.back"/></Button>
 </Menu>
 <!-- Box inspection menu -->
 <Menu Id="Box" Title="Garage">
@@ -29,11 +29,11 @@
     print(" Tires: "..car:getTires().manufacturer.." "..car:getTires().name.."\n")
   ]]></Script>
   <Sep/>
-  <Button Type="Script" Target="RepairCar"><Text Id="garage.repair"/></Button>
-  <Button Type="Goto" Target="UpgradeCar"><Text Id="garage.upgrade"/></Button>
-  <Button Type="Script" Target="SellCar"><Text Id="garage.sell"/></Button>
+  <Button Type="Script" Target="RepairCar"><Lang Id="garage.repair"/></Button>
+  <Button Type="Goto" Target="UpgradeCar"><Lang Id="garage.upgrade"/></Button>
+  <Button Type="Script" Target="SellCar"><Lang Id="garage.sell"/></Button>
   <Sep/>
-  <Button Type="Goto" Target="Garage"><Text Id="global.back"/></Button>
+  <Button Type="Goto" Target="Garage"><Lang Id="global.back"/></Button>
 </Menu>
 <Script Id="RepairCar"><![CDATA[
   alert("not impl");
@@ -51,12 +51,12 @@
     print(" Tires: "..car:getTires().manufacturer.." "..car:getTires().name.."\n")
   ]]></Script>
   <Sep/>
-  <Button Type="Goto" Target="UpgradeEngine"><Text Id="car.engine"/></Button>
-  <Button Type="Goto" Target="UpgradeSpoiler"><Text Id="car.spoiler"/></Button>
-  <Button Type="Goto" Target="UpgradeTires"><Text Id="car.tires"/></Button>
-  <Button Type="Intern" Target="chooseCharmMenu()"><Text Id="car.charm"/></Button>
+  <Button Type="Goto" Target="UpgradeEngine"><Lang Id="car.engine"/></Button>
+  <Button Type="Goto" Target="UpgradeSpoiler"><Lang Id="car.spoiler"/></Button>
+  <Button Type="Goto" Target="UpgradeTires"><Lang Id="car.tires"/></Button>
+  <Button Type="Intern" Target="chooseCharmMenu()"><Lang Id="car.charm"/></Button>
   <Sep/>
-  <Button Type="Goto" Target="Box"><Text Id="global.back"/></Button>
+  <Button Type="Goto" Target="Box"><Lang Id="global.back"/></Button>
 </Menu>
 <!-- Upgrade Engine Menu -->
 <Menu Id="UpgradeEngine" Title="Garage" OnLoad="UpgradeEngineOnLoad">

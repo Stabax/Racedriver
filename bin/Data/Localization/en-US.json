@@ -1,6 +1,11 @@
 {
   "localization": "English",
   "data": {
+    "update.newversion": "A new version of the game is available",
+    "update.updatetoenjoy": "Update now to get the latest features and content !",
+    "update.downloads": "Take me to the downloads now!",
+    "update.obsolete": "Play with an obsolete version of the game",
+
     "global.name": "Name",
     "global.apply": "Apply",
     "global.create": "Create",
@@ -19,6 +24,7 @@
     "game.options": "Options",
     "game.quit": "Quit",
 
+    "garage.buy": "Buy Car",
     "garage.repair": "Repair",
     "garage.sell": "Sell",
     "garage.upgrade": "Upgrade",

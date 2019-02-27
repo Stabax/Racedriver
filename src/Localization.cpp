@@ -11,7 +11,7 @@ std::string Localization::substitute(std::string data)
 {
   size_t beg = 0, end;
   std::string str;
-  while ((beg = data.find("<Text")) != std::string::npos)
+  while ((beg = data.find("<Lang")) != std::string::npos)
   {
     end = 0;
     str += data.substr(0, beg);
@@ -30,7 +30,7 @@ std::string Localization::substitute(xml_node data)
 {
   std::string str;
 
-  if (strcmp(data.name(), "Text") == 0)
+  if (strcmp(data.name(), "Lang") == 0)
   {
     try {
       str += Localization::data.at(data.attribute("Id").value());
@@ -40,7 +40,7 @@ std::string Localization::substitute(xml_node data)
   }
 	for (pugi::xml_node el = data.first_child(); el; el = el.next_sibling())
   {
-    if (strcmp(el.name(), "Text") == 0)
+    if (strcmp(el.name(), "Lang") == 0)
     {
       try {
         str += Localization::data.at(el.attribute("Id").value());

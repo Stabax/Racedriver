@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- PRE - PROFILE -->
 <Menu Id="Home" Title="Car" OnLoad="Test">
-  <Button Type="Intern" Target="loadGameMenu()"><Text Id="game.continue"/></Button>
-  <Button Type="Goto" Target="NewGame"><Text Id="game.new"/></Button>
-  <Button Type="Goto" Target="Credits"><Text Id="game.about"/></Button>
-  <Button Type="Intern" Target="exit()"><Text Id="game.quit"/></Button>
+  <Button Type="Intern" Target="loadGameMenu()"><Lang Id="game.continue"/></Button>
+  <Button Type="Goto" Target="NewGame"><Lang Id="game.new"/></Button>
+  <Button Type="Goto" Target="Credits"><Lang Id="game.about"/></Button>
+  <Button Type="Intern" Target="exit()"><Lang Id="game.quit"/></Button>
 </Menu>
 <!-- Menu -->
 <Menu Id="NewGame">
-  <Text Id="profile.promptname"/>
+  <Text><Lang Id="profile.promptname"/></Text>
   <Select Id="Difficulty" Text="Difficulty">
-    <Option Value="0"><Text Id="difficulty.easy"/></Option>
-    <Option Value="1"><Text Id="difficulty.medium"/></Option>
-    <Option Value="2"><Text Id="difficulty.hard"/></Option>
+    <Option Value="0"><Lang Id="difficulty.easy"/></Option>
+    <Option Value="1"><Lang Id="difficulty.medium"/></Option>
+    <Option Value="2"><Lang Id="difficulty.hard"/></Option>
   </Select>
   <Select Id="Locale" Text="Locale">
     <Option Value="en-US">en-US</Option>
     <Option Value="fr-FR">fr-FR</Option>
   </Select>
-  <Input Id="Profile"><Text Id="global.name"/></Input>
-  <Button Type="Script" Target="CreateProfile"><Text Id="global.create"/></Button>
-  <Button Type="Goto" Target="Home"><Text Id="global.back"/></Button>
+  <Input Id="Profile"><Lang Id="global.name"/></Input>
+  <Button Type="Script" Target="CreateProfile"><Lang Id="global.create"/></Button>
+  <Button Type="Goto" Target="Home"><Lang Id="global.back"/></Button>
 </Menu>
 <Script Id="CreateProfile"><![CDATA[
   createProfile(getInputData("Profile"), getSelectValue("Locale"))
@@ -32,31 +32,31 @@
     print(getVersion() .. "\n")
   ]]></Script>
   <Sep/>
-  <Button Type="Goto" Target="Home"><Text Id="global.back"/></Button>
+  <Button Type="Goto" Target="Home"><Lang Id="global.back"/></Button>
 </Menu>
 <!-- GAME -->
 <Menu Id="Main" Title="Game">
-  <Button Type="Goto" Target="Race"><Text Id="game.race"/></Button>
-  <Button Type="Goto" Target="Garage" Path="./Data/Menus/Garage.xml"><Text Id="game.garage"/></Button>
-  <Button Type="Goto" Target="Stats"><Text Id="game.stats"/></Button>
-  <Button Type="Goto" Target="Options"><Text Id="game.options"/></Button>
-  <Button Type="Intern" Target="exit()"><Text Id="game.quit"/></Button>
+  <Button Type="Goto" Target="Race"><Lang Id="game.race"/></Button>
+  <Button Type="Goto" Target="Garage" Path="./Data/Menus/Garage.xml"><Lang Id="game.garage"/></Button>
+  <Button Type="Goto" Target="Stats"><Lang Id="game.stats"/></Button>
+  <Button Type="Goto" Target="Options"><Lang Id="game.options"/></Button>
+  <Button Type="Intern" Target="exit()"><Lang Id="game.quit"/></Button>
 </Menu>
 <!-- Menu -->
 <Menu Id="Options" Title="Options" OnLoad="OptionsOnLoad">
   <Select Id="Difficulty" Text="Difficulty">
-    <Option Value="0"><Text Id="difficulty.easy"/></Option>
-    <Option Value="1"><Text Id="difficulty.medium"/></Option>
-    <Option Value="2"><Text Id="difficulty.hard"/></Option>
+    <Option Value="0"><Lang Id="difficulty.easy"/></Option>
+    <Option Value="1"><Lang Id="difficulty.medium"/></Option>
+    <Option Value="2"><Lang Id="difficulty.hard"/></Option>
   </Select>
   <Select Id="Locale" Text="Locale">
     <Option Value="en-US">en-US</Option>
     <Option Value="fr-FR">fr-FR</Option>
   </Select>
-  <Input Id="Profile"><Text Id="profile.promptname"/></Input>
+  <Input Id="Profile"><Lang Id="profile.promptname"/></Input>
   <Sep/>
-  <Button Type="Script" Target="ApplyOptions"><Text Id="global.apply"/></Button>
-  <Button Type="Goto" Target="Main"><Text Id="global.back"/></Button>
+  <Button Type="Script" Target="ApplyOptions"><Lang Id="global.apply"/></Button>
+  <Button Type="Goto" Target="Main"><Lang Id="global.back"/></Button>
 </Menu>
 <Script Id="OptionsOnLoad"><![CDATA[
   setSelectValue("Difficulty", getProfileDifficulty())
@@ -73,10 +73,10 @@
 <Menu Id="Race" Title="Game">
   <Text>Select mode</Text>
   <Sep/>
-  <Button Type="Script" Target="StartRace"><Text Id="race.free"/></Button>
-  <Text>-<Text Id="race.career"/>-</Text>
+  <Button Type="Script" Target="StartRace"><Lang Id="race.free"/></Button>
+  <Text>-<Lang Id="race.career"/>-</Text>
   <Sep/>
-  <Button Type="Goto" Target="Main"><Text Id="global.back"/></Button>
+  <Button Type="Goto" Target="Main"><Lang Id="global.back"/></Button>
 </Menu>
 <Script Id="StartRace"><![CDATA[
   selectCarMenu();

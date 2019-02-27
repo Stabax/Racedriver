@@ -77,12 +77,12 @@ bool Game::update()
 	if (res && res->status == 200 && res->body != GAME_VERSION) {
 		std::string menu;
 		menu += "<Menu Title='Game'>"
-						" <Text>Une nouvelle version du jeu est disponible. (" + res->body + ")</Text>"
-						" <Text>Mettez votre jeu à jour pour profiter des dernières fonctionnalités.</Text>"
+						" <Text><Lang Id='update.newversion'/>. (" + res->body + ")</Text>"
+						" <Text><Lang Id='update.updatetoenjoy'/>.</Text>"
 						" <Sep/>"
-						" <Button Type='Intern' Target='alert(\"not impl\")'>Télécharger la dernière version</Button>"
-						" <Button Type='Goto' Path='./Data/Menus/Main.xml' Target='Home'>Jouer avec une version obsolète</Button>"
-						"	<Button Type='Intern' Target='exit()'>Quitter</Button>"
+						" <Button Type='Intern' Target='alert(\"not impl\")'><Lang Id='update.downloads'/></Button>"
+						" <Button Type='Goto' Path='./Data/Menus/Main.xml' Target='Home'><Lang Id='update.obsolete'/></Button>"
+						"	<Button Type='Intern' Target='exit()'><Lang Id='global.quit'/></Button>"
 						"</Menu>";
 		Menu::goTo("", menu, DataSource::Document);
 		return (true);

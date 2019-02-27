@@ -37,7 +37,7 @@
 <!-- GAME -->
 <Menu Id="Main" Title="Game">
   <Button Type="Goto" Target="Race"><Text Id="game.race"/></Button>
-  <Button Type="Intern" Target="garageMenu()"><Text Id="game.garage"/></Button>
+  <Button Type="Goto" Target="Garage"><Text Id="game.garage"/></Button>
   <Button Type="Goto" Target="Stats"><Text Id="game.stats"/></Button>
   <Button Type="Goto" Target="Options"><Text Id="game.options"/></Button>
   <Button Type="Intern" Target="exit()"><Text Id="game.quit"/></Button>
@@ -112,9 +112,26 @@
   <Button Type='Goto' Target='Main'>Back</Button>
 </Menu>
 <!-- GARAGE -->
+<Menu Id="Garage" Title="Garage" OnLoad="GarageOnLoad">
+  <Sep/>
+  <Button Type="Script" Target="RepairCar"><Text Id="garage.repair"/></Button>
+  <Button Type="Goto" Target="UpgradeCar"><Text Id="garage.upgrade"/></Button>
+  <Button Type="Script" Target="SellCar"><Text Id="garage.sell"/></Button>
+  <Sep/>
+  <Button Type="Goto" Target="Main"><Text Id="global.back"/></Button>
+</Menu>
+<Script Id="GarageOnLoad"><![CDATA[
+  i = 0
+  while (i < Garage:size()) do
+    car = Garage:get(i)
+    addMenuItem(0 + i, "<Button Type='Intern' Target='setEnv(\"Box\", \""..i.."\") goTo(\"Box\")'>[Box " .. i .. "] "..car.manufacturer.." "..car.name .. "</Button>")
+    i = i + 1
+  end
+]]></Script>
+<!-- BOX -->
 <Menu Id="Box" Title="Garage">
   <Script><![CDATA[
-    car = getBox(getEnv("Box"))
+    car = Garage:get(getEnvInt("Box"))
     print("[Box "..getEnv("Box").."] "..car.manufacturer.." "..car.name .. "\n")
     print(" Engine: "..car:getEngine().manufacturer.." "..car:getEngine().name.."\n")
     print(" Spoiler: "..car:getSpoiler().manufacturer.." "..car:getSpoiler().name.."\n")
@@ -136,7 +153,7 @@
 <!-- Menu -->
 <Menu Id="UpgradeCar"  Title="Garage">
   <Script><![CDATA[
-    car = getBox(getEnv("Box"))
+    car = Garage:get(getEnvInt("Box"))
     print("[Box "..getEnv("Box").."] "..car.manufacturer.." "..car.name .. "\n")
     print(" Engine: "..car:getEngine().manufacturer.." "..car:getEngine().name.."\n")
     print(" Spoiler: "..car:getSpoiler().manufacturer.." "..car:getSpoiler().name.."\n")
@@ -153,7 +170,7 @@
 <!-- Menu -->
 <Menu Id="UpgradeEngine" Title="Garage" OnLoad="UpgradeEngineOnLoad">
   <Script><![CDATA[
-    car = getBox(getEnv("Box"))
+    car = Garage:get(getEnvInt("Box"))
     print("[Box "..getEnv("Box").."] "..car.manufacturer.." "..car.name .. "\n")
     print(" Engine: "..car:getEngine().manufacturer.." "..car:getEngine().name.."\n")
   ]]></Script>
@@ -171,7 +188,7 @@
 <!-- Menu -->
 <Menu Id="UpgradeSpoiler" Title="Garage"  OnLoad="UpgradeSpoilerOnLoad">
   <Script><![CDATA[
-    car = getBox(getEnv("Box"))
+    car = Garage:get(getEnvInt("Box"))
     print("[Box "..getEnv("Box").."] "..car.manufacturer.." "..car.name .. "\n")
     print(" Spoiler: "..car:getSpoiler().manufacturer.." "..car:getSpoiler().name.."\n")
   ]]></Script>
@@ -189,7 +206,7 @@
 <!-- Menu -->
 <Menu Id="UpgradeTires" Title="Garage"  OnLoad="UpgradeTiresOnLoad">
   <Script><![CDATA[
-    car = getBox(getEnv("Box"))
+    car = Garage:get(getEnvInt("Box"))
     print("[Box "..getEnv("Box").."] "..car.manufacturer.." "..car.name .. "\n")
     print(" Tires: "..car:getTires().manufacturer.." "..car:getTires().name.."\n")
   ]]></Script>

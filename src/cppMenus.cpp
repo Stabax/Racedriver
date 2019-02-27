@@ -56,7 +56,7 @@ void menuSelectCar()
 	for (size_t i = 0; i < Profile::active->garage.getSize(); i++)
 	{
 		menu += " <Button Type='Intern' Target='setEnv(\"Box\", \"" + std::to_string(i) + "\") menuSelectCar()'>"
-		        "[Box " + std::to_string(i) + "] " +  Profile::active->garage.getBox(i).manufacturer + " " + Profile::active->garage.getBox(i).name + "</Button>";
+		        "[Box " + std::to_string(i) + "] " +  Profile::active->garage.get(i).manufacturer + " " + Profile::active->garage.get(i).name + "</Button>";
 	}
  	menu += " <Sep/>"
 	 				"	<Button Type='Goto' Path='./Data/Menus/Main.xml' Target='Main'>Back</Button>"
@@ -78,26 +78,6 @@ void menuSelectTrack()
 	        "	<Button Type='Goto' Path='./Data/Menus/Main.xml' Target='Race'>Back</Button>"
 					"</Menu>";
 	Menu::popUp("", menu, DataSource::Document);
-}
-
-
-void menuGarage()
-{
-	std::string menu;
-	menu += "<Menu Title='Garage'>";
-	for (size_t i = 0; i < Profile::active->garage.getSize(); i++)
-	{
-		menu += " <Button Type='Intern' Target='setEnv(\"Box\", \"" + std::to_string(i) + "\") goToPath(\"Box\", \"./Data/Menus/Main.xml\") '>"
-				  	"[Box " + std::to_string(i) + "] " +  Profile::active->garage.getBox(i).manufacturer + " " + Profile::active->garage.getBox(i).name + "</Button>";
-	}
- 	menu += " <Sep/>"
-	 				" <Button Type='Intern' Target='buyBoxMenu()'>Upgrade garage (Buy Box)</Button>"
-	 				" <Button Type='Intern' Target='buyCarMenu()'>Buy new car</Button>"
-	 				" <Sep/>"
-	 				"	<Button Type='Goto' Path='./Data/Menus/Main.xml' Target='Main'>Back</Button>"
-					"</Menu>";
-	Menu::goTo("", menu, DataSource::Document);
-	//static_cast<std::shared_ptr<MenuButton>>(Menu::active->getItem("BuyCar"))->bind()
 }
 
 void menuBuyBox()
@@ -127,9 +107,4 @@ void menuBuyCar()
 					"</Menu>";
 	Menu::goTo("", menu, DataSource::Document);
 	//static_cast<std::shared_ptr<MenuButton>>(Menu::active->getItem("BuyCar"))->bind()
-}
-
-void menuChooseCharm()
-{
-	Menu::alert("not impl!");
 }

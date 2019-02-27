@@ -10,7 +10,9 @@ public:
   Garage();
   Garage(const json &data);
 
-  Car &getBox(size_t index) const;
+	static void expose(sol::environment &lua);
+
+  Car &get(size_t index) const;
   size_t getSize() const;
   size_t getBoxCount() const;
 

@@ -156,7 +156,7 @@ void Menu::alert(std::string str)
 
 Menu::ASCIILogo Menu::convertASCIILogo(std::string art)
 {
-	if (art == "Game") return (Menu::ASCIILogo::Game);
+	if (art == "Game") return (ASCIILogo::Game);
 	else if (art == "Options") return (Options);
 	else if (art == "Garage") return (Garage);
 	else if (art == "Stats") return (Stats);
@@ -169,7 +169,7 @@ void Menu::printASCIILogo(ASCIILogo art)
 	Terminal &term = Terminal::windows.at("main");
 	switch (art)
 	{
-	case Menu::ASCIILogo::Game:
+	case ASCIILogo::Game:
 		term << setColor(Terminal::Color::RedOnBlack)
 				 << " ________                  ________       _____                    \n"
 				 << " ___  __ \\_____ ______________  __ \\_________(_)__   ______________\n"

@@ -20,7 +20,23 @@ Garage::Garage(const json &data)
   }
 }
 
-Car &Garage::getBox(size_t index) const
+
+void Garage::expose(sol::environment &lua)
+{
+	lua.new_usertype<Garage>("Garage",
+		// constructor
+		sol::constructors<Garage(const json &data)>(),
+
+		"boxCount", &Garage::_boxCount,
+
+		"get", &Garage::get,
+		"sellCar", &Garage::sellCar,
+		"size", &Garage::getSize
+	);
+}
+
+
+Car &Garage::get(size_t index) const
 {
 	if (_boxs.size() > 0 && index >= _boxs.size()) throw (std::runtime_error("Out of bounds"));
 	if (_boxs[index] == nullptr) throw (std::runtime_error("Corrupted garage data"));
@@ -73,7 +89,7 @@ void Garage::sellCar(size_t index)
 	{
 		throw (std::runtime_error("Le box est vide"));
 	}
-	Car &car = getBox(index);
+	Car &car = get(index);
 	int sellPrice = car.getTotalPrice() * 0.70f;
 	Profile::active->credits += sellPrice;
 	Menu::alert(car.name+" vendue avec succes pour "+std::to_string(sellPrice)+"c");
@@ -89,7 +105,7 @@ void to_json(json& j, const Garage& garage)
 	for (size_t i = 0; i < garage.getBoxCount(); i++)
 	{
 		try {
-			Car &car = garage.getBox(i);
+			Car &car = garage.get(i);
 			j["cars"].push_back(car);
 		} catch (...) {
 			//Nothing to do

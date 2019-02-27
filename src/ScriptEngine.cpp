@@ -54,6 +54,7 @@ void ScriptEngine::exposeCpp()
   scriptEnv.set_function("goToPath", [=] (std::string id, std::string path) { Menu::goTo(id, path); });
   scriptEnv.set_function("setEnv", [=] (std::string key, std::string value) { environment[key] = value; });
   scriptEnv.set_function("getEnv", [=] (std::string key) { return (environment[key]); });
+  scriptEnv.set_function("getEnvInt", [=] (std::string key) { return (atoi(environment[key].c_str())); });
   //Menu helper
   scriptEnv.set_function("addMenuItem", [=] (int idx, std::string xml) {
     MenuFile menu(xml, DataSource::Document);
@@ -93,18 +94,16 @@ void ScriptEngine::exposeCpp()
   scriptEnv.set_function("createProfile", [=] (std::string name, std::string locale) { Profile::create(name, locale); });
   if (Profile::active != nullptr)
   {
+    scriptEnv["Garage"] = Profile::active->garage;
     scriptEnv.set_function("getProfileName", [] () { return (Profile::active->name); });
     scriptEnv.set_function("getProfileStats", [] () { return (Profile::active->careerStats); });
     scriptEnv.set_function("getProfileDifficulty", [] () { return (std::to_string(Profile::active->difficulty)); });
     scriptEnv.set_function("getProfileLocale", [=] () { return (Profile::active->localization); });
   }
-  //Garage management
-  scriptEnv.set_function("getBox", [&] (std::string index) ->Car& { return (Profile::active->garage.getBox(atoi(index.c_str()))); });
-  scriptEnv.set_function("buyCar", [&] (Car &car) { Profile::active->garage.buyCar(car); });
   //Cpp Menus
   scriptEnv.set_function("loadGameMenu", &menuLoadGame);
   scriptEnv.set_function("startRace", [] () {
-    Race race(std::make_shared<Car>(Profile::active->garage.getBox(atoi(ScriptEngine::environment["Box"].c_str()))),
+    Race race(std::make_shared<Car>(Profile::active->garage.get(atoi(ScriptEngine::environment["Box"].c_str()))),
               Track::collection[(atoi(ScriptEngine::environment["Track"].c_str()))]);
 
     if (race.preparations()) race.start();
@@ -112,17 +111,15 @@ void ScriptEngine::exposeCpp()
   scriptEnv.set_function("statsMenu", &menuStats);
   scriptEnv.set_function("selectCarMenu", &menuSelectCar);
   scriptEnv.set_function("selectTrackMenu", &menuSelectTrack);
-  scriptEnv.set_function("garageMenu", &menuGarage);
   scriptEnv.set_function("buyCarMenu", &menuBuyCar);
   scriptEnv.set_function("buyBoxMenu", &menuBuyBox);
-
-  scriptEnv.set_function("chooseCharmMenu", &menuChooseCharm);
 }
 
 void ScriptEngine::exposeCollections()
 {
   Stats::expose(scriptEnv);
   Car::expose(scriptEnv);
+  Garage::expose(scriptEnv);
   Engine::expose(scriptEnv);
   Spoiler::expose(scriptEnv);
   Tires::expose(scriptEnv);

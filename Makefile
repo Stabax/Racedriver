@@ -23,18 +23,17 @@ RM = rm -rf
 
 CXXFLAGS	= -std=c++17 -ggdb -W -Wall -Wpedantic -Iinclude
 CXXFLAGS += -I$(LIBDIR) -I$(LIBDIR)/json/include/ -I$(LIBDIR)/pugixml/src/ -I$(LIBDIR)/lua/
-CXXFLAGS += -I$(LIBDIR)/omniunit/include/omniunit/ -I$(LIBDIR)/sol2/
+CXXFLAGS += -I$(LIBDIR)/omniunit/include/omniunit/ -I$(LIBDIR)/sol2/ -I$(LIBDIR)/cpp-httplib/
 
 LDFLAGS		= -L$(LIBDIR)/lua/ -llua
 # -static-libgcc
 
 ifeq ($(OS),Windows_NT)
 	MAKE = mingw32-make
-	LDFLAGS += -L$(LIBDIR)/pdcurses/wincon/ -lpdcurses
-	LDFLAGS += -L$(BINDIR) -lcurl
+	LDFLAGS += -L$(LIBDIR)/pdcurses/wincon/ -lpdcurses -lws2_32
 else
 	MAKE = make
-	LDFLAGS += -lncurses -lcurl
+	LDFLAGS += -lncurses
 endif
 
 NAME = $(BINDIR)/Racedriver
@@ -73,7 +72,6 @@ all: game
 deps:
 ifeq ($(OS),Windows_NT)
 	-cd $(LIBDIR)/pdcurses/wincon/ && $(MAKE) DLL=Y
-	-cd $(LIBDIR)/curl/ && $(MAKE) --file=Makefile.dist mingw32 && cp ./lib/libcurl.dll ../../bin/
 	-cd $(LIBDIR)/lua/ && $(MAKE) mingw
 	-windres $(RESDIR)/racedriver.rc -O coff -o $(RESDIR)/racedriver.res
 else
@@ -91,7 +89,6 @@ fclean: clean
 
 cleandeps:
 ifeq ($(OS),Windows_NT)
-	-cd $(LIBDIR)/curl/ && $(MAKE) --file=Makefile.dist clean
 	-cd $(LIBDIR)/lua/ && $(MAKE) clean
 	-$(RM) $(RESDIR)/racedriver.res
 else

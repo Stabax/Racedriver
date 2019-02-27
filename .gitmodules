@@ -4,9 +4,6 @@
 [submodule "thirdparty/sol2"]
 	path = thirdparty/sol2
 	url = https://github.com/ThePhD/sol2.git
-[submodule "thirdparty/curl"]
-	path = thirdparty/curl
-	url = https://github.com/curl/curl.git
 [submodule "thirdparty/cpp-httplib"]
 	path = thirdparty/cpp-httplib
 	url = https://github.com/yhirose/cpp-httplib.git

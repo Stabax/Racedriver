@@ -2,7 +2,7 @@
 #include <thread>
 #include <ctime>
 #include <iostream>
-#include <curl/include/curl/curl.h>
+#include <httplib.h>
 #include <sstream>
 #include <fstream>
 #include "Menu.hh"
@@ -57,27 +57,11 @@ bool Game::load()
 
 int Game::main()
 {
-  Terminal &term = Terminal::windows.at("main");
-	// BEGIN
-	std::srand(std::time(0)); //INITIALISATION DE L'ALEATOIRE
-	if (!update()) //on verifie et fait les mises à jour
-	{
-		term << setColor(Terminal::Color::RedOnBlack)
-					<< ">Vous allez jouer avec une version potentiellement obsolete de Racedriver.\n"
-					<< resetAttrs
-		      << ">Appuyez sur [ENTREE] pour continuer.\n";
-		getch();
-	}
-	term.clearScreen();
-	if (!load()) return -1;
-	/*std::this_thread::sleep_for(std::chrono::seconds(2));
-	term.addWindow("test", Point(10, 10), Point(25, 25));
-	getch();*/
-	//Main loop hook
-	Menu::goTo("Home", "./Data/Menus/Main.xml");
+	std::srand(std::time(0));
+	if (!load()) return (-1); //Load game
+	if (!update()) Menu::goTo("Home", "./Data/Menus/Main.xml"); //If nothing showed while cheking updates, move to home
 	Menu::run();
-	//menuRacedriver(); //on lance le coeur du jeu
-	return 0;
+	return (0);
 }
 
 void Game::removeUpdatePackage()
@@ -87,88 +71,21 @@ void Game::removeUpdatePackage()
 
 bool Game::update()
 {
-  Terminal &term = Terminal::windows.at("main");
+	httplib::Client http(SERVER);
 
-	CURL *curlVersion = curl_easy_init(); //On crée un flux cURL et on "instancie" le flux
-	CURLcode resVersion; //CURLcode est un type enum de Curl stockant un état d'erreur.
-
-	//on indique l'url cible
-	curl_easy_setopt(curlVersion, CURLOPT_URL, "/bin/version");
-
-	//on indique quelle est la fonction d'ecriture du fichier. on utilise celle de la bibliothèque standard
-	curl_easy_setopt(curlVersion, CURLOPT_WRITEFUNCTION, fwrite);
-
-	//création et ouverture d'un fichier en ecriture
-	FILE *versionFile = fopen("Update/version.cdx", "w");
-	if (!versionFile)
-	{
-		Menu::alert("Impossible d'écrire dans le répertoire du jeu");
-		return (false);
-	}
-
-	//on indique le fichier de destination chez le client
-	curl_easy_setopt(curlVersion, CURLOPT_WRITEDATA, versionFile);
-
-	term << ">Recuperation des informations de mise a jour...\n\n";
-	//on lance le flux (curl version ici) ==> telechargement du fichier
-	//l'état du telechargement est stocké dans un type CURLcode (ici resVersion)
-	resVersion = curl_easy_perform(curlVersion);
-
-	//on libère les ressources utilisées
-	curl_easy_cleanup(curlVersion);
-	fclose(versionFile); //On ferme le fichier téléchargé car on en a plus besoin
-
-	//si le téléchargement s'est mal dérroulé
-	if(CURLE_OK != resVersion)
-	{
-		//echec de la récupération du fichier de version
-		Menu::alert("La recuperation des informations de mise a jour a echoue. Verifiez votre connexion.");
-		return (false);
-	}
-	std::ifstream latestVersion("Update/version.cdx");
-	std::string stringLatestVersion;	//derniere version disponible
-	std::getline(latestVersion, stringLatestVersion);
-
-	//si la verion actuelle est differente de la version disponible, on telecharge la derniere version de racedriver
-	if(GAME_VERSION != stringLatestVersion)
-	{
-		Menu::alert("Votre client est obsolete, une mise a jour est disponible !");
-
-		FILE *updateFile = fopen("Update/update.zip", "w");
-		CURL *curlUpdate;
-		CURLcode resUpdate;
-		std::string binURL;
-
-		curlUpdate = curl_easy_init();
-		binURL = "bin/"+stringLatestVersion+".zip";
-		term << "\n>Connexion au serveur distant...\n";
-		curl_easy_setopt(curlUpdate, CURLOPT_URL, binURL.c_str());
-		curl_easy_setopt(curlUpdate, CURLOPT_WRITEFUNCTION, fwrite);
-		curl_easy_setopt(curlUpdate, CURLOPT_WRITEDATA, updateFile);
-
-		term << ">Telechargement de la mise à jour...\n\n";
-		resUpdate = curl_easy_perform(curlUpdate);
-
-		curl_easy_cleanup(curlUpdate);
-		fclose(updateFile);
-		//echec du dl
-		if(CURLE_OK != resUpdate)
-		{
-			Menu::alert("Le telechargement de la mise a jour a echoue.");
-			return (false);
-		}
-		Menu::alert("Le client a ete mis a jour avec succes !");
-		term << ">Vous devez redemmarer le jeu pour appliquer les modifications.\n";
-		term << ">Appuyez sur [Entree] pour quitter.";
-		getch();
-		//décompression du .zip téléchargé
-		//opérateur ternaire: si OS == 0 (linux) on appelle execl pour unpack linux, sinon on appelle execl pour unpack.exe windows
-		//OS == 0 ? execl("Update/unpack", "unpack", "-qq", "-o", "Update/update.zip", NULL) : execl("Update/unpack.exe", "unpack.exe", "-qq", "-o", "Update/update.zip", NULL);
-		//le programme se termine ici grace à l'apel à execl()
+	auto res = http.Get("/racedriver/version");
+	if (res && res->status == 200 && res->body != GAME_VERSION) {
+		std::string menu;
+		menu += "<Menu Title='Game'>"
+						" <Text>Une nouvelle version du jeu est disponible. (" + res->body + ")</Text>"
+						" <Text>Mettez votre jeu à jour pour profiter des dernières fonctionnalités.</Text>"
+						" <Sep/>"
+						" <Button Type='Intern' Target='alert(\"not impl\")'>Télécharger la dernière version</Button>"
+						" <Button Type='Goto' Path='./Data/Menus/Main.xml' Target='Home'>Jouer avec une version obsolète</Button>"
+						"	<Button Type='Intern' Target='exit()'>Quitter</Button>"
+						"</Menu>";
+		Menu::goTo("", menu, DataSource::Document);
 		return (true);
 	}
-	Menu::alert("Aucune mise à jour disponible.");
-	term << ">Appuyez sur [Entree] pour continuer.\n";
-	getch();
-	return (true);
+	return (false);
 }

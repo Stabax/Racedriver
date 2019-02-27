@@ -4,7 +4,6 @@
 #include "cppMenus.hh"
 
 void menuLoadGame();
-void menuStats();
 void menuSelectCar();
 void menuSelectTrack();
 void menuBuyBox();

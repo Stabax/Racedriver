@@ -73,7 +73,7 @@
   ]]></Script>
   <Sep/>
   <Sep/>
-  <Button Type="Goto" Target="UpgradeCar"><Text Id="global.back"/></Button>
+  <Button Type="Goto" Target="UpgradeCar"><Lang Id="global.back"/></Button>
 </Menu>
 <Script Id="UpgradeEngineOnLoad"><![CDATA[
   i = 0
@@ -100,7 +100,7 @@
   ]]></Script>
   <Sep/>
   <Sep/>
-  <Button Type="Goto" Target="UpgradeCar"><Text Id="global.back"/></Button>
+  <Button Type="Goto" Target="UpgradeCar"><Lang Id="global.back"/></Button>
 </Menu>
 <Script Id="UpgradeSpoilerOnLoad"><![CDATA[
   i = 0
@@ -125,7 +125,7 @@
   ]]></Script>
   <Sep/>
   <Sep/>
-  <Button Type="Goto" Target="UpgradeCar"><Text Id="global.back"/></Button>
+  <Button Type="Goto" Target="UpgradeCar"><Lang Id="global.back"/></Button>
 </Menu>
 <Script Id="UpgradeTiresOnLoad"><![CDATA[
   i = 0

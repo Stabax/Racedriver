@@ -109,7 +109,6 @@ void ScriptEngine::exposeCpp()
 
     if (race.preparations()) race.start();
   });
-  scriptEnv.set_function("statsMenu", &menuStats);
   scriptEnv.set_function("selectCarMenu", &menuSelectCar);
   scriptEnv.set_function("selectTrackMenu", &menuSelectTrack);
   scriptEnv.set_function("buyCarMenu", &menuBuyCar);

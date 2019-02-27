@@ -29,12 +29,14 @@
     "garage.sell": "Sell",
     "garage.upgrade": "Upgrade",
 
+    "car.select": "Select a car",
     "car.engine": "Engine",
     "car.spoiler": "Spoiler",
     "car.tires": "Tires",
     "car.charm": "Charm",
 
-    "profile.promptname": "Enter Profile Name",
+    "profile.promptname": "Enter profile name",
+    "profile.select": "Select a profile to load",
 
     "difficulty.easy": "Easy",
     "difficulty.medium": "Medium",

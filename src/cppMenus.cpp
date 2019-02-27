@@ -13,36 +13,14 @@ void menuLoadGame()
 	std::vector<std::string> saves = DataFile::getFolderContents("./Data/Saves/", ".json");
 	std::string menu;
 	menu += "<Menu>"
-  				"  <Text>Load Profile:</Text>";
+  				"  <Text><Lang Id='profile.select'/>:</Text>"
+  				"  <Sep/>";
 	for (size_t i = 0; i < saves.size(); i++)
 	{
-		menu += "	<Button Type='Intern' Target='loadProfile(\""+ saves[i] +"\") goToPath(\"Main\", \"./Data/Menus/Main.xml\")'>" + saves[i] + "</Button>";
+		std::string profilename = saves[i].substr(0, saves[i].find(".json"));
+		menu += "	<Button Type='Intern' Target='loadProfile(\""+ saves[i] +"\") goToPath(\"Main\", \"./Data/Menus/Main.xml\")'>" + profilename + "</Button>";
 	}
-  menu += "	<Button Type='Goto' Path='./Data/Menus/Main.xml' Target='Home'>Back</Button>"
-					"</Menu>";
-	Menu::goTo("", menu, DataSource::Document);
-}
-
-void menuStats()
-{
-	std::string menu;
-	std::string wlratio = std::to_string(Profile::active->careerStats.victories/(1+Profile::active->careerStats.losses));
-	menu += "<Menu Title='Stats'>"
-					" <Text>Stats du Profile: " + Profile::active->name + "</Text>"
-					" <Sep/>"
-					" <Text> |Courses effectuees: " + std::to_string(Profile::active->careerStats.races) + "</Text>"
-					" <Text> |</Text>"
-					" <Text> |Victoires: " + std::to_string(Profile::active->careerStats.victories) + "</Text>"
-					" <Text> |Defaites: " + std::to_string(Profile::active->careerStats.losses) + "</Text>"
-					" <Text> |[V/D Ratio: " + wlratio + "]</Text>"
-					" <Text> |</Text>"
-					" <Text> |Accidents: " + std::to_string(Profile::active->careerStats.accidents) + "</Text>"
-					" <Text>#Stats Carriere:</Text>"
-					" <Text> |Credits remportes: " + std::to_string(Profile::active->careerStats.creditsEarned) + "c</Text>"
-					" <Text> |</Text>"
-					" <Text> |Cars achetees: " + std::to_string(Profile::active->careerStats.carBought) + "</Text>"
-					" <Sep/>"
-					"	<Button Type='Goto' Path='./Data/Menus/Main.xml' Target='Main'>Back</Button>"
+  menu += "	<Button Type='Goto' Path='./Data/Menus/Main.xml' Target='Home'><Lang Id='global.back'/></Button>"
 					"</Menu>";
 	Menu::goTo("", menu, DataSource::Document);
 }
@@ -51,7 +29,7 @@ void menuSelectCar()
 {
 	std::string menu;
 	menu += "<Menu>"
-  				" <Text>Select a car:</Text>"
+  				" <Text><Lang Id='car.select'/>:</Text>"
 					" <Sep/>";
 	for (size_t i = 0; i < Profile::active->garage.getSize(); i++)
 	{
@@ -59,7 +37,7 @@ void menuSelectCar()
 		        "[Box " + std::to_string(i) + "] " +  Profile::active->garage.get(i).manufacturer + " " + Profile::active->garage.get(i).name + "</Button>";
 	}
  	menu += " <Sep/>"
-	 				"	<Button Type='Goto' Path='./Data/Menus/Main.xml' Target='Main'>Back</Button>"
+	 				"	<Button Type='Goto' Path='./Data/Menus/Main.xml' Target='Main'><Lang Id='global.back'/></Button>"
 					"</Menu>";
 	Menu::popUp("", menu, DataSource::Document);
 }
@@ -75,7 +53,7 @@ void menuSelectTrack()
 		menu += " <Button Type='Intern' Target='setEnv(\"Track\", \"" + std::to_string(i) + "\")'>" + Track::collection[i].name + "</Button>";
 	}
  	menu += " <Sep/>"
-	        "	<Button Type='Goto' Path='./Data/Menus/Main.xml' Target='Race'>Back</Button>"
+	        "	<Button Type='Goto' Path='./Data/Menus/Main.xml' Target='Race'><Lang Id='global.back'/></Button>"
 					"</Menu>";
 	Menu::popUp("", menu, DataSource::Document);
 }
@@ -103,7 +81,7 @@ void menuBuyCar()
 		       + Car::collection[i].manufacturer + " " + Car::collection[i].name + "</Button>";
 	}
  	menu += " <Sep/>"
-	 				"	<Button Type='Intern' Target='garageMenu()'>Back</Button>"
+	 				"	<Button Type='Intern' Target='garageMenu()'><Lang Id='global.back'/></Button>"
 					"</Menu>";
 	Menu::goTo("", menu, DataSource::Document);
 	//static_cast<std::shared_ptr<MenuButton>>(Menu::active->getItem("BuyCar"))->bind()

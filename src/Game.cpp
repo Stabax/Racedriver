@@ -80,7 +80,7 @@ bool Game::update()
 						" <Text><Lang Id='update.newversion'/>. (" + res->body + ")</Text>"
 						" <Text><Lang Id='update.updatetoenjoy'/>.</Text>"
 						" <Sep/>"
-						" <Button Type='Intern' Target='alert(\"not impl\")'><Lang Id='update.downloads'/></Button>"
+						" <Button Type='Intern' Target='alert(\"not implemented\")'><Lang Id='update.downloads'/></Button>"
 						" <Button Type='Goto' Path='./Data/Menus/Main.xml' Target='Home'><Lang Id='update.obsolete'/></Button>"
 						"	<Button Type='Intern' Target='exit()'><Lang Id='global.quit'/></Button>"
 						"</Menu>";

@@ -8,7 +8,7 @@ The menu component will attempt to run menu with "Home" Id inside "./Data/Menus/
 
 ## Menu elements
 
-<table>
+<table style="width:100%;">
   <tr>
     <th>Tag</th>
     <th>Attribute</th>
@@ -23,10 +23,14 @@ The menu component will attempt to run menu with "Home" Id inside "./Data/Menus/
     <td>Id</td>
     <td>Sets id of element for interaction in script</td>
   </tr>
-  <!-- Text -->
+  <!-- Menu -->
   <tr>
-    <td rowspan="1">Menu</td>
+    <td rowspan="2">Menu</td>
     <td colspan="2">Container for menu items</td>
+  </tr>
+  <tr>
+    <td>OnLoad</td>
+    <td>scriptId to execute when creating menu</td>
   </tr>
   <!-- Text -->
   <tr>
@@ -126,9 +130,9 @@ You may want to have custom behaviour inside your menus, racedriver implement it
 
 If you need access to C++ Parts, the following are implemented in lua:
 
-<table>
+<table style="width:100%;">
   <tr>
-    <th>Object</th>
+    <th>TypeName</th>
     <th>Method/Member</th>
     <th>Description</th>
   </tr>
@@ -189,7 +193,7 @@ If you need access to C++ Parts, the following are implemented in lua:
 
 If you need access to C++ Collections and Data, the following are implemented in lua:
 
-<table>
+<table style="width:100%;">
   <tr>
     <th>Object</th>
     <th>Method/Member</th>
@@ -240,7 +244,7 @@ If you need access to C++ Collections and Data, the following are implemented in
 
 If you need helper C++ functions, the following are implemented in lua:
 
-<table>
+<table style="width:100%;">
   <tr>
     <th>Function</th>
     <th>Description</th>
@@ -291,3 +295,22 @@ If you need helper C++ functions, the following are implemented in lua:
     <td>go to a menu that allow player to select a Track, sets environment variable "Track" to int selection index</td>
   </tr>
 </table>
+
+## Write your own scripts
+
+For example, the following script prints a menu that lists all available Engines in the game, and allows to select one
+
+    <Menu Id="Engine" OnLoad="EngineOnLoad">
+      <Text>Select an engine</Text>
+      <Sep/>
+      <!-- Items will be inserted here -->
+      <Sep/>
+      <Button Type="Intern" Target="exit()">Quit</Button>
+    </Menu>
+    <Script Id="EngineOnLoad"><![CDATA[
+      i = 0
+      while (i < Engines:size()) do
+        addMenuItem(2 + i, "<Button Type='Intern' Target='alert(\"selected: Engines["..i.."].name\")'>"..Engines[i].manufacturer.." - "..Engines[i]..name.."</Button>")
+        i = i + 1
+      end
+    ]]></Script>

@@ -21,10 +21,10 @@ void ScriptEngine::init()
 
 void ScriptEngine::reset()
 {
+  engine.collect_garbage();
   scriptEnv = sol::environment(ScriptEngine::engine, sol::create);
   exposeCollections();
   exposeCpp();
-  engine.collect_garbage();
 }
 
 void ScriptEngine::runScript(const std::string &scriptId)
@@ -47,6 +47,7 @@ void ScriptEngine::exposeCpp()
   //General
   scriptEnv.set_function("print", [=] (std::string x) { Terminal::windows.at("main") << x; });
   scriptEnv.set_function("tostring", [=] (int x) { return (std::to_string(x)); });
+  scriptEnv.set_function("toint", [=] (std::string str) { return (atoi(str.c_str())); });
   scriptEnv.set_function("clearScreen", [] () { Terminal::windows.at("main").clearScreen(); });
   scriptEnv.set_function("pause", [] () { getch(); });
   scriptEnv.set_function("exit", [] () { exit(0); });
@@ -55,7 +56,6 @@ void ScriptEngine::exposeCpp()
   scriptEnv.set_function("goToPath", [=] (std::string id, std::string path) { Menu::goTo(id, path); });
   scriptEnv.set_function("setEnv", [=] (std::string key, std::string value) { environment[key] = value; });
   scriptEnv.set_function("getEnv", [=] (std::string key) { return (environment[key]); });
-  scriptEnv.set_function("getEnvInt", [=] (std::string key) { return (atoi(environment[key].c_str())); });
   //Menu helper
   scriptEnv.set_function("addMenuItem", [=] (int idx, std::string xml) {
     MenuFile menu(xml, DataSource::Document);
@@ -83,24 +83,10 @@ void ScriptEngine::exposeCpp()
   //Custom
   scriptEnv.set_function("printASCIILogo", [] (std::string art) { Menu::printASCIILogo(Menu::convertASCIILogo(art)); });
   scriptEnv.set_function("getVersion", [] () { return (GAME_VERSION); });
-  //Profile management
-  scriptEnv.set_function("setProfileName", [=] (std::string name) { Profile::active->rename(name); });
-  scriptEnv.set_function("setProfileDifficulty", [=] (std::string diff) { Profile::active->difficulty = static_cast<Profile::Difficulty>(atoi(diff.c_str())); });
-  scriptEnv.set_function("setProfileLocale", [=] (std::string locale) {
-    Profile::active->localization = locale;
-    Localization::load(Profile::active->localization);
-  });
   //Profile bindings
   scriptEnv.set_function("loadProfile", [=] (std::string save) { Profile::load(save); });
   scriptEnv.set_function("createProfile", [=] (std::string name, std::string locale) { Profile::create(name, locale); });
-  if (Profile::active != nullptr)
-  {
-    scriptEnv["Garage"] = Profile::active->garage;
-    scriptEnv.set_function("getProfileName", [] () { return (Profile::active->name); });
-    scriptEnv.set_function("getProfileStats", [] () { return (Profile::active->careerStats); });
-    scriptEnv.set_function("getProfileDifficulty", [] () { return (std::to_string(Profile::active->difficulty)); });
-    scriptEnv.set_function("getProfileLocale", [=] () { return (Profile::active->localization); });
-  }
+  scriptEnv.set_function("reloadLocale", [] () { Localization::load(Profile::active->localization); });
   //Cpp Menus
   scriptEnv.set_function("loadGameMenu", &menuLoadGame);
   scriptEnv.set_function("startRace", [] () {
@@ -111,12 +97,12 @@ void ScriptEngine::exposeCpp()
   });
   scriptEnv.set_function("selectCarMenu", &menuSelectCar);
   scriptEnv.set_function("selectTrackMenu", &menuSelectTrack);
-  scriptEnv.set_function("buyCarMenu", &menuBuyCar);
   scriptEnv.set_function("buyBoxMenu", &menuBuyBox);
 }
 
 void ScriptEngine::exposeCollections()
 {
+  Profile::expose(scriptEnv);
   Stats::expose(scriptEnv);
   Car::expose(scriptEnv);
   Garage::expose(scriptEnv);
@@ -127,10 +113,15 @@ void ScriptEngine::exposeCollections()
   Collection<Engine>::expose(scriptEnv);
   Collection<Spoiler>::expose(scriptEnv);
   Collection<Tires>::expose(scriptEnv);
-  scriptEnv["Cars"] = Car::collection;
-  scriptEnv["Engines"] = Engine::collection;
-  scriptEnv["Spoilers"] = Spoiler::collection;
-  scriptEnv["Tires"] = Tires::collection;
+  scriptEnv["Cars"] = std::ref(Car::collection);
+  scriptEnv["Engines"] = std::ref(Engine::collection);
+  scriptEnv["Spoilers"] = std::ref(Spoiler::collection);
+  scriptEnv["Tires"] = std::ref(Tires::collection);
+  if (Profile::active != nullptr)
+  {
+    scriptEnv["Garage"] = std::ref(Profile::active->garage);
+    scriptEnv["Profile"] = std::ref(*Profile::active);
+  }
 }
 
 void ScriptEngine::loadScripts(const xml_document &doc)

@@ -70,19 +70,3 @@ void menuBuyBox()
 					"</Menu>";
 	Menu::popUp("", menu, DataSource::Document);
 }
-
-void menuBuyCar()
-{
-	std::string menu;
-	menu += "<Menu Title='Garage'>";
-	for (size_t i = 0; i < Car::collection.size(); i++)
-	{
-		menu += " <Button Type='Intern' Target='goToPath(\"Garage\", \"./Data/Menus/Main.xml\") '>"
-		       + Car::collection[i].manufacturer + " " + Car::collection[i].name + "</Button>";
-	}
- 	menu += " <Sep/>"
-	 				"	<Button Type='Intern' Target='garageMenu()'><Lang Id='global.back'/></Button>"
-					"</Menu>";
-	Menu::goTo("", menu, DataSource::Document);
-	//static_cast<std::shared_ptr<MenuButton>>(Menu::active->getItem("BuyCar"))->bind()
-}

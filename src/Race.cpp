@@ -141,7 +141,7 @@ bool Race::start()
 	Profile::active->careerStats.races++;
 	term << setColor(Terminal::Color::BlackOnRed) << "Pressez [ENTREE] pour quitter le circuit.\n" << resetAttrs;
 	getch();
-	Profile::active->save();
+	Profile::saveActive();
 	return (true);
 }
 

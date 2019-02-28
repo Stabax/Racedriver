@@ -7,6 +7,5 @@ void menuLoadGame();
 void menuSelectCar();
 void menuSelectTrack();
 void menuBuyBox();
-void menuBuyCar();
 
 #endif /* !CPPMENUS_HH_ */

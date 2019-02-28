@@ -59,14 +59,15 @@
   <Button Type="Goto" Target="Main"><Lang Id="global.back"/></Button>
 </Menu>
 <Script Id="OptionsOnLoad"><![CDATA[
-  setSelectValue("Difficulty", getProfileDifficulty())
-  setInputData("Profile", getProfileName())
-  setSelectValue("Locale", getProfileLocale())
+  setSelectValue("Difficulty", tostring(Profile.difficulty))
+  setInputData("Profile", Profile.name)
+  setSelectValue("Locale", Profile.localization)
 ]]></Script>
 <Script Id="ApplyOptions"><![CDATA[
-  setProfileName(getInputData("Profile"))
-  setProfileDifficulty(getSelectValue("Difficulty"))
-  setProfileLocale(getSelectValue("Locale"))
+  Profile:rename(getInputData("Profile"))
+  Profile.difficulty = toint(getSelectValue("Difficulty"))
+  Profile.localization = getSelectValue("Locale")
+  reloadLocale()
   goTo("Main")
 ]]></Script>
 <!-- Menu -->

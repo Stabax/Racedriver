@@ -61,8 +61,11 @@ public:
 	Profile(const json &data);
 	~Profile();
 
+	static void expose(sol::environment &lua);
 	static void create(const std::string &name, const std::string &locale);
 	static void load(const std::string &save);
+
+	static void saveActive();
 	void save();
 
 	static void supprimerProfile(const int& numeroSave);

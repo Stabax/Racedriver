@@ -24,7 +24,6 @@ This game is especially developed to be hacked, modded, or customized ! Feel fre
 	- libhttp-cpp (works with winsock)
 	- Lua
 	- Sol2
-	- PicoSha2
 	- OmniUnit
 	- XCurses (PDCurses / NCurses)
 	- (libreadline-dev on linux)

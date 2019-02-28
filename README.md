@@ -1,25 +1,33 @@
 
-## RaceDriver ##
+# RaceDriver
+
+## About
+
+RaceDriver is a console based (XCurses) strategy racing game, with real world physics.
+
+### Contributors
+
+	- Stabax
+	- Baxlan
+	- Stalker2106
+
+## Modding ###
+
+This game is especially developed to be hacked, modded, or customized ! Feel free to take a look at the [Modding section!](./documentation/Modding.md)
+
+## How to Build ###
 
 ### Dependencies ###
 
 	- Nlhomann's json
 	- Pugixml
-	- libCurl
+	- libhttp-cpp (works with winsock)
 	- Lua
 	- Sol2
 	- PicoSha2
 	- OmniUnit
 	- XCurses (PDCurses / NCurses)
 	- (libreadline-dev on linux)
-
-### Contributors ###
-
-	- Stabax
-	- Baxlan
-	- Stalker2106
-
-### How to Build ###
 
 NOTE: If you are on linux, you might need to install lua subdependency "libreadline-dev", and "libcurl".
 			They should be available within your package manager:

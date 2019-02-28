@@ -38,26 +38,25 @@ endif
 
 NAME = $(BINDIR)/Racedriver
 
-SRCS = 	$(SRCDIR)/Game.cpp									\
+SRCS = 	$(SRCDIR)/Localization.cpp					\
 				$(SRCDIR)/Menu.cpp									\
 				$(SRCDIR)/MenuItem.cpp							\
 				$(SRCDIR)/DataFile.cpp							\
 				$(SRCDIR)/ScriptEngine.cpp					\
+				$(SRCDIR)/Terminal.cpp							\
+				$(SRCDIR)/main.cpp									\
+				$(SRCDIR)/Game.cpp									\
+				$(SRCDIR)/Profile.cpp								\
 				$(SRCDIR)/Track.cpp									\
 				$(SRCDIR)/Race.cpp									\
-				$(SRCDIR)/main.cpp									\
 				$(SRCDIR)/cppMenus.cpp							\
 				$(SRCDIR)/Engine.cpp								\
 				$(SRCDIR)/Tires.cpp									\
-				$(SRCDIR)/Profile.cpp								\
 				$(SRCDIR)/Garage.cpp								\
 				$(SRCDIR)/Spoiler.cpp								\
-				$(SRCDIR)/Terminal.cpp							\
 				$(SRCDIR)/Car.cpp										\
-				$(SRCDIR)/Localization.cpp					\
 				$(SRCDIR)/Accident.cpp							\
-				$(LIBDIR)/pugixml/src/pugixml.cpp		\
-				$(LIBDIR)/sha/sha.cpp
+				$(LIBDIR)/pugixml/src/pugixml.cpp
 
 OBJS = $(SRCS:.cpp=.o)
 

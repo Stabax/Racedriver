@@ -91,7 +91,4 @@ private:
   WINDOW *_win;
 };
 
-std::string getHashFromFile(std::string path);
-std::string getString();
-
 #endif /* !MENU_HH_ */

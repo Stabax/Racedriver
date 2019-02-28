@@ -1,13 +1,11 @@
-#ifndef PROFILE_HH_ // _h car erreur de compil sinon
-#define PROFILE_HH_ // idem
+#ifndef PROFILE_HH_
+#define PROFILE_HH_
 
 #include <iostream>
-#include <string>
-#include <cfloat>
-#include "sha/sha.h"
-#include "Garage.hh"
 #include <nlohmann/json.hpp>
 using json = nlohmann::json;
+
+#include "Garage.hh"
 
 /*!
  * @brief Struct storing player stats

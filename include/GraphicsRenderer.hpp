@@ -11,15 +11,15 @@ public:
   {
   }
 
-  virtual ~GraphicsRenderer() = 0;
-
-  virtual void alert(const std::string &str);
+  virtual ~GraphicsRenderer()
+  {
+  }
 
   virtual void clear() = 0;
 
   virtual void drawString(const std::string &str, int x, int y) = 0;
 
-  void getLineY(int line)
+  int getLineY(int line)
   {
     return (y + (line * fontsize));
   }

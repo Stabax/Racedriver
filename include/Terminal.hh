@@ -52,7 +52,7 @@ public:
   };
 
   Terminal(WINDOW *win);
-  ~Terminal();
+  virtual ~Terminal();
 
   static void start();
   static void initColor();
@@ -71,6 +71,10 @@ public:
 
   void clearScreen();
   void update();
+
+  //Renderer impl
+  virtual void clear();
+  virtual void drawString(const std::string &str, int x, int y);
 
   Terminal &addWindow(const std::string &winId, Point pos, Point size);
   static void removeWindow(const std::string &winId);

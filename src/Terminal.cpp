@@ -12,7 +12,7 @@
 std::map<std::string, Terminal> Terminal::windows;
 
 Terminal::Terminal(WINDOW *win)
- : _currentAttrs(0)
+ : GraphicsRenderer(0, 0, 12), _currentAttrs(0)
 {
 	_screen = win;
 }
@@ -112,11 +112,6 @@ void Terminal::setAttrs(int attrs)
 	_currentAttrs |= attrs;
 }
 
-void Terminal::drawString(const std::string &str, int x, int y)
-{
-	Terminal::printAt(Point(x, y), str);
-}
-
 void Terminal::print(const std::string &str, int attrs)
 {
 	if (attrs != 0 || _currentAttrs != 0) wattrset(_screen, attrs + _currentAttrs);
@@ -144,6 +139,16 @@ void Terminal::removeWindow(const std::string &winId)
 	auto it = windows.find(winId);
 	if (it == windows.end()) throw std::runtime_error("Unknown window");
 	windows.erase(it);
+}
+
+void Terminal::clear()
+{
+	clearScreen();
+}
+
+void Terminal::drawString(const std::string &str, int x, int y)
+{
+	printAt(Point(x, y), str);
 }
 
 Terminal &Terminal::operator<<(std::function<Terminal &(Terminal &term)> f)

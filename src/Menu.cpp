@@ -8,7 +8,7 @@
 
 std::shared_ptr<Menu> Menu::active = nullptr;
 std::shared_ptr<MenuFile> Menu::activeDoc = nullptr;
-std::shared_ptr<MenuFile> Menu::_renderer = std::make_shared<GraphicsRenderer>(0, 0, 12);
+std::shared_ptr<GraphicsRenderer> Menu::renderer = std::shared_ptr<Terminal>(&Terminal::windows.at("main"));
 
 Menu::Menu(const std::string &id)
  : _id(id), _lastInput(0), _title(None), _clickCallback(nullptr)

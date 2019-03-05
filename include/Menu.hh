@@ -58,10 +58,10 @@ public:
   void render();
   void renderConsole(std::string command);
 
+  static std::shared_ptr<GraphicsRenderer> renderer;
 private:
   std::shared_ptr<MenuItem> getHoveredItem();
 
-  static std::shared_ptr<GraphicsRenderer> _renderer;
 
   std::string _id;
   int _lastInput;

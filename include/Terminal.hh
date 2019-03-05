@@ -12,6 +12,7 @@
 #elif __linux__
   #include <curses.h>
 #endif
+#include "GraphicsRenderer.hpp"
 
 
 struct Point {
@@ -26,7 +27,7 @@ struct Point {
 
 #define BASE_PAIR     1
 
-class Terminal
+class Terminal : public GraphicsRenderer
 {
 public:
   enum Color {

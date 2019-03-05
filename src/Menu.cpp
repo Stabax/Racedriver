@@ -8,6 +8,7 @@
 
 std::shared_ptr<Menu> Menu::active = nullptr;
 std::shared_ptr<MenuFile> Menu::activeDoc = nullptr;
+std::shared_ptr<MenuFile> Menu::_renderer = std::make_shared<GraphicsRenderer>(0, 0, 12);
 
 Menu::Menu(const std::string &id)
  : _id(id), _lastInput(0), _title(None), _clickCallback(nullptr)
@@ -113,12 +114,10 @@ void Menu::render()
 	if (_title != -1)
 	{
 		printASCIILogo(_title);
-		term << "\n";
 	}
 	for (size_t i = 0; i < _items.size(); i++)
 	{
 		_items[i]->render();
-		term << "\n";
 	}
 }
 

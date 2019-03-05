@@ -112,6 +112,11 @@ void Terminal::setAttrs(int attrs)
 	_currentAttrs |= attrs;
 }
 
+void Terminal::drawString(const std::string &str, int x, int y)
+{
+	Terminal::printAt(Point(x, y), str);
+}
+
 void Terminal::print(const std::string &str, int attrs)
 {
 	if (attrs != 0 || _currentAttrs != 0) wattrset(_screen, attrs + _currentAttrs);

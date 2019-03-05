@@ -61,6 +61,8 @@ public:
 private:
   std::shared_ptr<MenuItem> getHoveredItem();
 
+  static std::shared_ptr<GraphicsRenderer> _renderer;
+
   std::string _id;
   int _lastInput;
   ASCIILogo _title; //title art

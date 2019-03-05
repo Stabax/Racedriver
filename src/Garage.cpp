@@ -69,6 +69,7 @@ bool Garage::addCar(Car &car)
 		return (false);
 	}
 	_boxs.push_back(std::make_shared<Car>(car));
+	Profile::saveActive();
 	return (true);
 }
 
@@ -80,6 +81,7 @@ bool Garage::buyCar(Car &car)
 		Menu::alert(car.name+" achetee avec succes !");
 		return (true);
 	}
+	Profile::saveActive();
 	return (false);
 }
 
@@ -94,6 +96,7 @@ void Garage::sellCar(size_t index)
 	Profile::active->credits += sellPrice;
 	Menu::alert(car.name+" vendue avec succes pour "+std::to_string(sellPrice)+"c");
 	_boxs.erase(_boxs.begin() + index);
+	Profile::saveActive();
 }
 
 void to_json(json& j, const Garage& garage)

@@ -57,6 +57,11 @@ void DataFile::setData(const json &data)
   _data = data;
 }
 
+bool DataFile::erase(const std::string &name)
+{
+  return (remove(name.c_str()) == 0);
+}
+
 bool DataFile::rename(const std::string &name)
 {
   if (_sourceMode != Filesystem) return (false);
@@ -71,7 +76,7 @@ const json &DataFile::getData()
 bool DataFile::rename(const std::string &oldName, const std::string &newName)
 {
   std::string path = "./Data/Saves/";
-  return (!std::rename((path+oldName+".json").c_str(), (path+newName+".json").c_str()));
+  return (std::rename((path+oldName+".json").c_str(), (path+newName+".json").c_str()) == 0);
 }
 
 std::vector<std::string> DataFile::getFolderContents(std::string path, std::string filter, bool truncateFilter)

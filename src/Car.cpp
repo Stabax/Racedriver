@@ -112,6 +112,7 @@ void Car::buyEngine(const Engine &newEngine)
 	if (!Profile::active->pay(newEngine.price)) return;
 	_engine = std::make_shared<Engine>(newEngine);
 	updateAttributs();
+	Profile::saveActive();
 }
 
 void Car::buySpoiler(const Spoiler &newSpoiler)
@@ -119,6 +120,7 @@ void Car::buySpoiler(const Spoiler &newSpoiler)
 	if (!Profile::active->pay(newSpoiler.price)) return;
 	_spoiler = std::make_shared<Spoiler>(newSpoiler);
 	updateAttributs();
+	Profile::saveActive();
 }
 
 void Car::buyTires(const Tires &newTires)
@@ -126,6 +128,7 @@ void Car::buyTires(const Tires &newTires)
 	if (!Profile::active->pay(newTires.price)) return;
 	_tires = std::make_shared<Tires>(newTires);
 	updateAttributs();
+	Profile::saveActive();
 }
 
 void Car::setNitro(omni::Liter ajouter)

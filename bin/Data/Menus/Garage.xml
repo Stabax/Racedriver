@@ -15,14 +15,21 @@
   end
 ]]></Script>
 <!-- Garage buy car menu -->
-<Menu Id="BuyCar" Title="Garage">
+<Menu Id="BuyCar" Title="Garage" OnLoad="BuyCarOnLoad">
   <Sep/>
   <Button Type="Goto" Target="Main"><Lang Id="global.back"/></Button>
 </Menu>
+<Script Id="BuyCarOnLoad"><![CDATA[
+  i = 0
+  while (i < Cars:size()) do
+    addMenuItem(2 + i, "<Button Type='Intern' Target='buyCar(Cars[" .. i .. "])'>" .. Cars[i].manufacturer .. " - " .. Cars[i].name.." ["..tostring(Cars[i]:getTotalPrice()).."c]</Button>")
+    i = i + 1
+  end
+]]></Script>
 <!-- Box inspection menu -->
 <Menu Id="Box" Title="Garage">
   <Script><![CDATA[
-    car = Garage:get(getEnvInt("Box"))
+    car = Garage:get(toint(getEnv("Box")))
     print("[Box "..getEnv("Box").."] "..car.manufacturer.." "..car.name .. "\n")
     print(" Engine: "..car:getEngine().manufacturer.." "..car:getEngine().name.."\n")
     print(" Spoiler: "..car:getSpoiler().manufacturer.." "..car:getSpoiler().name.."\n")
@@ -31,20 +38,17 @@
   <Sep/>
   <Button Type="Script" Target="RepairCar"><Lang Id="garage.repair"/></Button>
   <Button Type="Goto" Target="UpgradeCar"><Lang Id="garage.upgrade"/></Button>
-  <Button Type="Script" Target="SellCar"><Lang Id="garage.sell"/></Button>
+  <Button Type="Intern" Target='Garage:sellCar(toint(getEnv("Box"))) goTo("Garage")'><Lang Id="garage.sell"/></Button>
   <Sep/>
   <Button Type="Goto" Target="Garage"><Lang Id="global.back"/></Button>
 </Menu>
 <Script Id="RepairCar"><![CDATA[
-  alert("not impl");
-]]></Script>
-<Script Id="SellCar"><![CDATA[
-  alert("not impl")
+  alert("not implemented");
 ]]></Script>
 <!-- Upgrade Car Home -->
 <Menu Id="UpgradeCar"  Title="Garage">
   <Script><![CDATA[
-    car = Garage:get(getEnvInt("Box"))
+    car = Garage:get(toint(getEnv("Box")))
     print("[Box "..getEnv("Box").."] "..car.manufacturer.." "..car.name .. "\n")
     print(" Engine: "..car:getEngine().manufacturer.." "..car:getEngine().name.."\n")
     print(" Spoiler: "..car:getSpoiler().manufacturer.." "..car:getSpoiler().name.."\n")
@@ -77,11 +81,11 @@
 </Menu>
 <Script Id="UpgradeEngineOnLoad"><![CDATA[
   i = 0
-  car = Garage:get(getEnvInt("Box"))
+  car = Garage:get(toint(getEnv("Box")))
   engine = car:getEngine()
   parts = Engines:filterCompatible(car)
   while (i < parts:size()) do
-    addMenuItem(2 + i, "<Button Type='Intern' Target='car:buyEngine(parts["..i.."])'>"..parts[i].manufacturer.." - "..parts[i].name.." ["..parts[i].price.."c]</Button>")
+    addMenuItem(2 + i, "<Button Type='Intern' Target='car:buyEngine(parts["..i.."])  goTo(\"UpgradeCar\")'>"..parts[i].manufacturer.." - "..parts[i].name.." ["..parts[i].price.."c]</Button>")
     i = i + 1
   end
 ]]></Script>
@@ -104,11 +108,11 @@
 </Menu>
 <Script Id="UpgradeSpoilerOnLoad"><![CDATA[
   i = 0
-  car = Garage:get(getEnvInt("Box"))
+  car = Garage:get(toint(getEnv("Box")))
   spoiler = car:getSpoiler()
   parts = Spoilers:filterCompatible(car)
   while (i < parts:size()) do
-    addMenuItem(2 + i, "<Button Type='Intern' Target='car:buySpoiler(parts[" .. i .. "])'>" .. parts[i].manufacturer .. " - " .. parts[i].name .." ["..parts[i].price.."c]</Button>")
+    addMenuItem(2 + i, "<Button Type='Intern' Target='car:buySpoiler(parts[" .. i .. "])  goTo(\"UpgradeCar\")'>" .. parts[i].manufacturer .. " - " .. parts[i].name .." ["..parts[i].price.."c]</Button>")
     i = i + 1
   end
 ]]></Script>
@@ -129,11 +133,11 @@
 </Menu>
 <Script Id="UpgradeTiresOnLoad"><![CDATA[
   i = 0
-  car = Garage:get(getEnvInt("Box"))
+  car = Garage:get(toint(getEnv("Box")))
   tires = car:getTires()
   parts = Tires:filterCompatible(car)
   while (i < parts:size()) do
-    addMenuItem(2 + i, "<Button Type='Intern' Target='car:buyTires(parts[" .. i .. "])'>" .. parts[i].manufacturer .. " - " .. parts[i].name.." ["..parts[i].price.."c]</Button>")
+    addMenuItem(2 + i, "<Button Type='Intern' Target='car:buyTires(parts[" .. i .. "]) goTo(\"UpgradeCar\")>" .. parts[i].manufacturer .. " - " .. parts[i].name.." ["..parts[i].price.."c]</Button>")
     i = i + 1
   end
 ]]></Script>

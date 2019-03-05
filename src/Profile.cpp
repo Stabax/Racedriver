@@ -23,6 +23,21 @@ Profile::~Profile()
 {
 }
 
+void Profile::expose(sol::environment &lua)
+{
+	lua.new_usertype<Profile>("Profile",
+		// constructor
+		sol::constructors<Profile(const json &data), Profile(const std::string &name, const std::string &locale)>(),
+
+		"rename", &Profile::rename,
+
+		"name", &Profile::name,
+		"difficulty", &Profile::difficulty,
+		"localization", &Profile::localization,
+		"stats", &Profile::careerStats
+	);
+}
+
 void Profile::create(const std::string &name, const std::string &locale)
 {
 	Profile::active = std::make_shared<Profile>(name, locale);
@@ -44,6 +59,11 @@ void Profile::load(const std::string &save)
 	}
 }
 
+void Profile::saveActive()
+{
+	Profile::active->save();
+}
+
 void Profile::save()
 {
 	DataFile save("./Data/Saves/"+name+".json");
@@ -63,11 +83,9 @@ void Profile::supprimerProfile([[maybe_unused]]const int& numeroSave)
 bool Profile::rename(const std::string &n)
 {
 	if (n == name) return (true);
-	if (!DataFile::rename(name, n))
-	{
-		throw (std::runtime_error("Could not rename profile"));
-	}
+	if (!DataFile::erase("./Data/Saves/"+name+".json")) throw (std::runtime_error("Could not delete profile:"+std::string(strerror(errno))));
 	name = n;
+	save();
 	return (true);
 }
 

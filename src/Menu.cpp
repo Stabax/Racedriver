@@ -114,10 +114,12 @@ void Menu::render()
 	if (_title != -1)
 	{
 		printASCIILogo(_title);
+		term << "\n";
 	}
 	for (size_t i = 0; i < _items.size(); i++)
 	{
 		_items[i]->render();
+		term << "\n";
 	}
 }
 

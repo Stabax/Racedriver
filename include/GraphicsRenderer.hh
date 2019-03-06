@@ -36,6 +36,7 @@ public:
   virtual void setColor(GraphicsRenderer::Color color) = 0;
   virtual void resetAttrs() = 0;
 
+  void clearScreen();
   void print(std::string str);
 
   int lineToY(int line);

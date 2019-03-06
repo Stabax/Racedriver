@@ -147,11 +147,11 @@ void MenuInput::select()
   {
     if (_data.length() > 0 && (input == KEY_BACKSPACE || input == '\b')) _data.erase(--_data.end());
     else _data += input;
-    Menu::renderer->clear();
+    Menu::renderer->clearScreen();
     Menu::active->render(); //Request render to update input
     //Menu::renderer->setCursorPos(_dataPos); //set cursor at end of input
   }
-  Menu::renderer->clear(); //Clear screen for menu redraw
+  Menu::renderer->clearScreen(); //Clear screen for menu redraw
   //Menu::renderer->setCursor(0); //Disable cursor
 }
 
@@ -200,10 +200,10 @@ void MenuSelect::select()
     else if (input == KEY_RIGHT) ++_cursor;
     if (_cursor < 0) _cursor = _values.size()-1;
     if (static_cast<size_t>(_cursor) >= _values.size()) _cursor = 0;
-    Menu::renderer->clear();
+    Menu::renderer->clearScreen();
     Menu::active->render(); //Request render to update input
   }
-  Menu::renderer->clear(); //Clear screen for menu redraw
+  Menu::renderer->clearScreen(); //Clear screen for menu redraw
 }
 
 bool MenuSelect::isSelectable()

@@ -113,7 +113,7 @@ void Menu::renderAlerts()
 
 void Menu::render()
 {
-	renderer->clear();
+	renderer->clearScreen();
 	renderAlerts();
 	if (_title != -1)
 	{
@@ -151,7 +151,7 @@ std::shared_ptr<MenuItem> Menu::getHoveredItem()
 
 void Menu::renderConsole(std::string command)
 {
-	renderer->clear();
+	renderer->clearScreen();
 	for (size_t i = 0; i <_alerts.size(); i++) _alerts[i]->render();
   (*renderer) << "> " << command;
 }

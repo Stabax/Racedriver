@@ -20,9 +20,19 @@ void GraphicsRenderer::print(std::string str)
   {
     draw(str.substr(0, i), _cursor.x, lineToY(_cursor.y));
     _cursor.y++;
-    if (i < str.length() - 1) i++;
-    str.erase(0, i);
+    if (i < str.length() - 1)
+    {
+      i++;
+      str.erase(i, str.length() - i);
+    }
+    else return;
   }
+}
+
+void GraphicsRenderer::clearScreen()
+{
+  clear();
+  _cursor = Point(0, 0);
 }
 
 int GraphicsRenderer::lineToY(int line)

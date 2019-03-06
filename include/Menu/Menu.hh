@@ -7,8 +7,8 @@
 #include <map>
 #include <memory>
 #include <functional>
-#include "DataFile.hh"
-#include "MenuItem.hh"
+#include "Menu/DataFile.hh"
+#include "Menu/MenuItem.hh"
 
 /*!
  * @brief Base/Generic class for Menu

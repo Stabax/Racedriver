@@ -1,4 +1,4 @@
-#include "Localization.hh"
+#include "Menu/Localization.hh"
 
 std::map<std::string, std::string> Localization::data;
 

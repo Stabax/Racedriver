@@ -2,7 +2,7 @@
 #define LOCALIZATION_HH_
 
 #include <map>
-#include "DataFile.hh"
+#include "Menu/DataFile.hh"
 
 struct Localization
 {

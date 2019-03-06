@@ -7,9 +7,7 @@
 #include <sstream>
 #include "Part.hpp"
 #include "Collection.hpp"
-#include "DataFile.hh"
-
-#include "algos.hh"
+#include "Menu/DataFile.hh"
 #include "Game.hh"
 
 class Tires : public Part

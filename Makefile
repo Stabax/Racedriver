@@ -38,12 +38,12 @@ endif
 
 NAME = $(BINDIR)/Racedriver
 
-SRCS = 	$(SRCDIR)/Localization.cpp					\
-				$(SRCDIR)/GraphicsRenderer.cpp			\
-				$(SRCDIR)/Menu.cpp									\
-				$(SRCDIR)/MenuItem.cpp							\
-				$(SRCDIR)/DataFile.cpp							\
-				$(SRCDIR)/ScriptEngine.cpp					\
+SRCS = 	$(SRCDIR)/Menu/Localization.cpp			\
+				$(SRCDIR)/Menu/GraphicsRenderer.cpp	\
+				$(SRCDIR)/Menu/Menu.cpp							\
+				$(SRCDIR)/Menu/MenuItem.cpp					\
+				$(SRCDIR)/Menu/ScriptEngine.cpp			\
+				$(SRCDIR)/Menu/DataFile.cpp					\
 				$(SRCDIR)/Terminal.cpp							\
 				$(SRCDIR)/main.cpp									\
 				$(SRCDIR)/Game.cpp									\

@@ -4,8 +4,8 @@
 #include <iostream>
 #include <vector>
 #include <sol.hpp>
-#include "DataFile.hh"
-#include "Menu.hh"
+#include "Menu/DataFile.hh"
+#include "Menu/Menu.hh"
 #include "Part.hpp"
 
 //Forward declaring parts

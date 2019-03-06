@@ -1,4 +1,4 @@
-#include "GraphicsRenderer.hh"
+#include "Menu/GraphicsRenderer.hh"
 
 GraphicsRenderer::GraphicsRenderer(int x, int y, int fontsize, int spacing)
   : _position(x, y), _fontsize(fontsize), _spacing(spacing)

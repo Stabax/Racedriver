@@ -5,14 +5,14 @@
 #include <httplib.h>
 #include <sstream>
 #include <fstream>
-#include "Menu.hh"
+#include "Menu/Menu.hh"
+#include "Menu/ScriptEngine.hh"
+#include "Menu/Localization.hh"
 #include "Game.hh"
 #include "Track.hh"
 #include "Collection.hpp"
 #include "Race.hh"
 #include "Accident.hh"
-#include "ScriptEngine.hh"
-#include "Localization.hh"
 
 class Car;
 

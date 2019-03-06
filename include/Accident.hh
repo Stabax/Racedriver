@@ -2,7 +2,7 @@
 #define ACCIDENT_HH_
 
 #include <string>
-#include "DataFile.hh"
+#include "Menu/DataFile.hh"
 
 struct Accident
 {

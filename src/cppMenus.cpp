@@ -1,12 +1,12 @@
 #include <string>
 #include <vector>
 #include "cppMenus.hh"
-#include "DataFile.hh"
+#include "Menu/DataFile.hh"
+#include "Menu/ScriptEngine.hh"
 #include "Profile.hh"
-#include "Menu.hh"
+#include "Menu/Menu.hh"
 #include "Engine.hh"
 #include "Track.hh"
-#include "ScriptEngine.hh"
 
 void menuLoadGame()
 {

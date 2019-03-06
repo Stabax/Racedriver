@@ -3,7 +3,7 @@
 
 #include <map>
 #include <sol.hpp>
-#include "DataFile.hh"
+#include "Menu/DataFile.hh"
 #include "Terminal.hh"
 
 class Menu;

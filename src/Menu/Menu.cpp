@@ -1,7 +1,7 @@
-#include "Menu.hh"
+#include "Menu/Menu.hh"
+#include "Menu/ScriptEngine.hh"
 #include "Game.hh"
 #include "Collection.hpp"
-#include "ScriptEngine.hh"
 #include "Terminal.hh"
 #include <fstream>
 

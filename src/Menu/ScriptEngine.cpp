@@ -1,12 +1,12 @@
-#include "ScriptEngine.hh"
+#include "Menu/Localization.hh"
+#include "Menu/ScriptEngine.hh"
+#include "Menu/Menu.hh"
 #include "Game.hh"
-#include "Menu.hh"
 #include "Spoiler.hh"
 #include "Engine.hh"
 #include "Tires.hh"
 #include "Profile.hh"
 #include "Race.hh"
-#include "Localization.hh"
 #include "cppMenus.hh"
 
 std::map<std::string, std::string> ScriptEngine::scripts = std::map<std::string, std::string>();

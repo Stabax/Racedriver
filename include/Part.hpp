@@ -3,8 +3,8 @@
 
 #include <vector>
 #include "Units.hpp"
-#include "DataFile.hh"
-#include "Menu.hh"
+#include "Menu/DataFile.hh"
+#include "Menu/Menu.hh"
 
 #define ID_SEPARATOR '.'
 

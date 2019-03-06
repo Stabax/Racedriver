@@ -1,7 +1,7 @@
-#include "MenuItem.hh"
-#include "ScriptEngine.hh"
-#include "Menu.hh"
-#include "Localization.hh"
+#include "Menu/MenuItem.hh"
+#include "Menu/ScriptEngine.hh"
+#include "Menu/Menu.hh"
+#include "Menu/Localization.hh"
 
 //MenuItem
 

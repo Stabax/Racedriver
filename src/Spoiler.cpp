@@ -1,6 +1,6 @@
 //Spoiler.cpp
 #include "Spoiler.hh"
-#include "Menu.hh"
+#include "Menu/Menu.hh"
 
 Collection<Spoiler> Spoiler::collection = Collection<Spoiler>();
 

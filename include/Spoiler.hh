@@ -9,7 +9,6 @@
 #include <sol.hpp>
 #include "Part.hpp"
 #include "Collection.hpp"
-#include "algos.hh"
 
 class Spoiler : public Part
 {

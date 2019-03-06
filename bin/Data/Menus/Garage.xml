@@ -17,12 +17,12 @@
 <!-- Garage buy car menu -->
 <Menu Id="BuyCar" Title="Garage" OnLoad="BuyCarOnLoad">
   <Sep/>
-  <Button Type="Goto" Target="Main"><Lang Id="global.back"/></Button>
+  <Button Type="Goto" Target="Garage"><Lang Id="global.back"/></Button>
 </Menu>
 <Script Id="BuyCarOnLoad"><![CDATA[
   i = 0
   while (i < Cars:size()) do
-    addMenuItem(2 + i, "<Button Type='Intern' Target='buyCar(Cars[" .. i .. "])'>" .. Cars[i].manufacturer .. " - " .. Cars[i].name.." ["..tostring(Cars[i]:getTotalPrice()).."c]</Button>")
+    addMenuItem(i, "<Button Type='Intern' Target='buyCar(Cars[" .. i .. "])'>" .. Cars[i].manufacturer .. " - " .. Cars[i].name.." ["..tostring(Cars[i]:getTotalPrice()).."c]</Button>")
     i = i + 1
   end
 ]]></Script>

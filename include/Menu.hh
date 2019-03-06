@@ -25,6 +25,8 @@ public:
     Stats,
     Car
   };
+  static void setRenderer(GraphicsRenderer &renderer);
+
   static ASCIILogo convertASCIILogo(std::string art);
   static void printASCIILogo(ASCIILogo art);
   static void alert(std::string str);

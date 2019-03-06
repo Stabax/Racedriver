@@ -12,7 +12,7 @@
 std::map<std::string, Terminal> Terminal::windows;
 
 Terminal::Terminal(WINDOW *win)
- : GraphicsRenderer(0, 0, 12), _currentAttrs(0)
+ : GraphicsRenderer(0, 0), _currentAttrs(0)
 {
 	_screen = win;
 }
@@ -141,14 +141,21 @@ void Terminal::removeWindow(const std::string &winId)
 	windows.erase(it);
 }
 
+// Renderer
+
 void Terminal::clear()
 {
 	clearScreen();
 }
 
-void Terminal::drawString(const std::string &str, int x, int y)
+void Terminal::draw(const std::string &str, int x, int y)
 {
 	printAt(Point(x, y), str);
+}
+
+void Terminal::setColor(GraphicsRenderer::Color color)
+{
+	setAttrs(COLOR_PAIR(static_cast<int>(color)));
 }
 
 Terminal &Terminal::operator<<(std::function<Terminal &(Terminal &term)> f)
@@ -173,10 +180,3 @@ Terminal &operator<<(Terminal &term, const char *str)
   term.print(str);
   return (term);
 }
-
-Terminal &resetAttrs(Terminal &term)
-{
-	term.resetAttrs();
-  return (term);
-}
-

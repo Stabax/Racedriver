@@ -24,6 +24,7 @@ Game::Game()
   if (Game::instance != nullptr) throw ("Cannot reinstantiate singleton");
   Game::instance = std::unique_ptr<Game>(this);
 	Terminal::start();
+	Menu::setRenderer(Terminal::windows.at("main"));
 }
 
 bool Game::load()

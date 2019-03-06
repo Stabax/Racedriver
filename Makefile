@@ -39,6 +39,7 @@ endif
 NAME = $(BINDIR)/Racedriver
 
 SRCS = 	$(SRCDIR)/Localization.cpp					\
+				$(SRCDIR)/GraphicsRenderer.cpp			\
 				$(SRCDIR)/Menu.cpp									\
 				$(SRCDIR)/MenuItem.cpp							\
 				$(SRCDIR)/DataFile.cpp							\

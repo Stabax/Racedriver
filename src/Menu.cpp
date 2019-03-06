@@ -2,13 +2,14 @@
 #include "Game.hh"
 #include "Collection.hpp"
 #include "ScriptEngine.hh"
+#include "Terminal.hh"
 #include <fstream>
 
 //Menu
 
 std::shared_ptr<Menu> Menu::active = nullptr;
 std::shared_ptr<MenuFile> Menu::activeDoc = nullptr;
-std::shared_ptr<GraphicsRenderer> Menu::renderer = std::shared_ptr<Terminal>(&Terminal::windows.at("main"));
+std::shared_ptr<GraphicsRenderer> Menu::renderer = nullptr;
 
 Menu::Menu(const std::string &id)
  : _id(id), _lastInput(0), _title(None), _clickCallback(nullptr)
@@ -27,6 +28,11 @@ Menu::Menu(const std::string &id)
 	}
 	if (menu.attribute("Title")) _title = Menu::convertASCIILogo(menu.attribute("Title").value());
 	if (menu.attribute("OnLoad")) _onLoadScript = menu.attribute("OnLoad").value();
+}
+
+void Menu::setRenderer(GraphicsRenderer &renderer)
+{
+	Menu::renderer = std::shared_ptr<GraphicsRenderer>(&renderer);
 }
 
 void Menu::onLoad()
@@ -107,19 +113,17 @@ void Menu::renderAlerts()
 
 void Menu::render()
 {
-	Terminal &term = Terminal::windows.at("main");
-
-	term.clearScreen();
+	renderer->clear();
 	renderAlerts();
 	if (_title != -1)
 	{
 		printASCIILogo(_title);
-		term << "\n";
+		(*renderer) << "\n";
 	}
 	for (size_t i = 0; i < _items.size(); i++)
 	{
 		_items[i]->render();
-		term << "\n";
+		(*renderer) << "\n";
 	}
 }
 
@@ -147,10 +151,9 @@ std::shared_ptr<MenuItem> Menu::getHoveredItem()
 
 void Menu::renderConsole(std::string command)
 {
-	Terminal &term = Terminal::windows.at("main");
-	term.clearScreen();
+	renderer->clear();
 	for (size_t i = 0; i <_alerts.size(); i++) _alerts[i]->render();
-  term << "> " << command;
+  (*renderer) << "> " << command;
 }
 
 void Menu::alert(std::string str)
@@ -177,62 +180,61 @@ Menu::ASCIILogo Menu::convertASCIILogo(std::string art)
 
 void Menu::printASCIILogo(ASCIILogo art)
 {
-	Terminal &term = Terminal::windows.at("main");
 	switch (art)
 	{
 	case ASCIILogo::Game:
-		term << setColor(Terminal::Color::RedOnBlack)
-				 << " ________                  ________       _____                    \n"
-				 << " ___  __ \\_____ ______________  __ \\_________(_)__   ______________\n"
-				 << " __  /_/ /  __ `/  ___/  _ \\_  / / /_  ___/_  /__ | / /  _ \\_  ___/\n"
-				 << " _  _, _// /_/ // /__ /  __/  /_/ /_  /   _  / __ |/ //  __/  /    \n"
-				 << " /_/ |_| \\__,_/ \\___/ \\___//_____/ /_/    /_/  _____/ \\___//_/     \n"
-				 << resetAttrs;
+		(*renderer) << setColor(GraphicsRenderer::Color::Red)
+				 				<< " ________                  ________       _____                    \n"
+				 				<< " ___  __ \\_____ ______________  __ \\_________(_)__   ______________\n"
+				 				<< " __  /_/ /  __ `/  ___/  _ \\_  / / /_  ___/_  /__ | / /  _ \\_  ___/\n"
+				 				<< " _  _, _// /_/ // /__ /  __/  /_/ /_  /   _  / __ |/ //  __/  /    \n"
+				 				<< " /_/ |_| \\__,_/ \\___/ \\___//_____/ /_/    /_/  _____/ \\___//_/     \n"
+				 				<< resetAttrs;
 		break;
 	case Options:
-		term << setColor(Terminal::Color::RedOnBlack)
-				 << "_______          _____ _____                        \n"
-				 << "__  __ \\________ __  /____(_)______ _______ ________\n"
-				 << "_  / / /___  __ \\_  __/__  / _  __ \\__  __ \\__  ___/\n"
-				 << "/ /_/ / __  /_/ // /_  _  /  / /_/ /_  / / /_(__  ) \n"
-				 << "\\____/  _  .___/ \\__/  /_/   \\____/ /_/ /_/ /____/  \n"
-				 << "        /_/                                         \n"
-				 << resetAttrs;
+		(*renderer) << setColor(GraphicsRenderer::Color::Red)
+								<< "_______          _____ _____                        \n"
+								<< "__  __ \\________ __  /____(_)______ _______ ________\n"
+								<< "_  / / /___  __ \\_  __/__  / _  __ \\__  __ \\__  ___/\n"
+								<< "/ /_/ / __  /_/ // /_  _  /  / /_/ /_  / / /_(__  ) \n"
+								<< "\\____/  _  .___/ \\__/  /_/   \\____/ /_/ /_/ /____/  \n"
+								<< "        /_/                                         \n"
+								<< resetAttrs;
 		break;
 	case Garage:
-		term << setColor(Terminal::Color::RedOnBlack)
-				 << "_________                                       \n"
-				 << "__  ____/______ _______________ ________ ______ \n"
-				 << "_  / __  _  __ `/__  ___/_  __ `/__  __ `/_  _ \\\n"
-				 << "/ /_/ /  / /_/ / _  /    / /_/ / _  /_/ / /  __/\n"
-				 << "\\____/   \\__,_/  /_/     \\__,_/  _\\__, /  \\___/ \n"
-				 << "                                 /____/         \n"
-				 << resetAttrs;
+		(*renderer) << setColor(GraphicsRenderer::Color::Red)
+								<< "_________                                       \n"
+								<< "__  ____/______ _______________ ________ ______ \n"
+								<< "_  / __  _  __ `/__  ___/_  __ `/__  __ `/_  _ \\\n"
+								<< "/ /_/ /  / /_/ / _  /    / /_/ / _  /_/ / /  __/\n"
+								<< "\\____/   \\__,_/  /_/     \\__,_/  _\\__, /  \\___/ \n"
+								<< "                                 /____/         \n"
+								<< resetAttrs;
 		break;
 	case Stats:
-		term << setColor(Terminal::Color::RedOnBlack)
-				 << "_____________         _____         \n"
-				 << "__  ___/__  /_______ ___  /_________\n"
-				 << "_____ \\ _  __/_  __ `/_  __/__  ___/\n"
-				 << "____/ / / /_  / /_/ / / /_  _(__  ) \n"
-				 << "/____/  \\__/  \\__,_/  \\__/  /____/  \n"
-				 << resetAttrs;
+		(*renderer) << setColor(GraphicsRenderer::Color::Red)
+								<< "_____________         _____         \n"
+								<< "__  ___/__  /_______ ___  /_________\n"
+								<< "_____ \\ _  __/_  __ `/_  __/__  ___/\n"
+								<< "____/ / / /_  / /_/ / / /_  _(__  ) \n"
+								<< "/____/  \\__/  \\__,_/  \\__/  /____/  \n"
+								<< resetAttrs;
 		break;
 	case Car:
-		term << setColor(Terminal::Color::RedOnBlack)
-				 << "		                      ___..............._\n"
-				 << "             __.. ' _'.\"\"\"\"\"\"\\\\\"\"\"\"\"\"\"\"- .`-._\n"
-				 << " ______.-'         (_) |      \\\\           ` \\\\`-. _\n"
-				 << "/_       --------------'-------\\\\---....______\\\\__`.`  -..___\n"
-				 << "| T      _.----._           Xxx|x...           |          _.._`--. _\n"
-				 << "| |    .' ..--.. `.         XXX|XXXXXXXXXxx==  |       .'.---..`.     -._\n"
-				 << "\\_j   /  /  __  \\  \\        XXX|XXXXXXXXXXX==  |      / /  __  \\ \\        `-.\n"
-				 << " _|  |  |  /  \\  |  |       XXX|\"\"'            |     / |  /  \\  | |          |\n"
-				 << "|__\\_j  |  \\__/  |  L__________|_______________|_____j |  \\__/  | L__________J\n"
-				 << "     `'\\ \\      / ./__________________________________\\ \\      / /___________\\\n"
-				 << "        `.`----'.'                                     `.`----'.'\n"
-				 << "          `\"\"\"\"'                                         `\"\"\"\"'\n"
-				 << resetAttrs;
+		(*renderer) << setColor(GraphicsRenderer::Color::Red)
+								<< "		                      ___..............._\n"
+								<< "             __.. ' _'.\"\"\"\"\"\"\\\\\"\"\"\"\"\"\"\"- .`-._\n"
+								<< " ______.-'         (_) |      \\\\           ` \\\\`-. _\n"
+								<< "/_       --------------'-------\\\\---....______\\\\__`.`  -..___\n"
+								<< "| T      _.----._           Xxx|x...           |          _.._`--. _\n"
+								<< "| |    .' ..--.. `.         XXX|XXXXXXXXXxx==  |       .'.---..`.     -._\n"
+								<< "\\_j   /  /  __  \\  \\        XXX|XXXXXXXXXXX==  |      / /  __  \\ \\        `-.\n"
+								<< " _|  |  |  /  \\  |  |       XXX|\"\"'            |     / |  /  \\  | |          |\n"
+								<< "|__\\_j  |  \\__/  |  L__________|_______________|_____j |  \\__/  | L__________J\n"
+								<< "     `'\\ \\      / ./__________________________________\\ \\      / /___________\\\n"
+								<< "        `.`----'.'                                     `.`----'.'\n"
+								<< "          `\"\"\"\"'                                         `\"\"\"\"'\n"
+								<< resetAttrs;
 		break;
 	case None:
 	default:

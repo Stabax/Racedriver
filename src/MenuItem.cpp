@@ -76,15 +76,13 @@ void MenuItem::select()
 
 void MenuItem::render()
 {
-	Terminal &term = Terminal::windows.at("main");
-
   if (_hover)
   {
-    term << setColor(Terminal::Color::RedOnBlack)
-         << ">";
+    (*Menu::renderer) << setColor(GraphicsRenderer::Color::Red)
+                      << ">";
   }
-  term << _label;
-  if (_hover) term << resetAttrs;
+  (*Menu::renderer) << _label;
+  if (_hover) (*Menu::renderer) << resetAttrs;
 }
 
 //MenuButton
@@ -140,22 +138,21 @@ MenuInput::MenuInput(const xml_node &data)
 
 void MenuInput::select()
 {
-	Terminal &term = Terminal::windows.at("main");
   int input;
 
   Menu::active->render(); //Render once
-  term.setCursor(2); //Block cursor
-  term.setCursorPos(_dataPos); //set cursor at end of input
+  //Menu::renderer->setCursor(2); //Block cursor
+  //Menu::renderer->setCursorPos(_dataPos); //set cursor at end of input
   while ((input = getch()) != KEY_ENTER && input != '\r' && input != '\n')
   {
     if (_data.length() > 0 && (input == KEY_BACKSPACE || input == '\b')) _data.erase(--_data.end());
     else _data += input;
-    term.clearScreen();
+    Menu::renderer->clear();
     Menu::active->render(); //Request render to update input
-    term.setCursorPos(_dataPos); //set cursor at end of input
+    //Menu::renderer->setCursorPos(_dataPos); //set cursor at end of input
   }
-  term.clearScreen(); //Clear screen for menu redraw
-  term.setCursor(0); //Disable cursor
+  Menu::renderer->clear(); //Clear screen for menu redraw
+  //Menu::renderer->setCursor(0); //Disable cursor
 }
 
 bool MenuInput::isSelectable()
@@ -175,11 +172,9 @@ void MenuInput::setData(const std::string data)
 
 void MenuInput::render()
 {
-	Terminal &term = Terminal::windows.at("main");
-
   MenuItem::render();
-  term << ": " + _data;
-  _dataPos = term.getCursorPos(); //WEIRD ? should be static
+  (*Menu::renderer) << ": " + _data;
+  //_dataPos = Menu::renderer->getCursorPos(); //WEIRD ? should be static
 }
 
 //MenuSelect
@@ -196,7 +191,6 @@ MenuSelect::MenuSelect(const xml_node &data)
 
 void MenuSelect::select()
 {
-	Terminal &term = Terminal::windows.at("main");
   int input;
 
   Menu::active->render(); //Render once
@@ -206,10 +200,10 @@ void MenuSelect::select()
     else if (input == KEY_RIGHT) ++_cursor;
     if (_cursor < 0) _cursor = _values.size()-1;
     if (static_cast<size_t>(_cursor) >= _values.size()) _cursor = 0;
-    term.clearScreen();
+    Menu::renderer->clear();
     Menu::active->render(); //Request render to update input
   }
-  term.clearScreen(); //Clear screen for menu redraw
+  Menu::renderer->clear(); //Clear screen for menu redraw
 }
 
 bool MenuSelect::isSelectable()
@@ -232,10 +226,8 @@ void MenuSelect::setData(const std::string data)
 
 void MenuSelect::render()
 {
-	Terminal &term = Terminal::windows.at("main");
-
   MenuItem::render();
-  term << "    <" + _values[_cursor].first + ">";
+  (*Menu::renderer) << "    <" + _values[_cursor].first + ">";
 }
 
 
@@ -270,5 +262,5 @@ bool MenuAlert::isSelectable()
 
 void MenuAlert::render()
 {
-  Terminal::windows.at("main") << "::::\n" << _label << "\n::::\n";
+  (*Menu::renderer) << "::::\n" << _label << "\n::::\n";
 }

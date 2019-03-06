@@ -139,7 +139,7 @@ bool Race::start()
 	if (player - _players.begin() < 3 && !player->out) Profile::active->careerStats.victories++;//Si le joueur finit sur le podium & pas d'accident
 	else Profile::active->careerStats.losses++;
 	Profile::active->careerStats.races++;
-	term << setColor(Terminal::Color::BlackOnRed) << "Pressez [ENTREE] pour quitter le circuit.\n" << resetAttrs;
+	term << "Pressez [ENTREE] pour quitter le circuit.\n"; /* << resetAttrs; setColor(Terminal::Color::BlackOnRed) << */ 
 	getch();
 	Profile::saveActive();
 	return (true);
@@ -191,7 +191,7 @@ void Race::render(int rtick)
 	term << "(Tick " << rtick << ")\n";
 	for (size_t i = 0; i < _players.size(); i++)
 	{
-		term << "[" << i+1 << "e]" << setColor(_players[i].color) << (_players[i].out ? " <K.O.> " : " ")  << _players[i].name << " : " << _players[i].position << "\n"
+		term << "[" << i+1 << "e]" << (_players[i].out ? " <K.O.> " : " ")  << _players[i].name << " : " << _players[i].position << "\n" /* setColor(_players[i].color) << */
 				 << "  |-> " << _players[i].car->manufacturer << " " << _players[i].car->name << "\n"
 			   << "  |-> " << _players[i].car->speed.count() << "km/h (" << _players[i].car->getEngine().power.count() << "ch at " << _players[i].car->getEngine().revolutions.count() << ") [" << _players[i].car->getEngine().gear + 1 << "]\n"
 				 << "  |-> C: " << _players[i].car->getEngine().torque.count() << "Nm - Fc: " << _players[i].car->fc.count() << "N \n";
@@ -203,7 +203,7 @@ void Race::render(int rtick)
 			term << "  |-> " << _players[i].outmsg << "\n";
 			term << "  |-> " << oss.str() << "\n";
 		}
-		term << resetAttrs;
+		//term << resetAttrs;
 	}
 }
 

@@ -12,18 +12,7 @@
 #elif __linux__
   #include <curses.h>
 #endif
-#include "GraphicsRenderer.hpp"
-
-
-struct Point {
-  int x;
-  int y;
-
-  Point (int x_ = 0, int y_ = 0)
-   : x(x_), y(y_)
-  {
-  }
-};
+#include "GraphicsRenderer.hh"
 
 #define BASE_PAIR     1
 
@@ -74,7 +63,8 @@ public:
 
   //Renderer impl
   virtual void clear();
-  virtual void drawString(const std::string &str, int x, int y);
+  virtual void draw(const std::string &str, int x, int y);
+  virtual void setColor(GraphicsRenderer::Color color);
 
   Terminal &addWindow(const std::string &winId, Point pos, Point size);
   static void removeWindow(const std::string &winId);
@@ -96,34 +86,5 @@ private:
 Terminal &operator<<(Terminal &term, const std::string str);
 Terminal &operator<<(Terminal &term, int data);
 Terminal &operator<<(Terminal &term, const char *str);
-
-
-class setColor
-{
-public:
-    explicit setColor(Terminal::Color c): color(c) {}
-    Terminal::Color color;
-
-    friend Terminal& operator<<(Terminal& term, const setColor& colorManip)
-    {
-	    term.setAttrs(COLOR_PAIR(static_cast<int>(colorManip.color)));
-      return (term);
-    }
-};
-
-class setAttrs
-{
-public:
-    explicit setAttrs(int a): attrs(a) {}
-    int attrs;
-
-    friend Terminal& operator<<(Terminal& term, const setAttrs& attrsManip)
-    {
-	    term.setAttrs(attrsManip.attrs);
-      return (term);
-    }
-};
-
-Terminal &resetAttrs(Terminal &term);
 
 #endif /* !TERMINAL_HH_ */

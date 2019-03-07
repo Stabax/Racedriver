@@ -24,8 +24,8 @@ RM = rm -rf
 CXXFLAGS	= -std=c++17 -ggdb -W -Wall -Wpedantic -Iinclude
 CXXFLAGS += -I$(LIBDIR) -I$(LIBDIR)/lua/
 CXXFLAGS += -I$(LIBDIR)/omniunit/include/omniunit/ -I$(LIBDIR)/sol2/ -I$(LIBDIR)/cpp-httplib/ -I$(LIBDIR)/MenuFramework/include/
-#CXXFLAGS += -I$(LIBDIR)/MenuFramework/$(LIBDIR)/json/include/ -I$(LIBDIR)/MenuFramework/$(LIBDIR)/pugixml/src/ -I$(LIBDIR)/MenuFramework/$(LIBDIR)/sol2/
-#CXXFLAGS += -I$(LIBDIR)/MenuFramework/$(LIBDIR)/lua/
+CXXFLAGS += -I$(LIBDIR)/MenuFramework/$(LIBDIR)/json/include/ -I$(LIBDIR)/MenuFramework/$(LIBDIR)/pugixml/src/ -I$(LIBDIR)/MenuFramework/$(LIBDIR)/sol2/
+CXXFLAGS += -I$(LIBDIR)/MenuFramework/$(LIBDIR)/lua/
 
 # -static-libgcc
 

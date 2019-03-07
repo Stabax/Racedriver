@@ -67,6 +67,7 @@ all: game
 deps:
 ifeq ($(OS),Windows_NT)
 	-cd $(LIBDIR)/pdcurses/wincon/ && $(MAKE) DLL=Y
+	-cp $(LIBDIR)/pdcurses/wincon/pdcurses.dll ./bin/
 	-cd $(LIBDIR)/MenuFramework/ && $(MAKE)
 	-windres $(RESDIR)/racedriver.rc -O coff -o $(RESDIR)/racedriver.res
 else

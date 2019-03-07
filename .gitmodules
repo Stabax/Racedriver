@@ -1,9 +1,9 @@
 [submodule "thirdparty/omniunit"]
 	path = thirdparty/omniunit
 	url = https://bitbucket.org/stabax/omniunit/
-[submodule "thirdparty/sol2"]
-	path = thirdparty/sol2
-	url = https://github.com/ThePhD/sol2.git
 [submodule "thirdparty/cpp-httplib"]
 	path = thirdparty/cpp-httplib
 	url = https://github.com/yhirose/cpp-httplib.git
+[submodule "thirdparty/MenuFramework"]
+	path = thirdparty/MenuFramework
+	url = https://github.com/Stalker2106x/MenuFramework.git

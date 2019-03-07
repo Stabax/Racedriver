@@ -64,7 +64,10 @@ void handleArgs(int argc, char **argv)
 int main(int argc, char **argv)
 {
 	handleArgs(argc, argv);
+	{ //Scope to destruct game before quitting
+		Game racedriver;
 
-	Game racedriver;
-	return (racedriver.main());
+		racedriver.main();
+	}
+	return (0);
 }

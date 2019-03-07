@@ -62,6 +62,7 @@ void Terminal::initColor()
 
 void Terminal::close()
 {
+	windows.clear();
 	endwin();	//Close Xcurses
 }
 

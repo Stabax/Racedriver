@@ -12,6 +12,7 @@ class Game
 {
 public:
   Game();
+  ~Game();
 
   bool load();
   int main();

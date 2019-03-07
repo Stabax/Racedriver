@@ -29,6 +29,14 @@ Game::Game()
 	Menu::setInputManager(std::make_shared<Input>());
 }
 
+Game::~Game()
+{
+	Menu::unload();
+	Terminal::close();
+	Profile::active = nullptr;
+	Game::instance = nullptr;
+}
+
 bool Game::load()
 {
   Terminal &term = Terminal::windows.at("main");

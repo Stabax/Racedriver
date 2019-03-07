@@ -1,6 +1,6 @@
 //Tires.cpp
 #include "Tires.hh"
-#include "Menu/Menu.hh"
+#include <Menu.hh>
 
 Collection<Tires> Tires::collection = Collection<Tires>();
 

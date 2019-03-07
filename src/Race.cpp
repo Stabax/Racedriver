@@ -2,7 +2,7 @@
 #include <thread>
 #include <functional>
 #include <iomanip>
-#include "Menu/Menu.hh"
+#include <Menu.hh>
 #include "Race.hh"
 #include "Accident.hh"
 

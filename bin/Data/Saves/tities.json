@@ -1,10 +1,10 @@
 {
   "careerStats": {
-    "accidents": 1,
+    "accidents": 0,
     "carBought": 0,
     "creditsEarned": 0,
-    "losses": 1,
-    "races": 1,
+    "losses": 0,
+    "races": 0,
     "victories": 0
   },
   "credits": 10000,
@@ -15,15 +15,16 @@
       {
         "engine": "Renault.GT100",
         "fuel": 0.0,
-        "integrity": 100,
+        "integrity": 100.0,
         "name": "Renault.4L",
         "spoiler": ".None",
         "tires": {
           "id": "Continental.180/45",
-          "integrity": 100
+          "integrity": 100.0
         }
       }
     ]
   },
-  "name": ""
+  "localization": "en-US",
+  "name": "tities"
 }

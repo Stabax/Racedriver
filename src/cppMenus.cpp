@@ -1,10 +1,10 @@
 #include <string>
 #include <vector>
+#include <DataFile.hh>
+#include <ScriptEngine.hh>
+#include <Menu.hh>
 #include "cppMenus.hh"
-#include "Menu/DataFile.hh"
-#include "Menu/ScriptEngine.hh"
 #include "Profile.hh"
-#include "Menu/Menu.hh"
 #include "Engine.hh"
 #include "Track.hh"
 

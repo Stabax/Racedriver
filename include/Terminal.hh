@@ -12,7 +12,7 @@
 #elif __linux__
   #include <curses.h>
 #endif
-#include "Menu/GraphicsRenderer.hh"
+#include <GraphicsRenderer.hh>
 
 #define BASE_PAIR     1
 

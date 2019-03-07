@@ -2,9 +2,9 @@
 #define PART_HPP_
 
 #include <vector>
+#include <DataFile.hh>
+#include <Menu.hh>
 #include "Units.hpp"
-#include "Menu/DataFile.hh"
-#include "Menu/Menu.hh"
 
 #define ID_SEPARATOR '.'
 

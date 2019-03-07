@@ -22,29 +22,24 @@ CXX = g++
 RM = rm -rf
 
 CXXFLAGS	= -std=c++17 -ggdb -W -Wall -Wpedantic -Iinclude
-CXXFLAGS += -I$(LIBDIR) -I$(LIBDIR)/json/include/ -I$(LIBDIR)/pugixml/src/ -I$(LIBDIR)/lua/
-CXXFLAGS += -I$(LIBDIR)/omniunit/include/omniunit/ -I$(LIBDIR)/sol2/ -I$(LIBDIR)/cpp-httplib/
+CXXFLAGS += -I$(LIBDIR) -I$(LIBDIR)/lua/
+CXXFLAGS += -I$(LIBDIR)/omniunit/include/omniunit/ -I$(LIBDIR)/sol2/ -I$(LIBDIR)/cpp-httplib/ -I$(LIBDIR)/MenuFramework/include/
+#CXXFLAGS += -I$(LIBDIR)/MenuFramework/$(LIBDIR)/json/include/ -I$(LIBDIR)/MenuFramework/$(LIBDIR)/pugixml/src/ -I$(LIBDIR)/MenuFramework/$(LIBDIR)/sol2/
+#CXXFLAGS += -I$(LIBDIR)/MenuFramework/$(LIBDIR)/lua/
 
-LDFLAGS		= -L$(LIBDIR)/lua/ -llua
 # -static-libgcc
 
 ifeq ($(OS),Windows_NT)
 	MAKE = mingw32-make
-	LDFLAGS += -L$(LIBDIR)/pdcurses/wincon/ -lpdcurses -lws2_32
+	LDFLAGS = -L$(LIBDIR)/pdcurses/wincon/ -lpdcurses -L$(LIBDIR)/MenuFramework/bin/ -lMenuFramework -lws2_32
 else
 	MAKE = make
-	LDFLAGS += -lncurses
+	LDFLAGS = -lncurses
 endif
 
 NAME = $(BINDIR)/Racedriver
 
-SRCS = 	$(SRCDIR)/Menu/Localization.cpp			\
-				$(SRCDIR)/Menu/GraphicsRenderer.cpp	\
-				$(SRCDIR)/Menu/Menu.cpp							\
-				$(SRCDIR)/Menu/MenuItem.cpp					\
-				$(SRCDIR)/Menu/ScriptEngine.cpp			\
-				$(SRCDIR)/Menu/DataFile.cpp					\
-				$(SRCDIR)/Terminal.cpp							\
+SRCS = 	$(SRCDIR)/Terminal.cpp							\
 				$(SRCDIR)/main.cpp									\
 				$(SRCDIR)/Game.cpp									\
 				$(SRCDIR)/Profile.cpp								\
@@ -56,8 +51,7 @@ SRCS = 	$(SRCDIR)/Menu/Localization.cpp			\
 				$(SRCDIR)/Garage.cpp								\
 				$(SRCDIR)/Spoiler.cpp								\
 				$(SRCDIR)/Car.cpp										\
-				$(SRCDIR)/Accident.cpp							\
-				$(LIBDIR)/pugixml/src/pugixml.cpp
+				$(SRCDIR)/Accident.cpp
 
 OBJS = $(SRCS:.cpp=.o)
 
@@ -72,10 +66,10 @@ all: game
 deps:
 ifeq ($(OS),Windows_NT)
 	-cd $(LIBDIR)/pdcurses/wincon/ && $(MAKE) DLL=Y
-	-cd $(LIBDIR)/lua/ && $(MAKE) mingw
+	-cd $(LIBDIR)/MenuFramework/ && $(MAKE)
 	-windres $(RESDIR)/racedriver.rc -O coff -o $(RESDIR)/racedriver.res
 else
-	-cd $(LIBDIR)/lua/ && $(MAKE) linux
+	-cd $(LIBDIR)/MenuFramework/ && $(MAKE)
 endif
 
 game:	$(info ****************** Run "make deps" before compiling game *****************) $(OBJS)
@@ -89,10 +83,10 @@ fclean: clean
 
 cleandeps:
 ifeq ($(OS),Windows_NT)
-	-cd $(LIBDIR)/lua/ && $(MAKE) clean
+	-cd $(LIBDIR)/MenuFramework/ && $(MAKE) clean
 	-$(RM) $(RESDIR)/racedriver.res
 else
-	-cd $(LIBDIR)/lua/ && $(MAKE) clean
+	-cd $(LIBDIR)/MenuFramework/ && $(MAKE) clean
 endif
 
 re: fclean all

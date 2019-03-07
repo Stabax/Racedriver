@@ -1,7 +1,7 @@
 //Profiles.cpp
 #include "Profile.hh"
-#include "Menu/Menu.hh"
-#include "Menu/Localization.hh"
+#include <Menu.hh>
+#include <Localization.hh>
 
 std::shared_ptr<Profile> Profile::active = nullptr;
 

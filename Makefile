@@ -23,15 +23,15 @@ RM = rm -rf
 
 CXXFLAGS	= -std=c++17 -ggdb -W -Wall -Wpedantic -Iinclude
 CXXFLAGS += -I$(LIBDIR) -I$(LIBDIR)/lua/
-CXXFLAGS += -I$(LIBDIR)/omniunit/include/omniunit/ -I$(LIBDIR)/sol2/ -I$(LIBDIR)/cpp-httplib/ -I$(LIBDIR)/MenuFramework/include/
-CXXFLAGS += -I$(LIBDIR)/MenuFramework/$(LIBDIR)/json/include/ -I$(LIBDIR)/MenuFramework/$(LIBDIR)/pugixml/src/ -I$(LIBDIR)/MenuFramework/$(LIBDIR)/sol2/
-CXXFLAGS += -I$(LIBDIR)/MenuFramework/$(LIBDIR)/lua/
+CXXFLAGS += -I$(LIBDIR)/omniunit/include/omniunit/ -I$(LIBDIR)/cpp-httplib/ -I$(LIBDIR)/MenuFramework/include/
+CXXFLAGS += -I$(LIBDIR)/MenuFramework/$(LIBDIR)/json/include/ -I$(LIBDIR)/MenuFramework/$(LIBDIR)/pugixml/src/
+CXXFLAGS += -I$(LIBDIR)/MenuFramework/$(LIBDIR)/lua/ -I$(LIBDIR)/MenuFramework/$(LIBDIR)/sol2/
 
 # -static-libgcc
 
 ifeq ($(OS),Windows_NT)
 	MAKE = mingw32-make
-	LDFLAGS = -L$(LIBDIR)/pdcurses/wincon/ -lpdcurses -L$(LIBDIR)/MenuFramework/bin/ -lMenuFramework -lws2_32
+	LDFLAGS = -L$(LIBDIR)/pdcurses/wincon/ -lpdcurses -lws2_32 $(LIBDIR)/MenuFramework/lib/MenuFramework.a $(LIBDIR)/MenuFramework/thirdparty/lua/liblua.a
 else
 	MAKE = make
 	LDFLAGS = -lncurses
@@ -40,6 +40,7 @@ endif
 NAME = $(BINDIR)/Racedriver
 
 SRCS = 	$(SRCDIR)/Terminal.cpp							\
+				$(SRCDIR)/Input.cpp									\
 				$(SRCDIR)/main.cpp									\
 				$(SRCDIR)/Game.cpp									\
 				$(SRCDIR)/Profile.cpp								\
@@ -66,6 +67,7 @@ all: game
 deps:
 ifeq ($(OS),Windows_NT)
 	-cd $(LIBDIR)/pdcurses/wincon/ && $(MAKE) DLL=Y
+	-cp $(LIBDIR)/pdcurses/wincon/pdcurses.dll ./bin/
 	-cd $(LIBDIR)/MenuFramework/ && $(MAKE)
 	-windres $(RESDIR)/racedriver.rc -O coff -o $(RESDIR)/racedriver.res
 else

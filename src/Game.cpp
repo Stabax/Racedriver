@@ -13,6 +13,7 @@
 #include "Collection.hpp"
 #include "Race.hh"
 #include "Accident.hh"
+#include "Input.hh"
 
 class Car;
 
@@ -24,7 +25,8 @@ Game::Game()
   if (Game::instance != nullptr) throw ("Cannot reinstantiate singleton");
   Game::instance = std::unique_ptr<Game>(this);
 	Terminal::start();
-	Menu::setRenderer(Terminal::windows.at("main"));
+	Menu::setRenderer(std::shared_ptr<GraphicsRenderer>(&Terminal::windows.at("main")));
+	Menu::setInputManager(std::make_shared<Input>());
 }
 
 bool Game::load()

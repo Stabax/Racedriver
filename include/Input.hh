@@ -9,7 +9,7 @@ public:
   Input();
   ~Input();
 
-  virtual InputManager::Keys getInput();
+  virtual Key getInput();
 protected:
 };
 

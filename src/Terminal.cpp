@@ -146,7 +146,7 @@ void Terminal::removeWindow(const std::string &winId)
 
 void Terminal::clear()
 {
-	clearScreen();
+	Terminal::clearScreen();
 }
 
 void Terminal::draw(const std::string &str, int x, int y)

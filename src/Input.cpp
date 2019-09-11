@@ -12,31 +12,26 @@ Input::~Input()
 
 }
 
-InputManager::Keys Input::getInput()
+Key Input::getInput()
 {
   switch (getch())
   {
     case KEY_LEFT:
-      return (InputManager::Keys::Left);
-      break;
+      return (Key(Key::Code::Left));
     case KEY_RIGHT:
-      return (InputManager::Keys::Right);
-      break;
+      return (Key(Key::Code::Right));
     case KEY_UP:
-      return (InputManager::Keys::Up);
-      break;
+      return (Key(Key::Code::Up));
     case KEY_DOWN:
-      return (InputManager::Keys::Down);
+      return (Key(Key::Code::Down));
       break;
     case KEY_ENTER:
     case '\n':
     case '\r':
-      return (InputManager::Keys::Enter);
-      break;
+      return (Key(Key::Code::Down));
     case KEY_BACKSPACE:
     case '\b':
-      return (InputManager::Keys::Backspace);
-      break;
+      return (Key(Key::Code::Backspace));
   }
-  return (InputManager::Keys::None);
+  return (Key());
 }

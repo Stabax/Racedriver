@@ -31,7 +31,7 @@ Game::Game()
 
 Game::~Game()
 {
-	Menu::unload();
+	//Menu::unload();
 	Terminal::close();
 	Profile::active = nullptr;
 	Game::instance = nullptr;
@@ -41,6 +41,7 @@ bool Game::load()
 {
   Terminal &term = Terminal::windows.at("main");
 
+	Localization::langLocation = "./Data/Localization/";
 	Localization::load("en-US");
 	term << "Chargement en Cours...\n";
 	try

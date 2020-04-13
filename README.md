@@ -3,7 +3,7 @@
 
 ## About
 
-RaceDriver is a console based (XCurses) strategy racing game, with real world physics.
+RaceDriver is a console based (XCurses) strategy racing game, with real world
 
 ### Contributors
 
